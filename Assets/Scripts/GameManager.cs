@@ -6,14 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
+	    
 	}
 }
