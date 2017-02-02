@@ -11,57 +11,73 @@ public class GridSystem : MonoBehaviour
 
     public class Cell
     {
-        private uint _x;
-        private uint _y;
-        private bool _blocked;
-        private bool _isEntrance;
-        private bool _isExit;
-        
+        private readonly uint _x;
+        private readonly uint _y;
+        public bool IsBlocked { get; private set; }
+        public bool IsEntrance { get; private set; }
+        public bool IsExit { get; private set; }
+
         public Cell(uint x, uint y)
         {
             _x = x;
             _y = y;
-            _blocked = false;
-            _isEntrance = false;
-            _isExit = false;
+            IsBlocked = false;
+            IsEntrance = false;
+            IsExit = false;
         }
 
-        public bool IsBlocked()
+        public void SetEntrance()
         {
-            return _blocked;
+            IsEntrance = true;
+            IsExit = false;
         }
 
-        public bool IsEntrance()
+        public void SetExit()
         {
-            return _isEntrance;
+            IsExit = true;
+            IsEntrance = false;
         }
 
-        public bool IsExit()
+        public void SetCell(bool blocked)
         {
-            return _isExit;
+            IsBlocked = blocked;
         }
     }
 
     public class Grid
     {
-        private uint _width;
-        private uint _height;
-        private Cell[ , ] _grid;
-        private List<Cell> _entrances;
-        private List<Cell> _exits;
+        public uint Width { get; }
+        public uint Height { get; }
+        private readonly Cell[ , ] _grid;
+        public List<Cell> Entrances { get; private set; }
+        public List<Cell> Exits { get; private set; }
+        public HashSet<Cell> Obstacles { get; private set; }
 
         public Grid(uint width, uint height)
         {
-            _width = width;
-            _height = height;
-            _grid = new Cell[width,height];
+            Width = width;
+            Height = height;
+            _grid = new Cell[Width, Height];
+            Entrances = new List<Cell>();
+            Exits = new List<Cell>();
+            Obstacles = new HashSet<Cell>();
 
-            for (uint y = 0; y < height; ++y)
+            //Create grid
+            for (uint y = 0; y < Height; ++y)
             {
-                for (uint x = 0; x < width; ++x)
+                for (uint x = 0; x < Width; ++x)
                 {
                     _grid[x,y] = new Cell(x,y);
                 }
+            }
+
+            //create entrances and exits
+            for (uint i = 0; i < Width; ++i)
+            {
+                _grid[0,i].SetEntrance();
+                Entrances.Add(_grid[0, i]);
+                _grid[Height-1, i].SetExit();
+                Entrances.Add(_grid[Height - 1, i]);
             }
         }
 
@@ -69,12 +85,60 @@ public class GridSystem : MonoBehaviour
         {
             return _grid[x, y];
         }
+
+        public bool SetNumberOfEntries(uint n)
+        {
+            if (n <= 0 || n > Width || n > Entrances.Count)
+            {
+                return false;
+            }
+
+            uint num = (uint)Entrances.Count - n;
+            for (uint i = 0; i < num; ++i)
+            {
+                int index = Random.Range(0, Entrances.Count - 1);
+                Entrances.RemoveAt(index);
+                Exits.RemoveAt(index);
+            }
+
+            return true;
+        }
+
+        public void SetNumberOfObstacles(uint n)
+        {
+            bool validGrid;
+            do
+            {
+                Obstacles = new HashSet<Cell>();
+                while (n < Obstacles.Count)
+                {
+                    int x = Random.Range(0, (int)Width - 1);
+                    int y = Random.Range(0, (int)Height - 1);
+                    Obstacles.Add(_grid[x, y]);
+                    _grid[x, y].SetCell(true);
+                }
+                validGrid = ValidGrid();
+            } while (validGrid == false);
+        }
+
+        public bool ValidGrid()
+        {
+            //TODO: Check path 
+            return true;
+        }
     }
 
 
 	// Use this for initialization
 	void Awake ()
+	{
+	    CreateGrid(4,0);
+	}
+
+    public void CreateGrid(uint entries, uint obstacles)
     {
-        _mainGameGrid = new Grid(Width,Height);
+        _mainGameGrid = new Grid(Width, Height);
+        _mainGameGrid.SetNumberOfEntries(entries);
+        _mainGameGrid.SetNumberOfObstacles(obstacles);
     }
 }
