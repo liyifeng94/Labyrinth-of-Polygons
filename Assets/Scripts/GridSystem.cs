@@ -2,25 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GridSystem : MonoBehaviour
+public class GridSystem
 {
-    public uint Width = 10;
-    public uint Height = 20;
+    private readonly uint _width;
+    private readonly uint _height;
+    private readonly uint _entrances;
+    private readonly uint _obstacles;
 
     private Grid _mainGameGrid;
 
     public class Cell
     {
-        private readonly uint _x;
-        private readonly uint _y;
+        public readonly uint X;
+        public readonly uint Y;
         public bool IsBlocked { get; private set; }
         public bool IsEntrance { get; private set; }
         public bool IsExit { get; private set; }
 
         public Cell(uint x, uint y)
         {
-            _x = x;
-            _y = y;
+            X = x;
+            Y = y;
             IsBlocked = false;
             IsEntrance = false;
             IsExit = false;
@@ -38,16 +40,19 @@ public class GridSystem : MonoBehaviour
             IsEntrance = false;
         }
 
-        public void SetCell(bool blocked)
+        //Returns the previous blocked state
+        public bool SetCell(bool blocked)
         {
+            bool temp = IsBlocked;
             IsBlocked = blocked;
+            return temp;
         }
     }
 
     public class Grid
     {
-        public uint Width { get; }
-        public uint Height { get; }
+        public readonly uint Width;
+        public readonly uint Height;
         private readonly Cell[ , ] _grid;
         public List<Cell> Entrances { get; private set; }
         public List<Cell> Exits { get; private set; }
@@ -128,17 +133,37 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-
-	// Use this for initialization
-	void Awake ()
-	{
-	    CreateGrid(4,0);
-	}
-
-    public void CreateGrid(uint entries, uint obstacles)
+    public GridSystem(uint width, uint hight, uint entrances, uint obstacles)
     {
-        _mainGameGrid = new Grid(Width, Height);
-        _mainGameGrid.SetNumberOfEntries(entries);
-        _mainGameGrid.SetNumberOfObstacles(obstacles);
+        _width = width;
+        _height = hight;
+        _entrances = entrances;
+        _obstacles = obstacles;
+    }
+
+    public void CreateGrid()
+    {
+        _mainGameGrid = new Grid(_width, _height);
+        _mainGameGrid.SetNumberOfEntries(_entrances);
+        _mainGameGrid.SetNumberOfObstacles(_obstacles);
+    }
+
+    // Returns true if a tower can be built here
+    public bool BuildAtCell(uint x, uint y)
+    {
+        bool wasBlocked = _mainGameGrid.GetCellAt(x, y).SetCell(true);
+        if (wasBlocked)
+        {
+            return false;
+        }
+        //TODO: check if path is valid
+        //_mainGameGrid.GetCellAt(x, y).SetCell(false);
+        return true;
+    }
+
+    public bool DestoryAtCell(uint x, uint y)
+    {
+        _mainGameGrid.GetCellAt(x, y).SetCell(false);
+        return false;
     }
 }
