@@ -11,6 +11,12 @@ public class LevelManager : MonoBehaviour
     public uint GridEntrances = 4;
     public uint GridObstacles = 0;
 
+    public GameObject CellGound;
+    public GameObject CellEntrance;
+    public GameObject CellExit;
+    public GameObject CellObstacles;
+
+
 
 
     // Use this for initialization
