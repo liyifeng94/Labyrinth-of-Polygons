@@ -9,30 +9,30 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000013916891114}
+  m_RootGameObject: {fileID: 1000012451561396}
   m_IsPrefabParent: 1
---- !u!1 &1000013916891114
+--- !u!1 &1000012451561396
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000014098205972}
-  - 114: {fileID: 114000011911444382}
+  - 4: {fileID: 4000011128511566}
+  - 114: {fileID: 114000011648024974}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000014098205972
+--- !u!4 &4000011128511566
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013916891114}
+  m_GameObject: {fileID: 1000012451561396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,16 +40,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000011911444382
+--- !u!114 &114000011648024974
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013916891114}
+  m_GameObject: {fileID: 1000012451561396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 736abad998517f9428cb71cc76e74eee, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a8ed67d0ca890a4ca0537e2dfeb41e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameBoardObject: {fileID: 1000012323296422, guid: 54d29aaf0170c1d489e1589b0fc73486,
-    type: 2}
+  CurrentLevelManager: {fileID: 0}
