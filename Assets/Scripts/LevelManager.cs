@@ -20,4 +20,14 @@ public class LevelManager : MonoBehaviour
     {
 	
 	}
+
+    public void DestoryEnemy(/*Enemy*/ MonoBehaviour enemyPtr)
+    {
+        GameBoardSystem.RemoveEnemy(enemyPtr);
+    }
+
+    public void EnemyReachedExit(/*Enemy*/ MonoBehaviour enemyPtr)
+    {
+        GameBoardSystem.RemoveEnemy(enemyPtr);
+    }
 }
