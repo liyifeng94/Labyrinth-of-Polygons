@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [HideInInspector]
     public LevelManager CurrentLevelManager;
 
 	// Use this for initialization

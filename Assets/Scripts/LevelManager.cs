@@ -4,31 +4,30 @@ using System.Collections;
 public class LevelManager : MonoBehaviour
 {
     private GameManager _gameManagerInstance;
-    public GridSystem GameGridSystem { get; private set; }
+    public GameBoard GameBoardSystem { get; private set; }
 
-    public uint GridWidth = 10;
-    public uint GridHeight = 20;
-    public uint GridEntrances = 4;
-    public uint GridObstacles = 0;
-
-    public GameObject CellGound;
-    public GameObject CellEntrance;
-    public GameObject CellExit;
-    public GameObject CellObstacles;
-
-
-
+    public GameObject GameBoardObject;
 
     // Use this for initialization
     void Awake ()
 	{
 	    GameManager.Instance.CurrentLevelManager = this;
-        GameGridSystem = new GridSystem(GridWidth,GridHeight,GridEntrances,GridObstacles);
-    }
+        GameBoardSystem = gameObject.GetComponent<GameBoard>();
+	}
 	
 	// Update is called once per frame
 	void Update ()
     {
 	
 	}
+
+    public void DestoryEnemy(/*Enemy*/ MonoBehaviour enemyPtr)
+    {
+        GameBoardSystem.RemoveEnemy(enemyPtr);
+    }
+
+    public void EnemyReachedExit(/*Enemy*/ MonoBehaviour enemyPtr)
+    {
+        GameBoardSystem.RemoveEnemy(enemyPtr);
+    }
 }
