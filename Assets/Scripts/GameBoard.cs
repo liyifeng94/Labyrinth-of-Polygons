@@ -5,11 +5,9 @@ public class GameBoard : MonoBehaviour
 {
     private Transform _boardHolder;
 
-    //TODO: update with correct type
-    private HashSet<MonoBehaviour> _enemiesHolder;
+    private HashSet<Enemy> _enemiesHolder;
 
-    //TODO: update with correct type
-    private HashSet<MonoBehaviour> _towersHolder;
+    private HashSet<Tower> _towersHolder;
 
     public GridSystem GameGridSystem { get; private set; }
 
@@ -34,7 +32,7 @@ public class GameBoard : MonoBehaviour
         public readonly uint GridY;
         public readonly uint BlockSize;
 
-        public Tile(GameObject gameObject, uint x, uint y, uint blockSize)
+        public Tile(GameObject gameObject, uint x, uint y, uint blockSize, Transform parentTransform)
         {
             GridX = x;
             GridY = y;
@@ -48,6 +46,8 @@ public class GameBoard : MonoBehaviour
             Position = tilePosition;
 
             TileObject = Instantiate(gameObject, tilePosition, Quaternion.identity) as GameObject;
+
+            TileObject.transform.SetParent(parentTransform);
         }
     }
 
@@ -66,13 +66,13 @@ public class GameBoard : MonoBehaviour
     void GameBoardSetup()
     {
         _boardHolder = new GameObject("Board").transform;
-        _enemiesHolder = new HashSet<MonoBehaviour>();
-        _towersHolder = new HashSet<MonoBehaviour>();
+        _enemiesHolder = new HashSet<Enemy>();
+        _towersHolder = new HashSet<Tower>();
         GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
     }
 
     // Updates and checks if a tower can be build at grind position
-    public bool BuildTower(/*Tower*/MonoBehaviour towerPtr)
+    public bool BuildTower(Tower towerPtr)
     {
         bool valid = false;
         //TODO: check if the location is valid
@@ -88,7 +88,7 @@ public class GameBoard : MonoBehaviour
     }
 
     //Updates the game board to remove the tower
-    public bool RemoveTower(/*Tower*/MonoBehaviour towerPtr)
+    public bool RemoveTower(Tower towerPtr)
     {
         //TODO: remove tower
         _towersHolder.Remove(towerPtr);
@@ -96,23 +96,36 @@ public class GameBoard : MonoBehaviour
     }
 
     // Updates the game board of the movement of the enemy position and notifies the towers of enemies in range
-    public void UpdateEnemyPosition(/*Enemy*/MonoBehaviour enemyPtr)
+    public void UpdateEnemyPosition(Enemy enemyPtr)
     {
+        int enemyX = (int)enemyPtr.GridX;
+        int enemyY = (int)enemyPtr.GridY;
+
         //TODO: update the position of the enemy and notify the towers
 
         foreach (var towerPtr in _towersHolder)
         {
             //TODO: check if the enemy is in range of a tower
+            int towerX = (int)towerPtr.X;
+            int towerY = (int)towerPtr.Y;
+            int towerRange = (int)towerPtr.AttackRange;
+
+            if ((enemyX < towerX + towerRange && enemyX > towerX - towerRange) &&
+                (enemyY < towerY + towerRange && enemyY > towerY - towerRange))
+            {
+                //enemy in range of the tower
+                //TODO: notify the tower that the enemy is in range
+            }
         }
     }
 
-    public void AddEnemy(/*Enemy*/MonoBehaviour enemyPtr)
+    public void AddEnemy(Enemy enemyPtr)
     {
         //TODO: addEnemy
         _enemiesHolder.Add(enemyPtr);
     }
 
-    public void RemoveEnemy(/*Enemy*/MonoBehaviour enemyPtr)
+    public void RemoveEnemy(Enemy enemyPtr)
     {
         //TODO: remove enemy
         _enemiesHolder.Remove(enemyPtr);
