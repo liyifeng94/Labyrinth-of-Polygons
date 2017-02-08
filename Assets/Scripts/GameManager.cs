@@ -10,4 +10,10 @@ public class GameManager : MonoBehaviour
     {
 	    
 	}
+
+    // pathfinding
+    public List<Cell> pathfinding
+    {
+
+    }
 }
