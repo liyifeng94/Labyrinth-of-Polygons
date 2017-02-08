@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Polygon : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     public enum Direction { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3 }
+
+    public uint GridX { get; private set; }
+    public uint GridY { get; private set; }
 
     private uint x;
     private uint y = 0;
     private uint speed;
     private uint attackRange;
+
+
 
     private Direction dir = Direction.DOWN;
 
