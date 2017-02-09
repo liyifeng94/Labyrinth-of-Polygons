@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private uint y = 0;
     private uint speed;
     private uint attackRange;
+    private uint hp;
 
 
 
@@ -58,6 +59,18 @@ public class Enemy : MonoBehaviour
 
     public void attack() { }
 
+    public void damaged(uint damage)
+    {
+        hp -= damage;
+        if (hp<=0)
+        {
+            die();
+        }
+    }
 
+    public void die()
+    {
+
+    }
 
 }
