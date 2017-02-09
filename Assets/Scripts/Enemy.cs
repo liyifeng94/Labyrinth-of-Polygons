@@ -1,74 +1,79 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
 
-    public enum Direction { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3 }
+    public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
 
     public uint GridX { get; private set; }
     public uint GridY { get; private set; }
 
-    private uint x;
-    private uint y = 0;
-    private uint speed;
-    private uint attackRange;
-    private uint hp;
+    private uint _x;
+    private uint _y = 0;
+    private uint _speed;
+    private uint _attackRange;
+    private uint _hp;
 
+    private List<GridSystem.Cell> _path;
 
+    private Direction _dir = Direction.Down;
 
-    private Direction dir = Direction.DOWN;
+    public void Spawn() {
 
-    public void setPos(uint xPos, uint yPos) {
-        x = xPos;
-        y = yPos;
+    public void SetPos(uint xPos, uint yPos) {
+        _x = xPos;
+        _y = yPos;
     }
 
-    public uint getX() { return x; }
+    public uint GetX() { return _x; }
 
-    public uint getY() { return y; }
+    public uint GetY() { return _y; }
 
-    public void move() {
-        switch (dir)
+    public void Move() {
+        switch (_dir)
         {
             //TODO: change speed to unit/time
-            case Direction.UP:
-                y -= speed;
+            case Direction.Up:
+                _y -= _speed;
                 break;
-            case Direction.DOWN:
-                y += speed;
+            case Direction.Down:
+                _y += _speed;
                 break;
-            case Direction.LEFT:
-                x -= speed;
+            case Direction.Left:
+                _x -= _speed;
+                break;
+            case Direction.Right:
+                _x += _speed;
                 break;
             default:
-                x += speed;
                 break;
         }
-
+        
     }
 
-    public void blocked() {
-        turn(Direction.LEFT);
+    public void Blocked() {
+        Turn(Direction.Left);
     }
 
-    public void turn(Direction newDir)
+    public void Turn(Direction newDir)
     {
-        dir = newDir;
+        _dir = newDir;
     }
 
-    public void attack() { }
+    public void Attack() { }
 
-    public void damaged(uint damage)
+    public void GetDamaged(uint damage)
     {
-        hp -= damage;
-        if (hp<=0)
+        _hp -= damage;
+        if (_hp<=0)
         {
-            die();
+            Die();
         }
     }
 
-    public void die()
+    public void Die()
     {
 
     }
