@@ -23,4 +23,27 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+
+    public class PathFinding
+    {
+        private Cell[,] _grid;
+        private Cell[,] _prev;
+        private int[] dist;
+        private List<Cell> _entry;
+        private List<Cell> _exit;
+
+        public PathFinding( Cell[,] grid, List<Cell> Entrance, List<Cell> Exits )
+        {
+            _grid = grid;
+            _entry = Entrance;
+            _exit = Exits;
+            dist = new int[Width * Height] { -1 };
+            _prev = new Cell[Width, Height] { null };
+        }
+
+        public Cell find()
+        {
+
+        }
+    }
 }
