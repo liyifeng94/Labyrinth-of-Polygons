@@ -51,11 +51,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cc8558c0330c344bcf91e6afeb780f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlockSize: 10
   GridWidth: 10
   GridHeight: 20
   GridEntrances: 4
   GridObstacles: 0
-  CellGound: {fileID: 0}
-  CellEntrance: {fileID: 0}
-  CellExit: {fileID: 0}
-  CellObstacles: {fileID: 0}
+  CellGound: {fileID: 1000010469395078, guid: 083702cfb15d80a4ba7e75b652703764, type: 2}
+  CellEntrance: {fileID: 1000011915732324, guid: f6d2694731064a746a31c2cb88354dfd,
+    type: 2}
+  CellExit: {fileID: 1000010138883510, guid: 348b30715ae30e842ad2b28944d5aefc, type: 2}
+  CellObstacles: {fileID: 1000012335623424, guid: 1020063b86efe124ba0dc8a7af01afe3,
+    type: 2}

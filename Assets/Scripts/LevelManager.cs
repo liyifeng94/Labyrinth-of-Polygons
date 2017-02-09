@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
     public GameObject GameBoardObject;
 
     // Use this for initialization
-    void Awake ()
+    void Start ()
 	{
 	    GameManager.Instance.CurrentLevelManager = this;
         GameBoardSystem = gameObject.GetComponent<GameBoard>();

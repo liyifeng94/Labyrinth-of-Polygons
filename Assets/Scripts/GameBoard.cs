@@ -17,11 +17,12 @@ public class GameBoard : MonoBehaviour
     public uint GridEntrances = 4;
     public uint GridObstacles = 0;
 
-    public GameObject CellGound;
-    public GameObject CellEntrance;
-    public GameObject CellExit;
-    public GameObject CellObstacles;
-
+    public GameObject TileGound;
+    public GameObject TileEntrance;
+    public GameObject TileExit;
+    public GameObject TileObstacles;
+    public uint TileSize = 100;
+    public Tile[,] BoardTiles { get; private set; }
 
     public class Tile
     {
@@ -46,7 +47,11 @@ public class GameBoard : MonoBehaviour
             Position = tilePosition;
 
             TileObject = Instantiate(gameObject, tilePosition, Quaternion.identity) as GameObject;
-
+            if (TileObject == null)
+            {
+                Debug.LogAssertion("Unable to create tile at " + x + ","+ y);
+                return;
+            }
             TileObject.transform.SetParent(parentTransform);
         }
     }
@@ -69,6 +74,39 @@ public class GameBoard : MonoBehaviour
         _enemiesHolder = new HashSet<Enemy>();
         _towersHolder = new HashSet<Tower>();
         GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
+        CreateBoardTiles();
+    }
+
+    void CreateBoardTiles()
+    {
+        BoardTiles = new Tile[GridWidth, GridHeight];
+        GridSystem.Grid gameGrid = GameGridSystem.MainGameGrid;
+
+        //Create grid
+        for (uint y = 0; y < GridWidth; ++y)
+        {
+            for (uint x = 0; x < GridHeight; ++x)
+            {
+                GridSystem.Cell cell = gameGrid.GetCellAt(x, y);
+
+                if (cell.IsEntrance)
+                {
+                    BoardTiles[x, y] = new Tile(TileEntrance, x, y, TileSize, _boardHolder);
+                }
+                else if (cell.IsExit)
+                {
+                    BoardTiles[x, y] = new Tile(TileExit, x, y, TileSize, _boardHolder);
+                }
+                else if (cell.IsBlocked)
+                {
+                    BoardTiles[x, y] = new Tile(TileObstacles, x, y, TileSize, _boardHolder);
+                }
+                else
+                {
+                    BoardTiles[x, y] = new Tile(TileGound, x, y, TileSize, _boardHolder);
+                }
+            }
+        }
     }
 
     // Updates and checks if a tower can be build at grind position

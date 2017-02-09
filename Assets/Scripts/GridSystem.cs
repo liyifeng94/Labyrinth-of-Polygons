@@ -9,7 +9,7 @@ public class GridSystem
     private readonly uint _entrances;
     private readonly uint _obstacles;
 
-    private Grid _mainGameGrid;
+    public Grid MainGameGrid { get; private set; }
 
     public class Cell
     {
@@ -143,15 +143,15 @@ public class GridSystem
 
     public void CreateGrid()
     {
-        _mainGameGrid = new Grid(_width, _height);
-        _mainGameGrid.SetNumberOfEntries(_entrances);
-        _mainGameGrid.SetNumberOfObstacles(_obstacles);
+        MainGameGrid = new Grid(_width, _height);
+        MainGameGrid.SetNumberOfEntries(_entrances);
+        MainGameGrid.SetNumberOfObstacles(_obstacles);
     }
 
     // Returns true if a tower can be built here
     public bool BuildAtCell(uint x, uint y)
     {
-        bool wasBlocked = _mainGameGrid.GetCellAt(x, y).SetCell(true);
+        bool wasBlocked = MainGameGrid.GetCellAt(x, y).SetCell(true);
         if (wasBlocked)
         {
             return false;
@@ -163,7 +163,7 @@ public class GridSystem
 
     public bool DestoryAtCell(uint x, uint y)
     {
-        _mainGameGrid.GetCellAt(x, y).SetCell(false);
+        MainGameGrid.GetCellAt(x, y).SetCell(false);
         return false;
     }
 }
