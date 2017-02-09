@@ -5,15 +5,22 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-	// Use this for initialization
-	void Awake ()
-    {
-	    
-	}
+    [HideInInspector]
+    public LevelManager CurrentLevelManager;
 
-    // pathfinding
-    public List<Cell> pathfinding
+    // Use this for initialization
+    void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            CurrentLevelManager = null;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
+        DontDestroyOnLoad(gameObject);
     }
 }
