@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class Tower : MonoBehaviour {
+public class Tower : MonoBehaviour
+{
+    public uint X { get; private set; }
+    public uint Y { get; private set; }
 
-	public uint X { get; private set; }
-	public uint Y { get; private set; }
-	public uint AttackRange { get; private set; }
-	public uint HitPoint;
-	public uint AttackDamage;
-	public uint AttackSpeed;  // trsf only
+    public uint AttackRange ;
+    public uint HitPoint;
+    public uint AttackDamage;
+    public uint AttackSpeed;
+    // public uint Level = 0;
 
     private HashSet<Enemy> _enemies = new HashSet<Enemy>();
     private GameBoard _gameBoard;
@@ -18,13 +20,12 @@ public class Tower : MonoBehaviour {
     void Start ()
 	{
 	    Build();
-	    _enemies = null;
 	    _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
-        _loadingTime = AttackSpeed;
+	    _loadingTime = AttackSpeed;
 	}
 
 	void LastUpdate () {
-	    if (null != _enemies)
+	    if (null != _enemies.First())
 	    {
 	        if (_loadingTime >= AttackSpeed)
 	        {
@@ -37,12 +38,20 @@ public class Tower : MonoBehaviour {
                 _loadingTime += Time.deltaTime;
 	        }
         }
-	}
+	    if (Input.GetMouseButtonDown(0)) // 0 for mouse-left button
+	    {
+            Debug.Log("Pressed left click.");
+            // Todo show remove, upgrade, and tower-info selections
+        }
+    }
 
     public void Build()
     {
-
-        _gameBoard.BuildTower(this);
+        bool success = _gameBoard.BuildTower(this);
+        if (!success)
+        {
+            Debug.Log("Tower cannot be build");
+        }
     }
 
     public void Destory()
@@ -57,7 +66,7 @@ public class Tower : MonoBehaviour {
 
     public void AttackEnemy(Enemy t)
     {
-        t.damaged(AttackDamage);
+        t.GetDamaged(AttackDamage);
     }
     
 
