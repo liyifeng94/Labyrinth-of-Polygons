@@ -28,6 +28,13 @@ public class GridSystem
             IsExit = false;
         }
 
+        public void ResetCell()
+        {
+            IsEntrance = false;
+            IsExit = false;
+            IsBlocked = false;
+        }
+
         public void SetEntrance()
         {
             IsEntrance = true;
@@ -79,10 +86,10 @@ public class GridSystem
             //create entrances and exits
             for (uint i = 0; i < Width; ++i)
             {
-                _grid[0,i].SetEntrance();
-                Entrances.Add(_grid[0, i]);
-                _grid[Height-1, i].SetExit();
-                Entrances.Add(_grid[Height - 1, i]);
+                _grid[i, Height - 1].SetEntrance();
+                Entrances.Add(_grid[i, Height - 1]);
+                _grid[i,0].SetExit();
+                Exits.Add(_grid[i, 0]);
             }
         }
 
@@ -102,7 +109,9 @@ public class GridSystem
             for (uint i = 0; i < num; ++i)
             {
                 int index = Random.Range(0, Entrances.Count - 1);
+                Entrances[index].ResetCell();
                 Entrances.RemoveAt(index);
+                Exits[index].ResetCell();
                 Exits.RemoveAt(index);
             }
 
@@ -115,7 +124,7 @@ public class GridSystem
             do
             {
                 Obstacles = new HashSet<Cell>();
-                while (n < Obstacles.Count)
+                while (Obstacles.Count < n)
                 {
                     int x = Random.Range(0, (int)Width - 1);
                     int y = Random.Range(0, (int)Height - 1);
@@ -139,6 +148,7 @@ public class GridSystem
         _height = hight;
         _entrances = entrances;
         _obstacles = obstacles;
+        CreateGrid();
     }
 
     public void CreateGrid()

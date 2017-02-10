@@ -25,9 +25,4 @@ public class LevelManager : MonoBehaviour
     {
         GameBoardSystem.RemoveEnemy(enemyPtr);
     }
-
-    public void EnemyReachedExit(Enemy enemyPtr)
-    {
-        GameBoardSystem.RemoveEnemy(enemyPtr);
-    }
 }

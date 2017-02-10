@@ -51,5 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736abad998517f9428cb71cc76e74eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameBoardObject: {fileID: 1000012323296422, guid: 54d29aaf0170c1d489e1589b0fc73486,
-    type: 2}
+  GameBoardObject: {fileID: 0}

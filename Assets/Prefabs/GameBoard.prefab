@@ -55,10 +55,10 @@ MonoBehaviour:
   GridWidth: 10
   GridHeight: 20
   GridEntrances: 4
-  GridObstacles: 0
-  CellGound: {fileID: 1000010469395078, guid: 083702cfb15d80a4ba7e75b652703764, type: 2}
-  CellEntrance: {fileID: 1000011915732324, guid: f6d2694731064a746a31c2cb88354dfd,
+  GridObstacles: 1
+  TileGound: {fileID: 1000010469395078, guid: 083702cfb15d80a4ba7e75b652703764, type: 2}
+  TileEntrance: {fileID: 1000011915732324, guid: f6d2694731064a746a31c2cb88354dfd,
     type: 2}
-  CellExit: {fileID: 1000010138883510, guid: 348b30715ae30e842ad2b28944d5aefc, type: 2}
-  CellObstacles: {fileID: 1000012335623424, guid: 1020063b86efe124ba0dc8a7af01afe3,
+  TileExit: {fileID: 1000010138883510, guid: 348b30715ae30e842ad2b28944d5aefc, type: 2}
+  TileObstacles: {fileID: 1000012335623424, guid: 1020063b86efe124ba0dc8a7af01afe3,
     type: 2}
