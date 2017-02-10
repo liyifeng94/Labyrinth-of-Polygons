@@ -9,6 +9,8 @@ public class GameBoard : MonoBehaviour
 
     private HashSet<Tower> _towersHolder;
 
+    private LevelManager _levelManager;
+
     public GridSystem GameGridSystem { get; private set; }
 
     public uint BlockSize = 10;
@@ -21,7 +23,7 @@ public class GameBoard : MonoBehaviour
     public GameObject TileEntrance;
     public GameObject TileExit;
     public GameObject TileObstacles;
-    public uint TileSize = 100;
+    public float TileSize { get; private set; }
     public Tile[,] BoardTiles { get; private set; }
 
     public class Tile
@@ -31,18 +33,18 @@ public class GameBoard : MonoBehaviour
         public readonly Vector3 Position;
         public readonly uint GridX;
         public readonly uint GridY;
-        public readonly uint BlockSize;
+        public readonly float BlockSize;
 
-        public Tile(GameObject gameObject, uint x, uint y, uint blockSize, Transform parentTransform)
+        public Tile(GameObject gameObject, uint x, uint y, float blockSize, Transform parentTransform, Vector3 startPosition)
         {
             GridX = x;
             GridY = y;
             BlockSize = blockSize;
-            Vector3 tilePosition;
+            Vector3 tilePosition = startPosition;
 
-            tilePosition.x = GridX * blockSize + blockSize / 2;
-            tilePosition.y = GridY * blockSize + blockSize / 2;
-            tilePosition.z = 0f;
+            tilePosition.x += (int)GridX * blockSize + blockSize / 2;
+            tilePosition.y += (int)GridY * blockSize + blockSize / 2;
+            tilePosition.z += 0f;
 
             Position = tilePosition;
 
@@ -59,6 +61,8 @@ public class GameBoard : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
+        _levelManager = GameManager.Instance.CurrentLevelManager;
         GameBoardSetup();
     }
 
@@ -81,29 +85,34 @@ public class GameBoard : MonoBehaviour
     {
         BoardTiles = new Tile[GridWidth, GridHeight];
         GridSystem.Grid gameGrid = GameGridSystem.MainGameGrid;
+        Vector3 startPosition = new Vector3(0f, 0f, 0f);
+
+        startPosition.x = 0 - (GridWidth/2.0f) * TileSize;
+        startPosition.y = 0 - (GridHeight/2.0f) * TileSize;
+        startPosition.z = 0f;
 
         //Create grid
-        for (uint y = 0; y < GridWidth; ++y)
+        for (uint y = 0; y < GridHeight; ++y)
         {
-            for (uint x = 0; x < GridHeight; ++x)
+            for (uint x = 0; x < GridWidth; ++x)
             {
                 GridSystem.Cell cell = gameGrid.GetCellAt(x, y);
 
                 if (cell.IsEntrance)
                 {
-                    BoardTiles[x, y] = new Tile(TileEntrance, x, y, TileSize, _boardHolder);
+                    BoardTiles[x, y] = new Tile(TileEntrance, x, y, TileSize, _boardHolder, startPosition);
                 }
                 else if (cell.IsExit)
                 {
-                    BoardTiles[x, y] = new Tile(TileExit, x, y, TileSize, _boardHolder);
+                    BoardTiles[x, y] = new Tile(TileExit, x, y, TileSize, _boardHolder, startPosition);
                 }
                 else if (cell.IsBlocked)
                 {
-                    BoardTiles[x, y] = new Tile(TileObstacles, x, y, TileSize, _boardHolder);
+                    BoardTiles[x, y] = new Tile(TileObstacles, x, y, TileSize, _boardHolder, startPosition);
                 }
                 else
                 {
-                    BoardTiles[x, y] = new Tile(TileGound, x, y, TileSize, _boardHolder);
+                    BoardTiles[x, y] = new Tile(TileGound, x, y, TileSize, _boardHolder, startPosition);
                 }
             }
         }
@@ -167,5 +176,10 @@ public class GameBoard : MonoBehaviour
     {
         //TODO: remove enemy
         _enemiesHolder.Remove(enemyPtr);
+    }
+
+    public void EnemyReachedExit(Enemy enemyPtr)
+    {
+        
     }
 }
