@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using static GridSystem;
 
 public class PathFinding : MonoBehaviour {
     
-    //Cell[,] _grid; // get through game manager
-    //private Cell[,] _prev;/* for every cell at (x,y), which cell is the previous cell in the shortest path */
-    //private int[,] dist; /* the distance between every cell and entrance */
-    //private List<Cell> _entry; /* the list of entrance cells */
-    //private List<Cell> _exit; /* the list of exit cells */
-    //private List<Cell> queue = new List<Cell>();
+    Grid grid; // get through game manager
+    private Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
+    private int[,] dist; /* the distance between every cell and entrance */
+    private List<Cell> entry; /* the list of entrance cells */
+    private List<Cell> exit; /* the list of exit cells */
+    private List<Cell> queue = new List<Cell>();
 
     // Use this for initialization
     void Start () {
@@ -20,56 +20,125 @@ public class PathFinding : MonoBehaviour {
 	void Update () {
 	
 	}
-    /*
-    public PathFinding(Cell[,] grid, List<Cell> Entrance, List<Cell> Exits)
+    
+    public PathFinding(Grid MainGameGridgrid)
     {
-        _grid = grid;
-        _entry = Entrance;
-        _exit = Exits;
+        grid = MainGameGridgrid;
+        entry = MainGameGridgrid.Entrances;
+        exit = MainGameGridgrid.Exits;
 
-        /* initiate distance to be INFINITY /
-        for (int i = 0; i < Width; i++)
+        /* initiate distance to be INFINITY */
+        for (uint i = 0; i < MainGameGridgrid.Width; i++)
         {
-            for (int j = 0; j < Height; j++)
+            for (uint j = 0; j < MainGameGridgrid.Height; j++)
             {
                 dist[i, j] = int.MaxValue;
+                if (grid.GetCellAt(i, j).IsEntrance)
+                    dist[i, j] = 0;
+                queue.Add(grid.GetCellAt(i, j));
             }
-            queue.Add(grid[i, j]);
         }
 
-        /* intiate the previous cell of every cell to be null /
-        _prev = new Cell[Width, Height] { null };
+        /* intiate the previous cell of every cell to be null */
+        prev = new Cell[MainGameGridgrid.Width, MainGameGridgrid.Height];
+
     }
 
-    /* get the cell with the shortest distance /
-    private Cell GetNextCell()
+    /* get the cell with the shortest distance */
+    private bool GetNextCell(Cell u)
     {
         int min = int.MaxValue;
-        Cell Ret;
+        Cell Ret = queue[0];
 
-        foreach (int j in queue)
+        for (int cell = 0; cell < queue.Count; cell++)
         {
-            if (dist[j.x, j.y] <= min)
+            if (dist[queue[cell].X, queue[cell].Y] < min)
             {
-                min = dist[j.x, j.y];
-                Ret = _grid.get(j.x, j.y);
+                min = dist[queue[cell].X, queue[cell].Y];
+                Ret = grid.GetCellAt(queue[cell].X, queue[cell].Y);
             }
         }
-        queue.Remove(Ret);
-        return Ret;
+
+        /* if every cell has a distance == INFINITE, means no available path */
+        if (min == int.MaxValue)
+        {
+            return false;
+        }
+
+        if (Ret != null)
+            queue.Remove(Ret);
+        return true;
     }
 
-    public Cell Search()
+    private bool _CheckNeighbour(Cell neigh, int alt)
     {
-        Cell u;
+        if (neigh.IsExit)
+        {
+            dist[neigh.X, neigh.Y] = alt;
+            prev[neigh.X, neigh.Y] = neigh;
+            return true;
+        }
+
+        if (!neigh.IsBlocked)
+        {
+            if (alt < dist[neigh.X, neigh.Y])
+            {
+                dist[neigh.X, neigh.Y] = alt;
+                prev[neigh.X, neigh.Y] = neigh;
+            }
+        }
+        return false;
+    }
+
+    public List<Cell> Search()
+    {
+        Cell u, neigh;
+
         while (queue.Count > 0)
         {
-            u = GetNextCell(); /* assign u with the lowest dist in queue /
-            int alt = dist[u] + 1; /* the distance is simply dist[u] + 1 /
+            /* assign u with the lowest dist in queue 
+               if false returned, there're no available path.
+               pathfinding fail.                             */
+            if ( !GetNextCell(u) )
+                return null;
 
-            /* foreach neightbour of u /
-            Cell neigh = _grid.get();
-                // if (_grid.get() ) { }
+            int alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
+
+            /* foreach neightbour of u */
+            if (u.Y + 1 <= grid.Height)
+            {
+                neigh = grid.GetCellAt(u.X, u.Y + 1); // the one close to the bottom of screen
+                if (_CheckNeighbour(neigh, alt)) break;
             }
-    } */
+
+            if (u.X + 1 <= grid.Width)
+            {
+                neigh = grid.GetCellAt(u.X + 1, u.Y); // the righter one
+                if (_CheckNeighbour(neigh, alt)) break;
+            }
+
+            if (u.X - 1 >= 0)
+            {
+                neigh = grid.GetCellAt(u.X - 1, u.Y); // the lefter one
+                if (_CheckNeighbour(neigh, alt)) break;
+            }
+
+            if (u.Y - 1 >= 0)
+            {
+                neigh = grid.GetCellAt(u.X, u.Y - 1); // the upper one
+                if (_CheckNeighbour(neigh, alt)) break;
+            }
+        }
+
+        List<Cell> path = new List<Cell>();
+        path.Add(neigh);
+        while (prev[neigh.X, neigh.Y] != null)
+        {
+            neigh = prev[neigh.X, neigh.Y];
+            path.Add(neigh);
+        }
+        path.Reverse();
+
+        return path;
+    }
 }
