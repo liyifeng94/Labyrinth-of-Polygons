@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using static GridSystem;
+using GridSystem;
 
 public class PathFinding : MonoBehaviour {
     
-    Grid grid; // get through game manager
-    private Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
+    GridSystem.Grid grid; // get through game manager
+    private GridSystem.Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
     private int[,] dist; /* the distance between every cell and entrance */
-    private List<Cell> entry; /* the list of entrance cells */
-    private List<Cell> exit; /* the list of exit cells */
-    private List<Cell> queue = new List<Cell>();
+    private List<GridSystem.Cell> entry; /* the list of entrance cells */
+    private List<GridSystem.Cell> exit; /* the list of exit cells */
+    private List<GridSystem.Cell> queue = new List<GridSystem.Cell>();
 
     // Use this for initialization
     void Start () {
@@ -21,7 +21,7 @@ public class PathFinding : MonoBehaviour {
 	
 	}
     
-    public PathFinding(Grid MainGameGridgrid)
+    public PathFinding(GridSystem.Grid MainGameGridgrid)
     {
         grid = MainGameGridgrid;
         entry = MainGameGridgrid.Entrances;
@@ -40,15 +40,15 @@ public class PathFinding : MonoBehaviour {
         }
 
         /* intiate the previous cell of every cell to be null */
-        prev = new Cell[MainGameGridgrid.Width, MainGameGridgrid.Height];
+        prev = new GridSystem.Cell[MainGameGridgrid.Width, MainGameGridgrid.Height];
 
     }
 
     /* get the cell with the shortest distance */
-    private bool GetNextCell(Cell u)
+    private bool GetNextCell(GridSystem.Cell u)
     {
         int min = int.MaxValue;
-        Cell Ret = queue[0];
+        GridSystem.Cell Ret = queue[0];
 
         for (int cell = 0; cell < queue.Count; cell++)
         {
@@ -70,7 +70,7 @@ public class PathFinding : MonoBehaviour {
         return true;
     }
 
-    private bool _CheckNeighbour(Cell neigh, int alt)
+    private bool _CheckNeighbour(GridSystem.Cell neigh, int alt)
     {
         if (neigh.IsExit)
         {
@@ -90,9 +90,9 @@ public class PathFinding : MonoBehaviour {
         return false;
     }
 
-    public List<Cell> Search()
+    public List<GridSystem.Cell> Search()
     {
-        Cell u, neigh;
+        GridSystem.Cell u, neigh;
 
         while (queue.Count > 0)
         {
@@ -130,7 +130,7 @@ public class PathFinding : MonoBehaviour {
             }
         }
 
-        List<Cell> path = new List<Cell>();
+        List<GridSystem.Cell> path = new List<GridSystem.Cell>();
         path.Add(neigh);
         while (prev[neigh.X, neigh.Y] != null)
         {
