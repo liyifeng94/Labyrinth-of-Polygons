@@ -160,7 +160,7 @@ public class GameBoard : MonoBehaviour
             if ((enemyX < towerX + towerRange && enemyX > towerX - towerRange) &&
                 (enemyY < towerY + towerRange && enemyY > towerY - towerRange))
             {
-                //enemy in range of the tower
+                //enemy in range of the towers
                 //TODO: notify the tower that the enemy is in range
             }
         }
@@ -180,6 +180,7 @@ public class GameBoard : MonoBehaviour
 
     public void EnemyReachedExit(Enemy enemyPtr)
     {
-        
+        _enemiesHolder.Remove(enemyPtr);
+        _levelManager.RemoveHealth(1);
     }
 }

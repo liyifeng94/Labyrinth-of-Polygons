@@ -1,8 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization;
 
 public class LevelManager : MonoBehaviour
 {
+    private class LevelState
+    {
+        public int Gold;
+        public int Score;
+        public int Health;
+    }
+
+    private LevelState _currentLevelState;
     private GameManager _gameManagerInstance;
     public GameBoard GameBoardSystem { get; private set; }
 
@@ -12,6 +21,7 @@ public class LevelManager : MonoBehaviour
     void Start ()
 	{
 	    GameManager.Instance.CurrentLevelManager = this;
+        _currentLevelState = new LevelState();
         GameBoardSystem = gameObject.GetComponent<GameBoard>();
 	}
 	
@@ -21,8 +31,25 @@ public class LevelManager : MonoBehaviour
 	
 	}
 
+    //Adds the score value of the enemy
     public void DestoryEnemy(Enemy enemyPtr)
     {
         GameBoardSystem.RemoveEnemy(enemyPtr);
+        //TODO: add the score value of the enemy
+    }
+
+    public void UseGold(int amount)
+    {
+        _currentLevelState.Gold -= amount;
+    }
+
+    public void AddGold(int amount)
+    {
+        _currentLevelState.Gold += amount;
+    }
+
+    public void RemoveHealth(int damage)
+    {
+        _currentLevelState.Health -= damage;
     }
 }
