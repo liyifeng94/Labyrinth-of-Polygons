@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using GridSystem;
 
 public class PathFinding : MonoBehaviour {
     
