@@ -9,17 +9,23 @@ public class PathFinding : MonoBehaviour {
     //private List<GridSystem.Cell> entry; /* the list of entrance cells */
     //private List<GridSystem.Cell> exit; /* the list of exit cells */
     private List<GridSystem.Cell> queue = new List<GridSystem.Cell>();
+    private GameManager _gameManager;
+    private GridSystem _gameGrid;
 
     // Use this for initialization
     void Start () {
-	
+        _gameManager = GameManager.Instance;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
-    
+    public void initalize(GridSystem gameGrid)
+    {
+        _gameGrid = gameGrid;
+    }
+
     public PathFinding(GridSystem.Grid MainGameGridgrid)
     {
         grid = MainGameGridgrid;
@@ -34,18 +40,17 @@ public class PathFinding : MonoBehaviour {
             for (uint j = 0; j < MainGameGridgrid.Height; j++)
             {
                 dist[i, j] = int.MaxValue;
-                if (grid.GetCellAt(i, j).IsEntrance)
-                    dist[i, j] = 0;
+                // if (grid.GetCellAt(i, j).IsEntrance)
+                //    dist[i, j] = 0;
                 queue.Add(grid.GetCellAt(i, j));
             }
         }
 
         /* intiate the previous cell of every cell to be null */
         prev = new GridSystem.Cell[MainGameGridgrid.Width, MainGameGridgrid.Height];
-
     }
 
-    /* get the cell with the shortest distance */
+    /* get a cell with the shortest distance */
     private bool GetNextCell(GridSystem.Cell u)
     {
         int min = int.MaxValue;
@@ -59,7 +64,8 @@ public class PathFinding : MonoBehaviour {
                 Ret = grid.GetCellAt(queue[cell].X, queue[cell].Y);
             }
         }
-        /* if every cell has a distance == INFINITE, means no available path */
+
+        /* if every cell has a distance == INFINITE, it means there are no available paths */
         if (min == int.MaxValue)
         {
             return false;
@@ -69,8 +75,9 @@ public class PathFinding : MonoBehaviour {
         {
             u = Ret;
             queue.Remove(Ret);
+            return true;
         }
-        return true;
+        return false;
     }
 
     private bool _CheckNeighbour(GridSystem.Cell neigh, int alt)
@@ -93,23 +100,33 @@ public class PathFinding : MonoBehaviour {
         return false;
     }
 
-    public List<GridSystem.Cell> Search()
+    /* argument: (start): GridSystem.Cell. As the starting point, and
+     *           (path): List<GridSystem.Cell>. As an empty list of cells.
+     * return: true: if successfully found a path from (start) to the closest exit point,
+     *              and fill the (path) will all cells on the path in order. Or
+     *         false: if there are no available path.                                    */
+    public bool Search(GridSystem.Cell start, List<GridSystem.Cell> path)
     {
         GridSystem.Cell u, neigh;
-
-        u = new GridSystem.Cell(0, 0);
+        u = new GridSystem.Cell(0,0);
         neigh = new GridSystem.Cell(0, 0);
+
+        dist[start.X, start.Y] = 0;
+
+        /* keep searching until we run out all cells */
         while (queue.Count > 0)
         {
             /* assign u with the lowest dist in queue 
                if false returned, there're no available path.
                pathfinding fail.                             */
             if ( !GetNextCell(u) )
-                return null;
+                return false;
 
             int alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
 
-            /* foreach neightbour of u */
+            /* foreach neighbour of u, updates their distance from an
+             entry point. Whenever the neighbour is an exit point, break.
+             for we have found the shortest path.                         */
             if (u.Y + 1 <= grid.Height)
             {
                 neigh = grid.GetCellAt(u.X, u.Y + 1); // the one close to the bottom of screen
@@ -118,13 +135,13 @@ public class PathFinding : MonoBehaviour {
 
             if (u.X + 1 <= grid.Width)
             {
-                neigh = grid.GetCellAt(u.X + 1, u.Y); // the righter one
+                neigh = grid.GetCellAt(u.X + 1, u.Y); // the right one
                 if (_CheckNeighbour(neigh, alt)) break;
             }
 
             if (u.X - 1 >= 0)
             {
-                neigh = grid.GetCellAt(u.X - 1, u.Y); // the lefter one
+                neigh = grid.GetCellAt(u.X - 1, u.Y); // the left one
                 if (_CheckNeighbour(neigh, alt)) break;
             }
 
@@ -135,7 +152,10 @@ public class PathFinding : MonoBehaviour {
             }
         }
 
-        List<GridSystem.Cell> path = new List<GridSystem.Cell>();
+        // List<GridSystem.Cell> path = new List<GridSystem.Cell>();
+
+        /* if the program hits here, the neigh now should be one of exit points.
+         * push it to the path, and tracking backwards to the start points       */
         path.Add(neigh);
         while (prev[neigh.X, neigh.Y] != null)
         {
@@ -144,6 +164,6 @@ public class PathFinding : MonoBehaviour {
         }
         path.Reverse();
 
-        return path;
+        return true;
     }
 }
