@@ -6,8 +6,8 @@ public class PathFinding : MonoBehaviour {
     GridSystem.Grid grid; // get through game manager
     private GridSystem.Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
     private int[,] dist; /* the distance between every cell and entrance */
-    private List<GridSystem.Cell> entry; /* the list of entrance cells */
-    private List<GridSystem.Cell> exit; /* the list of exit cells */
+    //private List<GridSystem.Cell> entry; /* the list of entrance cells */
+    //private List<GridSystem.Cell> exit; /* the list of exit cells */
     private List<GridSystem.Cell> queue = new List<GridSystem.Cell>();
 
     // Use this for initialization
@@ -23,8 +23,10 @@ public class PathFinding : MonoBehaviour {
     public PathFinding(GridSystem.Grid MainGameGridgrid)
     {
         grid = MainGameGridgrid;
-        entry = MainGameGridgrid.Entrances;
-        exit = MainGameGridgrid.Exits;
+        //entry = MainGameGridgrid.Entrances;
+        //exit = MainGameGridgrid.Exits;
+
+        dist = new int[MainGameGridgrid.Width, MainGameGridgrid.Height];
 
         /* initiate distance to be INFINITY */
         for (uint i = 0; i < MainGameGridgrid.Width; i++)
