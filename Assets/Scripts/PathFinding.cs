@@ -57,7 +57,6 @@ public class PathFinding : MonoBehaviour {
                 Ret = grid.GetCellAt(queue[cell].X, queue[cell].Y);
             }
         }
-
         /* if every cell has a distance == INFINITE, means no available path */
         if (min == int.MaxValue)
         {
@@ -65,7 +64,10 @@ public class PathFinding : MonoBehaviour {
         }
 
         if (Ret != null)
+        {
+            u = Ret;
             queue.Remove(Ret);
+        }
         return true;
     }
 
@@ -93,6 +95,8 @@ public class PathFinding : MonoBehaviour {
     {
         GridSystem.Cell u, neigh;
 
+        u = new GridSystem.Cell(0, 0);
+        neigh = new GridSystem.Cell(0, 0);
         while (queue.Count > 0)
         {
             /* assign u with the lowest dist in queue 
