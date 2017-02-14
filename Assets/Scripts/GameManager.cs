@@ -4,9 +4,10 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private PathFinding _pathingFinder;
 
     [HideInInspector]
-    public LevelManager CurrentLevelManager;
+    public LevelManager CurrentLevelManager { get; private set; }
 
     // Use this for initialization
     void Awake()
@@ -22,5 +23,12 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void UpdateLevelManager(LevelManager currentLevelManager)
+    {
+        CurrentLevelManager = currentLevelManager;
+        GridSystem gameGrid = CurrentLevelManager.GameBoardSystem.GameGridSystem;
+        _pathingFinder = new PathFinding(gameGrid);
     }
 }

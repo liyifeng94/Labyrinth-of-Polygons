@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000014098205972}
   - 114: {fileID: 114000011911444382}
+  - 114: {fileID: 114000011574659896}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -40,6 +41,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000011574659896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013916891114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c07ee1d79c3874b84e87f450e69fc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Towers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114000011911444382
 MonoBehaviour:
   m_ObjectHideFlags: 1

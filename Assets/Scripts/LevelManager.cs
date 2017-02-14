@@ -20,10 +20,10 @@ public class LevelManager : MonoBehaviour
     // Use this for initialization
     void Start ()
 	{
-	    GameManager.Instance.CurrentLevelManager = this;
         _currentLevelState = new LevelState();
         GameBoardSystem = gameObject.GetComponent<GameBoard>();
-	}
+        GameManager.Instance.UpdateLevelManager(this);
+    }
 	
 	// Update is called once per frame
 	void Update ()
