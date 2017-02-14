@@ -13,8 +13,6 @@ public class PathFinding
     private GridSystem _gameGrid;
 
 
-
-
     public PathFinding(GridSystem mainGameGrid)
     {
         _gameGrid = mainGameGrid;
@@ -25,31 +23,22 @@ public class PathFinding
         dist = new int[grid.Width, grid.Height];
 
         /* initiate distance to be INFINITY */
-        for (uint i = 0; i < grid.Width; i++)
-        {
-            for (uint j = 0; j < grid.Height; j++)
-            {
-                dist[i, j] = int.MaxValue;
-                // if (grid.GetCellAt(i, j).IsEntrance)
-                //    dist[i, j] = 0;
-                queue.Add(grid.GetCellAt(i, j));
-            }
-        }
+        fillMax(dist, queue);
 
         /* intiate the previous cell of every cell to be null */
         prev = new GridSystem.Cell[grid.Width, grid.Height];
     }
 
-    private void fillMax()
+    private void fillMax(int[,] arr, List<GridSystem.Cell> q)
     {
         for (uint i = 0; i < grid.Width; i++)
         {
             for (uint j = 0; j < grid.Height; j++)
             {
-                dist[i, j] = int.MaxValue;
+                arr[i, j] = int.MaxValue;
                 // if (grid.GetCellAt(i, j).IsEntrance)
                 //    dist[i, j] = 0;
-                queue.Add(grid.GetCellAt(i, j));
+                q.Add(grid.GetCellAt(i, j));
             }
         }
     }
