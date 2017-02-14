@@ -13,6 +13,8 @@ public class PathFinding
     private GridSystem _gameGrid;
 
 
+
+
     public PathFinding(GridSystem mainGameGrid)
     {
         _gameGrid = mainGameGrid;
@@ -36,6 +38,20 @@ public class PathFinding
 
         /* intiate the previous cell of every cell to be null */
         prev = new GridSystem.Cell[grid.Width, grid.Height];
+    }
+
+    private void fillMax()
+    {
+        for (uint i = 0; i < grid.Width; i++)
+        {
+            for (uint j = 0; j < grid.Height; j++)
+            {
+                dist[i, j] = int.MaxValue;
+                // if (grid.GetCellAt(i, j).IsEntrance)
+                //    dist[i, j] = 0;
+                queue.Add(grid.GetCellAt(i, j));
+            }
+        }
     }
 
     /* get a cell with the shortest distance */
@@ -93,13 +109,15 @@ public class PathFinding
      * return: true: if successfully found a path from (start) to the closest exit point,
      *              and fill the (path) will all cells on the path in order. Or
      *         false: if there are no available path.                                    */
-    public bool Search(GridSystem.Cell start, List<GridSystem.Cell> path)
+    public List<GridSystem.Cell> Search(uint x, uint y)
     {
         GridSystem.Cell u, neigh;
         u = new GridSystem.Cell(0,0);
         neigh = new GridSystem.Cell(0, 0);
 
-        dist[start.X, start.Y] = 0;
+        dist[x, y] = 0;
+
+        List<GridSystem.Cell> path = new List<GridSystem.Cell>();
 
         /* keep searching until we run out all cells */
         while (queue.Count > 0)
@@ -108,7 +126,7 @@ public class PathFinding
                if false returned, there're no available path.
                pathfinding fail.                             */
             if ( !GetNextCell(u) )
-                return false;
+                return path;
 
             int alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
 
@@ -152,6 +170,6 @@ public class PathFinding
         }
         path.Reverse();
 
-        return true;
+        return path;
     }
 }
