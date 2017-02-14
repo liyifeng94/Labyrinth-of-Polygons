@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TileEventHandler : MonoBehaviour {
+public class TileEventHandler : MonoBehaviour
+{
+    [HideInInspector]
+    public uint GridX;
+    [HideInInspector]
+    public uint GridY;
 
 	// Use this for initialization
 	void Start () {
@@ -10,12 +15,10 @@ public class TileEventHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
     }
 
     void OnMouseDown()
     {
-        Debug.Log("Pressed click.");
+        Debug.Log("Pressed click at " + GridX + "," + GridY);
     }
 }

@@ -55,6 +55,12 @@ public class GameBoard : MonoBehaviour
                 return;
             }
             TileObject.transform.SetParent(parentTransform);
+            TileEventHandler eventHandler = TileObject.GetComponent<TileEventHandler>();
+            if (eventHandler != null)
+            {
+                eventHandler.GridX = GridX;
+                eventHandler.GridY = GridY;
+            }
         }
     }
 
