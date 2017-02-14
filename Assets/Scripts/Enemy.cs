@@ -20,7 +20,9 @@ public class Enemy : MonoBehaviour
 
     private Direction _dir = Direction.Down;
 
-    public void Spawn() {
+    public void Spawn()
+    { 
+    }
 
     public void SetPos(uint xPos, uint yPos) {
         _x = xPos;
