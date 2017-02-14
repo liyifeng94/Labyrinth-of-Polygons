@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class PathFinding : MonoBehaviour {
+public class PathFinding
+{
     
     GridSystem.Grid grid; // get through game manager
     private GridSystem.Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
@@ -9,35 +10,22 @@ public class PathFinding : MonoBehaviour {
     //private List<GridSystem.Cell> entry; /* the list of entrance cells */
     //private List<GridSystem.Cell> exit; /* the list of exit cells */
     private List<GridSystem.Cell> queue = new List<GridSystem.Cell>();
-    private GameManager _gameManager;
     private GridSystem _gameGrid;
 
-    // Use this for initialization
-    void Start () {
-        _gameManager = GameManager.Instance;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-    public void initalize(GridSystem gameGrid)
-    {
-        _gameGrid = gameGrid;
-    }
 
-    public PathFinding(GridSystem.Grid MainGameGridgrid)
+    public PathFinding(GridSystem mainGameGrid)
     {
-        grid = MainGameGridgrid;
+        _gameGrid = mainGameGrid;
+        grid = _gameGrid.MainGameGrid;
         //entry = MainGameGridgrid.Entrances;
         //exit = MainGameGridgrid.Exits;
 
-        dist = new int[MainGameGridgrid.Width, MainGameGridgrid.Height];
+        dist = new int[grid.Width, grid.Height];
 
         /* initiate distance to be INFINITY */
-        for (uint i = 0; i < MainGameGridgrid.Width; i++)
+        for (uint i = 0; i < grid.Width; i++)
         {
-            for (uint j = 0; j < MainGameGridgrid.Height; j++)
+            for (uint j = 0; j < grid.Height; j++)
             {
                 dist[i, j] = int.MaxValue;
                 // if (grid.GetCellAt(i, j).IsEntrance)
@@ -47,7 +35,7 @@ public class PathFinding : MonoBehaviour {
         }
 
         /* intiate the previous cell of every cell to be null */
-        prev = new GridSystem.Cell[MainGameGridgrid.Width, MainGameGridgrid.Height];
+        prev = new GridSystem.Cell[grid.Width, grid.Height];
     }
 
     /* get a cell with the shortest distance */
