@@ -69,12 +69,13 @@ public class PathFinding
         return true;
     }
 
-    private bool _CheckNeighbour(GridSystem.Cell neigh, int alt)
+    /* return true if the (neigh) is an exit point */
+    private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from,int alt)
     {
         if (neigh.IsExit)
         {
             dist[neigh.X, neigh.Y] = alt;
-            prev[neigh.X, neigh.Y] = neigh;
+            prev[neigh.X, neigh.Y] = from;
             return true;
         }
 
@@ -83,7 +84,7 @@ public class PathFinding
             if (alt < dist[neigh.X, neigh.Y])
             {
                 dist[neigh.X, neigh.Y] = alt;
-                prev[neigh.X, neigh.Y] = neigh;
+                prev[neigh.X, neigh.Y] = from;
             }
         }
         return false;
@@ -120,25 +121,25 @@ public class PathFinding
             if (u.Y + 1 <= grid.Height)
             {
                 neigh = grid.GetCellAt(u.X, u.Y + 1); // the one close to the bottom of screen
-                if (_CheckNeighbour(neigh, alt)) break;
+                if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
             if (u.X + 1 <= grid.Width)
             {
                 neigh = grid.GetCellAt(u.X + 1, u.Y); // the right one
-                if (_CheckNeighbour(neigh, alt)) break;
+                if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
             if (u.X != 0)
             {
                 neigh = grid.GetCellAt(u.X - 1, u.Y); // the left one
-                if (_CheckNeighbour(neigh, alt)) break;
+                if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
             if (u.Y != 0)
             {
                 neigh = grid.GetCellAt(u.X, u.Y - 1); // the upper one
-                if (_CheckNeighbour(neigh, alt)) break;
+                if (_CheckNeighbour(neigh, u, alt)) break;
             }
         }
 
