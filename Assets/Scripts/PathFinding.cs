@@ -9,7 +9,7 @@ public class PathFinding
     private int[,] dist; /* the distance between every cell and entrance */
     //private List<GridSystem.Cell> entry; /* the list of entrance cells */
     //private List<GridSystem.Cell> exit; /* the list of exit cells */
-    private List<GridSystem.Cell> queue = new List<GridSystem.Cell>();
+    private List<GridSystem.Cell> _queue = new List<GridSystem.Cell>();
     private GridSystem _gameGrid;
 
 
@@ -23,13 +23,13 @@ public class PathFinding
         dist = new int[grid.Width, grid.Height];
 
         /* initiate distance to be INFINITY */
-        fillMax(dist, queue);
+        FillMax(dist, _queue);
 
         /* intiate the previous cell of every cell to be null */
         prev = new GridSystem.Cell[grid.Width, grid.Height];
     }
 
-    private void fillMax(int[,] arr, List<GridSystem.Cell> q)
+    private void FillMax(int[,] arr, List<GridSystem.Cell> q)
     {
         for (uint i = 0; i < grid.Width; i++)
         {
@@ -46,16 +46,14 @@ public class PathFinding
     /* get a cell with the shortest distance */
     private bool GetNextCell(GridSystem.Cell u)
     {
-        int min = int.MaxValue;
-        GridSystem.Cell Ret = queue[0];
+        var min = int.MaxValue;
+        var ret = _queue[0];
 
-        for (int cell = 0; cell < queue.Count; cell++)
+        foreach (var t in _queue)
         {
-            if (dist[queue[cell].X, queue[cell].Y] < min)
-            {
-                min = dist[queue[cell].X, queue[cell].Y];
-                Ret = grid.GetCellAt(queue[cell].X, queue[cell].Y);
-            }
+            if (dist[t.X, t.Y] >= min) continue;
+            min = dist[t.X, t.Y];
+            ret = grid.GetCellAt(t.X, t.Y);
         }
 
         /* if every cell has a distance == INFINITE, it means there are no available paths */
@@ -64,13 +62,11 @@ public class PathFinding
             return false;
         }
 
-        if (Ret != null)
-        {
-            u = Ret;
-            queue.Remove(Ret);
-            return true;
-        }
-        return false;
+        if (ret == null) return false;
+
+        u = ret;
+        _queue.Remove(ret);
+        return true;
     }
 
     private bool _CheckNeighbour(GridSystem.Cell neigh, int alt)
@@ -93,23 +89,22 @@ public class PathFinding
         return false;
     }
 
-    /* argument: (start): GridSystem.Cell. As the starting point, and
-     *           (path): List<GridSystem.Cell>. As an empty list of cells.
-     * return: true: if successfully found a path from (start) to the closest exit point,
-     *              and fill the (path) will all cells on the path in order. Or
-     *         false: if there are no available path.                                    */
+    /* argument: (x): uint. As the x-coordinate of the starting point, and
+     *           (y): uint. As an y-coordinate of the starting point.
+     * return: List<GridSystem.Cell>: the list contains all cells on the path 
+     *           from the starting point to the closest exit point; However,
+     *           if there are no available path, the list should be EMPTY!    */
     public List<GridSystem.Cell> Search(uint x, uint y)
     {
-        GridSystem.Cell u, neigh;
-        u = new GridSystem.Cell(0,0);
-        neigh = new GridSystem.Cell(0, 0);
+        var u = new GridSystem.Cell(0,0);
+        var neigh = new GridSystem.Cell(0, 0);
 
         dist[x, y] = 0;
 
-        List<GridSystem.Cell> path = new List<GridSystem.Cell>();
+        var path = new List<GridSystem.Cell>();
 
         /* keep searching until we run out all cells */
-        while (queue.Count > 0)
+        while (_queue.Count > 0)
         {
             /* assign u with the lowest dist in queue 
                if false returned, there're no available path.
@@ -117,7 +112,7 @@ public class PathFinding
             if ( !GetNextCell(u) )
                 return path;
 
-            int alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
+            var alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
 
             /* foreach neighbour of u, updates their distance from an
              entry point. Whenever the neighbour is an exit point, break.
@@ -134,13 +129,13 @@ public class PathFinding
                 if (_CheckNeighbour(neigh, alt)) break;
             }
 
-            if (u.X - 1 >= 0)
+            if (u.X != 0)
             {
                 neigh = grid.GetCellAt(u.X - 1, u.Y); // the left one
                 if (_CheckNeighbour(neigh, alt)) break;
             }
 
-            if (u.Y - 1 >= 0)
+            if (u.Y != 0)
             {
                 neigh = grid.GetCellAt(u.X, u.Y - 1); // the upper one
                 if (_CheckNeighbour(neigh, alt)) break;
