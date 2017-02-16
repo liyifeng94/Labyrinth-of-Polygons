@@ -13,15 +13,12 @@ public class LevelManager : MonoBehaviour
 
     private LevelState _currentLevelState;
     private GameManager _gameManagerInstance;
-    public GameBoard GameBoardSystem { get; private set; }
-
-    public GameObject GameBoardObject;
+    public GameBoard GameBoardSystem;
 
     // Use this for initialization
     void Start ()
 	{
         _currentLevelState = new LevelState();
-        GameBoardSystem = gameObject.GetComponent<GameBoard>();
         GameManager.Instance.UpdateLevelManager(this);
     }
 	

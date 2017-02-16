@@ -235,6 +235,11 @@ Prefab:
       propertyPath: GameBoardObject
       value: 
       objectReference: {fileID: 2051960026}
+    - target: {fileID: 114000011911444382, guid: 4b244aa4e67cc654baa38db75144a0dc,
+        type: 2}
+      propertyPath: GameBoardSystem
+      value: 
+      objectReference: {fileID: 2051960027}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b244aa4e67cc654baa38db75144a0dc, type: 2}
   m_IsPrefabParent: 0
@@ -285,3 +290,9 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000012323296422, guid: 54d29aaf0170c1d489e1589b0fc73486,
     type: 2}
   m_PrefabInternal: {fileID: 1556765664}
+--- !u!114 &2051960027 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114000012744701448, guid: 54d29aaf0170c1d489e1589b0fc73486,
+    type: 2}
+  m_PrefabInternal: {fileID: 1556765664}
+  m_Script: {fileID: 11500000, guid: c6cc8558c0330c344bcf91e6afeb780f, type: 3}
