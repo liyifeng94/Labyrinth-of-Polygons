@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,5 +31,10 @@ public class GameManager : MonoBehaviour
         CurrentLevelManager = currentLevelManager;
         GridSystem gameGrid = CurrentLevelManager.GameBoardSystem.GameGridSystem;
         _pathingFinder = new PathFinding(gameGrid);
+    }
+
+    public List<GridSystem.Cell> SearchPathFrom(uint x, uint y)
+    {
+        return _pathingFinder.Search(x, y);
     }
 }
