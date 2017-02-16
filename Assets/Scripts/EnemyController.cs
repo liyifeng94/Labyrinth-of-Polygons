@@ -4,17 +4,13 @@ using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour
 {
-    public static EnemyController Instance;
+
     private List<Enemy> _enemies;
     private float _spawnTimer = Time.time;
 
-    void Awake()
-    {
-        Instance = this;
-    }
 
-    // Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start () {
 	
 	}
 
