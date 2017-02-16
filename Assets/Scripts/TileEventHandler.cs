@@ -9,13 +9,13 @@ public class TileEventHandler : MonoBehaviour
     public uint GridY;
 
     private bool _towerExist;
-    private TowerHandler _towerHandler;
+    private TowerController _towerController;
 
     // Use this for initialization
     void Start ()
     {
         _towerExist = false;
-        _towerHandler = TowerHandler.Instance;
+        _towerController = TowerController.Instance;
     }
 	
 	// Update is called once per frame
@@ -27,6 +27,6 @@ public class TileEventHandler : MonoBehaviour
     {
         Debug.Log("Pressed click at " + GridX + "," + GridY + "," + _towerExist);
         _towerExist = true;
-        //_towerHandler.BuildTower(GridX, GridY, 1); // make it simple, just tower type 1
+        //_towerController.BuildTower(GridX, GridY, 1); // make it simple, just tower type 1
     }
 }
