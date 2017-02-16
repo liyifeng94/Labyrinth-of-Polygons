@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class TowerHandler : MonoBehaviour
 {
+    public static TowerHandler Instance;
     public List<GameObject> Towers;
 
 	// Use this for initialization
@@ -20,8 +21,13 @@ public class TowerHandler : MonoBehaviour
 
     public bool BuildTower(uint x, uint y, uint index)
     {
-        GameObject towerGameObject = new GameObject();
-        Tower towerPtr = towerGameObject.GetComponent<Tower>();
+        Vector3 towerPosition;
+        towerPosition.x = x;
+        towerPosition.y = y;
+        towerPosition.z = 0f;
+        //GameObject towerGameObject = new GameObject();
+        //Tower towerPtr = towerGameObject.GetComponent<Tower>();
+        //towerGameObject = Instantiate(towerPtr, towerPosition, Quaternion.identity) as GameObject;
         return true;
     }
 }

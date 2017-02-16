@@ -16,12 +16,14 @@ public class Tower : MonoBehaviour
     private HashSet<Enemy> _enemies = new HashSet<Enemy>();
     private GameBoard _gameBoard;
     private float _loadingTime;
-
+    private TileEventHandler _tileEventHandler;
     void Start ()
 	{
 	    Build();
 	    _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
 	    _loadingTime = AttackSpeed;
+	    _tileEventHandler = null;
+
 	}
 
 	void LastUpdate () {
@@ -38,11 +40,13 @@ public class Tower : MonoBehaviour
                 _loadingTime += Time.deltaTime;
 	        }
         }
+        /*
 	    if (Input.GetMouseButtonDown(0)) // 0 for mouse-left button
 	    {
             Debug.Log("Pressed left click.");
             // Todo show remove, upgrade, and tower-info selections
         }
+        */
     }
 
     public void Build()
