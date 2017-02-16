@@ -15,16 +15,18 @@ public class LevelManager : MonoBehaviour
     private GameManager _gameManagerInstance;
     public GameBoard GameBoardSystem;
     public GameObject TowerController;
-    //public GameObject EnemyController;
+    public GameObject EnemyController;
 
     // Use this for initialization
     void Start ()
 	{
         _currentLevelState = new LevelState();
         GameManager.Instance.UpdateLevelManager(this);
-	    GameObject towerController = Instantiate(TowerController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
-        towerController.transform.SetParent(transform);
-	}
+	    GameObject towerControllerGameObject = Instantiate(TowerController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+        towerControllerGameObject.transform.SetParent(transform);
+        GameObject enemyControllerGameObject = Instantiate(EnemyController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+        enemyControllerGameObject.transform.SetParent(transform);
+    }
 	
 	// Update is called once per frame
 	void Update ()
