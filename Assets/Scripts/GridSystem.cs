@@ -156,6 +156,7 @@ public class GridSystem
         MainGameGrid = new Grid(_width, _height);
         MainGameGrid.SetNumberOfEntries(_entrances);
         MainGameGrid.SetNumberOfObstacles(_obstacles);
+        GameManager.Instance.CreatePathFinder(this);
     }
 
     // Returns true if a tower can be built here

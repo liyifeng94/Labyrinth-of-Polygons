@@ -29,12 +29,15 @@ public class GameManager : MonoBehaviour
     public void UpdateLevelManager(LevelManager currentLevelManager)
     {
         CurrentLevelManager = currentLevelManager;
-        GridSystem gameGrid = CurrentLevelManager.GameBoardSystem.GameGridSystem;
-        _pathingFinder = new PathFinding(gameGrid);
     }
 
     public List<GridSystem.Cell> SearchPathFrom(uint x, uint y)
     {
         return _pathingFinder.Search(x, y);
+    }
+
+    public void CreatePathFinder(GridSystem gameGrid)
+    {
+        _pathingFinder = new PathFinding(gameGrid);
     }
 }
