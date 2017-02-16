@@ -21,7 +21,18 @@ public class Enemy : MonoBehaviour
 
     private Direction _dir = Direction.Down;
 
-    public Enemy(uint x, uint y,List<GridSystem.Cell> path)
+    void Start()
+    {
+        
+    }
+
+    //Called every frame
+    void Update()
+    {
+        
+    }
+
+    public void SetupEnemy(uint x, uint y,List<GridSystem.Cell> path)
     {
         _x = x;
         _y = y;
