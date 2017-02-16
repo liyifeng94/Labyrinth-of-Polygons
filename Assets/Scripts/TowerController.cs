@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TowerHandler : MonoBehaviour
+public class TowerController : MonoBehaviour
 {
-    public static TowerHandler Instance;
+    public static TowerController Instance;
     public List<GameObject> Towers;
 
 	// Use this for initialization
