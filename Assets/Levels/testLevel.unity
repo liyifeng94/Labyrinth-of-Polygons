@@ -240,7 +240,14 @@ Prefab:
       propertyPath: GameBoardSystem
       value: 
       objectReference: {fileID: 2051960027}
-    m_RemovedComponents: []
+    - target: {fileID: 114000011911444382, guid: 4b244aa4e67cc654baa38db75144a0dc,
+        type: 2}
+      propertyPath: TowerController
+      value: 
+      objectReference: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
+        type: 2}
+    m_RemovedComponents:
+    - {fileID: 114000011574659896, guid: 4b244aa4e67cc654baa38db75144a0dc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4b244aa4e67cc654baa38db75144a0dc, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1556765664

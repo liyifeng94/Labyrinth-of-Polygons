@@ -7,6 +7,11 @@ public class TowerController : MonoBehaviour
     public static TowerController Instance;
     public List<GameObject> Towers;
 
+    void Awake()
+    {
+        Instance = this;
+    }
+
 	// Use this for initialization
 	void Start ()
     {
