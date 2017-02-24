@@ -6,6 +6,8 @@ public class TowerController : MonoBehaviour
 {
     public static TowerController Instance;
     public List<GameObject> Towers;
+    private Tower _towerPtr;
+    private GameObject towerGameObject;
 
     void Awake()
     {
@@ -24,15 +26,30 @@ public class TowerController : MonoBehaviour
 	
 	}
 
-    public bool BuildTower(uint x, uint y, uint index)
+    public Tower BuildTower(uint x, uint y, int index)
     {
         Vector3 towerPosition;
         towerPosition.x = x;
         towerPosition.y = y;
         towerPosition.z = 0f;
-        //GameObject towerGameObject = new GameObject();
-        //Tower towerPtr = towerGameObject.GetComponent<Tower>();
-        //towerGameObject = Instantiate(towerPtr, towerPosition, Quaternion.identity) as GameObject;
-        return true;
+        towerGameObject = Instantiate(Towers[index], towerPosition, Quaternion.identity) as GameObject;
+        _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
+        return _towerPtr;
     }
+
+    public void RemoveTower()
+    {
+        _towerPtr.Destory();
+    }
+
+    public void RepairTower()
+    {
+        _towerPtr.Repair();
+    }
+
+    public void UpgradeTower()
+    {
+        _towerPtr.Upgrade();
+    }
+
 }

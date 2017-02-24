@@ -9,30 +9,30 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000011245628898}
+  m_RootGameObject: {fileID: 1000011815176402}
   m_IsPrefabParent: 1
---- !u!1 &1000011245628898
+--- !u!1 &1000011815176402
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000013722158960}
-  - 114: {fileID: 114000012511350770}
+  - 4: {fileID: 4000013594744700}
+  - 114: {fileID: 114000011404140630}
   m_Layer: 0
-  m_Name: TowerController
+  m_Name: Tower_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000013722158960
+--- !u!4 &4000013594744700
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011245628898}
+  m_GameObject: {fileID: 1000011815176402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,20 +40,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000012511350770
+--- !u!114 &114000011404140630
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011245628898}
+  m_GameObject: {fileID: 1000011815176402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33c07ee1d79c3874b84e87f450e69fc0, type: 3}
+  m_Script: {fileID: 11500000, guid: f96a0db30cd452f44bc80faf4c3d9691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Towers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  AttackRange: 5
+  HitPoint: 6400000096000000c8000000
+  AttackDamage: 0a000000140000001e000000
+  AttackSpeed: 010000000200000003000000
