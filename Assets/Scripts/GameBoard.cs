@@ -13,6 +13,8 @@ public class GameBoard : MonoBehaviour
 
     private List<GameObject> _highlightTile;
 
+    private GameManager _gmInstance;
+
     public GridSystem GameGridSystem { get; private set; }
 
     public uint BlockSize = 10;
@@ -73,7 +75,8 @@ public class GameBoard : MonoBehaviour
     void Start()
     {
         TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
-        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _gmInstance = GameManager.Instance;
+        _levelManager = _gmInstance.CurrentLevelManager;
         GameBoardSetup();
     }
 
@@ -136,10 +139,17 @@ public class GameBoard : MonoBehaviour
         bool valid = false;
         //TODO: check if the location is valid
         valid = true;
-        if (!valid)
+
+        foreach (var entrance in GameGridSystem.MainGameGrid.Entrances)
         {
-            return false;
+            List<GridSystem.Cell> paths = _gmInstance.SearchPathFrom(entrance.X, entrance.Y);
+            valid = paths.Count != 0;
+            if (!valid)
+            {
+                return false;
+            }
         }
+
 
         _towersHolder.Add(towerPtr);
 
