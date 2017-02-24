@@ -69,4 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736abad998517f9428cb71cc76e74eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameBoardObject: {fileID: 0}
+  GameBoardSystem: {fileID: 0}
+  TowerController: {fileID: 0}
+  EnemyController: {fileID: 0}
