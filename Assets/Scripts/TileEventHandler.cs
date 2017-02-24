@@ -15,7 +15,7 @@ public class TileEventHandler : MonoBehaviour
     private Texture2D _image_2;
     private Texture2D _image_3;
     private Texture2D _image_4;
-    //private GameBoard _gameBoard;
+    private GameBoard _gameBoard;
     //private Tower towerPtr;
 
     // Use this for initialization
@@ -23,12 +23,12 @@ public class TileEventHandler : MonoBehaviour
     {
         _towerExist = false;
         _ongui = false;
+        _gameBoard = null;
         _towerController = TowerController.Instance;
         _image_1 = (Texture2D)Resources.Load("TowerImage_1");
         _image_2 = (Texture2D)Resources.Load("SellImage");
         _image_3 = (Texture2D)Resources.Load("Repair");
         _image_4 = (Texture2D)Resources.Load("Upgrade");
-        //_gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
     }
 	
 	// Update is called once per frame
@@ -40,6 +40,12 @@ public class TileEventHandler : MonoBehaviour
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
         _ongui = true;
+        if (_gameBoard == null)
+        {
+            _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+        }
+        _gameBoard.HighlightTileAt(GridX,GridY);
+
     }
 
     void OnGUI()
@@ -57,6 +63,7 @@ public class TileEventHandler : MonoBehaviour
                 _towerExist = false;
                 // remove the tower?
                 Debug.Log("TEH: Trying to sell tower");
+                _gameBoard.ClearHighlightTiles();
             }
 
             // repair case
@@ -66,6 +73,7 @@ public class TileEventHandler : MonoBehaviour
                 _towerExist = true;
                 Debug.Log("TEH: Trying to repair tower");
                 _towerController.RepairTower();
+                _gameBoard.ClearHighlightTiles();
             }
 
             // upgrade case
@@ -75,6 +83,7 @@ public class TileEventHandler : MonoBehaviour
                 _towerExist = true;
                 Debug.Log("TEH: Trying to upgrade tower");
                 _towerController.UpgradeTower();
+                _gameBoard.ClearHighlightTiles();
             }
         }
         else
@@ -86,6 +95,7 @@ public class TileEventHandler : MonoBehaviour
                 _towerExist = true;
                 _towerController.BuildTower(GridX, GridY, 0);
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+                _gameBoard.ClearHighlightTiles();
             }
         }
     }

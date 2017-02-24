@@ -89,6 +89,7 @@ public class GameBoard : MonoBehaviour
         _enemiesHolder = new HashSet<Enemy>();
         _towersHolder = new HashSet<Tower>();
         GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
+        _highlightTile = new List<GameObject>();
         CreateBoardTiles();
     }
 
