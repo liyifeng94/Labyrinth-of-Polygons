@@ -62,3 +62,5 @@ MonoBehaviour:
   TileExit: {fileID: 1000010138883510, guid: 348b30715ae30e842ad2b28944d5aefc, type: 2}
   TileObstacles: {fileID: 1000012335623424, guid: 1020063b86efe124ba0dc8a7af01afe3,
     type: 2}
+  TileHighlight: {fileID: 1000012520974482, guid: c9e606ee04e70034e93f94e729740038,
+    type: 2}

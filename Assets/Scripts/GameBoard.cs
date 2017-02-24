@@ -11,6 +11,8 @@ public class GameBoard : MonoBehaviour
 
     private LevelManager _levelManager;
 
+    private List<GameObject> _highlightTile;
+
     public GridSystem GameGridSystem { get; private set; }
 
     public uint BlockSize = 10;
@@ -23,8 +25,11 @@ public class GameBoard : MonoBehaviour
     public GameObject TileEntrance;
     public GameObject TileExit;
     public GameObject TileObstacles;
+    public GameObject TileHighlight;
+
     public float TileSize { get; private set; }
-    public Tile[,] BoardTiles { get; private set; }
+
+    public Tile[,] BoardTiles { get; private set; } 
 
     public class Tile
     {
@@ -188,5 +193,23 @@ public class GameBoard : MonoBehaviour
     {
         _enemiesHolder.Remove(enemyPtr);
         _levelManager.RemoveHealth(1);
+    }
+
+    public void HighlightTileAt(uint x, uint y)
+    {
+        Tile targetTile = BoardTiles[x, y];
+
+        Vector3 tilePositon = targetTile.TileObject.gameObject.transform.position;
+        GameObject newHighlight = Instantiate(TileHighlight, tilePositon, Quaternion.identity) as GameObject;
+
+        _highlightTile.Add(newHighlight);
+    }
+
+    public void ClearHighlightTiles()
+    {
+        foreach (var tile in _highlightTile)
+        {
+            Destroy(tile);
+        }
     }
 }
