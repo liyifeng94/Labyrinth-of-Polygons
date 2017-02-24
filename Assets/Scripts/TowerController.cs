@@ -8,6 +8,7 @@ public class TowerController : MonoBehaviour
     public List<GameObject> Towers;
     private Tower _towerPtr;
     private GameObject towerGameObject;
+    private GameBoard _gameBoard;
 
     void Awake()
     {
@@ -17,8 +18,8 @@ public class TowerController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-	
-	}
+        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -28,11 +29,9 @@ public class TowerController : MonoBehaviour
 
     public Tower BuildTower(uint x, uint y, int index)
     {
-        Vector3 towerPosition;
-        towerPosition.x = x;
-        towerPosition.y = y;
-        towerPosition.z = 0f;
-        towerGameObject = Instantiate(Towers[index], towerPosition, Quaternion.identity) as GameObject;
+        Vector3 GamePosition;
+        GamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
+        towerGameObject = Instantiate(Towers[index], GamePosition, Quaternion.identity) as GameObject;
         _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
         return _towerPtr;
     }
