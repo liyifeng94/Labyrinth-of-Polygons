@@ -199,7 +199,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -237,7 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c993c583eec0fc2488fac583b08d5200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameManagerPrefab: {fileID: 0}
+  GameManagerPrefab: {fileID: 1000012451561396, guid: 1d70b4cd7422b4a40be026958fc9e3f3,
+    type: 2}
 --- !u!1001 &2127533390
 Prefab:
   m_ObjectHideFlags: 0
@@ -282,18 +283,7 @@ Prefab:
       propertyPath: GameBoardSystem
       value: 
       objectReference: {fileID: 680770821}
-    - target: {fileID: 114000011911444382, guid: 4b244aa4e67cc654baa38db75144a0dc,
-        type: 2}
-      propertyPath: TowerController
-      value: 
-      objectReference: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
-        type: 2}
-    - target: {fileID: 114000011911444382, guid: 4b244aa4e67cc654baa38db75144a0dc,
-        type: 2}
-      propertyPath: EnemyController
-      value: 
-      objectReference: {fileID: 1000012688933106, guid: cc8d379bc1c7ea4458121410e12126ff,
-        type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011574659896, guid: 4b244aa4e67cc654baa38db75144a0dc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4b244aa4e67cc654baa38db75144a0dc, type: 2}
   m_IsPrefabParent: 0
