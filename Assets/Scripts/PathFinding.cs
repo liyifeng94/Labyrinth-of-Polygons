@@ -154,6 +154,10 @@ public class PathFinding
         }
         path.Reverse();
 
+        _queue = new List<GridSystem.Cell>();
+        FillMax(dist, _queue);
+        prev = new GridSystem.Cell[grid.Width, grid.Height];
+
         return path;
     }
 }
