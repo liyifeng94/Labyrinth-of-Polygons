@@ -51,4 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c07ee1d79c3874b84e87f450e69fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Towers: []
+  Towers:
+  - {fileID: 1000012114627248, guid: 8ca7860fd04cae742b9faedb893accaa, type: 2}

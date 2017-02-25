@@ -7,29 +7,34 @@ public class Tower : MonoBehaviour
     public uint X { get; private set; }
     public uint Y { get; private set; }
 
-    public uint AttackRange ;
-    public uint HitPoint;
-    public uint AttackDamage;
-    public uint AttackSpeed;
-    // public uint Level = 0;
+    public uint AttackRange;
+    public uint[] HitPoint;
+    public uint[] AttackDamage;
+    public uint[] AttackSpeed;
 
+    private uint _currentHP;
+    private uint _level;
     private HashSet<Enemy> _enemies = new HashSet<Enemy>();
     private GameBoard _gameBoard;
     private float _loadingTime;
     private TileEventHandler _tileEventHandler;
-    void Start ()
-	{
-	    Build();
-	    _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
-	    _loadingTime = AttackSpeed;
-	    _tileEventHandler = null;
 
-	}
+    void Start ()
+    {
+        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+        Build();
+        _level = 0;
+        _loadingTime = AttackSpeed[_level];
+	    _tileEventHandler = null;
+	    _currentHP = HitPoint[_level];
+        Debug.Log("T: Tower 1 all set");
+    }
 
 	void LastUpdate () {
-	    if (null != _enemies.First())
+        Debug.Log("T: Tower 1 searching");
+        if (null != _enemies.First())
 	    {
-	        if (_loadingTime >= AttackSpeed)
+	        if (_loadingTime >= AttackSpeed[_level])
 	        {
 	            AttackEnemy(_enemies.First()); // make this simple, just attack the first one
 	            _loadingTime = 0.0f;
@@ -40,13 +45,6 @@ public class Tower : MonoBehaviour
                 _loadingTime += Time.deltaTime;
 	        }
         }
-        /*
-	    if (Input.GetMouseButtonDown(0)) // 0 for mouse-left button
-	    {
-            Debug.Log("Pressed left click.");
-            // Todo show remove, upgrade, and tower-info selections
-        }
-        */
     }
 
     public void Build()
@@ -54,8 +52,10 @@ public class Tower : MonoBehaviour
         bool success = _gameBoard.BuildTower(this);
         if (!success)
         {
-            Debug.Log("Tower cannot be build");
+            Debug.Log("T: Tower cannot be build");
+            Destory();
         }
+        
     }
 
     public void Destory()
@@ -70,19 +70,40 @@ public class Tower : MonoBehaviour
 
     public void AttackEnemy(Enemy t)
     {
-        t.GetDamaged(AttackDamage);
+        t.GetDamaged(AttackDamage[_level]);
     }
     
 
     public void ReceiveAttack(uint ad)
     {
-        if (HitPoint > ad)
+        if (_currentHP > ad)
         {
-            HitPoint -= ad;
+            _currentHP -= ad;
         }
         else
         {
             Destory();
+            Debug.Log("T: Tower destoryed");
         }
+    }
+
+    public void Upgrade()
+    {
+        if (_level < 2)
+        {
+            _level += 1;
+            _currentHP = HitPoint[_level];
+            Debug.Log("T: Tower upgraded to level" + _level);
+        }
+        else
+        {
+            Debug.Log("T: Max Level");
+        }
+    }
+
+    public void Repair()
+    {
+        _currentHP = HitPoint[_level];
+        Debug.Log("T: Tower Repaired, HP is " + _currentHP);
     }
 }

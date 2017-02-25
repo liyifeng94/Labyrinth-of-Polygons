@@ -11,6 +11,10 @@ public class GameBoard : MonoBehaviour
 
     private LevelManager _levelManager;
 
+    private List<GameObject> _highlightTile;
+
+    private GameManager _gmInstance;
+
     public GridSystem GameGridSystem { get; private set; }
 
     public uint BlockSize = 10;
@@ -23,8 +27,11 @@ public class GameBoard : MonoBehaviour
     public GameObject TileEntrance;
     public GameObject TileExit;
     public GameObject TileObstacles;
+    public GameObject TileHighlight;
+
     public float TileSize { get; private set; }
-    public Tile[,] BoardTiles { get; private set; }
+
+    public Tile[,] BoardTiles { get; private set; } 
 
     public class Tile
     {
@@ -68,7 +75,8 @@ public class GameBoard : MonoBehaviour
     void Start()
     {
         TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
-        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _gmInstance = GameManager.Instance;
+        _levelManager = _gmInstance.CurrentLevelManager;
         GameBoardSetup();
     }
 
@@ -84,6 +92,7 @@ public class GameBoard : MonoBehaviour
         _enemiesHolder = new HashSet<Enemy>();
         _towersHolder = new HashSet<Tower>();
         GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
+        _highlightTile = new List<GameObject>();
         CreateBoardTiles();
     }
 
@@ -130,10 +139,17 @@ public class GameBoard : MonoBehaviour
         bool valid = false;
         //TODO: check if the location is valid
         valid = true;
-        if (!valid)
+
+        foreach (var entrance in GameGridSystem.MainGameGrid.Entrances)
         {
-            return false;
+            List<GridSystem.Cell> paths = _gmInstance.SearchPathFrom(entrance.X, entrance.Y);
+            valid = paths.Count != 0;
+            if (!valid)
+            {
+                return false;
+            }
         }
+
 
         _towersHolder.Add(towerPtr);
 
@@ -188,5 +204,23 @@ public class GameBoard : MonoBehaviour
     {
         _enemiesHolder.Remove(enemyPtr);
         _levelManager.RemoveHealth(1);
+    }
+
+    public void HighlightTileAt(uint x, uint y)
+    {
+        Tile targetTile = BoardTiles[x, y];
+
+        Vector3 tilePositon = targetTile.TileObject.gameObject.transform.position;
+        GameObject newHighlight = Instantiate(TileHighlight, tilePositon, Quaternion.identity) as GameObject;
+
+        _highlightTile.Add(newHighlight);
+    }
+
+    public void ClearHighlightTiles()
+    {
+        foreach (var tile in _highlightTile)
+        {
+            Destroy(tile);
+        }
     }
 }

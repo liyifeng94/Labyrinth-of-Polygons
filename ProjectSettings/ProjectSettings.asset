@@ -558,6 +558,7 @@ PlayerSettings:
   XboxOne::VR::enabledDevices: []
   iOS::VR::enabledDevices: []
   tvOS::VR::enabledDevices: []
+  vectorPropertyNames: []
   cloudProjectId: 
   projectName: 
   organizationId: 
