@@ -117,13 +117,13 @@ public class PathFinding
             /* foreach neighbour of u, updates their distance from an
              entry point. Whenever the neighbour is an exit point, break.
              for we have found the shortest path.                         */
-            if (u.Y + 1 <= grid.Height)
+            if (u.Y + 1 < grid.Height)
             {
                 neigh = grid.GetCellAt(u.X, u.Y + 1); // the one close to the bottom of screen
                 if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
-            if (u.X + 1 <= grid.Width)
+            if (u.X + 1 < grid.Width)
             {
                 neigh = grid.GetCellAt(u.X + 1, u.Y); // the right one
                 if (_CheckNeighbour(neigh, u, alt)) break;
