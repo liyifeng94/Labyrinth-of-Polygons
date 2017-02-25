@@ -12,7 +12,6 @@ public class PathFinding
     private List<GridSystem.Cell> _queue = new List<GridSystem.Cell>();
     private GridSystem _gameGrid;
 
-
     public PathFinding(GridSystem mainGameGrid)
     {
         _gameGrid = mainGameGrid;
@@ -62,7 +61,7 @@ public class PathFinding
             return false;
         }
 
-        if (ret == null) return false;
+        // if (ret == null) return false;
 
         u = ret;
         _queue.Remove(ret);
