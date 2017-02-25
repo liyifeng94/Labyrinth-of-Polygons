@@ -43,7 +43,7 @@ public class PathFinding
     }
 
     /* get a cell with the shortest distance */
-    private bool GetNextCell(GridSystem.Cell u)
+    private bool GetNextCell(ref GridSystem.Cell u)
     {
         var min = int.MaxValue;
         var ret = _queue[0];
@@ -109,7 +109,7 @@ public class PathFinding
             /* assign u with the lowest dist in queue 
                if false returned, there're no available path.
                pathfinding fail.                             */
-            if ( !GetNextCell(u) )
+            if ( !GetNextCell(ref u) )
                 return path;
 
             var alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
