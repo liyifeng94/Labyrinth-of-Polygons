@@ -38,7 +38,7 @@ public class TowerController : MonoBehaviour
 
     public void RemoveTower()
     {
-        _towerPtr.Destory();
+        _towerPtr.Remove();
     }
 
     public void RepairTower()

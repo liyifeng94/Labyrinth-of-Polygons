@@ -136,16 +136,18 @@ public class GameBoard : MonoBehaviour
     // Updates and checks if a tower can be build at grind position
     public bool BuildTower(Tower towerPtr)
     {
-        bool valid = false;
-        //TODO: check if the location is valid
-        valid = true;
+        GridSystem.Cell towerCell = GameGridSystem.MainGameGrid.GetCellAt(towerPtr.X, towerPtr.Y);
+
+        towerCell.SetCell(true);
 
         foreach (var entrance in GameGridSystem.MainGameGrid.Entrances)
         {
+            bool valid;
             List<GridSystem.Cell> paths = _gmInstance.SearchPathFrom(entrance.X, entrance.Y);
             valid = paths.Count != 0;
             if (!valid)
             {
+                towerCell.SetCell(false);
                 return false;
             }
         }
@@ -159,7 +161,8 @@ public class GameBoard : MonoBehaviour
     //Updates the game board to remove the tower
     public bool RemoveTower(Tower towerPtr)
     {
-        //TODO: remove tower
+        GridSystem.Cell towerCell = GameGridSystem.MainGameGrid.GetCellAt(towerPtr.X, towerPtr.Y);
+        towerCell.SetCell(false);
         _towersHolder.Remove(towerPtr);
         return true;
     }

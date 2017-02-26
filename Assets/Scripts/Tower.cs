@@ -47,20 +47,30 @@ public class Tower : MonoBehaviour
         }
     }
 
+    public void Setup(TileEventHandler tileEventHandler)
+    {
+        _tileEventHandler = tileEventHandler;
+        X = tileEventHandler.GridX;
+        Y = tileEventHandler.GridY;
+    }
+
     public void Build()
     {
         bool success = _gameBoard.BuildTower(this);
+        _tileEventHandler.SetTowerExist(true);
         if (!success)
         {
             Debug.Log("T: Tower cannot be build");
-            Destory();
+            Remove();
         }
         
     }
 
-    public void Destory()
+    public void Remove()
     {
         _gameBoard.RemoveTower(this);
+        _tileEventHandler.SetTowerExist(false);
+        Destroy(gameObject);
     }
     
     public void AddEnemy(Enemy t)
@@ -82,7 +92,7 @@ public class Tower : MonoBehaviour
         }
         else
         {
-            Destory();
+            Remove();
             Debug.Log("T: Tower destoryed");
         }
     }

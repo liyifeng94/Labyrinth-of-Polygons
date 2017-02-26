@@ -93,11 +93,17 @@ public class TileEventHandler : MonoBehaviour
             {
                 _ongui = false;
                 _towerExist = true;
-                _towerController.BuildTower(GridX, GridY, 0);
+                Tower newTower = _towerController.BuildTower(GridX, GridY, 0);
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+                newTower.Setup(this);
                 _gameBoard.ClearHighlightTiles();
             }
         }
+    }
+
+    public void SetTowerExist(bool towerExist)
+    {
+        _towerExist = towerExist;
     }
 
 }
