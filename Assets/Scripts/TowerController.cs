@@ -27,28 +27,13 @@ public class TowerController : MonoBehaviour
 	
 	}
 
-    public Tower BuildTower(uint x, uint y, int index)
+    public GameObject BuildTower(uint x, uint y, int index)
     {
+        //bool success;
         Vector3 GamePosition;
         GamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
         towerGameObject = Instantiate(Towers[index], GamePosition, Quaternion.identity) as GameObject;
-        _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
-        return _towerPtr;
+        Debug.Log("TC: Tower object created");
+        return towerGameObject;
     }
-
-    public void RemoveTower()
-    {
-        _towerPtr.Remove();
-    }
-
-    public void RepairTower()
-    {
-        _towerPtr.Repair();
-    }
-
-    public void UpgradeTower()
-    {
-        _towerPtr.Upgrade();
-    }
-
 }

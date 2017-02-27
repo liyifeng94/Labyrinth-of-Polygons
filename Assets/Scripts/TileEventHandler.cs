@@ -16,7 +16,8 @@ public class TileEventHandler : MonoBehaviour
     private Texture2D _image_3;
     private Texture2D _image_4;
     private GameBoard _gameBoard;
-    //private Tower towerPtr;
+    private Tower _towerPtr;
+    private GameObject towerGameObject;
 
     // Use this for initialization
     void Start ()
@@ -61,8 +62,8 @@ public class TileEventHandler : MonoBehaviour
             {
                 _ongui = false;
                 _towerExist = false;
-                // remove the tower?
                 Debug.Log("TEH: Trying to sell tower");
+                RemoveTower();
                 _gameBoard.ClearHighlightTiles();
             }
 
@@ -72,7 +73,7 @@ public class TileEventHandler : MonoBehaviour
                 _ongui = false;
                 _towerExist = true;
                 Debug.Log("TEH: Trying to repair tower");
-                _towerController.RepairTower();
+                RepairTower();
                 _gameBoard.ClearHighlightTiles();
             }
 
@@ -82,7 +83,7 @@ public class TileEventHandler : MonoBehaviour
                 _ongui = false;
                 _towerExist = true;
                 Debug.Log("TEH: Trying to upgrade tower");
-                _towerController.UpgradeTower();
+                UpgradeTower();
                 _gameBoard.ClearHighlightTiles();
             }
         }
@@ -93,17 +94,29 @@ public class TileEventHandler : MonoBehaviour
             {
                 _ongui = false;
                 _towerExist = true;
-                Tower newTower = _towerController.BuildTower(GridX, GridY, 0);
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
-                newTower.Setup(this);
+                towerGameObject = _towerController.BuildTower(GridX, GridY, 0);
+                _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
                 _gameBoard.ClearHighlightTiles();
             }
         }
     }
 
-    public void SetTowerExist(bool towerExist)
+    public void RepairTower()
     {
-        _towerExist = towerExist;
+        _towerPtr.Repair();
     }
 
+
+    public void RemoveTower()
+    {
+        Destroy(towerGameObject);
+        _towerPtr.Destory();
+        Debug.Log("TC: Tower object removed");
+    }
+
+    public void UpgradeTower()
+    {
+        _towerPtr.Upgrade();
+    }
 }

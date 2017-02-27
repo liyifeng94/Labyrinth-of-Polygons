@@ -18,16 +18,17 @@ public class Tower : MonoBehaviour
     private GameBoard _gameBoard;
     private float _loadingTime;
     private TileEventHandler _tileEventHandler;
+    private TowerController _towerController;
 
     void Start ()
     {
         _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+        _towerController = TowerController.Instance;
+        //_tileEventHandler = towerGameObject.GetComponent<Tower>(); // get scripts
         Build();
         _level = 0;
         _loadingTime = AttackSpeed[_level];
-	    _tileEventHandler = null;
-	    _currentHP = HitPoint[_level];
-        Debug.Log("T: Tower 1 all set");
+        _currentHP = HitPoint[_level];
     }
 
 	void LastUpdate () {
@@ -47,30 +48,21 @@ public class Tower : MonoBehaviour
         }
     }
 
-    public void Setup(TileEventHandler tileEventHandler)
-    {
-        _tileEventHandler = tileEventHandler;
-        X = tileEventHandler.GridX;
-        Y = tileEventHandler.GridY;
-    }
-
     public void Build()
     {
         bool success = _gameBoard.BuildTower(this);
-        _tileEventHandler.SetTowerExist(true);
         if (!success)
         {
             Debug.Log("T: Tower cannot be build");
-            Remove();
+            //_towerController.RemoveTower();
+            //_towerExist.exist
         }
         
     }
 
-    public void Remove()
+    public void Destory()
     {
         _gameBoard.RemoveTower(this);
-        _tileEventHandler.SetTowerExist(false);
-        Destroy(gameObject);
     }
     
     public void AddEnemy(Enemy t)
@@ -92,7 +84,7 @@ public class Tower : MonoBehaviour
         }
         else
         {
-            Remove();
+            Destory();
             Debug.Log("T: Tower destoryed");
         }
     }
