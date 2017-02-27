@@ -13,6 +13,10 @@ public class LevelManager : MonoBehaviour
 
     private LevelState _currentLevelState;
     private GameManager _gameManagerInstance;
+
+    public int StartingHealth = 100;
+    public int StartingGold = 100;
+
     public GameBoard GameBoardSystem;
     public GameObject TowerController;
     public GameObject EnemyController;
@@ -21,6 +25,8 @@ public class LevelManager : MonoBehaviour
     void Start ()
 	{
         _currentLevelState = new LevelState();
+	    _currentLevelState.Gold = StartingGold;
+	    _currentLevelState.Health = StartingHealth;
         GameManager.Instance.UpdateLevelManager(this);
 	    GameObject towerControllerGameObject = Instantiate(TowerController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
         towerControllerGameObject.transform.SetParent(transform);
