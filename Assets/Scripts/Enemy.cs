@@ -70,8 +70,8 @@ public class Enemy : MonoBehaviour
 
     void ReachEnd()
     {
-        _levelManager.RemoveHealth(_damage);
-        Die();
+        _gameBoard.EnemyReachedExit(this);
+        Destroy(gameObject);
     }
 
     //Called every frame

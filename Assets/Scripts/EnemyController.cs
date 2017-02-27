@@ -53,12 +53,6 @@ public class EnemyController : MonoBehaviour
         SpawnEnemy();
 	}
 
-    public bool WaveCleared()
-    {
-        return _enemies.Count==0;
-    }
-
-
 
 	// Update is called once per frame
 	public void Update () {
