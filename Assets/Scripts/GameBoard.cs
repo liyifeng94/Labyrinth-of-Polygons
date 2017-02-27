@@ -33,6 +33,14 @@ public class GameBoard : MonoBehaviour
 
     public Tile[,] BoardTiles { get; private set; } 
 
+    public enum GamePhase
+    {
+        BuildingPhase,
+        BattlePhase
+    }
+
+    public GamePhase CurrentGamePhase { get; private set; }
+
     public class Tile
     {
         public GameObject TileObject { get; private set; }
@@ -78,6 +86,7 @@ public class GameBoard : MonoBehaviour
         _gmInstance = GameManager.Instance;
         _levelManager = _gmInstance.CurrentLevelManager;
         GameBoardSetup();
+        CurrentGamePhase = GamePhase.BuildingPhase;
     }
 
     // Update is called once per frame
@@ -225,5 +234,15 @@ public class GameBoard : MonoBehaviour
         {
             Destroy(tile);
         }
+    }
+
+    public void EnterBattlePhase()
+    {
+        CurrentGamePhase = GamePhase.BattlePhase;
+    }
+
+    public void EnterBuildingPhase()
+    {
+        CurrentGamePhase = GamePhase.BuildingPhase;
     }
 }

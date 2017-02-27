@@ -40,6 +40,21 @@ public class LevelManager : MonoBehaviour
 	
 	}
 
+    public void EnterBattePhase()
+    {
+        GameBoardSystem.EnterBattlePhase();
+    }
+
+    public void EnterBuildingPhase()
+    {
+        GameBoardSystem.EnterBuildingPhase();
+    }
+
+    public GameBoard.GamePhase CurrentGamePhase()
+    {
+        return GameBoardSystem.CurrentGamePhase;
+    }
+
     //Adds the score value of the enemy
     public void DestoryEnemy(Enemy enemyPtr)
     {
