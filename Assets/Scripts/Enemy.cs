@@ -22,10 +22,11 @@ public class Enemy : MonoBehaviour
     
     public float Speed;
     public uint AttackRange;
-    public uint Hp = 1;
-    public Direction Dir = Direction.Down ;
-    public int Pos = 0;
-    public float distance = (float)0.0;
+    public int Damage = 1;
+    public int Hp = 1;
+    private Direction Dir = Direction.Down ;
+    private int _pos = 0;
+    private float _distance = (float)0.0;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
     private EnemyController _enemyController;
@@ -54,16 +55,16 @@ public class Enemy : MonoBehaviour
     void ChangeDir()
     {
        
-        if (_path[Pos + 1].Position.x >_path[Pos].Position.x) Dir = Direction.Right;
-        if (_path[Pos + 1].Position.x < _path[Pos].Position.x) Dir = Direction.Left;
-        if (_path[Pos + 1].Position.y > _path[Pos].Position.y) Dir = Direction.Up;
-        if (_path[Pos + 1].Position.y < _path[Pos].Position.y) Dir = Direction.Down;
+        if (_path[_pos + 1].Position.x >_path[_pos].Position.x) Dir = Direction.Right;
+        if (_path[_pos + 1].Position.x < _path[_pos].Position.x) Dir = Direction.Left;
+        if (_path[_pos + 1].Position.y > _path[_pos].Position.y) Dir = Direction.Up;
+        if (_path[_pos + 1].Position.y < _path[_pos].Position.y) Dir = Direction.Down;
 
     }
 
     void ReachTileCenter()
     {
-        if (Pos==_path.Count-1) ReachEnd();
+        if (_pos==_path.Count-1) ReachEnd();
         else ChangeDir();
     }
 
@@ -77,21 +78,21 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector3 position = transform.position;
-        if (((Pos == 0 || Pos+1 == _path.Count) && distance==0.5) ||
-            (Math.Abs(distance - 1) < Tolerance))
+        if (((_pos == 0 || _pos+1 == _path.Count) && _distance==0.5) ||
+            (Math.Abs(_distance - 1) < Tolerance))
         {
-            Pos++;
-            GridX = _cells[Pos].X;
-            GridY = _cells[Pos].Y;
+            _pos++;
+            GridX = _cells[_pos].X;
+            GridY = _cells[_pos].Y;
             _gameBoard.UpdateEnemyPosition(this);
-            distance = 0;
+            _distance = 0;
         }
-        if (Math.Abs(transform.position.x - _path[Pos].Position.x) < Tolerance &&
-            Math.Abs(transform.position.y - _path[Pos].Position.y) < Tolerance)
+        if (Math.Abs(transform.position.x - _path[_pos].Position.x) < Tolerance &&
+            Math.Abs(transform.position.y - _path[_pos].Position.y) < Tolerance)
         {
             ReachTileCenter();
         }
-        distance += Speed;
+        _distance += Speed;
         if (Dir == Direction.Right) position.x += Speed;
         if (Dir == Direction.Left) position.x -= Speed;
         if (Dir == Direction.Up) position.y += Speed;
@@ -121,7 +122,7 @@ public class Enemy : MonoBehaviour
         //TODO: add attack range to enemy
     }
 
-    public void GetDamaged(uint damage)
+    public void GetDamaged(int damage)
     {
         Hp -= damage;
         if (Hp<=0)

@@ -215,7 +215,7 @@ public class GameBoard : MonoBehaviour
     public void EnemyReachedExit(Enemy enemyPtr)
     {
         _enemiesHolder.Remove(enemyPtr);
-        _levelManager.RemoveHealth(1);
+        _levelManager.RemoveHealth(enemyPtr.Damage);
     }
 
     public void HighlightTileAt(uint x, uint y)
