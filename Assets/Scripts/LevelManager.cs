@@ -41,6 +41,11 @@ public class LevelManager : MonoBehaviour
         //TODO: add the score value of the enemy
     }
 
+    public int GetGold()
+    {
+        return _currentLevelState.Gold;
+    }
+
     public void UseGold(int amount)
     {
         _currentLevelState.Gold -= amount;
@@ -54,5 +59,20 @@ public class LevelManager : MonoBehaviour
     public void RemoveHealth(int damage)
     {
         _currentLevelState.Health -= damage;
+    }
+
+    public int GetHealth()
+    {
+        return _currentLevelState.Health;
+    }
+
+    public void AddScore(int score)
+    {
+        _currentLevelState.Score += score;
+    }
+
+    public int GetScore()
+    {
+        return _currentLevelState.Score;
     }
 }

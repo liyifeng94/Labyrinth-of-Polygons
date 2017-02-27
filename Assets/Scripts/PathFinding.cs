@@ -12,7 +12,6 @@ public class PathFinding
     private List<GridSystem.Cell> _queue = new List<GridSystem.Cell>();
     private GridSystem _gameGrid;
 
-
     public PathFinding(GridSystem mainGameGrid)
     {
         _gameGrid = mainGameGrid;
@@ -44,7 +43,7 @@ public class PathFinding
     }
 
     /* get a cell with the shortest distance */
-    private bool GetNextCell(GridSystem.Cell u)
+    private bool GetNextCell(ref GridSystem.Cell u)
     {
         var min = int.MaxValue;
         var ret = _queue[0];
@@ -62,7 +61,7 @@ public class PathFinding
             return false;
         }
 
-        if (ret == null) return false;
+        // if (ret == null) return false;
 
         u = ret;
         _queue.Remove(ret);
@@ -110,7 +109,7 @@ public class PathFinding
             /* assign u with the lowest dist in queue 
                if false returned, there're no available path.
                pathfinding fail.                             */
-            if ( !GetNextCell(u) )
+            if ( !GetNextCell(ref u) )
                 return path;
 
             var alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
@@ -118,13 +117,13 @@ public class PathFinding
             /* foreach neighbour of u, updates their distance from an
              entry point. Whenever the neighbour is an exit point, break.
              for we have found the shortest path.                         */
-            if (u.Y + 1 <= grid.Height)
+            if (u.Y + 1 < grid.Height)
             {
                 neigh = grid.GetCellAt(u.X, u.Y + 1); // the one close to the bottom of screen
                 if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
-            if (u.X + 1 <= grid.Width)
+            if (u.X + 1 < grid.Width)
             {
                 neigh = grid.GetCellAt(u.X + 1, u.Y); // the right one
                 if (_CheckNeighbour(neigh, u, alt)) break;
@@ -154,6 +153,10 @@ public class PathFinding
             path.Add(neigh);
         }
         path.Reverse();
+
+        _queue = new List<GridSystem.Cell>();
+        FillMax(dist, _queue);
+        prev = new GridSystem.Cell[grid.Width, grid.Height];
 
         return path;
     }
