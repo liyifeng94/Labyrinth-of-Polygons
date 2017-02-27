@@ -12,9 +12,9 @@ public class Enemy : MonoBehaviour
 
     private uint _x;
     private uint _y;
-    private uint _speed;
-    private uint _attackRange;
-    private uint _hp;
+    public uint Speed;
+    public uint AttackRange;
+    public uint Hp;
     private uint index;
 
     private List<GridSystem.Cell> _path;
@@ -29,15 +29,18 @@ public class Enemy : MonoBehaviour
     //Called every frame
     void Update()
     {
-        
+        Vector3 position = transform.position;
+        position.x++;
+        transform.position = position;
+
     }
 
     public void SetupEnemy(uint x, uint y,List<GridSystem.Cell> path)
     {
         _x = x;
         _y = y;
-        _speed = 50;
-        _hp = 1;
+        Speed = 50;
+        Hp = 1;
         _path = path;
         index = 0;
 
@@ -57,16 +60,16 @@ public class Enemy : MonoBehaviour
         {
             //TODO: change speed to unit/time
             case Direction.Up:
-                _y -= _speed;
+                _y -= Speed;
                 break;
             case Direction.Down:
-                _y += _speed;
+                _y += Speed;
                 break;
             case Direction.Left:
-                _x -= _speed;
+                _x -= Speed;
                 break;
             case Direction.Right:
-                _x += _speed;
+                _x += Speed;
                 break;
             default:
                 break;
@@ -87,8 +90,8 @@ public class Enemy : MonoBehaviour
 
     public void GetDamaged(uint damage)
     {
-        _hp -= damage;
-        if (_hp<=0)
+        Hp -= damage;
+        if (Hp<=0)
         {
             Die();
         }
