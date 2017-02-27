@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000011058345576}
   - 212: {fileID: 212000011997658836}
   - 114: {fileID: 114000012180961610}
+  - 114: {fileID: 114000010262907620}
   m_Layer: 0
   m_Name: Tower_1
   m_TagString: Untagged
@@ -41,6 +42,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010262907620
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012114627248}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4547e09587d560b40957770e87995d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  AttackRange: 0
+  Hp: 0
+  Dir: 0
+  Pos: 0
+  distance: 0
 --- !u!114 &114000012180961610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84,7 +102,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: a7b52536660099343aac161be5a12054, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
