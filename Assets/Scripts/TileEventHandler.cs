@@ -97,6 +97,7 @@ public class TileEventHandler : MonoBehaviour
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                 towerGameObject = _towerController.BuildTower(GridX, GridY, 0);
                 _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
+                _towerPtr.Setup(this);
                 _gameBoard.ClearHighlightTiles();
             }
         }
@@ -111,12 +112,17 @@ public class TileEventHandler : MonoBehaviour
     public void RemoveTower()
     {
         Destroy(towerGameObject);
-        _towerPtr.Destory();
+        _towerPtr.Remove();
         Debug.Log("TC: Tower object removed");
     }
 
     public void UpgradeTower()
     {
         _towerPtr.Upgrade();
+    }
+
+    public void SetTowerExist(bool towerExist)
+    {
+        _towerExist = towerExist;
     }
 }
