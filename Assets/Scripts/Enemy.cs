@@ -19,14 +19,13 @@ public class Enemy : MonoBehaviour
             return Tolerance;
         }
     }
-
-    public int _damage;
+    
     public float Speed;
     public uint AttackRange;
-    public uint Hp;
-    public Direction Dir ;
-    public int Pos;
-    public float distance;
+    public uint Hp = 1;
+    public Direction Dir = Direction.Down ;
+    public int Pos = 0;
+    public float distance = (float)0.0;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
     private EnemyController _enemyController;
@@ -108,12 +107,8 @@ public class Enemy : MonoBehaviour
         GridX = x;
         GridY = y;
         Speed = speed;
-        Hp = 1;
         _path = path;
         _cells = cells;
-        Dir = Direction.Down;
-        Pos = 0;
-        distance = (float)0.0;
     }
 
     public void SetPos(uint xPos, uint yPos) {
