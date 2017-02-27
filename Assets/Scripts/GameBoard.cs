@@ -186,7 +186,7 @@ public class GameBoard : MonoBehaviour
                 (enemyY < towerY + towerRange && enemyY > towerY - towerRange))
             {
                 //enemy in range of the towers
-                //TODO: notify the tower that the enemy is in range
+                towerPtr.AddEnemy(enemyPtr);
             }
         }
     }
