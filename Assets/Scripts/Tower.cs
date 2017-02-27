@@ -7,13 +7,14 @@ public class Tower : MonoBehaviour
     public uint X { get; private set; }
     public uint Y { get; private set; }
 
-    public uint AttackRange;
-    public uint[] HitPoint;
-    public uint[] AttackDamage;
-    public uint[] AttackSpeed;
+    public int buildCost;
+    public int AttackRange;
+    public int[] HitPoint;
+    public int[] AttackDamage;
+    public int[] AttackSpeed;
 
-    private uint _currentHP;
-    private uint _level;
+    private int _currentHP;
+    private int _level;
     private HashSet<Enemy> _enemies = new HashSet<Enemy>();
     private GameBoard _gameBoard;
     private float _loadingTime;
@@ -48,12 +49,12 @@ public class Tower : MonoBehaviour
         }
     }
 
-public void Setup(TileEventHandler tileEventHandler)
-{
-    _tileEventHandler = tileEventHandler;
-    X = tileEventHandler.GridX;
-    Y = tileEventHandler.GridY;
-}
+    public void Setup(TileEventHandler tileEventHandler)
+    {
+        _tileEventHandler = tileEventHandler;
+        X = tileEventHandler.GridX;
+        Y = tileEventHandler.GridY;
+    }
 
 public void Build()
     {
@@ -61,8 +62,8 @@ public void Build()
         if (!success)
         {
             Debug.Log("T: Tower cannot be build");
-            //_towerController.RemoveTower();
-            //_towerExist.exist
+            _tileEventHandler.RemoveTower();
+            _tileEventHandler.SetTowerExist(false);
         }
         _tileEventHandler.SetTowerExist(true);
 
@@ -86,7 +87,7 @@ public void Build()
     }
     
 
-    public void ReceiveAttack(uint ad)
+    public void ReceiveAttack(int ad)
     {
         if (_currentHP > ad)
         {
