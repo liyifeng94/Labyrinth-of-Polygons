@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
-    private const float Tolerance=(float)0.01;
+    private const float Tolerance=(float)0.1;
 
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
 
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector3 position = transform.position;
-        if (((Pos == 0 || Pos+1 == _path.Count) && Math.Abs(distance - 0.5) < Tolerance) ||
+        if (((Pos == 0 || Pos+1 == _path.Count) && distance==0.5) ||
             (Math.Abs(distance - 1) < Tolerance))
         {
             Pos++;
@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour
         {
             ReachTileCenter();
         }
-        distance += (float)0.01;
+        distance += Speed;
         if (Dir == Direction.Right) position.x += Speed;
         if (Dir == Direction.Left) position.x -= Speed;
         if (Dir == Direction.Up) position.y += Speed;
@@ -116,7 +116,10 @@ public class Enemy : MonoBehaviour
         GridY = yPos;
     }
 
-    public void Attack() { }
+    public void Attack()
+    {
+        //TODO: add attack range to enemy
+    }
 
     public void GetDamaged(uint damage)
     {

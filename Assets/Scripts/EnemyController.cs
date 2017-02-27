@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
         GridSystem.Cell startCell = entrances[0];
         GameBoard.Tile startTile = tiles[0];
 
-        float speed = (float)0.01;
+        float speed = (float)3 * Time.deltaTime;
 
         Vector3 spawnPosition = startTile.Position;
 
