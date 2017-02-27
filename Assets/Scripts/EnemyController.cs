@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
         GridSystem.Cell startCell = entrances[0];
         GameBoard.Tile startTile = tiles[0];
 
+        float speed = (float)0.01;
+
         Vector3 spawnPosition = startTile.Position;
 
         GameObject enemeyGameObject = Instantiate(Enemies[0], spawnPosition, Quaternion.identity) as GameObject;
@@ -30,7 +32,7 @@ public class EnemyController : MonoBehaviour
             enemeyGameObject.transform.SetParent(this.transform);
             Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
-            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path);
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,speed);
             _gameBoard.AddEnemy(enemy);
         }
     }

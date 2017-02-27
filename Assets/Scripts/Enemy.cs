@@ -103,18 +103,17 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells)
+    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, float speed)
     {
         GridX = x;
         GridY = y;
-        _damage = 1;
-        Speed = (float) 0.01;
+        Speed = speed;
         Hp = 1;
         _path = path;
-        Pos = 0;
-        distance = (float) 0.0;
         _cells = cells;
         Dir = Direction.Down;
+        Pos = 0;
+        distance = (float)0.0;
     }
 
     public void SetPos(uint xPos, uint yPos) {
