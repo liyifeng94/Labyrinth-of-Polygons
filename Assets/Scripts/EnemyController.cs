@@ -6,25 +6,38 @@ public class EnemyController : MonoBehaviour
 {
     public static EnemyController Instance;
     public List<GameObject> Enemies;
-    private List<Enemy> _enemies;
-
+    private GameBoard _gameBoard;
 
     public void SpawnEnemy()
     {
         List<GridSystem.Cell> entrances = GameManager.Instance.CurrentLevelManager.GameBoardSystem.GameGridSystem.MainGameGrid.Entrances;
         List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[0].X, entrances[0].Y);
-
+        var tiles = new List<GameBoard.Tile>();
+        for (int i = 0; i < path.Count; i++)
+        {
+            tiles.Add(_gameBoard.BoardTiles[path[i].X,path[i].Y]);
+        }
         //randomly chose a entrance
         GridSystem.Cell startCell = entrances[0];
-        GameBoard.Tile starTile = GameManager.Instance.CurrentLevelManager.GameBoardSystem.BoardTiles[startCell.X, startCell.Y];
+        GameBoard.Tile startTile = tiles[0];
 
-        Vector3 spawnPosition = starTile.Position;
+        Vector3 spawnPosition = startTile.Position;
 
         GameObject enemeyGameObject = Instantiate(Enemies[0], spawnPosition, Quaternion.identity) as GameObject;
-        enemeyGameObject.transform.SetParent(this.transform);
-        Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
-        //TODO: pathfinding 
-        enemy.SetupEnemy(0,0,null);
+        if (enemeyGameObject != null)
+        {
+            
+            enemeyGameObject.transform.SetParent(this.transform);
+            Enemies.Add(enemeyGameObject);
+            Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path);
+            _gameBoard.AddEnemy(enemy);
+        }
+    }
+
+    public void RemoveEnemy(Enemy ptr)
+    {
+        _gameBoard.RemoveEnemy(ptr);
     }
 
     void Awake()
@@ -33,8 +46,11 @@ public class EnemyController : MonoBehaviour
     }
 
 	// Use this for initialization
-    void Start () {
-	
+    void Start ()
+    {
+        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+
+        SpawnEnemy();
 	}
 
     public bool WaveCleared()
