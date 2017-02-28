@@ -14,15 +14,15 @@ public class LevelManager : MonoBehaviour
 
     private LevelState _currentLevelState;
     private GameManager _gameManagerInstance;
-    private TowerController _towerController;
-    private EnemyController _enemyController;
+    public TowerController TowerController;
+    public EnemyController EnemyController;
 
     public int StartingHealth = 100;
     public int StartingGold = 100;
 
     public GameBoard GameBoardSystem;
-    public GameObject TowerController;
-    public GameObject EnemyController;
+    public GameObject TowerControllerPrefab;
+    public GameObject EnemyControllerPrefab;
 
     // Use this for initialization
     void Start ()
@@ -31,13 +31,13 @@ public class LevelManager : MonoBehaviour
 	    _currentLevelState.Gold = StartingGold;
 	    _currentLevelState.Health = StartingHealth;
         GameManager.Instance.UpdateLevelManager(this);
-	    GameObject towerControllerGameObject = Instantiate(TowerController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+	    GameObject towerControllerGameObject = Instantiate(TowerControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(towerControllerGameObject != null, "towerControllerGameObject != null");
 	    towerControllerGameObject.transform.SetParent(transform);
-	    _towerController = towerControllerGameObject.GetComponent<TowerController>();
-        GameObject enemyControllerGameObject = Instantiate(EnemyController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+	    TowerController = towerControllerGameObject.GetComponent<TowerController>();
+        GameObject enemyControllerGameObject = Instantiate(EnemyControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(enemyControllerGameObject != null, "enemyControllerGameObject != null");
-	    _enemyController = enemyControllerGameObject.GetComponent<EnemyController>();
+	    EnemyController = enemyControllerGameObject.GetComponent<EnemyController>();
         enemyControllerGameObject.transform.SetParent(transform);
     }
 	
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
     public void EnterBattePhase()
     {
         GameBoardSystem.EnterBattlePhase();
-        _enemyController.StartSpawning();
+        EnemyController.StartSpawning();
 
     }
 

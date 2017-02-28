@@ -51,10 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736abad998517f9428cb71cc76e74eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerController: {fileID: 0}
+  EnemyController: {fileID: 0}
   StartingHealth: 100
   StartingGold: 100
   GameBoardSystem: {fileID: 0}
-  TowerController: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
+  TowerControllerPrefab: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
     type: 2}
-  EnemyController: {fileID: 1000012688933106, guid: cc8d379bc1c7ea4458121410e12126ff,
+  EnemyControllerPrefab: {fileID: 1000012688933106, guid: cc8d379bc1c7ea4458121410e12126ff,
     type: 2}

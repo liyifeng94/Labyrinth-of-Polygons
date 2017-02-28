@@ -209,7 +209,7 @@ public class GameBoard : MonoBehaviour
 
     public void RemoveEnemy(Enemy enemyPtr)
     {
-        //TODO: remove enemy
+        _levelManager.TowerController.RemoveEnemy(enemyPtr);
         _enemiesHolder.Remove(enemyPtr);
     }
 
