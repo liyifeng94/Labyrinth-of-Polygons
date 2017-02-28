@@ -39,8 +39,9 @@ public class TowerController : MonoBehaviour
         _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
         if (_towerPtr.buildCost < _levelManager.GetGold())
         {
+            // gole will not be used here, need to check if it blocks the last path later
             Debug.Log("TC: Enough gold to build");
-            _levelManager.UseGold(_towerPtr.buildCost);
+            //_levelManager.UseGold(_towerPtr.buildCost);
         }
         else
         {

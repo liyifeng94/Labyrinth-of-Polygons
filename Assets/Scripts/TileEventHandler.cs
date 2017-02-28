@@ -117,20 +117,26 @@ public class TileEventHandler : MonoBehaviour
             {
                 _ongui = false;
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+                // ask tower controller to build(check avaliable gold)
                 towerGameObject = _towerController.BuildTower(this, GridX, GridY, 0);
                 if (null == towerGameObject)
                 {
-
+                    Debug.Log("TEH: towerGameObject is null");
                 }
                 else
                 {
                     _towerExist = true;
                     _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
                     _towerPtr.Setup(this);
+                    // check if it blocks the last path
                     if (!_gameBoard.BuildTower(_towerPtr))
                     {
                         RemoveTower();
                         _towerExist = false;
+                    }
+                    else
+                    {
+                        _levelManager.UseGold(_towerPtr.buildCost);
                     }
                 }
                 _gameBoard.ClearHighlightTiles();

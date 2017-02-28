@@ -28,7 +28,7 @@ public class Tower : MonoBehaviour
          _enemies = new HashSet<Enemy>();
         _towerController = TowerController.Instance;
         //_tileEventHandler = towerGameObject.GetComponent<Tower>(); // get scripts
-        Build();
+        //Build();
         _level = 0;
         _loadingTime = AttackSpeed[_level];
         _currentHP = HitPoint[_level];
