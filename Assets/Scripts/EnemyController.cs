@@ -6,8 +6,11 @@ public class EnemyController : MonoBehaviour
 {
     public static EnemyController Instance;
     public List<GameObject> Enemies;
+    private List<Enemy> _enemies;
     private GameBoard _gameBoard;
+    private LevelManager _levelManager;
     private bool _spawn = false;
+    private float _speed;
 
     public void SpawnEnemy()
     {
@@ -22,7 +25,7 @@ public class EnemyController : MonoBehaviour
         GridSystem.Cell startCell = entrances[0];
         GameBoard.Tile startTile = tiles[0];
 
-        float speed = (float)3 * Time.deltaTime;
+        
 
         Vector3 spawnPosition = startTile.Position;
 
@@ -33,7 +36,8 @@ public class EnemyController : MonoBehaviour
             enemeyGameObject.transform.SetParent(this.transform);
             Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
-            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,speed);
+            _enemies.Add(enemy);
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path);
             _gameBoard.AddEnemy(enemy);
         }
     }
@@ -41,6 +45,7 @@ public class EnemyController : MonoBehaviour
     public void StartSpawning()
     {
         _spawn = true;
+        _speed = 3 * Time.deltaTime;
     }
 
     public void StopSpawning()
@@ -51,8 +56,10 @@ public class EnemyController : MonoBehaviour
     public void RemoveEnemy(Enemy ptr)
     {
         _gameBoard.RemoveEnemy(ptr);
+        _enemies.Remove(ptr);
     }
 
+    
     void Awake()
     {
         Instance = this;
@@ -62,17 +69,23 @@ public class EnemyController : MonoBehaviour
     void Start ()
     {
         _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _enemies = new List<Enemy>();
+        //SpawnEnemy();
+    }
 
-        
-	}
-
-
+    private int _num = 1;
 	// Update is called once per frame
-	public void Update () {
-	    if (_spawn)
+	void Update () {
+	    if (_spawn && _num>0)
 	    {
+	        _num--;
 	        SpawnEnemy();
 	        _spawn = false;
 	    }
-	}
+	    if (_enemies.Count == 0)
+	    {
+	        _levelManager.EnterBuildingPhase();
+	    }
+    }
 }

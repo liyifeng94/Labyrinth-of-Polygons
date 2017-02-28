@@ -239,6 +239,7 @@ public class GameBoard : MonoBehaviour
     public void EnterBattlePhase()
     {
         CurrentGamePhase = GamePhase.BattlePhase;
+        
     }
 
     public void EnterBuildingPhase()
