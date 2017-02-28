@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     public int Damage = 1;
     public int Hp = 1;
     public int Gold = 5;
+    public int Score = 10;
     private Direction Dir = Direction.Down ;
     private int _pos = 0;
     private float _distance = (float)0.0;
@@ -132,6 +133,7 @@ public class Enemy : MonoBehaviour
         if (Hp<=0)
         {
             GameManager.Instance.CurrentLevelManager.AddGold(Gold);
+            GameManager.Instance.CurrentLevelManager.AddScore(Score);
             Die();
         }
     }
