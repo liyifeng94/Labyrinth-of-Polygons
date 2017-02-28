@@ -93,10 +93,13 @@ public class EnemyController : MonoBehaviour
 	        _end = Time.time;
 	        _num--;
 	        SpawnEnemy();
-	        if (_num==0) _spawn = false;
-	        _build = true;
-	    }
-	    if (_build && _enemies.Count == 0)
+	        if (_num == 0)
+	        {
+	            _spawn = false;
+            }
+            _build = true;
+        }
+	    if ((!_spawn) && _build && _enemies.Count == 0)
 	    {
 	        _levelManager.EnterBuildingPhase();
 
