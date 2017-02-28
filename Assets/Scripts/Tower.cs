@@ -12,23 +12,25 @@ public class Tower : MonoBehaviour
     public int[] HitPoint;
     public int[] AttackDamage;
     public int[] AttackSpeed;
-    public int[] upgradeCost;
+    public int upgradeCost;
+    public int[] sellGain;
+    public int[] repairCost;
 
     private int _currentHP;
     private int _level;
     private HashSet<Enemy> _enemies;
-    private GameBoard _gameBoard;
+    private LevelManager _levelManager;
+    //private GameBoard _gameBoard;
     private float _loadingTime;
-    private TileEventHandler _tileEventHandler;
+    //private TileEventHandler _tileEventHandler;
     private TowerController _towerController;
 
     void Start ()
     {
-        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
-         _enemies = new HashSet<Enemy>();
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        //_gameBoard = _levelManager.GameBoardSystem;
+        _enemies = new HashSet<Enemy>();
         _towerController = TowerController.Instance;
-        //_tileEventHandler = towerGameObject.GetComponent<Tower>(); // get scripts
-        Build();
         _level = 0;
         _loadingTime = AttackSpeed[_level];
         _currentHP = HitPoint[_level];
@@ -37,17 +39,16 @@ public class Tower : MonoBehaviour
 	void LateUpdate ()
     {
         //Debug.Log("T: Tower 1 searching");
-        //if (null != _enemies.First())
         if (0 != _enemies.Count)
         {
             float attackS = (float)AttackSpeed[_level] - 0.95f;
-
-            //if (_loadingTime >= AttackSpeed[_level])
             if (_loadingTime >= attackS)
 	        {
+                // todo check if target enemy is still alive from controller
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 _loadingTime = 0.0f;
                 _enemies.Clear();
+                _towerController.ClearEnemis();
 	        }
 	        else
 	        {
@@ -58,34 +59,20 @@ public class Tower : MonoBehaviour
 
     public void Setup(TileEventHandler tileEventHandler)
     {
-        _tileEventHandler = tileEventHandler;
+        //_tileEventHandler = tileEventHandler;
         X = tileEventHandler.GridX;
         Y = tileEventHandler.GridY;
     }
 
-    public void Build()
-    {
-        //bool success = _gameBoard.BuildTower(this);
-        /*if (!success)
-        {
-            //Debug.Log("T: Tower cannot be build");
-            _tileEventHandler.RemoveTower();
-            _tileEventHandler.SetTowerExist(false);
-        }
-        _tileEventHandler.SetTowerExist(true);*/
-
-    }
-
     public void Remove()
     {
-        //_gameBoard.RemoveTower(this);
-        _tileEventHandler.SetTowerExist(false);
         Destroy(gameObject);
     }
     
     public void AddEnemy(Enemy t)
     {
         _enemies.Add(t);
+        _towerController.AddEnemy(t);
     }
 
     public void AttackEnemy(Enemy t)
@@ -96,7 +83,14 @@ public class Tower : MonoBehaviour
         Vector3 end = endTransform.position;
         DrawLine(start, end, Color.blue);
         Debug.Log("attacks");
-        t.GetDamaged(AttackDamage[_level]);
+        if (_towerController.CheckIfEnemyAlive(t))
+        {
+            t.GetDamaged(AttackDamage[_level]);
+        }
+        else
+        {
+            Debug.Log("T: Targeted enemy died");
+        }
     }
     
 
@@ -119,6 +113,7 @@ public class Tower : MonoBehaviour
         {
             _level += 1;
             _currentHP = HitPoint[_level];
+            _levelManager.UseGold(upgradeCost);
             Debug.Log("T: Tower upgraded to level" + _level);
         }
         else
@@ -130,6 +125,7 @@ public class Tower : MonoBehaviour
     public void Repair()
     {
         _currentHP = HitPoint[_level];
+        _levelManager.UseGold(repairCost[_level]);
         Debug.Log("T: Tower Repaired, HP is " + _currentHP);
     }
 
