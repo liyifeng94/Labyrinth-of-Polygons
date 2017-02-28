@@ -54,10 +54,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 0
   AttackRange: 0
-  Hp: 3
-  Dir: 0
-  Pos: 0
-  distance: 0
+  Damage: 1
+  Hp: 1
+  Gold: 5
+  Score: 10
 --- !u!212 &212000011856922786
 SpriteRenderer:
   m_ObjectHideFlags: 1

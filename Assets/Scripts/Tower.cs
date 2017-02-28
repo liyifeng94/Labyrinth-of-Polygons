@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class Tower : MonoBehaviour
 {
@@ -19,7 +16,7 @@ public class Tower : MonoBehaviour
 
     private int _currentHP;
     private int _level;
-    private HashSet<Enemy> _enemies = new HashSet<Enemy>();
+    private HashSet<Enemy> _enemies;
     private GameBoard _gameBoard;
     private float _loadingTime;
     private TileEventHandler _tileEventHandler;
@@ -28,6 +25,7 @@ public class Tower : MonoBehaviour
     void Start ()
     {
         _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+         _enemies = new HashSet<Enemy>();
         _towerController = TowerController.Instance;
         //_tileEventHandler = towerGameObject.GetComponent<Tower>(); // get scripts
         Build();
@@ -36,7 +34,8 @@ public class Tower : MonoBehaviour
         _currentHP = HitPoint[_level];
     }
 
-	void LateUpdate () {
+	void LateUpdate ()
+    {
         //Debug.Log("T: Tower 1 searching");
         //if (null != _enemies.First())
         if (0 != _enemies.Count)
@@ -92,7 +91,9 @@ public class Tower : MonoBehaviour
     public void AttackEnemy(Enemy t)
     {
         Vector3 start = transform.position;
-        Vector3 end = _enemies.First().transform.position;
+        GameObject target = t.gameObject;
+        Transform endTransform = target.transform;
+        Vector3 end = endTransform.position;
         DrawLine(start, end, Color.blue);
         Debug.Log("attacks");
         t.GetDamaged(AttackDamage[_level]);
@@ -143,7 +144,7 @@ public class Tower : MonoBehaviour
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
         lr.SetColors(color, color);
         lr.SetWidth(0.1f, 0.1f);
         lr.SetPosition(0, start);
