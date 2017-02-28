@@ -42,22 +42,23 @@ public class TileEventHandler : MonoBehaviour
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
         _ongui = true;
+        _gameBoard.HighlightTileAt(GridX,GridY);
+    }
+
+    void OnGUI()
+    {
         if (_gameBoard == null)
         {
             _levelManager = GameManager.Instance.CurrentLevelManager;
             _gameBoard = _levelManager.GameBoardSystem;
         }
-        _gameBoard.HighlightTileAt(GridX,GridY);
-
-    }
-
-    void OnGUI()
-    {
-        //Vector3 v = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
-        uint x = GridX * 20 + 38;
-        uint y = 460 - GridY * 20 + (3-(GridY / 5))*10;
-        if (GridX >= 7) x -= 49;
-        if (GridY <= 1) y -= 60;
+        Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
+        float x = gridPosition.x;
+        float y = gridPosition.y;
+        //uint x = GridX * 20 + 38;
+        //uint y = 460 - GridY * 20 + (3-(GridY / 5))*10;
+        //if (GridX >= 7) x -= 49;
+        //if (GridY <= 1) y -= 60;
         if (_towerExist)
         {
             // remove case
