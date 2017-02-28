@@ -81,7 +81,6 @@ public class EnemyController : MonoBehaviour
     }
 
     private int _num = 5;
-    private int _num2 = 10;
 	// Update is called once per frame
 	void Update ()
 	{
@@ -103,8 +102,7 @@ public class EnemyController : MonoBehaviour
 	    {
 	        _levelManager.EnterBuildingPhase();
 
-	        _num = _num2;
-            _num2 = 0;
+	        _num = 5;
 	        _build = false;
 	    }
     }
