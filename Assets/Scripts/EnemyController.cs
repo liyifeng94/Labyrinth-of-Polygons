@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
     private bool _spawn = false;
-    private float _speed;
+    private bool _build = false;
 
     public void SpawnEnemy()
     {
@@ -45,7 +45,6 @@ public class EnemyController : MonoBehaviour
     public void StartSpawning()
     {
         _spawn = true;
-        _speed = 3 * Time.deltaTime;
     }
 
     public void StopSpawning()
@@ -82,8 +81,9 @@ public class EnemyController : MonoBehaviour
 	        _num--;
 	        SpawnEnemy();
 	        _spawn = false;
+	        _build = true;
 	    }
-	    if (_enemies.Count == 0)
+	    if (_build && _enemies.Count == 0)
 	    {
 	        _levelManager.EnterBuildingPhase();
 	    }
