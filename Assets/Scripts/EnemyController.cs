@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     public void SpawnEnemy()
     {
         List<GridSystem.Cell> entrances = GameManager.Instance.CurrentLevelManager.GameBoardSystem.GameGridSystem.MainGameGrid.Entrances;
-        int entrance = Random.Range(0, entrances.Count - 1);
+        int entrance = Random.Range(0, entrances.Count);
 
         List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         var tiles = new List<GameBoard.Tile>();
