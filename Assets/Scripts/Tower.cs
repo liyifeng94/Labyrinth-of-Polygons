@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class Tower : MonoBehaviour
 {
@@ -39,7 +41,10 @@ public class Tower : MonoBehaviour
         //if (null != _enemies.First())
         if (0 != _enemies.Count)
         {
-	        if (_loadingTime >= AttackSpeed[_level])
+            float attackS = (float)AttackSpeed[_level] - 0.95f;
+
+            //if (_loadingTime >= AttackSpeed[_level])
+            if (_loadingTime >= attackS)
 	        {
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 _loadingTime = 0.0f;
@@ -132,7 +137,7 @@ public class Tower : MonoBehaviour
         return _level;
     }
 
-    void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.1f)
+    void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
     {
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
