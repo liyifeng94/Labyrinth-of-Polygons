@@ -12,23 +12,25 @@ public class Tower : MonoBehaviour
     public int[] HitPoint;
     public int[] AttackDamage;
     public int[] AttackSpeed;
-    public int[] upgradeCost;
+    public int upgradeCost;
+    public int[] sellGain;
+    public int[] repairCost;
 
     private int _currentHP;
     private int _level;
     private HashSet<Enemy> _enemies;
-    private GameBoard _gameBoard;
+    private LevelManager _levelManager;
+    //private GameBoard _gameBoard;
     private float _loadingTime;
     private TileEventHandler _tileEventHandler;
     private TowerController _towerController;
 
     void Start ()
     {
-        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
-         _enemies = new HashSet<Enemy>();
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        //_gameBoard = _levelManager.GameBoardSystem;
+        _enemies = new HashSet<Enemy>();
         _towerController = TowerController.Instance;
-        //_tileEventHandler = towerGameObject.GetComponent<Tower>(); // get scripts
-        //Build();
         _level = 0;
         _loadingTime = AttackSpeed[_level];
         _currentHP = HitPoint[_level];
@@ -63,23 +65,8 @@ public class Tower : MonoBehaviour
         Y = tileEventHandler.GridY;
     }
 
-    public void Build()
-    {
-        //bool success = _gameBoard.BuildTower(this);
-        /*if (!success)
-        {
-            //Debug.Log("T: Tower cannot be build");
-            _tileEventHandler.RemoveTower();
-            _tileEventHandler.SetTowerExist(false);
-        }
-        _tileEventHandler.SetTowerExist(true);*/
-
-    }
-
     public void Remove()
     {
-        //_gameBoard.RemoveTower(this);
-        _tileEventHandler.SetTowerExist(false);
         Destroy(gameObject);
     }
     
@@ -119,6 +106,7 @@ public class Tower : MonoBehaviour
         {
             _level += 1;
             _currentHP = HitPoint[_level];
+            _levelManager.UseGold(upgradeCost);
             Debug.Log("T: Tower upgraded to level" + _level);
         }
         else
@@ -130,6 +118,7 @@ public class Tower : MonoBehaviour
     public void Repair()
     {
         _currentHP = HitPoint[_level];
+        _levelManager.UseGold(repairCost[_level]);
         Debug.Log("T: Tower Repaired, HP is " + _currentHP);
     }
 

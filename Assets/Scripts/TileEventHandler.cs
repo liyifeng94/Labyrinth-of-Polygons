@@ -69,11 +69,6 @@ public class TileEventHandler : MonoBehaviour
 
 #endif
 
-
-        //uint x = GridX * 20 + 38;
-        //uint y = 460 - GridY * 20 + (3-(GridY / 5))*10;
-        //if (GridX >= 7) x -= 49;
-        //if (GridY <= 1) y -= 60;
         if (_towerExist)
         {
             // remove case
@@ -82,7 +77,7 @@ public class TileEventHandler : MonoBehaviour
                 _ongui = false;
                 _towerExist = false;
                 Debug.Log("TEH: Trying to sell tower");
-                RemoveTower();
+                RemoveTower(false);
                 _gameBoard.ClearHighlightTiles();
             }
 
@@ -131,7 +126,7 @@ public class TileEventHandler : MonoBehaviour
                     // check if it blocks the last path
                     if (!_gameBoard.BuildTower(_towerPtr))
                     {
-                        RemoveTower();
+                        RemoveTower(true);
                         _towerExist = false;
                     }
                     else
@@ -146,22 +141,25 @@ public class TileEventHandler : MonoBehaviour
 
     public void RepairTower()
     {
-        // todo update the gold
         _towerPtr.Repair();
     }
 
 
-    public void RemoveTower()
+    public void RemoveTower(bool blockCase)
     {
         Destroy(towerGameObject);
+        _towerExist = false;
+        // cant move the last line in tower.cs, when tower is destroy by enemy, receive 0 gold
+        if (! blockCase)
+        {
+            _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
+        }
         _towerPtr.Remove();
-        // todo update the gold
         Debug.Log("TC: Tower object removed");
     }
 
     public void UpgradeTower()
     {
-        _levelManager.UseGold(_towerPtr.upgradeCost[_towerPtr.getLevel()]); // move it into Tower.cs
         _towerPtr.Upgrade();
     }
 

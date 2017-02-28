@@ -57,7 +57,9 @@ MonoBehaviour:
   HitPoint: 6400000096000000c8000000
   AttackDamage: 050000000a0000000f000000
   AttackSpeed: 010000000100000002000000
-  upgradeCost: 0300000006000000
+  upgradeCost: 3
+  sellGain: 040000000600000009000000
+  repairCost: 
 --- !u!212 &212000011997658836
 SpriteRenderer:
   m_ObjectHideFlags: 1
