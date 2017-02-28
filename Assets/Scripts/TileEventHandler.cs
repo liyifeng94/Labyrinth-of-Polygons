@@ -42,7 +42,10 @@ public class TileEventHandler : MonoBehaviour
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
         _ongui = true;
-        _gameBoard.HighlightTileAt(GridX,GridY);
+        if(!_towerExist && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        {
+            _gameBoard.HighlightTileAt(GridX, GridY);
+        }
     }
 
     void OnGUI()
@@ -55,11 +58,16 @@ public class TileEventHandler : MonoBehaviour
         //Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
         //float x = gridPosition.x;
         //float y = gridPosition.y;
-
-        float x = 40;
+#if UNITY_EDITOR
+        float x = 4;
         float y = 0;
-        int v = 90;
-        int h = 90;
+        int size = 30;
+#else
+        float x = 40;
+        float y = 500;
+        int size = 90;
+
+#endif
 
 
         //uint x = GridX * 20 + 38;
@@ -69,7 +77,7 @@ public class TileEventHandler : MonoBehaviour
         if (_towerExist)
         {
             // remove case
-            if (_ongui && GUI.Button(new Rect(x + 4, y + 60, 90, 90), _image_2))
+            if (_ongui && GUI.Button(new Rect(x + 4, y, size, size), _image_2))
             {
                 _ongui = false;
                 _towerExist = false;
@@ -79,7 +87,7 @@ public class TileEventHandler : MonoBehaviour
             }
 
             // repair case
-            if (_ongui && GUI.Button(new Rect(x + 4, y + 90, 90, 90), _image_3))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 2 * size, size, size), _image_3))
             {
                 _ongui = false;
                 _towerExist = true;
@@ -89,7 +97,7 @@ public class TileEventHandler : MonoBehaviour
             }
 
             // upgrade case
-            if (_ongui && GUI.Button(new Rect(x + 4, y + 120, 90, 90), _image_4))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 4 * size, size, size), _image_4))
             {
                 _ongui = false;
                 _towerExist = true;
@@ -100,8 +108,12 @@ public class TileEventHandler : MonoBehaviour
         }
         else
         {
+            if (_levelManager.CurrentGamePhase() != GameBoard.GamePhase.BuildingPhase)
+            {
+                return;
+            }
             // build tower 1 case
-            if (_ongui && GUI.Button(new Rect(x + 4, y + 60, 90, 90), _image_1))
+            if (_ongui && GUI.Button(new Rect(x + 4, y, size, size), _image_1))
             {
                 _ongui = false;
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
