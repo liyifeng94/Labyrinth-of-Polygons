@@ -55,10 +55,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 0
   AttackRange: 0
+  Damage: 1
   Hp: 0
-  Dir: 0
-  Pos: 0
-  distance: 0
 --- !u!114 &114000012180961610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,10 +68,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96a0db30cd452f44bc80faf4c3d9691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildCost: 5
   AttackRange: 3
   HitPoint: 6400000096000000c8000000
   AttackDamage: 050000000a0000000f000000
   AttackSpeed: 010000000100000002000000
+  upgradeCost: 0300000006000000
 --- !u!212 &212000011997658836
 SpriteRenderer:
   m_ObjectHideFlags: 1

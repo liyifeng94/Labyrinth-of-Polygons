@@ -15,6 +15,7 @@ public class TileEventHandler : MonoBehaviour
     private Texture2D _image_2;
     private Texture2D _image_3;
     private Texture2D _image_4;
+    private LevelManager _levelManager;
     private GameBoard _gameBoard;
     private Tower _towerPtr;
     private GameObject towerGameObject;
@@ -43,7 +44,8 @@ public class TileEventHandler : MonoBehaviour
         _ongui = true;
         if (_gameBoard == null)
         {
-            _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+            _levelManager = GameManager.Instance.CurrentLevelManager;
+            _gameBoard = _levelManager.GameBoardSystem;
         }
         _gameBoard.HighlightTileAt(GridX,GridY);
 
@@ -51,6 +53,7 @@ public class TileEventHandler : MonoBehaviour
 
     void OnGUI()
     {
+        //Vector3 v = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
         uint x = GridX * 20 + 38;
         uint y = 460 - GridY * 20 + (3-(GridY / 5))*10;
         if (GridX >= 7) x -= 49;
@@ -93,11 +96,18 @@ public class TileEventHandler : MonoBehaviour
             if (_ongui && GUI.Button(new Rect(x, y, 30, 30), _image_1))
             {
                 _ongui = false;
-                _towerExist = true;
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                 towerGameObject = _towerController.BuildTower(this, GridX, GridY, 0);
-                _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
-                _towerPtr.Setup(this);
+                if (null == towerGameObject)
+                {
+
+                }
+                else
+                {
+                    _towerExist = true;
+                    _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
+                    _towerPtr.Setup(this);
+                }
                 _gameBoard.ClearHighlightTiles();
             }
         }
@@ -105,6 +115,7 @@ public class TileEventHandler : MonoBehaviour
 
     public void RepairTower()
     {
+        // todo update the gold
         _towerPtr.Repair();
     }
 
@@ -113,11 +124,13 @@ public class TileEventHandler : MonoBehaviour
     {
         Destroy(towerGameObject);
         _towerPtr.Remove();
+        // todo update the gold
         Debug.Log("TC: Tower object removed");
     }
 
     public void UpgradeTower()
     {
+        _levelManager.UseGold(_towerPtr.upgradeCost[_towerPtr.getLevel()]); // move it into Tower.cs
         _towerPtr.Upgrade();
     }
 
