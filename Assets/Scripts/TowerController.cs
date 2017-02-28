@@ -9,6 +9,7 @@ public class TowerController : MonoBehaviour
     private Tower _towerPtr;
     private GameObject towerGameObject;
     private GameBoard _gameBoard;
+    private LevelManager _levelManager;
 
     void Awake()
     {
@@ -18,7 +19,9 @@ public class TowerController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _gameBoard = _levelManager.GameBoardSystem;
+
     }
 	
 	// Update is called once per frame
@@ -34,7 +37,17 @@ public class TowerController : MonoBehaviour
         GamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
         towerGameObject = Instantiate(Towers[index], GamePosition, Quaternion.identity) as GameObject;
         _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
-        //_towerPtr.buildCost
+        if (_towerPtr.buildCost < _levelManager.GetGold())
+        {
+            Debug.Log("TC: Enough gold to build");
+            _levelManager.UseGold(_towerPtr.buildCost);
+        }
+        else
+        {
+            Debug.Log("TC: Not enough gold to build");
+            Destroy(towerGameObject);
+            return null;
+        }
         Debug.Log("TC: Tower object created");
         return towerGameObject;
     }

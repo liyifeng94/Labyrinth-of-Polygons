@@ -127,7 +127,7 @@ public class GridSystem
                 while (Obstacles.Count < n)
                 {
                     int x = Random.Range(0, (int)Width - 1);
-                    int y = Random.Range(0, (int)Height - 1);
+                    int y = Random.Range(1, (int)Height - 2);
                     Obstacles.Add(_grid[x, y]);
                     _grid[x, y].SetCell(true);
                 }
@@ -137,7 +137,14 @@ public class GridSystem
 
         public bool ValidGrid()
         {
-            //TODO: Check path 
+            foreach (var entrance in Entrances)
+            {
+                List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrance.X, entrance.Y);
+                if (path.Count == 0)
+                {
+                    return false;
+                }
+            }
             return true;
         }
     }
@@ -155,26 +162,7 @@ public class GridSystem
     {
         MainGameGrid = new Grid(_width, _height);
         MainGameGrid.SetNumberOfEntries(_entrances);
-        MainGameGrid.SetNumberOfObstacles(_obstacles);
         GameManager.Instance.CreatePathFinder(this);
-    }
-
-    // Returns true if a tower can be built here
-    public bool BuildAtCell(uint x, uint y)
-    {
-        bool wasBlocked = MainGameGrid.GetCellAt(x, y).SetCell(true);
-        if (wasBlocked)
-        {
-            return false;
-        }
-        //TODO: check if path is valid
-        //_mainGameGrid.GetCellAt(x, y).SetCell(false);
-        return true;
-    }
-
-    public bool DestoryAtCell(uint x, uint y)
-    {
-        MainGameGrid.GetCellAt(x, y).SetCell(false);
-        return false;
+        MainGameGrid.SetNumberOfObstacles(_obstacles);
     }
 }

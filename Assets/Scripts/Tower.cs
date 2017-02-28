@@ -12,6 +12,7 @@ public class Tower : MonoBehaviour
     public int[] HitPoint;
     public int[] AttackDamage;
     public int[] AttackSpeed;
+    public int[] upgradeCost;
 
     private int _currentHP;
     private int _level;
@@ -56,7 +57,7 @@ public class Tower : MonoBehaviour
         Y = tileEventHandler.GridY;
     }
 
-public void Build()
+    public void Build()
     {
         bool success = _gameBoard.BuildTower(this);
         if (!success)
@@ -118,5 +119,10 @@ public void Build()
     {
         _currentHP = HitPoint[_level];
         Debug.Log("T: Tower Repaired, HP is " + _currentHP);
+    }
+
+    public int getLevel()
+    {
+        return _level;
     }
 }
