@@ -52,9 +52,14 @@ public class TileEventHandler : MonoBehaviour
             _levelManager = GameManager.Instance.CurrentLevelManager;
             _gameBoard = _levelManager.GameBoardSystem;
         }
-        Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
-        float x = gridPosition.x;
-        float y = gridPosition.y;
+        //Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
+        //float x = gridPosition.x;
+        //float y = gridPosition.y;
+
+        float x = 0;
+        float y = 0;
+
+
         //uint x = GridX * 20 + 38;
         //uint y = 460 - GridY * 20 + (3-(GridY / 5))*10;
         //if (GridX >= 7) x -= 49;
@@ -62,7 +67,7 @@ public class TileEventHandler : MonoBehaviour
         if (_towerExist)
         {
             // remove case
-            if (_ongui && GUI.Button(new Rect(x, y, 30, 30), _image_2))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 60, 30, 30), _image_2))
             {
                 _ongui = false;
                 _towerExist = false;
@@ -72,7 +77,7 @@ public class TileEventHandler : MonoBehaviour
             }
 
             // repair case
-            if (_ongui && GUI.Button(new Rect(x+30, y, 30, 30), _image_3))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 90, 30, 30), _image_3))
             {
                 _ongui = false;
                 _towerExist = true;
@@ -82,7 +87,7 @@ public class TileEventHandler : MonoBehaviour
             }
 
             // upgrade case
-            if (_ongui && GUI.Button(new Rect(x + 60, y, 30, 30), _image_4))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 120, 30, 30), _image_4))
             {
                 _ongui = false;
                 _towerExist = true;
@@ -94,7 +99,7 @@ public class TileEventHandler : MonoBehaviour
         else
         {
             // build tower 1 case
-            if (_ongui && GUI.Button(new Rect(x, y, 30, 30), _image_1))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 60, 30, 30), _image_1))
             {
                 _ongui = false;
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
