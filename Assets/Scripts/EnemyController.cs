@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ public class EnemyController : MonoBehaviour
     private LevelManager _levelManager;
     private bool _spawn = false;
     private bool _build = false;
+    private float _start,_end;
+
 
     public void SpawnEnemy()
     {
@@ -70,22 +73,33 @@ public class EnemyController : MonoBehaviour
         _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _enemies = new List<Enemy>();
+        _start = Time.time;
         //SpawnEnemy();
     }
 
-    private int _num = 1;
+    private int _num = 5;
+    private int _num2 = 10;
 	// Update is called once per frame
-	void Update () {
-	    if (_spawn && _num>0)
+	void Update ()
+	{
+	    _end = Time.time;
+	    float diff =  _end - _start;
+	    if (_spawn && _num>0 && diff>1)
 	    {
+	        _start = Time.time;
+	        _end = Time.time;
 	        _num--;
 	        SpawnEnemy();
-	        _spawn = false;
+	        if (_num==0) _spawn = false;
 	        _build = true;
 	    }
 	    if (_build && _enemies.Count == 0)
 	    {
 	        _levelManager.EnterBuildingPhase();
+
+	        _num = _num2;
+            _num2 = 0;
+	        _build = false;
 	    }
     }
 }
