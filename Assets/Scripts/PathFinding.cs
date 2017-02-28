@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class PathFinding
@@ -7,10 +8,10 @@ public class PathFinding
     GridSystem.Grid grid; // get through game manager
     private GridSystem.Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
     private int[,] dist; /* the distance between every cell and entrance */
-    //private List<GridSystem.Cell> entry; /* the list of entrance cells */
-    //private List<GridSystem.Cell> exit; /* the list of exit cells */
     private List<GridSystem.Cell> _queue = new List<GridSystem.Cell>();
     private GridSystem _gameGrid;
+
+    Hashtable _hashpath = new Hashtable();
 
     public PathFinding(GridSystem mainGameGrid)
     {
@@ -26,6 +27,10 @@ public class PathFinding
 
         /* intiate the previous cell of every cell to be null */
         prev = new GridSystem.Cell[grid.Width, grid.Height];
+        foreach (var e in grid.Entrances)
+        {
+            _hashpath.Add(e.X, new List<GridSystem.Cell>());
+        }
     }
 
 
@@ -98,12 +103,27 @@ public class PathFinding
      *           if there are no available path, the list should be EMPTY!    */
     public List<GridSystem.Cell> Search(uint x, uint y)
     {
+        var path = ((List<GridSystem.Cell>) _hashpath[x]);
+        if (path.Count > 0)
+        {
+            bool modified = false;
+            foreach (var e in path)
+            {
+                if (e.IsBlocked)
+                {
+                    modified = true;
+                    path = new List<GridSystem.Cell>();
+                    break;
+                }
+            }
+            if (!modified)
+                return path;
+        }
+
         var u = new GridSystem.Cell(0,0);
         var neigh = new GridSystem.Cell(0, 0);
 
         dist[x, y] = 0;
-
-        var path = new List<GridSystem.Cell>();
 
         /* keep searching until we run out all cells */
         while (_queue.Count > 0)
@@ -116,6 +136,7 @@ public class PathFinding
                 _queue = new List<GridSystem.Cell>();
                 FillMax(dist, _queue);
                 prev = new GridSystem.Cell[grid.Width, grid.Height];
+                _hashpath[x] = new List<GridSystem.Cell>();
                 return path;
             }
 
@@ -124,9 +145,9 @@ public class PathFinding
             /* foreach neighbour of u, updates their distance from an
              entry point. Whenever the neighbour is an exit point, break.
              for we have found the shortest path.                         */
-            if (u.Y + 1 < grid.Height)
+            if (u.Y != 0)
             {
-                neigh = grid.GetCellAt(u.X, u.Y + 1); // the one close to the bottom of screen
+                neigh = grid.GetCellAt(u.X, u.Y - 1); // the one close to the bottom of screen
                 if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
@@ -142,9 +163,9 @@ public class PathFinding
                 if (_CheckNeighbour(neigh, u, alt)) break;
             }
 
-            if (u.Y != 0)
+            if (u.Y + 1 < grid.Height)
             {
-                neigh = grid.GetCellAt(u.X, u.Y - 1); // the upper one
+                neigh = grid.GetCellAt(u.X, u.Y + 1); // the upper one
                 if (_CheckNeighbour(neigh, u, alt)) break;
             }
         }
@@ -160,6 +181,8 @@ public class PathFinding
             path.Add(neigh);
         }
         path.Reverse();
+
+        _hashpath[x] = path;
 
         _queue = new List<GridSystem.Cell>();
         FillMax(dist, _queue);
