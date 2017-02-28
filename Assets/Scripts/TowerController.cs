@@ -10,6 +10,8 @@ public class TowerController : MonoBehaviour
     private GameObject towerGameObject;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
+    // todo: hashset for each avaliable enemy
+    // todo: flag to make sure only one ongui esixt
 
     void Awake()
     {
@@ -39,9 +41,8 @@ public class TowerController : MonoBehaviour
         _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
         if (_towerPtr.buildCost < _levelManager.GetGold())
         {
-            // gole will not be used here, need to check if it blocks the last path later
+            // gold will not be used here, need to check if it blocks the last path later
             Debug.Log("TC: Enough gold to build");
-            //_levelManager.UseGold(_towerPtr.buildCost);
         }
         else
         {
