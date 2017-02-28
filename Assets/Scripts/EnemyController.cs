@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -18,7 +19,9 @@ public class EnemyController : MonoBehaviour
     public void SpawnEnemy()
     {
         List<GridSystem.Cell> entrances = GameManager.Instance.CurrentLevelManager.GameBoardSystem.GameGridSystem.MainGameGrid.Entrances;
-        List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[0].X, entrances[0].Y);
+        int entrance = Random.Range(0, entrances.Count - 1);
+
+        List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         var tiles = new List<GameBoard.Tile>();
         for (int i = 0; i < path.Count; i++)
         {
