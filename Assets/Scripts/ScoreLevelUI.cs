@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class ScoreLevelUI : MonoBehaviour
 {
-
-    // public Text ScoreText;
     public Text ScoreCount;
 
 	// Use this for initialization
@@ -16,8 +14,10 @@ public class ScoreLevelUI : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	}
+    void Update()
+    {
+        
+    }
 
     public void BackToMainPhase()
     {
