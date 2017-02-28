@@ -78,12 +78,13 @@ public class EnemyController : MonoBehaviour
     }
 
     private int _num = 5;
+    private int _num2 = 10;
 	// Update is called once per frame
 	void Update ()
 	{
 	    _end = Time.time;
-	    float diff = _start - _end;
-	    if (_spawn && _num>0)
+	    float diff =  _end - _start;
+	    if (_spawn && _num>0 && diff>1)
 	    {
 	        _start = Time.time;
 	        _end = Time.time;
@@ -95,6 +96,10 @@ public class EnemyController : MonoBehaviour
 	    if (_build && _enemies.Count == 0)
 	    {
 	        _levelManager.EnterBuildingPhase();
+
+	        _num = _num2;
+            _num2 = 0;
+	        _build = false;
 	    }
     }
 }
