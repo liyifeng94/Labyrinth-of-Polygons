@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour
             GameManager.Instance.CurrentLevelManager.AddScore(Score);
             Die();
         }
-    }
+    }   
 
     public void Die()
     {
