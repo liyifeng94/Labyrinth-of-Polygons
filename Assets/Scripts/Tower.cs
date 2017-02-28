@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 public class Tower : MonoBehaviour
 {
@@ -33,14 +34,15 @@ public class Tower : MonoBehaviour
         _currentHP = HitPoint[_level];
     }
 
-	void LastUpdate () {
-        Debug.Log("T: Tower 1 searching");
-        if (null != _enemies.First())
-	    {
+	void LateUpdate () {
+        //Debug.Log("T: Tower 1 searching");
+        //if (null != _enemies.First())
+        if (0 != _enemies.Count)
+        {
 	        if (_loadingTime >= AttackSpeed[_level])
 	        {
-	            AttackEnemy(_enemies.First()); // make this simple, just attack the first one
-	            _loadingTime = 0.0f;
+                AttackEnemy(_enemies.First()); // make this simple, just attack the first one
+                _loadingTime = 0.0f;
                 _enemies.Clear();
 	        }
 	        else
@@ -62,7 +64,7 @@ public class Tower : MonoBehaviour
         bool success = _gameBoard.BuildTower(this);
         if (!success)
         {
-            Debug.Log("T: Tower cannot be build");
+            //Debug.Log("T: Tower cannot be build");
             _tileEventHandler.RemoveTower();
             _tileEventHandler.SetTowerExist(false);
         }
@@ -72,7 +74,7 @@ public class Tower : MonoBehaviour
 
     public void Remove()
     {
-        _gameBoard.RemoveTower(this);
+        //_gameBoard.RemoveTower(this);
         _tileEventHandler.SetTowerExist(false);
         Destroy(gameObject);
     }
@@ -84,6 +86,10 @@ public class Tower : MonoBehaviour
 
     public void AttackEnemy(Enemy t)
     {
+        Vector3 start = transform.position;
+        Vector3 end = _enemies.First().transform.position;
+        DrawLine(start, end, Color.blue);
+        Debug.Log("attacks");
         t.GetDamaged(AttackDamage[_level]);
     }
     
@@ -125,4 +131,20 @@ public class Tower : MonoBehaviour
     {
         return _level;
     }
+
+    void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.1f)
+    {
+        GameObject myLine = new GameObject();
+        myLine.transform.position = start;
+        myLine.AddComponent<LineRenderer>();
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.SetColors(color, color);
+        lr.SetWidth(0.1f, 0.1f);
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        lr.sortingLayerName = "Effects"; 
+        GameObject.Destroy(myLine, duration);
+    }
+
 }
