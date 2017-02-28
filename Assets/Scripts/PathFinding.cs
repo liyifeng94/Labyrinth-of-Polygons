@@ -28,6 +28,8 @@ public class PathFinding
         prev = new GridSystem.Cell[grid.Width, grid.Height];
     }
 
+
+
     private void FillMax(int[,] arr, List<GridSystem.Cell> q)
     {
         for (uint i = 0; i < grid.Width; i++)
@@ -109,8 +111,13 @@ public class PathFinding
             /* assign u with the lowest dist in queue 
                if false returned, there're no available path.
                pathfinding fail.                             */
-            if ( !GetNextCell(ref u) )
+            if (!GetNextCell(ref u))
+            {
+                _queue = new List<GridSystem.Cell>();
+                FillMax(dist, _queue);
+                prev = new GridSystem.Cell[grid.Width, grid.Height];
                 return path;
+            }
 
             var alt = dist[u.X, u.Y] + 1; /* the distance is simply dist[u] + 1 */
 

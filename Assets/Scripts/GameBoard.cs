@@ -157,6 +157,7 @@ public class GameBoard : MonoBehaviour
             if (!valid)
             {
                 towerCell.SetCell(false);
+                paths = _gmInstance.SearchPathFrom(entrance.X, entrance.Y);
                 return false;
             }
         }
