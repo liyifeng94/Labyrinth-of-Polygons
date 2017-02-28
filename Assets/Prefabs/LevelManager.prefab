@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000014098205972}
   - 114: {fileID: 114000011911444382}
-  - 114: {fileID: 114000011574659896}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -41,19 +40,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000011574659896
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013916891114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33c07ee1d79c3874b84e87f450e69fc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Towers:
-  - {fileID: 1000012114627248, guid: 8ca7860fd04cae742b9faedb893accaa, type: 2}
 --- !u!114 &114000011911444382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,8 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736abad998517f9428cb71cc76e74eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerController: {fileID: 0}
+  EnemyController: {fileID: 0}
+  StartingHealth: 100
+  StartingGold: 100
   GameBoardSystem: {fileID: 0}
-  TowerController: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
+  TowerControllerPrefab: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
     type: 2}
-  EnemyController: {fileID: 1000012688933106, guid: cc8d379bc1c7ea4458121410e12126ff,
+  EnemyControllerPrefab: {fileID: 1000012688933106, guid: cc8d379bc1c7ea4458121410e12126ff,
     type: 2}

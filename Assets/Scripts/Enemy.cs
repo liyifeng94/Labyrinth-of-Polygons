@@ -1,102 +1,147 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
+    private const float Tolerance=(float)0.01;
 
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
 
     public uint GridX { get; private set; }
     public uint GridY { get; private set; }
 
-    private uint _x;
-    private uint _y;
-    private uint _speed;
-    private uint _attackRange;
-    private uint _hp;
-    private uint index;
+    public static float Tolerance1
+    {
+        get
+        {
+            return Tolerance;
+        }
+    }
+    
+    public float Speed;
+    public uint AttackRange;
+    public int Damage = 1;
+    public int Hp = 1;
+    public int Gold = 5;
+    public int Score = 10;
+    private Direction Dir = Direction.Down ;
+    private int _pos = 0;
+    private float _distance = (float)0.0;
+    private GameBoard _gameBoard;
+    private LevelManager _levelManager;
+    private EnemyController _enemyController;
 
-    private List<GridSystem.Cell> _path;
+    private List<GameBoard.Tile> _path;
+    private List<GridSystem.Cell> _cells;
+    
 
-    private Direction _dir = Direction.Down;
+    
 
     void Start()
     {
-        
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _gameBoard = _levelManager.GameBoardSystem;
+        _enemyController = EnemyController.Instance;
+        Speed = 3;
+    }
+
+    bool InTile(GameBoard.Tile tile)
+    {
+        if ((Math.Abs(transform.position.x - tile.Position.x) > 0.5) ||
+            (Math.Abs(transform.position.y - tile.Position.y) > 0.5)) 
+            return false;
+        return true;
+    }
+
+    void ChangeDir()
+    {
+       
+        if (_path[_pos + 1].Position.x >_path[_pos].Position.x) Dir = Direction.Right;
+        if (_path[_pos + 1].Position.x < _path[_pos].Position.x) Dir = Direction.Left;
+        if (_path[_pos + 1].Position.y > _path[_pos].Position.y) Dir = Direction.Up;
+        if (_path[_pos + 1].Position.y < _path[_pos].Position.y) Dir = Direction.Down;
+
+    }
+
+    void ReachTileCenter()
+    {
+        if (_pos==_path.Count-1) ReachEnd();
+        else ChangeDir();
+    }
+
+    void ReachEnd()
+    {
+        _gameBoard.EnemyReachedExit(this);
+        Die();
     }
 
     //Called every frame
     void Update()
     {
-        
+        Vector3 position = transform.position;
+        if (((_pos == 0 || _pos+1 == _path.Count) && _distance>0.5) ||
+            _distance>1)
+        {
+            _pos++;
+            GridX = _cells[_pos].X;
+            GridY = _cells[_pos].Y;
+            _gameBoard.UpdateEnemyPosition(this);
+            _distance = 0;
+        }
+        if ((transform.position.x >_path[_pos].Position.x && Dir==Direction.Right) ||
+            (transform.position.x < _path[_pos].Position.x && Dir == Direction.Left) ||
+            (transform.position.y > _path[_pos].Position.y && Dir == Direction.Up) ||
+            (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
+        {
+            ReachTileCenter();
+        }
+        float temp = Speed * Time.deltaTime;
+        _distance += temp;
+        if (Dir == Direction.Right) position.x += temp;
+        if (Dir == Direction.Left) position.x -= temp;
+        if (Dir == Direction.Up) position.y += temp;
+        if (Dir == Direction.Down) position.y -= temp;
+
+        transform.position = position;
+
     }
 
-    public void SetupEnemy(uint x, uint y,List<GridSystem.Cell> path)
-    {
-        _x = x;
-        _y = y;
-        _speed = 50;
-        _hp = 1;
-        _path = path;
-        index = 0;
 
+    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells)
+    {
+        GridX = x;
+        GridY = y;
+        _path = path;
+        _cells = cells;
     }
 
     public void SetPos(uint xPos, uint yPos) {
-        _x = xPos;
-        _y = yPos;
+        GridX = xPos;
+        GridY = yPos;
     }
 
-    public uint GetX() { return _x; }
-
-    public uint GetY() { return _y; }
-
-    public void Move() {
-        switch (_dir)
-        {
-            //TODO: change speed to unit/time
-            case Direction.Up:
-                _y -= _speed;
-                break;
-            case Direction.Down:
-                _y += _speed;
-                break;
-            case Direction.Left:
-                _x -= _speed;
-                break;
-            case Direction.Right:
-                _x += _speed;
-                break;
-            default:
-                break;
-        }
-        
-    }
-
-    public void Blocked() {
-        Turn(Direction.Left);
-    }
-
-    public void Turn(Direction newDir)
+    public void Attack()
     {
-        _dir = newDir;
+        //TODO: add attack range to enemy
     }
 
-    public void Attack() { }
-
-    public void GetDamaged(uint damage)
+    public void GetDamaged(int damage)
     {
-        _hp -= damage;
-        if (_hp<=0)
+        Hp -= damage;
+        if (Hp<=0)
         {
+            GameManager.Instance.CurrentLevelManager.AddGold(Gold);
+            GameManager.Instance.CurrentLevelManager.AddScore(Score);
             Die();
         }
-    }
+    }   
 
     public void Die()
     {
-
+        _enemyController.RemoveEnemy(this);
+        Destroy(gameObject);
     }
 
 }

@@ -9,6 +9,9 @@ public class TowerController : MonoBehaviour
     private Tower _towerPtr;
     private GameObject towerGameObject;
     private GameBoard _gameBoard;
+    private LevelManager _levelManager;
+    private HashSet<Enemy> _enemies;
+    // todo: flag to make sure only one ongui esixt
 
     void Awake()
     {
@@ -18,7 +21,9 @@ public class TowerController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _gameBoard = _levelManager.GameBoardSystem;
+
     }
 	
 	// Update is called once per frame
@@ -27,28 +32,45 @@ public class TowerController : MonoBehaviour
 	
 	}
 
-    public Tower BuildTower(uint x, uint y, int index)
+    public GameObject BuildTower(TileEventHandler teh,uint x, uint y, int index)
     {
+
         Vector3 GamePosition;
         GamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
         towerGameObject = Instantiate(Towers[index], GamePosition, Quaternion.identity) as GameObject;
         _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
-        return _towerPtr;
+        if (_towerPtr.buildCost < _levelManager.GetGold())
+        {
+            // gold will not be used here, need to check if it blocks the last path later
+            Debug.Log("TC: Enough gold to build");
+        }
+        else
+        {
+            Debug.Log("TC: Not enough gold to build");
+            Destroy(towerGameObject);
+            return null;
+        }
+        Debug.Log("TC: Tower object created");
+        return towerGameObject;
     }
 
-    public void RemoveTower()
+    public void AddEnemy(Enemy enemy)
     {
-        _towerPtr.Remove();
+        _enemies.Add(enemy);
     }
 
-    public void RepairTower()
+    public void ClearEnemis()
     {
-        _towerPtr.Repair();
+        _enemies.Clear();
     }
 
-    public void UpgradeTower()
+    public bool CheckIfEnemyAlive(Enemy enemy)
     {
-        _towerPtr.Upgrade();
+        return _enemies.Contains(enemy);
     }
 
+    public void RemoveEnemy(Enemy enemy)
+    {
+        _enemies.Remove(enemy);
+    }
 }

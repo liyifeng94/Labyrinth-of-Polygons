@@ -33,6 +33,14 @@ public class GameBoard : MonoBehaviour
 
     public Tile[,] BoardTiles { get; private set; } 
 
+    public enum GamePhase
+    {
+        BuildingPhase,
+        BattlePhase
+    }
+
+    public GamePhase CurrentGamePhase { get; private set; }
+
     public class Tile
     {
         public GameObject TileObject { get; private set; }
@@ -78,6 +86,7 @@ public class GameBoard : MonoBehaviour
         _gmInstance = GameManager.Instance;
         _levelManager = _gmInstance.CurrentLevelManager;
         GameBoardSetup();
+        CurrentGamePhase = GamePhase.BuildingPhase;
     }
 
     // Update is called once per frame
@@ -148,6 +157,7 @@ public class GameBoard : MonoBehaviour
             if (!valid)
             {
                 towerCell.SetCell(false);
+                paths = _gmInstance.SearchPathFrom(entrance.X, entrance.Y);
                 return false;
             }
         }
@@ -199,14 +209,14 @@ public class GameBoard : MonoBehaviour
 
     public void RemoveEnemy(Enemy enemyPtr)
     {
-        //TODO: remove enemy
+        _levelManager.TowerController.RemoveEnemy(enemyPtr);
         _enemiesHolder.Remove(enemyPtr);
     }
 
     public void EnemyReachedExit(Enemy enemyPtr)
     {
         _enemiesHolder.Remove(enemyPtr);
-        _levelManager.RemoveHealth(1);
+        _levelManager.RemoveHealth(enemyPtr.Damage);
     }
 
     public void HighlightTileAt(uint x, uint y)
@@ -225,5 +235,16 @@ public class GameBoard : MonoBehaviour
         {
             Destroy(tile);
         }
+    }
+
+    public void EnterBattlePhase()
+    {
+        CurrentGamePhase = GamePhase.BattlePhase;
+        
+    }
+
+    public void EnterBuildingPhase()
+    {
+        CurrentGamePhase = GamePhase.BuildingPhase;
     }
 }

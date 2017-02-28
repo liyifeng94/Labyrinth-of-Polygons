@@ -15,8 +15,10 @@ public class TileEventHandler : MonoBehaviour
     private Texture2D _image_2;
     private Texture2D _image_3;
     private Texture2D _image_4;
+    private LevelManager _levelManager;
     private GameBoard _gameBoard;
-    //private Tower towerPtr;
+    private Tower _towerPtr;
+    private GameObject towerGameObject;
 
     // Use this for initialization
     void Start ()
@@ -40,70 +42,129 @@ public class TileEventHandler : MonoBehaviour
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
         _ongui = true;
-        if (_gameBoard == null)
+        if(!_towerExist && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
-            _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
+            _gameBoard.HighlightTileAt(GridX, GridY);
         }
-        _gameBoard.HighlightTileAt(GridX,GridY);
-
     }
 
     void OnGUI()
     {
-        uint x = GridX * 20 + 38;
-        uint y = 460 - GridY * 20 + (3-(GridY / 5))*10;
-        if (GridX >= 7) x -= 49;
-        if (GridY <= 1) y -= 60;
+        if (_gameBoard == null)
+        {
+            _levelManager = GameManager.Instance.CurrentLevelManager;
+            _gameBoard = _levelManager.GameBoardSystem;
+        }
+        //Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
+        //float x = gridPosition.x;
+        //float y = gridPosition.y;
+#if UNITY_EDITOR
+        float x = 4;
+        float y = 0;
+        int size = 30;
+#else
+        float x = 40;
+        float y = 500;
+        int size = 90;
+
+#endif
+
         if (_towerExist)
         {
             // remove case
-            if (_ongui && GUI.Button(new Rect(x, y, 30, 30), _image_2))
+            if (_ongui && GUI.Button(new Rect(x + 4, y, size, size), _image_2))
             {
                 _ongui = false;
                 _towerExist = false;
-                // remove the tower?
                 Debug.Log("TEH: Trying to sell tower");
+                RemoveTower(false);
                 _gameBoard.ClearHighlightTiles();
             }
 
             // repair case
-            if (_ongui && GUI.Button(new Rect(x+30, y, 30, 30), _image_3))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 2 * size, size, size), _image_3))
             {
                 _ongui = false;
                 _towerExist = true;
                 Debug.Log("TEH: Trying to repair tower");
-                _towerController.RepairTower();
+                RepairTower();
                 _gameBoard.ClearHighlightTiles();
             }
 
             // upgrade case
-            if (_ongui && GUI.Button(new Rect(x + 60, y, 30, 30), _image_4))
+            if (_ongui && GUI.Button(new Rect(x + 4, y + 4 * size, size, size), _image_4))
             {
                 _ongui = false;
                 _towerExist = true;
                 Debug.Log("TEH: Trying to upgrade tower");
-                _towerController.UpgradeTower();
+                UpgradeTower();
                 _gameBoard.ClearHighlightTiles();
             }
         }
         else
         {
+            if (_levelManager.CurrentGamePhase() != GameBoard.GamePhase.BuildingPhase)
+            {
+                return;
+            }
             // build tower 1 case
-            if (_ongui && GUI.Button(new Rect(x, y, 30, 30), _image_1))
+            if (_ongui && GUI.Button(new Rect(x + 4, y, size, size), _image_1))
             {
                 _ongui = false;
-                _towerExist = true;
-                Tower newTower = _towerController.BuildTower(GridX, GridY, 0);
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
-                newTower.Setup(this);
+                // ask tower controller to build(check avaliable gold)
+                towerGameObject = _towerController.BuildTower(this, GridX, GridY, 0);
+                if (null == towerGameObject)
+                {
+                    Debug.Log("TEH: towerGameObject is null");
+                }
+                else
+                {
+                    _towerExist = true;
+                    _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
+                    _towerPtr.Setup(this);
+                    // check if it blocks the last path
+                    if (!_gameBoard.BuildTower(_towerPtr))
+                    {
+                        RemoveTower(true);
+                        _towerExist = false;
+                    }
+                    else
+                    {
+                        _levelManager.UseGold(_towerPtr.buildCost);
+                    }
+                }
                 _gameBoard.ClearHighlightTiles();
             }
         }
+    }
+
+    public void RepairTower()
+    {
+        _towerPtr.Repair();
+    }
+
+
+    public void RemoveTower(bool blockCase)
+    {
+        Destroy(towerGameObject);
+        _towerExist = false;
+        // cant move the last line in tower.cs, when tower is destroy by enemy, receive 0 gold
+        if (! blockCase)
+        {
+            _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
+        }
+        _towerPtr.Remove();
+        Debug.Log("TC: Tower object removed");
+    }
+
+    public void UpgradeTower()
+    {
+        _towerPtr.Upgrade();
     }
 
     public void SetTowerExist(bool towerExist)
     {
         _towerExist = towerExist;
     }
-
 }

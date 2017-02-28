@@ -26,6 +26,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else 
+        Application.Quit(); 
+#endif
+        }
+    }
+
     public void UpdateLevelManager(LevelManager currentLevelManager)
     {
         CurrentLevelManager = currentLevelManager;
@@ -40,4 +52,6 @@ public class GameManager : MonoBehaviour
     {
         _pathingFinder = new PathFinding(gameGrid);
     }
+
+
 }

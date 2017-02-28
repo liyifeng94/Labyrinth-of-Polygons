@@ -52,10 +52,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96a0db30cd452f44bc80faf4c3d9691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildCost: 5
   AttackRange: 3
   HitPoint: 6400000096000000c8000000
   AttackDamage: 050000000a0000000f000000
   AttackSpeed: 010000000100000002000000
+  upgradeCost: 3
+  sellGain: 040000000600000009000000
+  repairCost: 
 --- !u!212 &212000011997658836
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -84,7 +88,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: a7b52536660099343aac161be5a12054, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
