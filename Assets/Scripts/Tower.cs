@@ -22,7 +22,7 @@ public class Tower : MonoBehaviour
     private LevelManager _levelManager;
     //private GameBoard _gameBoard;
     private float _loadingTime;
-    private TileEventHandler _tileEventHandler;
+    //private TileEventHandler _tileEventHandler;
     private TowerController _towerController;
 
     void Start ()
@@ -39,17 +39,16 @@ public class Tower : MonoBehaviour
 	void LateUpdate ()
     {
         //Debug.Log("T: Tower 1 searching");
-        //if (null != _enemies.First())
         if (0 != _enemies.Count)
         {
             float attackS = (float)AttackSpeed[_level] - 0.95f;
-
-            //if (_loadingTime >= AttackSpeed[_level])
             if (_loadingTime >= attackS)
 	        {
+                // todo check if target enemy is still alive from controller
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 _loadingTime = 0.0f;
                 _enemies.Clear();
+                _towerController.ClearEnemis();
 	        }
 	        else
 	        {
@@ -60,7 +59,7 @@ public class Tower : MonoBehaviour
 
     public void Setup(TileEventHandler tileEventHandler)
     {
-        _tileEventHandler = tileEventHandler;
+        //_tileEventHandler = tileEventHandler;
         X = tileEventHandler.GridX;
         Y = tileEventHandler.GridY;
     }
@@ -73,6 +72,7 @@ public class Tower : MonoBehaviour
     public void AddEnemy(Enemy t)
     {
         _enemies.Add(t);
+        _towerController.AddEnemy(t);
     }
 
     public void AttackEnemy(Enemy t)
@@ -83,7 +83,14 @@ public class Tower : MonoBehaviour
         Vector3 end = endTransform.position;
         DrawLine(start, end, Color.blue);
         Debug.Log("attacks");
-        t.GetDamaged(AttackDamage[_level]);
+        if (_towerController.CheckIfEnemyAlive(t))
+        {
+            t.GetDamaged(AttackDamage[_level]);
+        }
+        else
+        {
+            Debug.Log("T: Targeted enemy died");
+        }
     }
     
 

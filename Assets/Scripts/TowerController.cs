@@ -10,7 +10,7 @@ public class TowerController : MonoBehaviour
     private GameObject towerGameObject;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
-    // todo: hashset for each avaliable enemy
+    private HashSet<Enemy> _enemies;
     // todo: flag to make sure only one ongui esixt
 
     void Awake()
@@ -52,5 +52,25 @@ public class TowerController : MonoBehaviour
         }
         Debug.Log("TC: Tower object created");
         return towerGameObject;
+    }
+
+    public void AddEnemy(Enemy enemy)
+    {
+        _enemies.Add(enemy);
+    }
+
+    public void ClearEnemis()
+    {
+        _enemies.Clear();
+    }
+
+    public bool CheckIfEnemyAlive(Enemy enemy)
+    {
+        return _enemies.Contains(enemy);
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        _enemies.Remove(enemy);
     }
 }
