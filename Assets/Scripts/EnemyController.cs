@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public static EnemyController Instance;
     public List<GameObject> Enemies;
     private GameBoard _gameBoard;
+    private bool _spawn = false;
 
     public void SpawnEnemy()
     {
@@ -37,6 +38,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void StartSpawning()
+    {
+        _spawn = true;
+    }
+
+    public void StopSpawning()
+    {
+        _spawn = false;
+    }
+
     public void RemoveEnemy(Enemy ptr)
     {
         _gameBoard.RemoveEnemy(ptr);
@@ -52,12 +63,16 @@ public class EnemyController : MonoBehaviour
     {
         _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
 
-        SpawnEnemy();
+        
 	}
 
 
 	// Update is called once per frame
 	public void Update () {
-	    
+	    if (_spawn)
+	    {
+	        SpawnEnemy();
+	        _spawn = false;
+	    }
 	}
 }

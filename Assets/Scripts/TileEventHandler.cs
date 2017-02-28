@@ -95,7 +95,7 @@ public class TileEventHandler : MonoBehaviour
                 _ongui = false;
                 _towerExist = true;
                 Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
-                towerGameObject = _towerController.BuildTower(GridX, GridY, 0);
+                towerGameObject = _towerController.BuildTower(this, GridX, GridY, 0);
                 _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
                 _towerPtr.Setup(this);
                 _gameBoard.ClearHighlightTiles();
