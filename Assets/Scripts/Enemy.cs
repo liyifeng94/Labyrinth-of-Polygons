@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
-    private const float Tolerance=(float)0.1;
+    private const float Tolerance=(float)0.01;
 
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
 
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
         _enemyController = EnemyController.Instance;
+        Speed = 3;
     }
 
     bool InTile(GameBoard.Tile tile)
@@ -71,6 +72,7 @@ public class Enemy : MonoBehaviour
     void ReachEnd()
     {
         _gameBoard.EnemyReachedExit(this);
+        _enemyController.RemoveEnemy(this);
         Destroy(gameObject);
     }
 
@@ -78,8 +80,8 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector3 position = transform.position;
-        if (((_pos == 0 || _pos+1 == _path.Count) && _distance==0.5) ||
-            (Math.Abs(_distance - 1) < Tolerance))
+        if (((_pos == 0 || _pos+1 == _path.Count) && _distance>0.5) ||
+            _distance>1)
         {
             _pos++;
             GridX = _cells[_pos].X;
@@ -87,27 +89,29 @@ public class Enemy : MonoBehaviour
             _gameBoard.UpdateEnemyPosition(this);
             _distance = 0;
         }
-        if (Math.Abs(transform.position.x - _path[_pos].Position.x) < Tolerance &&
-            Math.Abs(transform.position.y - _path[_pos].Position.y) < Tolerance)
+        if ((transform.position.x >_path[_pos].Position.x && Dir==Direction.Right) ||
+            (transform.position.x < _path[_pos].Position.x && Dir == Direction.Left) ||
+            (transform.position.y > _path[_pos].Position.y && Dir == Direction.Up) ||
+            (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
         }
-        _distance += Speed;
-        if (Dir == Direction.Right) position.x += Speed;
-        if (Dir == Direction.Left) position.x -= Speed;
-        if (Dir == Direction.Up) position.y += Speed;
-        if (Dir == Direction.Down) position.y -= Speed;
+        float temp = Speed * Time.deltaTime;
+        _distance += temp;
+        if (Dir == Direction.Right) position.x += temp;
+        if (Dir == Direction.Left) position.x -= temp;
+        if (Dir == Direction.Up) position.y += temp;
+        if (Dir == Direction.Down) position.y -= temp;
 
         transform.position = position;
 
     }
 
 
-    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, float speed)
+    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells)
     {
         GridX = x;
         GridY = y;
-        Speed = speed;
         _path = path;
         _cells = cells;
     }

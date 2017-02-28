@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
+using Debug = System.Diagnostics.Debug;
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class LevelManager : MonoBehaviour
 
     private LevelState _currentLevelState;
     private GameManager _gameManagerInstance;
+    private TowerController _towerController;
+    private EnemyController _enemyController;
 
     public int StartingHealth = 100;
     public int StartingGold = 100;
@@ -29,8 +32,12 @@ public class LevelManager : MonoBehaviour
 	    _currentLevelState.Health = StartingHealth;
         GameManager.Instance.UpdateLevelManager(this);
 	    GameObject towerControllerGameObject = Instantiate(TowerController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
-        towerControllerGameObject.transform.SetParent(transform);
+	    Debug.Assert(towerControllerGameObject != null, "towerControllerGameObject != null");
+	    towerControllerGameObject.transform.SetParent(transform);
+	    _towerController = towerControllerGameObject.GetComponent<TowerController>();
         GameObject enemyControllerGameObject = Instantiate(EnemyController, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+	    Debug.Assert(enemyControllerGameObject != null, "enemyControllerGameObject != null");
+	    _enemyController = enemyControllerGameObject.GetComponent<EnemyController>();
         enemyControllerGameObject.transform.SetParent(transform);
     }
 	
@@ -43,6 +50,8 @@ public class LevelManager : MonoBehaviour
     public void EnterBattePhase()
     {
         GameBoardSystem.EnterBattlePhase();
+        _enemyController.StartSpawning();
+
     }
 
     public void EnterBuildingPhase()
