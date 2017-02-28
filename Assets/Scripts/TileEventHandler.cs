@@ -127,6 +127,11 @@ public class TileEventHandler : MonoBehaviour
                     _towerExist = true;
                     _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
                     _towerPtr.Setup(this);
+                    if (!_gameBoard.BuildTower(_towerPtr))
+                    {
+                        RemoveTower();
+                        _towerExist = false;
+                    }
                 }
                 _gameBoard.ClearHighlightTiles();
             }

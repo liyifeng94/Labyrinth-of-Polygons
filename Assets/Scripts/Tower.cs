@@ -65,14 +65,14 @@ public class Tower : MonoBehaviour
 
     public void Build()
     {
-        bool success = _gameBoard.BuildTower(this);
-        if (!success)
+        //bool success = _gameBoard.BuildTower(this);
+        /*if (!success)
         {
             //Debug.Log("T: Tower cannot be build");
             _tileEventHandler.RemoveTower();
             _tileEventHandler.SetTowerExist(false);
         }
-        _tileEventHandler.SetTowerExist(true);
+        _tileEventHandler.SetTowerExist(true);*/
 
     }
 
