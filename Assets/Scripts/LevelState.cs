@@ -1,16 +1,26 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SocialPlatforms.Impl;
 
 [Serializable]
 public class LevelState
 {
-    public int Score;
-    public int Gems;
-    public int Gold;
-    public int Level;
+    public int Score = 0;
+    public int Health = 0;
+    public int Gold = 0;
+    public int Level = 0;
+    public uint FinalScore;
+
+    //TODO: Gems
+    //public Gems
 
     //TODO: save grid state
+
+    public uint CalculateFinalScore(GameOptions gameOptions)
+    {
+        FinalScore = (uint) Score;
+        FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
+        FinalScore *= (uint)Level;
+        FinalScore += (uint) Score * gameOptions.Obstacles;
+        FinalScore += (uint)Gold;
+        return FinalScore;
+    }
 }

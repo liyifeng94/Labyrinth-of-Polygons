@@ -82,11 +82,7 @@ public class GameBoard : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
-        _gmInstance = GameManager.Instance;
-        _levelManager = _gmInstance.CurrentLevelManager;
-        GameBoardSetup();
-        CurrentGamePhase = GamePhase.BuildingPhase;
+
     }
 
     // Update is called once per frame
@@ -95,13 +91,27 @@ public class GameBoard : MonoBehaviour
 
     }
 
-    void GameBoardSetup()
+    public void GameBoardSetup(GameOptions gameOptions)
     {
+        TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
+        _gmInstance = GameManager.Instance;
+        _levelManager = _gmInstance.CurrentLevelManager;
+        CurrentGamePhase = GamePhase.BuildingPhase;
         _boardHolder = new GameObject("Board").transform;
         _enemiesHolder = new HashSet<Enemy>();
         _towersHolder = new HashSet<Tower>();
-        GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
         _highlightTile = new List<GameObject>();
+
+        if (gameOptions == null)
+        {
+            GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
+        }
+        else
+        {
+            GameGridSystem = new GridSystem(gameOptions.Width, gameOptions.Height, gameOptions.Entrances, gameOptions.Obstacles);
+        }
+        
+
         CreateBoardTiles();
     }
 
@@ -246,5 +256,10 @@ public class GameBoard : MonoBehaviour
     public void EnterBuildingPhase()
     {
         CurrentGamePhase = GamePhase.BuildingPhase;
+    }
+
+    public void EndGame()
+    {
+        
     }
 }

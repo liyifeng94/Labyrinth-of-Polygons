@@ -5,15 +5,10 @@ using Debug = System.Diagnostics.Debug;
 
 public class LevelManager : MonoBehaviour
 {
-    private class LevelState
-    {
-        public int Gold;
-        public int Score;
-        public int Health;
-    }
-
     private LevelState _currentLevelState;
     private GameManager _gameManagerInstance;
+    private GameOptions _currentGameOptions;
+
     public TowerController TowerController;
     public EnemyController EnemyController;
 
@@ -30,11 +25,15 @@ public class LevelManager : MonoBehaviour
         _currentLevelState = new LevelState();
 	    _currentLevelState.Gold = StartingGold;
 	    _currentLevelState.Health = StartingHealth;
-        GameManager.Instance.UpdateLevelManager(this);
+
+        _currentGameOptions = GameManager.Instance.StartGameLevel(this);
+        GameBoardSystem.GameBoardSetup(_currentGameOptions);
+
 	    GameObject towerControllerGameObject = Instantiate(TowerControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(towerControllerGameObject != null, "towerControllerGameObject != null");
 	    towerControllerGameObject.transform.SetParent(transform);
 	    TowerController = towerControllerGameObject.GetComponent<TowerController>();
+
         GameObject enemyControllerGameObject = Instantiate(EnemyControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(enemyControllerGameObject != null, "enemyControllerGameObject != null");
 	    EnemyController = enemyControllerGameObject.GetComponent<EnemyController>();
@@ -44,7 +43,7 @@ public class LevelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	
+	    
 	}
 
     public void EnterBattePhase()
@@ -104,5 +103,15 @@ public class LevelManager : MonoBehaviour
     public int GetScore()
     {
         return _currentLevelState.Score;
+    }
+
+    void OnDestory()
+    {
+        EndGame();
+    }
+
+    public void EndGame()
+    {
+        _gameManagerInstance.SaveGameState(_currentLevelState);
     }
 }
