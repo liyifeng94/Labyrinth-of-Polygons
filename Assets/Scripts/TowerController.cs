@@ -23,7 +23,7 @@ public class TowerController : MonoBehaviour
     {
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
-
+        _enemies = new HashSet<Enemy>();
     }
 	
 	// Update is called once per frame

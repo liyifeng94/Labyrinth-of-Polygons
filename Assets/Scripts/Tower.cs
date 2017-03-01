@@ -77,15 +77,15 @@ public class Tower : MonoBehaviour
 
     public void AttackEnemy(Enemy t)
     {
-        Vector3 start = transform.position;
-        GameObject target = t.gameObject;
-        Transform endTransform = target.transform;
-        Vector3 end = endTransform.position;
-        DrawLine(start, end, Color.blue);
-        Debug.Log("attacks");
         if (_towerController.CheckIfEnemyAlive(t))
         {
+            Vector3 start = transform.position;
+            GameObject target = t.gameObject;
+            Transform endTransform = target.transform;
+            Vector3 end = endTransform.position;
+            DrawLine(start, end, Color.blue);
             t.GetDamaged(AttackDamage[_level]);
+            Debug.Log("T: Attacks");
         }
         else
         {
