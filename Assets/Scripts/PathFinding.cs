@@ -78,6 +78,7 @@ public class PathFinding
     /* return true if the (neigh) is an exit point */
     private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from,int alt)
     {
+        Debug.Log("pathfinding triggered");
         if (neigh.IsExit)
         {
             dist[neigh.X, neigh.Y] = alt;
