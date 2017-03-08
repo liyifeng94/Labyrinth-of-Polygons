@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
             Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
             _enemies.Add(enemy);
-            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path);
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,0);
             _gameBoard.AddEnemy(enemy);
         }
     }
