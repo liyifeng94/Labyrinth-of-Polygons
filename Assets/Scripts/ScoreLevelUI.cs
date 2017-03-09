@@ -9,17 +9,14 @@ public class ScoreLevelUI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    int score = GameManager.Instance.CurrentLevelManager.GetScore();
-	    ScoreCount.text = score.ToString();
-	}
+	    int score = 0;
+	    if (GameManager.Instance != null)
+            score = GameManager.Instance.CurrentLevelManager.GetScore();
+        ScoreCount.text = score.ToString();
+    }
 	
 	// Update is called once per frame
     void Update()
-    {
-        
-    }
-
-    public void BackToMainPhase()
     {
         
     }
