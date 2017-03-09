@@ -11,14 +11,16 @@ public class TileEventHandler : MonoBehaviour
     private bool _towerExist;
     private bool _ongui;
     private TowerController _towerController;
-    private Texture2D _image_1;
-    private Texture2D _image_2;
-    private Texture2D _image_3;
-    private Texture2D _image_4;
+    private TowerBuildPanel _towerBuildPanel;
     private LevelManager _levelManager;
     private GameBoard _gameBoard;
     private Tower _towerPtr;
     private GameObject towerGameObject;
+    private Texture2D _image_1;
+    private Texture2D _image_2;
+    private Texture2D _image_3;
+    private Texture2D _image_4;
+
 
     // Use this for initialization
     void Start ()
@@ -27,6 +29,7 @@ public class TileEventHandler : MonoBehaviour
         _ongui = false;
         _gameBoard = null;
         _towerController = TowerController.Instance;
+        _towerBuildPanel = TowerBuildPanel.Instance;
         _image_1 = (Texture2D)Resources.Load("TowerImage_1");
         _image_2 = (Texture2D)Resources.Load("SellImage");
         _image_3 = (Texture2D)Resources.Load("Repair");
@@ -46,6 +49,7 @@ public class TileEventHandler : MonoBehaviour
         {
             _gameBoard.HighlightTileAt(GridX, GridY);
         }
+        _towerBuildPanel.Appear();
     }
 
     void OnGUI()
@@ -68,7 +72,7 @@ public class TileEventHandler : MonoBehaviour
         int size = 90;
 
 #endif
-
+        return;
         if (_towerExist)
         {
             // remove case
