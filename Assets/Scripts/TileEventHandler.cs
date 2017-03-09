@@ -20,6 +20,7 @@ public class TileEventHandler : MonoBehaviour
     private Texture2D _image_2;
     private Texture2D _image_3;
     private Texture2D _image_4;
+    private TankTowerButton _tankTowerButton;
 
 
     // Use this for initialization
@@ -30,10 +31,13 @@ public class TileEventHandler : MonoBehaviour
         _gameBoard = null;
         _towerController = TowerController.Instance;
         _towerBuildPanel = TowerBuildPanel.Instance;
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+        _gameBoard = _levelManager.GameBoardSystem;
         _image_1 = (Texture2D)Resources.Load("TowerImage_1");
         _image_2 = (Texture2D)Resources.Load("SellImage");
         _image_3 = (Texture2D)Resources.Load("Repair");
         _image_4 = (Texture2D)Resources.Load("Upgrade");
+        _tankTowerButton = TankTowerButton.Instance;
     }
 	
 	// Update is called once per frame
@@ -48,17 +52,23 @@ public class TileEventHandler : MonoBehaviour
         if(!_towerExist && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
             _gameBoard.HighlightTileAt(GridX, GridY);
+            if (_towerExist)
+            {
+                // TODO: remove, repaire, sell cases
+            }
+            else
+            {
+                //_tankTowerButton.setTowerEventHandler(this);
+                // TODO: set the rest four towers
+                //_towerBuildPanel.Appear();
+            }
         }
-        _towerBuildPanel.Appear();
+
+
     }
 
     void OnGUI()
     {
-        if (_gameBoard == null)
-        {
-            _levelManager = GameManager.Instance.CurrentLevelManager;
-            _gameBoard = _levelManager.GameBoardSystem;
-        }
         //Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
         //float x = gridPosition.x;
         //float y = gridPosition.y;
@@ -72,7 +82,6 @@ public class TileEventHandler : MonoBehaviour
         int size = 90;
 
 #endif
-        return;
         if (_towerExist)
         {
             // remove case
