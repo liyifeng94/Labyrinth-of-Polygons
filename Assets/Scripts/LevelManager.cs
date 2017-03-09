@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
 	    _currentLevelState.Health = StartingHealth;
 
         _currentGameOptions = GameManager.Instance.StartGameLevel(this);
-        GameBoardSystem.GameBoardSetup(_currentGameOptions);
+        _currentGameOptions = GameBoardSystem.GameBoardSetup(_currentGameOptions);
 
 	    GameObject towerControllerGameObject = Instantiate(TowerControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(towerControllerGameObject != null, "towerControllerGameObject != null");

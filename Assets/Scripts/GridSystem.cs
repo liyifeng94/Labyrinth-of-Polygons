@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public class GridSystem
 {
@@ -61,25 +62,33 @@ public class GridSystem
         public readonly uint Width;
         public readonly uint Height;
         private readonly Cell[ , ] _grid;
+        private readonly List<Cell> _availableCells;
         public List<Cell> Entrances { get; private set; }
         public List<Cell> Exits { get; private set; }
-        public HashSet<Cell> Obstacles { get; private set; }
+        public List<Cell> Obstacles { get; private set; }
 
         public Grid(uint width, uint height)
         {
             Width = width;
             Height = height;
             _grid = new Cell[Width, Height];
+            _availableCells = new List<Cell>();
             Entrances = new List<Cell>();
             Exits = new List<Cell>();
-            Obstacles = new HashSet<Cell>();
+            Obstacles = new List<Cell>();
+
 
             //Create grid
             for (uint y = 0; y < Height; ++y)
             {
                 for (uint x = 0; x < Width; ++x)
                 {
-                    _grid[x,y] = new Cell(x,y);
+                    Cell newCell = new Cell(x, y);
+                    _grid[x, y] = newCell;
+                    if (y > 1 && y < Height - 2)
+                    {
+                        _availableCells.Add(newCell);
+                    }
                 }
             }
 
@@ -118,21 +127,42 @@ public class GridSystem
             return true;
         }
 
-        public void SetNumberOfObstacles(uint n)
+        public uint SetNumberOfObstacles(uint n)
         {
-            bool validGrid;
+            List<Cell> availableCells = new List<Cell>(_availableCells);
+            ListExt.Shuffle(availableCells);
+            Queue<Cell> obstacleQueue = new Queue<Cell>(availableCells);
+            Obstacles = new List<Cell>();
+            uint obstacles = 0;
+            Cell lastCell = null;
             do
             {
-                Obstacles = new HashSet<Cell>();
-                while (Obstacles.Count < n)
+                Cell obstacleCell = obstacleQueue.Dequeue();
+                obstacleCell.SetCell(true);
+                bool validGrid = ValidGrid();
+                if (validGrid)
                 {
-                    int x = Random.Range(0, (int)Width - 1);
-                    int y = Random.Range(1, (int)Height - 2);
-                    Obstacles.Add(_grid[x, y]);
-                    _grid[x, y].SetCell(true);
+                    ++obstacles;
+                    Obstacles.Add(obstacleCell);
                 }
-                validGrid = ValidGrid();
-            } while (validGrid == false);
+                else
+                {
+                    obstacleCell.SetCell(false);
+                    obstacleQueue.Enqueue(obstacleCell);
+                    if (lastCell == null)
+                    {
+                        lastCell = obstacleCell;
+                    }
+                    else if (lastCell == obstacleCell)
+                    {
+                        Debug.Log("Max obstacles: " + obstacles);
+                        return obstacles;
+                    }
+
+                }
+            } while (obstacles != n);
+            Debug.Log("Obstacles: " + obstacles);
+            return obstacles;
         }
 
         public bool ValidGrid()
@@ -149,20 +179,20 @@ public class GridSystem
         }
     }
 
-    public GridSystem(uint width, uint hight, uint entrances, uint obstacles)
+    public GridSystem(GameOptions gameOptions)
     {
-        _width = width;
-        _height = hight;
-        _entrances = entrances;
-        _obstacles = obstacles;
-        CreateGrid();
+        _width = gameOptions.Width;
+        _height = gameOptions.Height;
+        _entrances = gameOptions.Entrances;
+        _obstacles = gameOptions.Obstacles;
+        CreateGrid(gameOptions);
     }
 
-    public void CreateGrid()
+    public void CreateGrid(GameOptions gameOptions)
     {
         MainGameGrid = new Grid(_width, _height);
         MainGameGrid.SetNumberOfEntries(_entrances);
         GameManager.Instance.CreatePathFinder(this);
-        MainGameGrid.SetNumberOfObstacles(_obstacles);
+        gameOptions.Obstacles = MainGameGrid.SetNumberOfObstacles(_obstacles);
     }
 }

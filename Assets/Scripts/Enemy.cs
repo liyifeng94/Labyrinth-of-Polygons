@@ -2,12 +2,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
     private const float Tolerance=(float)0.01;
 
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
+    public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, Boss = 4}
 
     public uint GridX { get; private set; }
     public uint GridY { get; private set; }
@@ -27,11 +29,13 @@ public class Enemy : MonoBehaviour
     public int Gold = 5;
     public int Score = 10;
     private Direction Dir = Direction.Down ;
+    public Type EnemyType;
     private int _pos = 0;
     private float _distance = (float)0.0;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
     private EnemyController _enemyController;
+    private HashSet<Tower> _towers;
 
     private List<GameBoard.Tile> _path;
     private List<GridSystem.Cell> _cells;
@@ -57,7 +61,7 @@ public class Enemy : MonoBehaviour
 
     void ChangeDir()
     {
-       
+        if (EnemyType == Type.Flying) return;
         if (_path[_pos + 1].Position.x >_path[_pos].Position.x) Dir = Direction.Right;
         if (_path[_pos + 1].Position.x < _path[_pos].Position.x) Dir = Direction.Left;
         if (_path[_pos + 1].Position.y > _path[_pos].Position.y) Dir = Direction.Up;
@@ -109,12 +113,14 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells)
+    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, Type type)
     {
+        EnemyType = type;
         GridX = x;
         GridY = y;
         _path = path;
         _cells = cells;
+        AttackRange = 1;
     }
 
     public void SetPos(uint xPos, uint yPos) {
@@ -122,9 +128,17 @@ public class Enemy : MonoBehaviour
         GridY = yPos;
     }
 
+    public void AddTowers(Tower t)
+    {
+        _towers.Add(t);
+    }
+
     public void Attack()
     {
-        //TODO: add attack range to enemy
+        if (EnemyType != Type.Attacking) return;
+
+        _towers.First().ReceiveAttack(1);
+
     }
 
     public void GetDamaged(int damage)
@@ -142,6 +156,11 @@ public class Enemy : MonoBehaviour
     {
         _enemyController.RemoveEnemy(this);
         Destroy(gameObject);
+    }
+
+    public void SlowDown(float p)
+    {
+        
     }
 
 }

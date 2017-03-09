@@ -91,7 +91,7 @@ public class GameBoard : MonoBehaviour
 
     }
 
-    public void GameBoardSetup(GameOptions gameOptions)
+    public GameOptions GameBoardSetup(GameOptions gameOptions)
     {
         TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
         _gmInstance = GameManager.Instance;
@@ -104,15 +104,21 @@ public class GameBoard : MonoBehaviour
 
         if (gameOptions == null)
         {
-            GameGridSystem = new GridSystem(GridWidth, GridHeight, GridEntrances, GridObstacles);
+            gameOptions = new GameOptions();
+            gameOptions.Width = GridWidth;
+            gameOptions.Height = GridHeight;
+            gameOptions.Entrances = GridEntrances;
+            gameOptions.Obstacles = GridObstacles;
+            GameGridSystem = new GridSystem(gameOptions);
         }
         else
         {
-            GameGridSystem = new GridSystem(gameOptions.Width, gameOptions.Height, gameOptions.Entrances, gameOptions.Obstacles);
+            GameGridSystem = new GridSystem(gameOptions);
         }
         
 
         CreateBoardTiles();
+        return gameOptions;
     }
 
     void CreateBoardTiles()
