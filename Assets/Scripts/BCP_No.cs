@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BCP_Yes : MonoBehaviour
-{
+public class BCP_No : MonoBehaviour {
 
-    public static BCP_Yes Instance;
+    public static BCP_No Instance;
     private TowerBuildPanel _towerBuildPanel;
     private TileEventHandler _tileEventHandler;
     private BuildCheckPanel _buildCheckPanel;
@@ -17,24 +16,16 @@ public class BCP_Yes : MonoBehaviour
         Instance = this;
     }
 
-    void Start () {
+    void Start()
+    {
 
     }
 
-	void Update () {
+    void Update () {
 	
 	}
 
-    public void BuildConfirmed()
-    {
-        _towerBuildPanel.DisAppear();
-        _buildCheckPanel.DisAppear();
-        _towerInfoPanel.DisAppear();
-        _tileEventHandler.SetYes();
-        _gameBoard.ClearHighlightTiles();
-    }
-
-    public void setTileEventHandler(TileEventHandler teh)
+    public void BuildDenied()
     {
         if (null == _gameBoard)
         {
@@ -44,6 +35,9 @@ public class BCP_Yes : MonoBehaviour
             _levelManager = GameManager.Instance.CurrentLevelManager;
             _gameBoard = _levelManager.GameBoardSystem;
         }
-        _tileEventHandler = teh;
+        _towerBuildPanel.DisAppear();
+        _buildCheckPanel.DisAppear();
+        _towerInfoPanel.DisAppear();
+        _gameBoard.ClearHighlightTiles();
     }
 }

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class TankTowerButton : MonoBehaviour {
 
-    //public BuildCheckPanel BuildCheckPanel;
     public static TankTowerButton Instance;
     private BuildCheckPanel _buildCheckPanel;
     private TowerBuildPanel _towerBuildPanel;
@@ -47,49 +46,8 @@ public class TankTowerButton : MonoBehaviour {
 
     public void TankTowerSelected()
     {
-        Debug.Log("TTB: TankTowerButton clicked");
-        // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
-        // ask tower controller to build(check avaliable gold)
-        towerGameObject = _towerController.BuildTower(_tileEventHandler, _tileEventHandler.GridX, _tileEventHandler.GridY, 0);
-        _towerInfoPanel.Appear();// TODO: fix when should it shows up, like if not enough money, 
-        if (null == towerGameObject)
-        {
-            Debug.Log("TTB: towerGameObject is null");
-        }
-        else
-        {
-            _buildCheckPanel.Appear();
-            _tileEventHandler.SetTowerExist(true);
-            _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
-            _towerPtr.Setup(_tileEventHandler);
-            // check if it blocks the last path
-            if (!_gameBoard.BuildTower(_towerPtr))
-            {
-                //_tileEventHandler.RemoveTower(true);
-                RemoveTower(true);
-                _tileEventHandler.SetTowerExist(false);
-            }
-            else
-            {
-                _levelManager.UseGold(_towerPtr.buildCost);
-            }
-        }
-        _gameBoard.ClearHighlightTiles();
+        _tileEventHandler.SetTowerIndex(0);
+        _buildCheckPanel.Appear();
+        _towerInfoPanel.Appear();
     }
-
-    void RemoveTower(bool blockCase)
-    {
-        Destroy(towerGameObject);
-        if (!blockCase)
-        {
-            _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
-        }
-        _towerPtr.Remove();
-        _towerInfoPanel.DisAppear();
-        _buildCheckPanel.DisAppear();
-        _towerBuildPanel.DisAppear();
-        Debug.Log("TTB: Tower object removed");
-    }
-
-
 }

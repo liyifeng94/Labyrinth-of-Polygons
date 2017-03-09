@@ -21,6 +21,9 @@ public class TileEventHandler : MonoBehaviour
     private Texture2D _image_3;
     private Texture2D _image_4;
     private TankTowerButton _tankTowerButton;
+    private BCP_Yes _bcp_yes;
+    private bool _yes;
+    private int _towerIndex;
 
 
     // Use this for initialization
@@ -29,20 +32,50 @@ public class TileEventHandler : MonoBehaviour
         _towerExist = false;
         _ongui = false;
         _gameBoard = null;
+        _yes = false;
+        _towerIndex = -1;
+
         _towerController = TowerController.Instance;
         _towerBuildPanel = TowerBuildPanel.Instance;
+        _tankTowerButton = TankTowerButton.Instance;
+        _bcp_yes = BCP_Yes.Instance;
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
+
         _image_1 = (Texture2D)Resources.Load("TowerImage_1");
         _image_2 = (Texture2D)Resources.Load("SellImage");
         _image_3 = (Texture2D)Resources.Load("Repair");
         _image_4 = (Texture2D)Resources.Load("Upgrade");
-        _tankTowerButton = TankTowerButton.Instance;
     }
 	
-	// Update is called once per frame
 	void Update () {
-
+        if (_yes)
+        {
+            //Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+            // ask tower controller to build(check avaliable gold)
+            towerGameObject = _towerController.BuildTower(this, GridX, GridY, 0);
+            if (null == towerGameObject)
+            {
+                Debug.Log("TEH: towerGameObject is null");
+            }
+            else
+            {
+                _towerExist = true;
+                _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
+                _towerPtr.Setup(this);
+                // check if it blocks the last path
+                if (!_gameBoard.BuildTower(_towerPtr))
+                {
+                    RemoveTower(true);
+                    _towerExist = false;
+                }
+                else
+                {
+                    _levelManager.UseGold(_towerPtr.buildCost);
+                }
+            }
+            _yes = false;
+        }
     }
 
     void OnMouseDown()
@@ -55,11 +88,13 @@ public class TileEventHandler : MonoBehaviour
             if (_towerExist)
             {
                 // TODO: remove, repaire, sell cases
+                Debug.Log("TEH: click on an existing tower... do something?");
             }
             else
             {
                 _tankTowerButton.setTowerEventHandler(this);
                 // TODO: set the rest four towers
+                _bcp_yes.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
             }
         }
@@ -161,7 +196,6 @@ public class TileEventHandler : MonoBehaviour
 
     public void RemoveTower(bool blockCase)
     {
-        return;
         Destroy(towerGameObject);
         _towerExist = false;
         // cant move the last line in tower.cs, when tower is destroy by enemy, receive 0 gold
@@ -181,5 +215,15 @@ public class TileEventHandler : MonoBehaviour
     public void SetTowerExist(bool towerExist)
     {
         _towerExist = towerExist;
+    }
+
+    public void SetYes()
+    {
+        _yes = true;
+    }
+
+    public void SetTowerIndex(int i)
+    {
+        _towerIndex = i;
     }
 }
