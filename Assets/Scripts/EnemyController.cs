@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     private bool _spawn = false;
     private bool _build = false;
     private float _start,_end;
-
+    private Enemy.Type type = Enemy.Type.Normal;
 
     public void SpawnEnemy()
     {
@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
         int entrance = Random.Range(0, entrances.Count);
 
         List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
+        List<GridSystem.Cell> flyingPath = GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         var tiles = new List<GameBoard.Tile>();
         foreach (GridSystem.Cell t in path)
         {
@@ -43,7 +44,9 @@ public class EnemyController : MonoBehaviour
             Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
             _enemies.Add(enemy);
-            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,0);
+            if ()
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,(Enemy.Type)type);
+            type++;
             _gameBoard.AddEnemy(enemy);
         }
     }
