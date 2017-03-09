@@ -18,8 +18,6 @@ public class PathFinding
     {
         _gameGrid = mainGameGrid;
         grid = _gameGrid.MainGameGrid;
-        //entry = MainGameGridgrid.Entrances;
-        //exit = MainGameGridgrid.Exits;
 
         dist = new int[grid.Width, grid.Height];
 
@@ -35,8 +33,6 @@ public class PathFinding
         }
     }
 
-
-
     private void FillMax(int[,] arr, List<GridSystem.Cell> q)
     {
         for (uint i = 0; i < grid.Width; i++)
@@ -44,8 +40,6 @@ public class PathFinding
             for (uint j = 0; j < grid.Height; j++)
             {
                 arr[i, j] = int.MaxValue;
-                // if (grid.GetCellAt(i, j).IsEntrance)
-                //    dist[i, j] = 0;
                 q.Add(grid.GetCellAt(i, j));
             }
         }
@@ -80,7 +74,7 @@ public class PathFinding
     /* return true if the (neigh) is an exit point */
     private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from,int alt)
     {
-        Debug.Log("pathfinding triggered");
+        // Debug.Log("pathfinding triggered");
         if (neigh.IsExit)
         {
             dist[neigh.X, neigh.Y] = alt;
@@ -115,6 +109,7 @@ public class PathFinding
      *           if there are no available path, the list should be EMPTY!    */
     public List<GridSystem.Cell> Search(uint x, uint y)
     {
+        
         var path = ((List<GridSystem.Cell>) _hashpath[x]);
         if (path.Count > 0)
         {
@@ -131,6 +126,9 @@ public class PathFinding
             if (!modified)
                 return path;
         }
+        
+
+        //var path = new List<GridSystem.Cell>();
 
         var u = new GridSystem.Cell(0,0);
         var neigh = new GridSystem.Cell(0, 0);
