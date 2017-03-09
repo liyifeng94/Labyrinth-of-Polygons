@@ -10,7 +10,8 @@ public class ScoreLevelUI : MonoBehaviour
 	void Start ()
 	{
         // TODO: using the method from GameManager to get the final score
-	    // ScoreCount.text = .ToString();
+	    int score = GameManager.Instance.CurrentLevelManager.GetScore();
+	    ScoreCount.text = score.ToString();
 	}
 	
 	// Update is called once per frame

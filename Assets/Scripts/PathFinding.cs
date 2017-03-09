@@ -12,6 +12,7 @@ public class PathFinding
     private GridSystem _gameGrid;
 
     Hashtable _hashpath = new Hashtable();
+    Hashtable _initialpath = new Hashtable();
 
     public PathFinding(GridSystem mainGameGrid)
     {
@@ -30,6 +31,7 @@ public class PathFinding
         foreach (var e in grid.Entrances)
         {
             _hashpath.Add(e.X, new List<GridSystem.Cell>());
+            _initialpath.Add(e.X, new List<GridSystem.Cell>());
         }
     }
 
@@ -95,6 +97,15 @@ public class PathFinding
             }
         }
         return false;
+    }
+
+    public List<GridSystem.Cell> SearchFlying(uint x, uint y)
+    {
+        var path = ((List<GridSystem.Cell>)_initialpath[x]);
+        if (path.Count > 0)
+            return path;
+        path = Search(x, y);
+        return path;
     }
 
     /* argument: (x): uint. As the x-coordinate of the starting point, and
@@ -182,8 +193,6 @@ public class PathFinding
             path.Add(neigh);
         }
         path.Reverse();
-
-        _hashpath[x] = path;
 
         _queue = new List<GridSystem.Cell>();
         FillMax(dist, _queue);
