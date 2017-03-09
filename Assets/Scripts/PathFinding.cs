@@ -12,13 +12,12 @@ public class PathFinding
     private GridSystem _gameGrid;
 
     Hashtable _hashpath = new Hashtable();
+    Hashtable _initialpath = new Hashtable();
 
     public PathFinding(GridSystem mainGameGrid)
     {
         _gameGrid = mainGameGrid;
         grid = _gameGrid.MainGameGrid;
-        //entry = MainGameGridgrid.Entrances;
-        //exit = MainGameGridgrid.Exits;
 
         dist = new int[grid.Width, grid.Height];
 
@@ -30,10 +29,9 @@ public class PathFinding
         foreach (var e in grid.Entrances)
         {
             _hashpath.Add(e.X, new List<GridSystem.Cell>());
+            _initialpath.Add(e.X, new List<GridSystem.Cell>());
         }
     }
-
-
 
     private void FillMax(int[,] arr, List<GridSystem.Cell> q)
     {
@@ -42,8 +40,6 @@ public class PathFinding
             for (uint j = 0; j < grid.Height; j++)
             {
                 arr[i, j] = int.MaxValue;
-                // if (grid.GetCellAt(i, j).IsEntrance)
-                //    dist[i, j] = 0;
                 q.Add(grid.GetCellAt(i, j));
             }
         }
@@ -78,7 +74,7 @@ public class PathFinding
     /* return true if the (neigh) is an exit point */
     private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from,int alt)
     {
-        Debug.Log("pathfinding triggered");
+        // Debug.Log("pathfinding triggered");
         if (neigh.IsExit)
         {
             dist[neigh.X, neigh.Y] = alt;
@@ -97,6 +93,15 @@ public class PathFinding
         return false;
     }
 
+    public List<GridSystem.Cell> SearchFlying(uint x, uint y)
+    {
+        var path = ((List<GridSystem.Cell>)_initialpath[x]);
+        if (path.Count > 0)
+            return path;
+        path = Search(x, y);
+        return path;
+    }
+
     /* argument: (x): uint. As the x-coordinate of the starting point, and
      *           (y): uint. As an y-coordinate of the starting point.
      * return: List<GridSystem.Cell>: the list contains all cells on the path 
@@ -104,6 +109,7 @@ public class PathFinding
      *           if there are no available path, the list should be EMPTY!    */
     public List<GridSystem.Cell> Search(uint x, uint y)
     {
+        
         var path = ((List<GridSystem.Cell>) _hashpath[x]);
         if (path.Count > 0)
         {
@@ -120,6 +126,9 @@ public class PathFinding
             if (!modified)
                 return path;
         }
+        
+
+        //var path = new List<GridSystem.Cell>();
 
         var u = new GridSystem.Cell(0,0);
         var neigh = new GridSystem.Cell(0, 0);
@@ -182,8 +191,6 @@ public class PathFinding
             path.Add(neigh);
         }
         path.Reverse();
-
-        _hashpath[x] = path;
 
         _queue = new List<GridSystem.Cell>();
         FillMax(dist, _queue);
