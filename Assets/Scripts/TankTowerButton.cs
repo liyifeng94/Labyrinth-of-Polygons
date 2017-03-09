@@ -6,6 +6,7 @@ public class TankTowerButton : MonoBehaviour {
     //public BuildCheckPanel BuildCheckPanel;
     public static TankTowerButton Instance;
     private BuildCheckPanel _buildCheckPanel;
+    private TowerBuildPanel _towerBuildPanel;
     private TowerInfoPanel _towerInfoPanel;
     private TileEventHandler _tileEventHandler;
     private TowerController _towerController;
@@ -36,6 +37,7 @@ public class TankTowerButton : MonoBehaviour {
         if (null == _gameBoard)
         {
             _buildCheckPanel = BuildCheckPanel.Instance;
+            _towerBuildPanel = TowerBuildPanel.Instance;
             _towerInfoPanel = TowerInfoPanel.Instance;
             _towerController = TowerController.Instance;
             _levelManager = GameManager.Instance.CurrentLevelManager;
@@ -49,7 +51,7 @@ public class TankTowerButton : MonoBehaviour {
         // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
         // ask tower controller to build(check avaliable gold)
         towerGameObject = _towerController.BuildTower(_tileEventHandler, _tileEventHandler.GridX, _tileEventHandler.GridY, 0);
-        _towerInfoPanel.Appear();
+        _towerInfoPanel.Appear();// TODO: fix when should it shows up, like if not enough money, 
         if (null == towerGameObject)
         {
             Debug.Log("TTB: towerGameObject is null");
@@ -83,8 +85,9 @@ public class TankTowerButton : MonoBehaviour {
             _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
         }
         _towerPtr.Remove();
-        //_towerInfoPanel.DisAppear();
+        _towerInfoPanel.DisAppear();
         _buildCheckPanel.DisAppear();
+        _towerBuildPanel.DisAppear();
         Debug.Log("TTB: Tower object removed");
     }
 

@@ -23,7 +23,6 @@ public class BCP_Yes : MonoBehaviour {
     {
         Debug.Log("TankTowerButton clicked");
         // TODO call controller
-        // TODO show tower info
         _towerBuildPanel.DisAppear();
         _buildCheckPanel.DisAppear();
         _towerInfoPanel.DisAppear();
