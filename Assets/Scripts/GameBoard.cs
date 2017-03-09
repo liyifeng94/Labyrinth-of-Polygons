@@ -220,7 +220,7 @@ public class GameBoard : MonoBehaviour
             if ((towerX < enemyX + enemyRange && towerX > enemyX - enemyRange) &&
                 (towerY < enemyY + enemyRange && towerY > enemyY - enemyRange))
             {
-                enemyPtr.AddTowers(towerPtr);
+                enemyPtr.AddTower(towerPtr);
             }
         }
     }

@@ -44,8 +44,8 @@ public class EnemyController : MonoBehaviour
             Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
             _enemies.Add(enemy);
-            if ()
-            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,(Enemy.Type)type);
+            //TODO: add flying path
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles,path,Enemy.Type.Attacking);
             type++;
             _gameBoard.AddEnemy(enemy);
         }

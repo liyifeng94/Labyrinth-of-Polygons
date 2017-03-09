@@ -119,6 +119,7 @@ public class Enemy : MonoBehaviour
         GridY = y;
         _path = path;
         _cells = cells;
+        _towers = new HashSet<Tower>();
         switch (EnemyType)
         {
             case Type.Normal:
@@ -128,8 +129,8 @@ public class Enemy : MonoBehaviour
                 Score = 10;
                 break;
             case Type.Attacking:
-                Hp = 5;
-                AttackRange = 2;
+                Hp = 500;
+                AttackRange = 20;
                 Speed = 2;
                 Score = 30;
                 break;
@@ -152,7 +153,6 @@ public class Enemy : MonoBehaviour
                 Score = 100;
                 break;
         }
-        AttackRange = 1;
     }
 
     public void SetPos(uint xPos, uint yPos) {
@@ -160,7 +160,7 @@ public class Enemy : MonoBehaviour
         GridY = yPos;
     }
 
-    public void AddTowers(Tower t)
+    public void AddTower(Tower t)
     {
         _towers.Add(t);
     }
@@ -169,7 +169,7 @@ public class Enemy : MonoBehaviour
     {
         if (EnemyType != Type.Attacking) return;
 
-        _towers.First().ReceiveAttack(1);
+        //if (_towers.Count>0) _towers.First().ReceiveAttack(1000);
 
     }
 
