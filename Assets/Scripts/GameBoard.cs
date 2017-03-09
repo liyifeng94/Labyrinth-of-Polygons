@@ -203,7 +203,7 @@ public class GameBoard : MonoBehaviour
 
         foreach (var towerPtr in _towersHolder)
         {
-            //TODO: check if the enemy is in range of a tower
+            //check if the enemy is in range of a tower
             int towerX = (int)towerPtr.X;
             int towerY = (int)towerPtr.Y;
             int towerRange = (int)towerPtr.AttackRange;
@@ -213,6 +213,14 @@ public class GameBoard : MonoBehaviour
             {
                 //enemy in range of the towers
                 towerPtr.AddEnemy(enemyPtr);
+            }
+
+            // check if the tower is in range of of the current enemy
+            int enemyRange = (int) enemyPtr.AttackRange;
+            if ((towerX < enemyX + enemyRange && towerX > enemyX - enemyRange) &&
+                (towerY < enemyY + enemyRange && towerY > enemyY - enemyRange))
+            {
+                enemyPtr.AddTowers(towerPtr);
             }
         }
     }
