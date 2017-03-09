@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TowerBuildPanel : MonoBehaviour {
+public class TowerInfoPanel : MonoBehaviour {
 
-    public static TowerBuildPanel Instance;
+    public static TowerInfoPanel Instance;
     public GameObject ThisPanel;
-    private TileEventHandler _tileEventHandler;
 
     void Awake()
     {
@@ -14,13 +13,13 @@ public class TowerBuildPanel : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        ThisPanel.SetActive(false);
-    }
+	    ThisPanel.SetActive(false);
+	}
 	
 	// Update is called once per frame
 	void Update () {
-
-    }
+	
+	}
 
     public void Appear()
     {

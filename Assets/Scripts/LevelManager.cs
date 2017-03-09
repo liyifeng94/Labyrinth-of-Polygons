@@ -105,6 +105,11 @@ public class LevelManager : MonoBehaviour
         return _currentLevelState.Score;
     }
 
+    public int GetCurrentLevel()
+    {
+        return _currentLevelState.Level;
+    }
+
     void OnDestory()
     {
         EndGame();
