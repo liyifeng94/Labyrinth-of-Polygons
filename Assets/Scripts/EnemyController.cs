@@ -23,11 +23,11 @@ public class EnemyController : MonoBehaviour
 
         List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         var tiles = new List<GameBoard.Tile>();
-        for (int i = 0; i < path.Count; i++)
+        foreach (GridSystem.Cell t in path)
         {
-            tiles.Add(_gameBoard.BoardTiles[path[i].X,path[i].Y]);
+            tiles.Add(_gameBoard.BoardTiles[t.X,t.Y]);
         }
-        //randomly chose a entrance
+
         GridSystem.Cell startCell = entrances[0];
         GameBoard.Tile startTile = tiles[0];
 
