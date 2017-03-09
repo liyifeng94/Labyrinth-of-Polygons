@@ -125,6 +125,10 @@ public class GameBoard : MonoBehaviour
     {
         BoardTiles = new Tile[GridWidth, GridHeight];
         GridSystem.Grid gameGrid = GameGridSystem.MainGameGrid;
+        foreach (var entrance in gameGrid.Entrances)
+        {
+            _gmInstance.SearchFlyingPath(entrance.X, entrance.Y);
+        }
         Vector3 startPosition = new Vector3(0f, 0f, 0f);
 
         startPosition.x = 0 - (GridWidth/2.0f) * TileSize;

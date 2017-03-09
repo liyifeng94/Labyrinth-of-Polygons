@@ -69,6 +69,11 @@ public class GameManager : MonoBehaviour
         return _pathingFinder.Search(x, y);
     }
 
+    public List<GridSystem.Cell> SearchFlyingPath(uint x, uint y)
+    {
+        return _pathingFinder.SearchFlying(x, y);
+    }
+
     public void CreatePathFinder(GridSystem gameGrid)
     {
         _pathingFinder = new PathFinding(gameGrid);
