@@ -48,7 +48,6 @@ public class Enemy : MonoBehaviour
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
         _enemyController = EnemyController.Instance;
-        Speed = 3;
     }
 
     bool InTile(GameBoard.Tile tile)
@@ -61,7 +60,6 @@ public class Enemy : MonoBehaviour
 
     void ChangeDir()
     {
-        if (EnemyType == Type.Flying) return;
         if (_path[_pos + 1].Position.x >_path[_pos].Position.x) Dir = Direction.Right;
         if (_path[_pos + 1].Position.x < _path[_pos].Position.x) Dir = Direction.Left;
         if (_path[_pos + 1].Position.y > _path[_pos].Position.y) Dir = Direction.Up;
@@ -84,6 +82,7 @@ public class Enemy : MonoBehaviour
     //Called every frame
     void Update()
     {
+        Attack();
         Vector3 position = transform.position;
         if (((_pos == 0 || _pos+1 == _path.Count) && _distance>0.5) ||
             _distance>1)
@@ -120,7 +119,40 @@ public class Enemy : MonoBehaviour
         GridY = y;
         _path = path;
         _cells = cells;
-        AttackRange = 1;
+        _towers = new HashSet<Tower>();
+        switch (EnemyType)
+        {
+            case Type.Normal:
+                Hp = 5;
+                AttackRange = 0;
+                Speed = 2;
+                Score = 10;
+                break;
+            case Type.Attacking:
+                Hp = 500;
+                AttackRange = 20;
+                Speed = 2;
+                Score = 30;
+                break;
+            case Type.Fast:
+                Hp = 3;
+                AttackRange = 0;
+                Speed = 4;
+                Score = 20;
+                break;
+            case Type.Flying:
+                Hp = 5;
+                AttackRange = 0;
+                Speed = 2;
+                Score = 40;
+                break;
+            case Type.Boss:
+                Hp = 50;
+                AttackRange = 0;
+                Speed = 1;
+                Score = 100;
+                break;
+        }
     }
 
     public void SetPos(uint xPos, uint yPos) {
@@ -128,7 +160,7 @@ public class Enemy : MonoBehaviour
         GridY = yPos;
     }
 
-    public void AddTowers(Tower t)
+    public void AddTower(Tower t)
     {
         _towers.Add(t);
     }
@@ -137,7 +169,7 @@ public class Enemy : MonoBehaviour
     {
         if (EnemyType != Type.Attacking) return;
 
-        _towers.First().ReceiveAttack(1);
+        //if (_towers.Count>0) _towers.First().ReceiveAttack(1000);
 
     }
 
