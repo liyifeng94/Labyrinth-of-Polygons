@@ -29,6 +29,7 @@ public class TowerBuildPanel : MonoBehaviour {
 
     public void DisAppear()
     {
+        Debug.Log("!!!!!!!!!!!!!!!!!!!");
         ThisPanel.SetActive(false);
     }
 }

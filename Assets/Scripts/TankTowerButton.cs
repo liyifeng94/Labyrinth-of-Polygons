@@ -45,14 +45,14 @@ public class TankTowerButton : MonoBehaviour {
 
     public void TankTowerSelected()
     {
-        Debug.Log("TankTowerButton clicked");
+        Debug.Log("TTB: TankTowerButton clicked");
         // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
         // ask tower controller to build(check avaliable gold)
         towerGameObject = _towerController.BuildTower(_tileEventHandler, _tileEventHandler.GridX, _tileEventHandler.GridY, 0);
         _towerInfoPanel.Appear();
         if (null == towerGameObject)
         {
-            Debug.Log("TEH: towerGameObject is null");
+            Debug.Log("TTB: towerGameObject is null");
         }
         else
         {
@@ -83,7 +83,9 @@ public class TankTowerButton : MonoBehaviour {
             _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
         }
         _towerPtr.Remove();
-        Debug.Log("TC: Tower object removed");
+        //_towerInfoPanel.DisAppear();
+        _buildCheckPanel.DisAppear();
+        Debug.Log("TTB: Tower object removed");
     }
 
 

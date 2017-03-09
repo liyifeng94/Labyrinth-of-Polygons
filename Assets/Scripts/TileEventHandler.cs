@@ -58,9 +58,9 @@ public class TileEventHandler : MonoBehaviour
             }
             else
             {
-                //_tankTowerButton.setTowerEventHandler(this);
+                _tankTowerButton.setTowerEventHandler(this);
                 // TODO: set the rest four towers
-                //_towerBuildPanel.Appear();
+                _towerBuildPanel.Appear();
             }
         }
 
@@ -69,6 +69,7 @@ public class TileEventHandler : MonoBehaviour
 
     void OnGUI()
     {
+        return;
         //Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
         //float x = gridPosition.x;
         //float y = gridPosition.y;
@@ -160,6 +161,7 @@ public class TileEventHandler : MonoBehaviour
 
     public void RemoveTower(bool blockCase)
     {
+        return;
         Destroy(towerGameObject);
         _towerExist = false;
         // cant move the last line in tower.cs, when tower is destroy by enemy, receive 0 gold
