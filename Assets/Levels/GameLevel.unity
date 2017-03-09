@@ -370,7 +370,7 @@ Prefab:
     - target: {fileID: 114000012744701448, guid: 54d29aaf0170c1d489e1589b0fc73486,
         type: 2}
       propertyPath: GridObstacles
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54d29aaf0170c1d489e1589b0fc73486, type: 2}
