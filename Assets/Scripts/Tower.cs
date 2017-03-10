@@ -15,8 +15,10 @@ public class Tower : MonoBehaviour
     public int upgradeCost;
     public int[] sellGain;
     public int[] repairCost;
+    public enum Type { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
+    public Type TowerType;
 
-    private int _currentHP;
+    private int _currentHp;
     private int _level;
     private HashSet<Enemy> _enemies;
     private LevelManager _levelManager;
@@ -33,7 +35,7 @@ public class Tower : MonoBehaviour
         _towerController = TowerController.Instance;
         _level = 0;
         _loadingTime = AttackSpeed[_level];
-        _currentHP = HitPoint[_level];
+        _currentHp = HitPoint[_level];
     }
 
 	void LateUpdate ()
@@ -96,9 +98,9 @@ public class Tower : MonoBehaviour
 
     public void ReceiveAttack(int ad)
     {
-        if (_currentHP > ad)
+        if (_currentHp > ad)
         {
-            _currentHP -= ad;
+            _currentHp -= ad;
         }
         else
         {
@@ -112,7 +114,7 @@ public class Tower : MonoBehaviour
         if (_level < 2)
         {
             _level += 1;
-            _currentHP = HitPoint[_level];
+            _currentHp = HitPoint[_level];
             _levelManager.UseGold(upgradeCost);
             Debug.Log("T: Tower upgraded to level" + _level);
         }
@@ -124,9 +126,9 @@ public class Tower : MonoBehaviour
 
     public void Repair()
     {
-        _currentHP = HitPoint[_level];
+        _currentHp = HitPoint[_level];
         _levelManager.UseGold(repairCost[_level]);
-        Debug.Log("T: Tower Repaired, HP is " + _currentHP);
+        Debug.Log("T: Tower Repaired, HP is " + _currentHp);
     }
 
     public int getLevel()
