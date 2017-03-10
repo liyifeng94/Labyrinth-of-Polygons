@@ -33,7 +33,7 @@ public class BCP_Yes : MonoBehaviour
         _towerInfoPanel.DisAppear();
         _towerOperationPanel.DisAppear();
         _gameBoard.ClearHighlightTiles();
-        _tileEventHandler.SetYes();
+        _tileEventHandler.OperationConfirmed();
     }
 
     public void setTileEventHandler(TileEventHandler teh)

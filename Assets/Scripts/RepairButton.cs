@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SellButton : MonoBehaviour {
+public class RepairButton : MonoBehaviour {
 
-    public static SellButton Instance;
+    public static RepairButton Instance;
     private BuildCheckPanel _buildCheckPanel;
     private TowerInfoPanel _towerInfoPanel;
     private TileEventHandler _tileEventHandler;
@@ -27,9 +27,9 @@ public class SellButton : MonoBehaviour {
         }
     }
 
-    public void SellButtonSelected()
+    public void RepairButtonSelected()
     {
-        _tileEventHandler.SetOperation(8);
+        _tileEventHandler.SetOperation(7);
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();
     }

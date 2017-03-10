@@ -35,9 +35,8 @@ public class TowerController : MonoBehaviour
     public GameObject BuildTower(TileEventHandler teh,uint x, uint y, int index)
     {
 
-        Vector3 GamePosition;
-        GamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
-        towerGameObject = Instantiate(Towers[index], GamePosition, Quaternion.identity) as GameObject;
+        Vector3 gamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
+        towerGameObject = Instantiate(Towers[index], gamePosition, Quaternion.identity) as GameObject;
         _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
         if (_towerPtr.buildCost < _levelManager.GetGold())
         {
@@ -47,6 +46,7 @@ public class TowerController : MonoBehaviour
         else
         {
             Debug.Log("TC: Not enough gold to build");
+            // TODO: display the message
             Destroy(towerGameObject);
             return null;
         }
@@ -54,7 +54,7 @@ public class TowerController : MonoBehaviour
         return towerGameObject;
     }
 
-    public int checkTowerInfo(int index, int[] info) // return the tower range, store other info array
+    public int CheckTowerInfo(int index, int[] info) // return the tower range, store other info array
     {
         towerGameObject = Instantiate(Towers[index], new Vector3(), Quaternion.identity) as GameObject;
         _towerPtr = towerGameObject.GetComponent<Tower>();

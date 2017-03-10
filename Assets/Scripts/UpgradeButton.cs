@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SellButton : MonoBehaviour {
+public class UpgradeButton : MonoBehaviour {
 
-    public static SellButton Instance;
+    public static UpgradeButton Instance;
     private BuildCheckPanel _buildCheckPanel;
     private TowerInfoPanel _towerInfoPanel;
     private TileEventHandler _tileEventHandler;
@@ -27,9 +27,9 @@ public class SellButton : MonoBehaviour {
         }
     }
 
-    public void SellButtonSelected()
+    public void UpgradeButtonSelected()
     {
-        _tileEventHandler.SetOperation(8);
+        _tileEventHandler.SetOperation(6);
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();
     }

@@ -30,11 +30,10 @@ public class TankTowerButton : MonoBehaviour {
     public void TankTowerSelected()
     {
         _gameBoard.ClearHighlightTiles();
-        _tileEventHandler.SetTowerIndex(0);
+        _tileEventHandler.SelectTowerType(0);
         _tileEventHandler.SetOperation(1);
         int[] towerInfo = new int[11];
-        int range = _towerController.checkTowerInfo(0, towerInfo);
-        // TODO: get display text
+        int range = _towerController.CheckTowerInfo(0, towerInfo);
         //Debug.Log("Range is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
         for (uint i = 0; i <= range; i++)
         {
