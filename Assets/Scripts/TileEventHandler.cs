@@ -11,6 +11,7 @@ public class TileEventHandler : MonoBehaviour
     private bool _towerExist;
     private bool _operationReceived;
     private int _towerIndex;
+    private bool clearBeforeBattle;
 
     //private Texture2D _image_1;
     //private Texture2D _image_2;
@@ -43,6 +44,8 @@ public class TileEventHandler : MonoBehaviour
         _operationReceived = false;
         _towerIndex = -1;
         TowerOperation = Operation.Nop;
+        clearBeforeBattle = false;
+
 
         _towerController = TowerController.Instance;
         _levelManager = GameManager.Instance.CurrentLevelManager;
@@ -63,6 +66,16 @@ public class TileEventHandler : MonoBehaviour
     }
 	
 	void Update () {
+	    if (_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase && !clearBeforeBattle)
+	    {
+            _towerBuildPanel.DisAppear();
+            _towerOperationPanel.DisAppear();
+            _towerInfoPanel.DisAppear();
+            _buildCheckPanel.DisAppear();
+            _gameBoard.ClearHighlightTiles();
+	        clearBeforeBattle = true;
+	        return;
+	    }
         if (_operationReceived)
         {
             switch (TowerOperation)
@@ -247,7 +260,7 @@ public class TileEventHandler : MonoBehaviour
         {
             _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.GetLevel()]);
         }
-        _towerPtr.Remove();
+        //_towerPtr.Remove();
         Debug.Log("TEH: Tower object removed");
     }
 

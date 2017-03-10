@@ -35,6 +35,6 @@ public class TowerInfoPanel : MonoBehaviour {
     public void SetTowerInfo(int[] info)
     {
         Debug.Log("Tower Level is " + info[1]+1);
-        Level.text = "Lvl: " + info[0];
+        Level.text = "Lvl: " + info[1];
     }
 }
