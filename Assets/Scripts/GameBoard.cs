@@ -199,8 +199,8 @@ public class GameBoard : MonoBehaviour
 
     public bool TargetInRange(int x, int y, int attackRange, int targetX, int targetY)
     {
-        if ((x < targetX + attackRange && x > targetX - attackRange) &&
-                (y < targetY + attackRange && y > targetY - attackRange))
+        if ((x <= targetX + attackRange && x >= targetX - attackRange) &&
+                (y <= targetY + attackRange && y >= targetY - attackRange))
         {
             return true;
         }
