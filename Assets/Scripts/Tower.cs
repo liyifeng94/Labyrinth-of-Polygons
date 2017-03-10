@@ -15,8 +15,8 @@ public class Tower : MonoBehaviour
     public int upgradeCost;
     public int[] sellGain;
     public int[] repairCost;
-    public enum Type { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
-    public Type TowerType;
+    public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
+    public TowerType Type;
 
     private int _currentHp;
     private int _level;
@@ -131,7 +131,7 @@ public class Tower : MonoBehaviour
         Debug.Log("T: Tower Repaired, HP is " + _currentHp);
     }
 
-    public int getLevel()
+    public int GetLevel()
     {
         return _level;
     }
@@ -154,5 +154,20 @@ public class Tower : MonoBehaviour
     public int GetAttackRange()
     {
         return AttackRange;
+    }
+
+    public void GetTowerInfo(int[] info)
+    {
+        info[0] = AttackRange;
+        info[1] = _level;
+        info[2] = (int)Type;
+        info[3] = _currentHp;
+        info[4] = HitPoint[_level];
+        info[5] = AttackDamage[_level];
+        info[6] = AttackSpeed[_level];
+        info[7] = upgradeCost;
+        info[8] = repairCost[_level];
+        info[9] = sellGain[_level];
+        info[10] = buildCost;
     }
 }

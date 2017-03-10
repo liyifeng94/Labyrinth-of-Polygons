@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class TowerInfoPanel : MonoBehaviour {
 
     public static TowerInfoPanel Instance;
     public GameObject ThisPanel;
+    public Text Level;
 
     void Awake()
     {
@@ -29,5 +30,11 @@ public class TowerInfoPanel : MonoBehaviour {
     public void DisAppear()
     {
         ThisPanel.SetActive(false);
+    }
+
+    public void SetTowerInfo(int[] info)
+    {
+        Debug.Log("Tower Level is " + info[1]+1);
+        Level.text = "Lvl: " + info[0];
     }
 }

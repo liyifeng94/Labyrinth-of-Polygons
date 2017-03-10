@@ -32,7 +32,9 @@ public class TankTowerButton : MonoBehaviour {
         _gameBoard.ClearHighlightTiles();
         _tileEventHandler.SetTowerIndex(0);
         _tileEventHandler.SetOperation(1);
-        int range = _towerController.CheckAttackRange(0);
+        int[] towerInfo = new int[11];
+        int range = _towerController.checkTowerInfo(0, towerInfo);
+        // TODO: get display text
         //Debug.Log("Range is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
         for (uint i = 0; i <= range; i++)
         {
@@ -60,6 +62,7 @@ public class TankTowerButton : MonoBehaviour {
             }
         }
         _buildCheckPanel.Appear();
+        _towerInfoPanel.SetTowerInfo(towerInfo);
         _towerInfoPanel.Appear();
     }
 }

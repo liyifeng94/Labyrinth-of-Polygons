@@ -54,14 +54,14 @@ public class TowerController : MonoBehaviour
         return towerGameObject;
     }
 
-    public int CheckAttackRange(int index)
+    public int checkTowerInfo(int index, int[] info) // return the tower range, store other info array
     {
         towerGameObject = Instantiate(Towers[index], new Vector3(), Quaternion.identity) as GameObject;
         _towerPtr = towerGameObject.GetComponent<Tower>();
-        int range =  _towerPtr.GetAttackRange();
+        _towerPtr.GetTowerInfo(info);
         _towerPtr.Remove();
         Destroy(towerGameObject);
-        return range;
+        return info[0];
     }
 
     public void AddEnemy(Enemy enemy)

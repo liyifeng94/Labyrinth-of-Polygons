@@ -12,10 +12,10 @@ public class TileEventHandler : MonoBehaviour
     private bool _operationReceived;
     private int _towerIndex;
 
-    private Texture2D _image_1;
-    private Texture2D _image_2;
-    private Texture2D _image_3;
-    private Texture2D _image_4;
+    //private Texture2D _image_1;
+    //private Texture2D _image_2;
+    //private Texture2D _image_3;
+    //private Texture2D _image_4;
     private LevelManager _levelManager;
     private GameBoard _gameBoard;
     private Tower _towerPtr;
@@ -56,10 +56,10 @@ public class TileEventHandler : MonoBehaviour
         _sellButton = SellButton.Instance;
         _yesButton = BCP_Yes.Instance;
 
-        _image_1 = (Texture2D)Resources.Load("TowerImage_1");
-        _image_2 = (Texture2D)Resources.Load("SellImage");
-        _image_3 = (Texture2D)Resources.Load("Repair");
-        _image_4 = (Texture2D)Resources.Load("Upgrade");
+        //_image_1 = (Texture2D)Resources.Load("TowerImage_1");
+        //_image_2 = (Texture2D)Resources.Load("SellImage");
+        //_image_3 = (Texture2D)Resources.Load("Repair");
+        //_image_4 = (Texture2D)Resources.Load("Upgrade");
     }
 	
 	void Update () {
@@ -145,6 +145,7 @@ public class TileEventHandler : MonoBehaviour
 
     }
 
+    /*
     void OnGUI()
     {
         return;
@@ -229,6 +230,7 @@ public class TileEventHandler : MonoBehaviour
         }
     }
 
+    */
     public void RepairTower()
     {
         _towerPtr.Repair();
@@ -238,13 +240,12 @@ public class TileEventHandler : MonoBehaviour
     public void SellTower(bool blockCase)
     {
         Debug.Log("TEH: Trying to sell tower");
-        //RemoveTower(false);
         _gameBoard.ClearHighlightTiles();
         Destroy(towerGameObject);
         _towerExist = false;
         if (! blockCase) // there is money refund for the non-blockCase
         {
-            _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
+            _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.GetLevel()]);
         }
         _towerPtr.Remove();
         Debug.Log("TEH: Tower object removed");
