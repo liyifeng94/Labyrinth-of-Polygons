@@ -9,9 +9,9 @@ public class TileEventHandler : MonoBehaviour
     public uint GridY;
 
     private bool _towerExist;
-    private bool _ongui;
     private TowerController _towerController;
     private TowerBuildPanel _towerBuildPanel;
+    private TowerOperationPanel _towerOperationPanel;
     private LevelManager _levelManager;
     private GameBoard _gameBoard;
     private Tower _towerPtr;
@@ -24,19 +24,20 @@ public class TileEventHandler : MonoBehaviour
     private BCP_Yes _bcp_yes;
     private bool _yes;
     private int _towerIndex;
+    private bool _ongui;
 
 
     // Use this for initialization
     void Start ()
     {
         _towerExist = false;
-        _ongui = false;
         _gameBoard = null;
         _yes = false;
         _towerIndex = -1;
 
         _towerController = TowerController.Instance;
         _towerBuildPanel = TowerBuildPanel.Instance;
+        _towerOperationPanel = TowerOperationPanel.Instance;
         _tankTowerButton = TankTowerButton.Instance;
         _bcp_yes = BCP_Yes.Instance;
         _levelManager = GameManager.Instance.CurrentLevelManager;
@@ -51,9 +52,9 @@ public class TileEventHandler : MonoBehaviour
 	void Update () {
         if (_yes)
         {
-            //Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+            // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
             // ask tower controller to build(check avaliable gold)
-            towerGameObject = _towerController.BuildTower(this, GridX, GridY, 0);
+            towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
             if (null == towerGameObject)
             {
                 Debug.Log("TEH: towerGameObject is null");
@@ -80,15 +81,15 @@ public class TileEventHandler : MonoBehaviour
 
     void OnMouseDown()
     {
-        //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
-        _ongui = true;
-        if(!_towerExist && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist);
+        if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
+            _gameBoard.ClearHighlightTiles();
             _gameBoard.HighlightTileAt(GridX, GridY);
             if (_towerExist)
             {
                 // TODO: remove, repaire, sell cases
-                Debug.Log("TEH: click on an existing tower... do something?");
+                _towerOperationPanel.Appear();
             }
             else
             {

@@ -83,7 +83,7 @@ public class Tower : MonoBehaviour
             GameObject target = t.gameObject;
             Transform endTransform = target.transform;
             Vector3 end = endTransform.position;
-            DrawLine(start, end, Color.blue);
+            DrawLine(start, end, Color.yellow);
             t.GetDamaged(AttackDamage[_level]);
             Debug.Log("T: Attacks");
         }
@@ -142,11 +142,15 @@ public class Tower : MonoBehaviour
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
         lr.SetColors(color, color);
-        lr.SetWidth(0.1f, 0.1f);
+        lr.SetWidth(0.05f, 0.7f);
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         lr.sortingLayerName = "Effects"; 
         GameObject.Destroy(myLine, duration);
     }
 
+    public int GetAttackRange()
+    {
+        return AttackRange;
+    }
 }

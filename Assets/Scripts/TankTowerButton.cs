@@ -46,7 +46,35 @@ public class TankTowerButton : MonoBehaviour {
 
     public void TankTowerSelected()
     {
+        _gameBoard.ClearHighlightTiles();
         _tileEventHandler.SetTowerIndex(0);
+        int range = _towerController.CheckAttackRange(0);
+        Debug.Log("Range is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
+        for (uint i = 0; i < range; i++)
+        {
+            for (uint j = 0; j < range; j++)
+            {
+                if (_tileEventHandler.GridX + i < 10 && _tileEventHandler.GridY + j < 20)
+                {
+                    _gameBoard.HighlightTileAt(_tileEventHandler.GridX + i, _tileEventHandler.GridY + j);
+                }
+                if (_tileEventHandler.GridX >= i && _tileEventHandler.GridY >= j)
+                {
+                    _gameBoard.HighlightTileAt(_tileEventHandler.GridX - i, _tileEventHandler.GridY - j);
+                }
+                if (i != 0 && j != 0)
+                {
+                    if (_tileEventHandler.GridX + i < 10 && _tileEventHandler.GridY >= j)
+                    {
+                        _gameBoard.HighlightTileAt(_tileEventHandler.GridX + i, _tileEventHandler.GridY - j);
+                    }
+                    if (_tileEventHandler.GridX >= i && _tileEventHandler.GridY + j < 20)
+                    {
+                        _gameBoard.HighlightTileAt(_tileEventHandler.GridX - i, _tileEventHandler.GridY + j);
+                    }
+                }
+            }
+        }
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();
     }
