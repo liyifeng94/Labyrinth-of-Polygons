@@ -9,22 +9,30 @@ public class TileEventHandler : MonoBehaviour
     public uint GridY;
 
     private bool _towerExist;
-    private TowerController _towerController;
-    private TowerBuildPanel _towerBuildPanel;
-    private TowerOperationPanel _towerOperationPanel;
-    private LevelManager _levelManager;
-    private GameBoard _gameBoard;
-    private Tower _towerPtr;
-    private GameObject towerGameObject;
+    private bool _operationReceived;
+    private int _towerIndex;
+
     private Texture2D _image_1;
     private Texture2D _image_2;
     private Texture2D _image_3;
     private Texture2D _image_4;
+    private LevelManager _levelManager;
+    private GameBoard _gameBoard;
+    private Tower _towerPtr;
+    private GameObject towerGameObject;
+    private TowerController _towerController;
+
+    private TowerBuildPanel _towerBuildPanel;
+    private TowerOperationPanel _towerOperationPanel;
+    private TowerInfoPanel _towerInfoPanel;
+    private BuildCheckPanel _buildCheckPanel;
     private TankTowerButton _tankTowerButton;
-    private BCP_Yes _bcp_yes;
-    private bool _yes;
-    private int _towerIndex;
+    private SellButton _sellButton;
+    private BCP_Yes _yesButton;
+
     private bool _ongui;
+    public enum Operation { Nop, Tower1, Tower2, Tower3, Tower4, Tower5, Upgrade, Repair, Sell}
+    public Operation TowerOperation;
 
 
     // Use this for initialization
@@ -32,16 +40,21 @@ public class TileEventHandler : MonoBehaviour
     {
         _towerExist = false;
         _gameBoard = null;
-        _yes = false;
+        _operationReceived = false;
         _towerIndex = -1;
+        TowerOperation = Operation.Nop;
 
         _towerController = TowerController.Instance;
-        _towerBuildPanel = TowerBuildPanel.Instance;
-        _towerOperationPanel = TowerOperationPanel.Instance;
-        _tankTowerButton = TankTowerButton.Instance;
-        _bcp_yes = BCP_Yes.Instance;
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
+
+        _towerBuildPanel = TowerBuildPanel.Instance;
+        _towerOperationPanel = TowerOperationPanel.Instance;
+        _towerInfoPanel = TowerInfoPanel.Instance;
+        _buildCheckPanel = BuildCheckPanel.Instance;
+        _tankTowerButton = TankTowerButton.Instance;
+        _sellButton = SellButton.Instance;
+        _yesButton = BCP_Yes.Instance;
 
         _image_1 = (Texture2D)Resources.Load("TowerImage_1");
         _image_2 = (Texture2D)Resources.Load("SellImage");
@@ -50,53 +63,82 @@ public class TileEventHandler : MonoBehaviour
     }
 	
 	void Update () {
-        if (_yes)
+        if (_operationReceived)
         {
-            // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
-            // ask tower controller to build(check avaliable gold)
-            towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
-            if (null == towerGameObject)
+            switch (TowerOperation)
             {
-                Debug.Log("TEH: towerGameObject is null");
+                case Operation.Nop:
+                    break;
+                case Operation.Tower1:
+                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+                    // ask tower controller to build(check avaliable gold)
+                    towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
+                    if (null == towerGameObject)
+                    {
+                        Debug.Log("TEH: towerGameObject is null");
+                    }
+                    else
+                    {
+                        _towerExist = true;
+                        _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
+                        _towerPtr.Setup(this);
+                        // check if it blocks the last path
+                        if (!_gameBoard.BuildTower(_towerPtr))
+                        {
+                            SellTower(true);
+                            _towerExist = false;
+                        }
+                        else
+                        {
+                            _levelManager.UseGold(_towerPtr.buildCost);
+                        }
+                    }
+                    break;
+                case Operation.Tower2:
+                    break;
+                case Operation.Tower3:
+                    break;
+                case Operation.Tower4:
+                    break;
+                case Operation.Tower5:
+                    break;
+                case Operation.Upgrade:
+                    break;
+                case Operation.Repair:
+                    break;
+                case Operation.Sell:
+                    SellTower(false);
+                    break;
             }
-            else
-            {
-                _towerExist = true;
-                _towerPtr = towerGameObject.GetComponent<Tower>(); // get scripts
-                _towerPtr.Setup(this);
-                // check if it blocks the last path
-                if (!_gameBoard.BuildTower(_towerPtr))
-                {
-                    RemoveTower(true);
-                    _towerExist = false;
-                }
-                else
-                {
-                    _levelManager.UseGold(_towerPtr.buildCost);
-                }
-            }
-            _yes = false;
+            _operationReceived = false;
         }
     }
 
     void OnMouseDown()
     {
-        Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist);
+        //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist);
         if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
             _gameBoard.ClearHighlightTiles();
             _gameBoard.HighlightTileAt(GridX, GridY);
             if (_towerExist)
             {
-                // TODO: remove, repaire, sell cases
+                _sellButton.setTowerEventHandler(this);
+                // TODO: set repair and upgrade button
                 _towerOperationPanel.Appear();
+                _towerInfoPanel.Appear();
+                _towerBuildPanel.DisAppear();
+                _buildCheckPanel.DisAppear();
             }
             else
             {
                 _tankTowerButton.setTowerEventHandler(this);
                 // TODO: set the rest four towers
-                _bcp_yes.setTileEventHandler(this);
+                _yesButton.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
+                _towerOperationPanel.DisAppear();
+                _towerInfoPanel.DisAppear();
+                _buildCheckPanel.DisAppear();
             }
         }
 
@@ -106,9 +148,7 @@ public class TileEventHandler : MonoBehaviour
     void OnGUI()
     {
         return;
-        //Vector3 gridPosition = _gameBoard.BoardTiles[GridX, GridY].TileObject.transform.position;
-        //float x = gridPosition.x;
-        //float y = gridPosition.y;
+
 #if UNITY_EDITOR
         float x = 4;
         float y = 0;
@@ -127,7 +167,7 @@ public class TileEventHandler : MonoBehaviour
                 _ongui = false;
                 _towerExist = false;
                 Debug.Log("TEH: Trying to sell tower");
-                RemoveTower(false);
+                SellTower(false);
                 _gameBoard.ClearHighlightTiles();
             }
 
@@ -176,7 +216,7 @@ public class TileEventHandler : MonoBehaviour
                     // check if it blocks the last path
                     if (!_gameBoard.BuildTower(_towerPtr))
                     {
-                        RemoveTower(true);
+                        SellTower(true);
                         _towerExist = false;
                     }
                     else
@@ -195,17 +235,19 @@ public class TileEventHandler : MonoBehaviour
     }
 
 
-    public void RemoveTower(bool blockCase)
+    public void SellTower(bool blockCase)
     {
+        Debug.Log("TEH: Trying to sell tower");
+        //RemoveTower(false);
+        _gameBoard.ClearHighlightTiles();
         Destroy(towerGameObject);
         _towerExist = false;
-        // cant move the last line in tower.cs, when tower is destroy by enemy, receive 0 gold
-        if (! blockCase)
+        if (! blockCase) // there is money refund for the non-blockCase
         {
             _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.getLevel()]);
         }
         _towerPtr.Remove();
-        Debug.Log("TC: Tower object removed");
+        Debug.Log("TEH: Tower object removed");
     }
 
     public void UpgradeTower()
@@ -220,11 +262,16 @@ public class TileEventHandler : MonoBehaviour
 
     public void SetYes()
     {
-        _yes = true;
+        _operationReceived = true;
     }
 
     public void SetTowerIndex(int i)
     {
         _towerIndex = i;
+    }
+
+    public void SetOperation(int op)
+    {
+        TowerOperation = (Operation) op;
     }
 }

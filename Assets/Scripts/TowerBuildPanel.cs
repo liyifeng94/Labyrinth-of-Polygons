@@ -12,14 +12,8 @@ public class TowerBuildPanel : MonoBehaviour {
         Instance = this;
     }
 
-    // Use this for initialization
     void Start () {
         ThisPanel.SetActive(false);
-    }
-	
-	// Update is called once per frame
-	void Update () {
-
     }
 
     public void Appear()
