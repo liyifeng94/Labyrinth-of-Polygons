@@ -15,35 +15,38 @@ public class Tower : MonoBehaviour
     public int upgradeCost;
     public int[] sellGain;
     public int[] repairCost;
+    public int MaxLevel;
     public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
     public TowerType Type;
-
     private int _currentHp;
-    private int _level;
+    private int _currentLevel;
+
     private HashSet<Enemy> _enemies;
     private LevelManager _levelManager;
-    //private GameBoard _gameBoard;
     private float _loadingTime;
-    //private TileEventHandler _tileEventHandler;
     private TowerController _towerController;
+
+    private NotificationPanel _notificationPanel;
+
 
     void Start ()
     {
         _levelManager = GameManager.Instance.CurrentLevelManager;
-        //_gameBoard = _levelManager.GameBoardSystem;
         _enemies = new HashSet<Enemy>();
         _towerController = TowerController.Instance;
-        _level = 0;
-        _loadingTime = AttackSpeed[_level];
-        _currentHp = HitPoint[_level];
+        _currentLevel = 0;
+        _loadingTime = AttackSpeed[_currentLevel];
+        _currentHp = HitPoint[_currentLevel];
+        _notificationPanel = NotificationPanel.Instance;
     }
+
 
 	void LateUpdate ()
     {
         //Debug.Log("T: Tower 1 searching");
         if (0 != _enemies.Count)
         {
-            float attackS = (float)AttackSpeed[_level] - 0.95f;
+            float attackS = (float)AttackSpeed[_currentLevel] - 0.95f;
             if (_loadingTime >= attackS)
 	        {
                 // todo check if target enemy is still alive from controller
@@ -59,6 +62,7 @@ public class Tower : MonoBehaviour
         }
     }
 
+
     public void Setup(TileEventHandler tileEventHandler)
     {
         //_tileEventHandler = tileEventHandler;
@@ -66,16 +70,19 @@ public class Tower : MonoBehaviour
         Y = tileEventHandler.GridY;
     }
 
+
     public void Remove()
     {
         Destroy(gameObject);
     }
     
+
     public void AddEnemy(Enemy t)
     {
         _enemies.Add(t);
         _towerController.AddEnemy(t);
     }
+
 
     public void AttackEnemy(Enemy t)
     {
@@ -86,7 +93,7 @@ public class Tower : MonoBehaviour
             Transform endTransform = target.transform;
             Vector3 end = endTransform.position;
             DrawLine(start, end, Color.yellow);
-            t.GetDamaged(AttackDamage[_level]);
+            t.GetDamaged(AttackDamage[_currentLevel]);
             Debug.Log("T: Attacks");
         }
         else
@@ -109,32 +116,43 @@ public class Tower : MonoBehaviour
         }
     }
 
+
     public void Upgrade()
     {
-        if (_level < 2)
+        if (_currentLevel < MaxLevel - 1)
         {
-            _level += 1;
-            _currentHp = HitPoint[_level];
+            _currentLevel += 1;
+            _currentHp = HitPoint[_currentLevel];
             _levelManager.UseGold(upgradeCost);
-            Debug.Log("T: Tower upgraded to level" + _level);
+            Debug.Log("T: Tower upgraded to level" + _currentLevel);
         }
         else
         {
             Debug.Log("T: Max Level");
+            _notificationPanel.SetNotificationType("MaxLevel");
         }
     }
 
+
     public void Repair()
     {
-        _currentHp = HitPoint[_level];
-        _levelManager.UseGold(repairCost[_level]);
+        _currentHp = HitPoint[_currentLevel];
+        _levelManager.UseGold(repairCost[_currentLevel]);
         Debug.Log("T: Tower Repaired, HP is " + _currentHp);
     }
 
+
     public int GetLevel()
     {
-        return _level;
+        return _currentLevel;
     }
+
+
+    public bool CheckMaxLevel()
+    {
+        return _currentLevel == MaxLevel - 1;
+    }
+
 
     void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
     {
@@ -151,23 +169,25 @@ public class Tower : MonoBehaviour
         GameObject.Destroy(myLine, duration);
     }
 
+
     public int GetAttackRange()
     {
         return AttackRange;
     }
 
+
     public void GetTowerInfo(int[] info)
     {
         info[0] = AttackRange;
-        info[1] = _level;
+        info[1] = _currentLevel;
         info[2] = (int)Type;
         info[3] = _currentHp;
-        info[4] = HitPoint[_level];
-        info[5] = AttackDamage[_level];
-        info[6] = AttackSpeed[_level];
+        info[4] = HitPoint[_currentLevel];
+        info[5] = AttackDamage[_currentLevel];
+        info[6] = AttackSpeed[_currentLevel];
         info[7] = upgradeCost;
-        info[8] = repairCost[_level];
-        info[9] = sellGain[_level];
+        info[8] = repairCost[_currentLevel];
+        info[9] = sellGain[_currentLevel];
         info[10] = buildCost;
     }
 }

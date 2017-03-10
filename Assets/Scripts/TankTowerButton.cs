@@ -4,11 +4,15 @@ using System.Collections;
 public class TankTowerButton : MonoBehaviour {
 
     public static TankTowerButton Instance;
+
+    private GameBoard _gameBoard;
+
     private BuildCheckPanel _buildCheckPanel;
     private TowerInfoPanel _towerInfoPanel;
     private TileEventHandler _tileEventHandler;
     private TowerController _towerController;
-    private GameBoard _gameBoard;
+    private NotificationPanel _notificationPanel;
+
 
     void Awake()
     {
@@ -20,10 +24,12 @@ public class TankTowerButton : MonoBehaviour {
         _tileEventHandler = teh;
         if (null == _gameBoard)
         {
-            _buildCheckPanel = BuildCheckPanel.Instance; // used for set appear
-            _towerInfoPanel = TowerInfoPanel.Instance; // used for set appear
             _towerController = TowerController.Instance; // used for check range
             _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem; // used for highlight
+
+            _buildCheckPanel = BuildCheckPanel.Instance; // used for set appear
+            _towerInfoPanel = TowerInfoPanel.Instance; // used for set appear
+            _notificationPanel = NotificationPanel.Instance; // used for notification, set appear
         }
     }
 
@@ -63,5 +69,7 @@ public class TankTowerButton : MonoBehaviour {
         _buildCheckPanel.Appear();
         _towerInfoPanel.SetTowerInfo(towerInfo);
         _towerInfoPanel.Appear();
+        _notificationPanel.SetNotificationType("Tank");
+        _notificationPanel.Appear();
     }
 }

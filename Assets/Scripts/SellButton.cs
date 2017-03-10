@@ -4,11 +4,13 @@ using System.Collections;
 public class SellButton : MonoBehaviour {
 
     public static SellButton Instance;
+
+    private TileEventHandler _tileEventHandler;
+
     private BuildCheckPanel _buildCheckPanel;
     private TowerInfoPanel _towerInfoPanel;
-    private TileEventHandler _tileEventHandler;
-    private LevelManager _levelManager;
-    private GameBoard _gameBoard;
+    private NotificationPanel _notificationPanel;
+
 
     void Awake()
     {
@@ -17,14 +19,13 @@ public class SellButton : MonoBehaviour {
 
     public void setTowerEventHandler(TileEventHandler teh)
     {
-        _tileEventHandler = teh;
-        if (null == _gameBoard)
+        if (null == _tileEventHandler)
         {
             _buildCheckPanel = BuildCheckPanel.Instance;
             _towerInfoPanel = TowerInfoPanel.Instance;
-            _levelManager = GameManager.Instance.CurrentLevelManager;
-            _gameBoard = _levelManager.GameBoardSystem;
+            _notificationPanel = NotificationPanel.Instance;
         }
+        _tileEventHandler = teh;
     }
 
     public void SellButtonSelected()
@@ -32,5 +33,7 @@ public class SellButton : MonoBehaviour {
         _tileEventHandler.SetOperation(8);
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();
+        _notificationPanel.SetNotificationType("Sell");
+        _notificationPanel.Appear();
     }
 }

@@ -23,6 +23,7 @@ public class TileEventHandler : MonoBehaviour
     private TowerOperationPanel _towerOperationPanel;
     private TowerInfoPanel _towerInfoPanel;
     private BuildCheckPanel _buildCheckPanel;
+    private NotificationPanel _notificationPanel;
 
     private TankTowerButton _tankTowerButton;
     // TODO: more tower button here
@@ -50,6 +51,7 @@ public class TileEventHandler : MonoBehaviour
         _towerOperationPanel = TowerOperationPanel.Instance;
         _towerInfoPanel = TowerInfoPanel.Instance;
         _buildCheckPanel = BuildCheckPanel.Instance;
+        _notificationPanel = NotificationPanel.Instance;
 
         _tankTowerButton = TankTowerButton.Instance;
         // TODO: more tower button here
@@ -71,6 +73,7 @@ public class TileEventHandler : MonoBehaviour
             _towerOperationPanel.DisAppear();
             _towerInfoPanel.DisAppear();
             _buildCheckPanel.DisAppear();
+            _notificationPanel.DisAppear();
             _gameBoard.ClearHighlightTiles();
             _clearBeforeBattle = true;
 	        return;
@@ -105,6 +108,9 @@ public class TileEventHandler : MonoBehaviour
                         {
                             SellTower(true);
                             _towerExist = false;
+                            //_notificationPanel.DisAppear();
+                            _notificationPanel.SetNotificationType("Block");
+                            _notificationPanel.Appear();
                         }
                         else
                         {
@@ -148,6 +154,9 @@ public class TileEventHandler : MonoBehaviour
                 _upgradeButton.setTowerEventHandler(this);
                 _repairButton.setTowerEventHandler(this);
                 _towerOperationPanel.Appear();
+                int[] towerInfo = new int[11];
+                _towerPtr.GetTowerInfo(towerInfo);
+                _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
                 _towerBuildPanel.DisAppear();
                 _buildCheckPanel.DisAppear();
@@ -161,6 +170,7 @@ public class TileEventHandler : MonoBehaviour
                 _towerOperationPanel.DisAppear();
                 _towerInfoPanel.DisAppear();
                 _buildCheckPanel.DisAppear();
+                _notificationPanel.DisAppear();
             }
         }
 
@@ -197,5 +207,11 @@ public class TileEventHandler : MonoBehaviour
     public void SetOperation(int op)
     {
         TowerOperation = (Operation) op;
+    }
+
+
+    public Tower GetTowerScript()
+    {
+        return _towerPtr;
     }
 }

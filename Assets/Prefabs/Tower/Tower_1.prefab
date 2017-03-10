@@ -60,6 +60,7 @@ MonoBehaviour:
   upgradeCost: 3
   sellGain: 040000000600000009000000
   repairCost: 020000000300000004000000
+  MaxLevel: 3
   Type: 0
 --- !u!212 &212000011997658836
 SpriteRenderer:
