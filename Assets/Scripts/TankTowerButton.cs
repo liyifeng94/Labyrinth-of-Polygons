@@ -50,9 +50,9 @@ public class TankTowerButton : MonoBehaviour {
         _tileEventHandler.SetTowerIndex(0);
         int range = _towerController.CheckAttackRange(0);
         Debug.Log("Range is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
-        for (uint i = 0; i < range; i++)
+        for (uint i = 0; i <= range; i++)
         {
-            for (uint j = 0; j < range; j++)
+            for (uint j = 0; j <= range; j++)
             {
                 if (_tileEventHandler.GridX + i < 10 && _tileEventHandler.GridY + j < 20)
                 {
