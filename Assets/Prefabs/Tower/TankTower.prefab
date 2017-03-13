@@ -63,7 +63,7 @@ MonoBehaviour:
   HitPoint: 320000006400000096000000
   AttackRange: 1
   AttackSpeed: 010000000100000001000000
-  BuildCost: 5
+  BuildCost: 101
   UpgradeCost: 4
   RepairCost: 020000000300000004000000
   SellGain: 030000000600000009000000

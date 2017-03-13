@@ -11,6 +11,7 @@ public class TowerController : MonoBehaviour
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
     private HashSet<Enemy> _enemies;
+    private NotificationPanel _notificationPanel;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class TowerController : MonoBehaviour
     {
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
+        _notificationPanel = NotificationPanel.Instance;
         _enemies = new HashSet<Enemy>();
     }
 	
@@ -47,6 +49,8 @@ public class TowerController : MonoBehaviour
         {
             Debug.Log("TC: Not enough gold to build");
             // TODO: display the message
+            _notificationPanel.SetNotificationType("NotEnoughMoney");
+            _notificationPanel.Appear();
             Destroy(_towerGameObject);
             return null;
         }

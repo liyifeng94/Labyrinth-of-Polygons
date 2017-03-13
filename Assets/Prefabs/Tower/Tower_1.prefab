@@ -22,7 +22,7 @@ GameObject:
   - 212: {fileID: 212000011997658836}
   - 114: {fileID: 114000012180961610}
   m_Layer: 0
-  m_Name: TestTower
+  m_Name: Tower_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
