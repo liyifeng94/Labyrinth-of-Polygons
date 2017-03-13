@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         LocalHighScoreBoard = null;
         
-        if (System.IO.File.Exists(_highScoreBoardPath))
+        if (File.Exists(_highScoreBoardPath))
         {
             string rawJson = File.ReadAllText(_highScoreBoardPath);
             LocalHighScoreBoard = JsonUtility.FromJson<HighScoreBoard>(rawJson);
