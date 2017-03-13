@@ -6,7 +6,7 @@ public class TowerController : MonoBehaviour
 {
     public static TowerController Instance;
     public List<GameObject> Towers;
-    private Tower _towerPtr;
+    private TankTower _towerPtr;
     private GameObject _towerGameObject;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
@@ -37,11 +37,11 @@ public class TowerController : MonoBehaviour
 
         Vector3 gamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
         _towerGameObject = Instantiate(Towers[index], gamePosition, Quaternion.identity) as GameObject;
-        _towerPtr = _towerGameObject.GetComponent<Tower>(); // get scripts
-        if (_towerPtr.buildCost < _levelManager.GetGold())
+        _towerPtr = _towerGameObject.GetComponent<TankTower>(); // get scripts
+        if (_towerPtr.BuildCost < _levelManager.GetGold())
         {
             // gold will not be used here, need to check if it blocks the last path later
-            Debug.Log("TC: Enough gold to build");
+            //Debug.Log("TC: Enough gold to build");
         }
         else
         {
@@ -50,7 +50,7 @@ public class TowerController : MonoBehaviour
             Destroy(_towerGameObject);
             return null;
         }
-        Debug.Log("TC: Tower object created");
+        //Debug.Log("TC: Tower object created");
         return _towerGameObject;
     }
 
@@ -58,7 +58,7 @@ public class TowerController : MonoBehaviour
     public int CheckTowerInfo(int index, int[] info) // return the tower range, store other info array
     {
         _towerGameObject = Instantiate(Towers[index], new Vector3(), Quaternion.identity) as GameObject;
-        _towerPtr = _towerGameObject.GetComponent<Tower>();
+        _towerPtr = _towerGameObject.GetComponent<TankTower>();
         _towerPtr.GetTowerInfo(info);
         _towerPtr.Remove();
         Destroy(_towerGameObject);
