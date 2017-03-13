@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridX: 0
   GridY: 0
+  TowerOperation: 0
 --- !u!212 &212000010220278682
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -96,7 +97,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2057329891
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7205e6930a217d543aabce7b611bc294, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

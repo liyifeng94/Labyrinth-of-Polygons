@@ -2,8 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class Tower : MonoBehaviour
-{
+ public abstract class Tower : MonoBehaviour
+ {
+
+    [HideInInspector] public uint X;// { get; private set; }
+    [HideInInspector] public uint Y;// { get; private set; }
+    [HideInInspector] public int CurrentHp;
+    [HideInInspector] public int CurrentLevel;
+    [HideInInspector] public bool DestroyByEnemy;
+    [HideInInspector] public LevelManager LevelManager;
+    [HideInInspector] public TowerController TowerController;
+    [HideInInspector] public NotificationPanel NotificationPanel;
+    public int MaxLevel;
+    public int[] HitPoint;
+    public int AttackRange;
+    public int[] AttackSpeed;
+    public int BuildCost;
+    public int UpgradeCost;
+    public int[] RepairCost;
+    public int[] SellGain;
+    public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
+    public TowerType Type;
+
+
+    public void Setup(TileEventHandler tileEventHandler) { }
+    public virtual void Remove() { }
+    public virtual void AddEnemy(Enemy t)
+    {
+         //Debug.Log("T: Enemy added");
+    }
+    public virtual void AttackEnemy(Enemy t) {}
+    public virtual void ReceiveAttack(int ad) { }
+    public virtual void Upgrade() { }
+    public virtual void Repair() { }
+    public virtual int GetLevel() { return 0; }
+    public virtual bool CheckMaxLevel() { return false; }
+    public virtual void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f) { }
+    public virtual int GetAttackRange() { return 0; }
+    public void GetTowerInfo(int[] info) { }
+
+    /*
     public uint X { get; private set; }
     public uint Y { get; private set; }
 
@@ -49,7 +87,6 @@ public class Tower : MonoBehaviour
             float attackS = (float)AttackSpeed[_currentLevel] - 0.95f;
             if (_loadingTime >= attackS)
 	        {
-                // todo check if target enemy is still alive from controller
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 _loadingTime = 0.0f;
                 _enemies.Clear();
@@ -190,4 +227,5 @@ public class Tower : MonoBehaviour
         info[9] = sellGain[_currentLevel];
         info[10] = buildCost;
     }
+    */
 }

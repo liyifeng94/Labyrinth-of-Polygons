@@ -16,7 +16,8 @@ public class TileEventHandler : MonoBehaviour
     private LevelManager _levelManager;
     private GameBoard _gameBoard;
     private TowerController _towerController;
-    private Tower _towerPtr;
+    private TankTower _tankTowerPtr;
+    private RangeTower _rangeTower;
     private GameObject _towerGameObject;
 
     private TowerBuildPanel _towerBuildPanel;
@@ -26,6 +27,7 @@ public class TileEventHandler : MonoBehaviour
     private NotificationPanel _notificationPanel;
 
     private TankTowerButton _tankTowerButton;
+    private RangeTowerButton _rangeTowerButton;
     // TODO: more tower button here
     private UpgradeButton _upgradeButton;
     private RepairButton _repairButton;
@@ -54,6 +56,7 @@ public class TileEventHandler : MonoBehaviour
         _notificationPanel = NotificationPanel.Instance;
 
         _tankTowerButton = TankTowerButton.Instance;
+        _rangeTowerButton = RangeTowerButton.Instance;
         // TODO: more tower button here
         _upgradeButton = UpgradeButton.Instance;
         _repairButton = RepairButton.Instance;
@@ -101,10 +104,10 @@ public class TileEventHandler : MonoBehaviour
                     else
                     {
                         _towerExist = true;
-                        _towerPtr = _towerGameObject.GetComponent<Tower>(); // get scripts
-                        _towerPtr.Setup(this);
+                        _tankTowerPtr = _towerGameObject.GetComponent<TankTower>(); // get scripts
+                        _tankTowerPtr.Setup(this);
                         // check if it blocks the last path
-                        if (!_gameBoard.BuildTower(_towerPtr))
+                        if (!_gameBoard.BuildTower(_tankTowerPtr))
                         {
                             SellTower(true);
                             _towerExist = false;
@@ -114,7 +117,7 @@ public class TileEventHandler : MonoBehaviour
                         }
                         else
                         {
-                            _levelManager.UseGold(_towerPtr.buildCost);
+                            _levelManager.UseGold(_tankTowerPtr.BuildCost);
                         }
                     }
                     break;
@@ -127,10 +130,10 @@ public class TileEventHandler : MonoBehaviour
                 case Operation.Tower5:
                     break;
                 case Operation.Upgrade:
-                    _towerPtr.Upgrade();
+                    _tankTowerPtr.Upgrade();
                     break;
                 case Operation.Repair:
-                    _towerPtr.Repair();
+                    _tankTowerPtr.Repair();
                     break;
                 case Operation.Sell:
                     SellTower(false);
@@ -155,15 +158,17 @@ public class TileEventHandler : MonoBehaviour
                 _repairButton.setTowerEventHandler(this);
                 _towerOperationPanel.Appear();
                 int[] towerInfo = new int[11];
-                _towerPtr.GetTowerInfo(towerInfo);
+                _tankTowerPtr.GetTowerInfo(towerInfo);
                 _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
                 _towerBuildPanel.DisAppear();
                 _buildCheckPanel.DisAppear();
+                _notificationPanel.DisAppear();
             }
             else
             {
                 _tankTowerButton.setTowerEventHandler(this);
+                _rangeTowerButton.setTowerEventHandler(this);
                 // TODO: set the rest four towers
                 _yesButton.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
@@ -180,13 +185,13 @@ public class TileEventHandler : MonoBehaviour
 
     public void SellTower(bool blockCase)
     {
-        Debug.Log("TEH: Trying to sell tower");
+        //Debug.Log("TEH: Trying to sell tower");
         _gameBoard.ClearHighlightTiles();
         Destroy(_towerGameObject);
         _towerExist = false;
         if (! blockCase) // there is money refund for the non-blockCase
         {
-            _levelManager.AddGold(_towerPtr.sellGain[_towerPtr.GetLevel()]);
+            _levelManager.AddGold(_tankTowerPtr.SellGain[_tankTowerPtr.GetLevel()]);
         }
         //_towerPtr.Remove();
         Debug.Log("TEH: Tower object removed");
@@ -212,6 +217,6 @@ public class TileEventHandler : MonoBehaviour
 
     public Tower GetTowerScript()
     {
-        return _towerPtr;
+        return _tankTowerPtr;
     }
 }

@@ -47,21 +47,28 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012114627248}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f96a0db30cd452f44bc80faf4c3d9691, type: 3}
+  m_Script: {fileID: 11500000, guid: a8c4a5aa6c4557e4981d2d8b89d35d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildCost: 5
-  AttackRange: 3
-  HitPoint: 6400000096000000c8000000
-  AttackDamage: 050000000a0000000f000000
-  AttackSpeed: 010000000100000002000000
-  upgradeCost: 3
-  sellGain: 040000000600000009000000
-  repairCost: 020000000300000004000000
-  MaxLevel: 3
+  X: 0
+  Y: 0
+  CurrentHp: 0
+  CurrentLevel: 0
+  LevelManager: {fileID: 0}
+  TowerController: {fileID: 0}
+  NotificationPanel: {fileID: 0}
+  MaxLevel: 0
+  HitPoint: 
+  AttackRange: 0
+  AttackSpeed: 
+  BuildCost: 0
+  UpgradeCost: 0
+  RepairCost: 
+  SellGain: 
   Type: 0
+  AttackDamage: 
 --- !u!212 &212000011997658836
 SpriteRenderer:
   m_ObjectHideFlags: 1
