@@ -33,14 +33,13 @@ public class Enemy : MonoBehaviour
     private int _pos = 0;
     private float _distance = (float)0.0;
     private GameBoard _gameBoard;
-    private LevelManager _levelManager;
+    private LevelManager _levelManager = GameManager.Instance.CurrentLevelManager;
     private EnemyController _enemyController;
     private HashSet<Tower> _towers;
+    private float _attackSpeed;
 
     private List<GameBoard.Tile> _path;
     private List<GridSystem.Cell> _cells;
-    
-
     
 
     void Start()
@@ -114,6 +113,7 @@ public class Enemy : MonoBehaviour
 
     public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, Type type)
     {
+        int currentLevel = _levelManager.GetCurrentLevel();
         EnemyType = type;
         GridX = x;
         GridY = y;
@@ -123,25 +123,25 @@ public class Enemy : MonoBehaviour
         switch (EnemyType)
         {
             case Type.Normal:
-                Hp = 5;
+                Hp = 5 + currentLevel;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 10;
                 break;
             case Type.Attacking:
-                Hp = 500;
+                Hp = 5 + currentLevel;
                 AttackRange = 20;
                 Speed = 2;
                 Score = 30;
                 break;
             case Type.Fast:
-                Hp = 3;
+                Hp = 3 + currentLevel;
                 AttackRange = 0;
                 Speed = 4;
                 Score = 20;
                 break;
             case Type.Flying:
-                Hp = 5;
+                Hp = 5 + currentLevel;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 40;
@@ -178,8 +178,8 @@ public class Enemy : MonoBehaviour
         Hp -= damage;
         if (Hp<=0)
         {
-            GameManager.Instance.CurrentLevelManager.AddGold(Gold);
-            GameManager.Instance.CurrentLevelManager.AddScore(Score);
+            _levelManager.AddGold(Gold);
+            _levelManager.AddScore(Score);
             Die();
         }
     }   
