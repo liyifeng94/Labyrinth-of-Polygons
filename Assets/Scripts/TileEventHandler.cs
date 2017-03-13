@@ -17,7 +17,7 @@ public class TileEventHandler : MonoBehaviour
     private GameBoard _gameBoard;
     private TowerController _towerController;
     private TankTower _tankTowerPtr;
-    //private RangeTower _rangeTower;
+    private RangeTower _rangeTower;
     private GameObject _towerGameObject;
 
     private TowerBuildPanel _towerBuildPanel;

@@ -12,13 +12,15 @@ public class TankTower : Tower
 
     void Start()
     {
-        LevelManager = GameManager.Instance.CurrentLevelManager;
-        _enemies = new HashSet<Enemy>();
-        TowerController = TowerController.Instance;
         CurrentLevel = 0;
+        DestroyByEnemy = false;
         _loadingTime = AttackSpeed[CurrentLevel];
         CurrentHp = HitPoint[CurrentLevel];
+        _enemies = new HashSet<Enemy>();
+
+        LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
+        TowerController = TowerController.Instance;
     }
 
 

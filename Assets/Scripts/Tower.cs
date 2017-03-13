@@ -9,6 +9,7 @@ using System.Linq;
     [HideInInspector] public uint Y;// { get; private set; }
     [HideInInspector] public int CurrentHp;
     [HideInInspector] public int CurrentLevel;
+    [HideInInspector] public bool DestroyByEnemy;
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public TowerController TowerController;
     [HideInInspector] public NotificationPanel NotificationPanel;

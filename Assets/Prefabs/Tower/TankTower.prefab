@@ -56,6 +56,7 @@ MonoBehaviour:
   Y: 0
   CurrentHp: 0
   CurrentLevel: 0
+  DestroyByEnemy: 0
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
@@ -63,7 +64,7 @@ MonoBehaviour:
   HitPoint: 320000006400000096000000
   AttackRange: 1
   AttackSpeed: 010000000100000001000000
-  BuildCost: 101
+  BuildCost: 5
   UpgradeCost: 4
   RepairCost: 020000000300000004000000
   SellGain: 030000000600000009000000
