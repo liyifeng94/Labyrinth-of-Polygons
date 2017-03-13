@@ -62,7 +62,7 @@ MonoBehaviour:
   NotificationPanel: {fileID: 0}
   MaxLevel: 3
   HitPoint: 320000006400000096000000
-  AttackRange: 4
+  AttackRange: 1
   AttackSpeed: 010000000100000001000000
   BuildCost: 5
   UpgradeCost: 4
