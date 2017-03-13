@@ -31,7 +31,7 @@ public class TowerController : MonoBehaviour
 
 	void Update ()
     {
-	
+
 	}
 
 
@@ -92,5 +92,11 @@ public class TowerController : MonoBehaviour
     public void RemoveEnemy(Enemy enemy)
     {
         _enemies.Remove(enemy);
+    }
+
+
+    public int CheckInRangedEnemy()
+    {
+        return _enemies.Count;
     }
 }

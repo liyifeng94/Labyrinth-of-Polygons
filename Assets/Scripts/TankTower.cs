@@ -32,11 +32,10 @@ public class TankTower : Tower
             float attackS = (float)AttackSpeed[CurrentLevel] - 0.95f;
             if (_loadingTime >= attackS)
             {
-                // todo check if target enemy is still alive from controller
+            // todo check if target enemy is still alive from controller
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 _loadingTime = 0.0f;
                 _enemies.Clear();
-               TowerController.ClearEnemis();
             }
             else
             {
@@ -70,6 +69,7 @@ public class TankTower : Tower
     public new void AttackEnemy(Enemy t)
     {
         //Debug.Log("TT: AttackEnemy~~~~~~~~~~~~~~~~~");
+        Debug.Log("TT: Number of in ranged enemies " + TowerController.CheckInRangedEnemy()); 
         if (TowerController.CheckIfEnemyAlive(t))
         {
             Vector3 start = transform.position;
@@ -78,11 +78,11 @@ public class TankTower : Tower
             Vector3 end = endTransform.position;
             DrawLine(start, end, Color.yellow);
             t.GetDamaged(AttackDamage[CurrentLevel]);
-            //Debug.Log("TT: Attacks");
+            Debug.Log("TT: Attacks");
         }
         else
         {
-            //Debug.Log("T: Targeted enemy died");
+            Debug.Log("T: Targeted enemy died");
         }
     }
 
