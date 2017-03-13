@@ -35,8 +35,11 @@ public class NotificationPanel : MonoBehaviour {
             case "Tank":
                 FixText.text = "Tank Tower creation" + towerOperationReuqst;
                 break;
+            case "NotEnoughMoney":
+                FixText.text = "Not enough gold to build.\nClick another tile or EnterBattle to continue.";
+                break;
             case "Block":
-                FixText.text = "You were tried to build a tower that blocks the last path.";
+                FixText.text = "You were tried to build a tower that blocks the last path.\nClick another tile or EnterBattle to continue.";
                 break;
             case "Upgrade":
                 FixText.text = _type + towerOperationReuqst;
