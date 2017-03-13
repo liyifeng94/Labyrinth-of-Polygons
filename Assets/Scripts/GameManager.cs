@@ -14,11 +14,11 @@ public class GameManager : MonoBehaviour
 
 #if UNITY_EDITOR
     private const string HighScoreBoardPath = "Assets/Resources/Local/GameJSONData/Runtime/HighScore.json";
-#elif UNITY_STANDALONE
-    private const string HighScoreBoardPath = "GameData/Resources/GameJSONData/HighScore.json";
 #else
-    private const string HighScoreBoardPath = "HighScore.json";
+    private const string HighScoreBoardPath = "GameData/Resources/GameJSONData/HighScore.json";
 #endif
+
+    private string _highScoreBoardPath;
 
     public HighScoreBoard LocalHighScoreBoard { get; private set; }
 
@@ -34,6 +34,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             CurrentLevelManager = null;
+#if UNITY_EDITOR
+            _highScoreBoardPath = HighScoreBoardPath;
+#else
+            _highScoreBoardPath = Application.persistentDataPath + "/" + HighScoreBoardPath;
+#endif
+            Debug.LogWarning("HighScoreBoardPath: "  + _highScoreBoardPath);
             LoadHighScoreBoard();
             CurrentGameOptions = null;
             LastLevelState = null;
@@ -52,7 +58,7 @@ public class GameManager : MonoBehaviour
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#else 
+#else
         Application.Quit(); 
 #endif
         }
@@ -82,15 +88,13 @@ public class GameManager : MonoBehaviour
     void LoadHighScoreBoard()
     {
         LocalHighScoreBoard = null;
-        Directory.CreateDirectory(Path.GetDirectoryName(HighScoreBoardPath));
-        using (FileStream fs = new FileStream(HighScoreBoardPath, FileMode.OpenOrCreate))
+        
+        if (System.IO.File.Exists(_highScoreBoardPath))
         {
-            using (StreamReader reader = new StreamReader(fs))
-            {
-                string jsonDataString = reader.ReadLine();
-                LocalHighScoreBoard = JsonUtility.FromJson<HighScoreBoard>(jsonDataString);
-            }
+            string rawJson = File.ReadAllText(_highScoreBoardPath);
+            LocalHighScoreBoard = JsonUtility.FromJson<HighScoreBoard>(rawJson);
         }
+       
 
         if (LocalHighScoreBoard == null)
         {
@@ -101,14 +105,7 @@ public class GameManager : MonoBehaviour
     void SaveHighScoreBoard()
     {
         string jsonDataString = JsonUtility.ToJson(LocalHighScoreBoard);
-        Directory.CreateDirectory(Path.GetDirectoryName(HighScoreBoardPath));
-        using (FileStream fs = new FileStream(HighScoreBoardPath, FileMode.Create))
-        {
-            using (StreamWriter writer = new StreamWriter(fs))
-            {
-                writer.Write(jsonDataString);
-            }
-        }
+        File.WriteAllText(_highScoreBoardPath, jsonDataString);
     }
 
     void OnApplicationQuit()
