@@ -70,7 +70,7 @@ public class RangeTowerButton : MonoBehaviour
         _buildCheckPanel.Appear();
         _towerInfoPanel.SetTowerInfo(towerInfo);
         _towerInfoPanel.Appear();
-        _notificationPanel.SetNotificationType("Tank");
+        _notificationPanel.SetNotificationType("Range");
         _notificationPanel.Appear();
     }
 }

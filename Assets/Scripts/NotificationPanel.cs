@@ -35,6 +35,10 @@ public class NotificationPanel : MonoBehaviour {
             case "Tank":
                 FixText.text = "Tank Tower creation" + towerOperationReuqst;
                 break;
+            case "Range":
+                FixText.text = "Range Tower creation" + towerOperationReuqst;
+                break;
+            // TODO
             case "NotEnoughMoney":
                 FixText.text = "Not enough gold to build.\nClick another tile or EnterBattle to continue.";
                 break;
@@ -49,6 +53,9 @@ public class NotificationPanel : MonoBehaviour {
                 break;
             case "Repair":
                 FixText.text = _type + towerOperationReuqst;
+                break;
+            case "RepairWithFullHp":
+                FixText.text = "You were tried to repair a full HP tower, request ";
                 break;
             case "Remove":
                 FixText.text = _type + towerOperationReuqst;

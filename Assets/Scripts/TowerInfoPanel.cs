@@ -39,6 +39,9 @@ public class TowerInfoPanel : MonoBehaviour {
             case 0:
                 Type.text = "Tank";
                 break;
+            case 1:
+                Type.text = "Range";
+                break;
         }
         Level.text = "Lvl: " + (info[2]+1);
         // TODO: display more text about tower info

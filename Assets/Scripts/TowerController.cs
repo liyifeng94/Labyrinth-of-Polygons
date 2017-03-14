@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Channels;
 
 public class TowerController : MonoBehaviour
 {
     public static TowerController Instance;
     public List<GameObject> Towers;
-    private TankTower _TanktowerPtr;
-    private RangeTowerButton _rangeTowerPtr;
+    private TankTower _tankTowerPtr;
+    private RangeTower _rangeTowerPtr;
+    // TODO
     private GameObject _towerGameObject;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
@@ -40,20 +42,33 @@ public class TowerController : MonoBehaviour
 
         Vector3 gamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
         _towerGameObject = Instantiate(Towers[index], gamePosition, Quaternion.identity) as GameObject;
-        _TanktowerPtr = _towerGameObject.GetComponent<TankTower>(); // get scripts
-        if (_TanktowerPtr.BuildCost < _levelManager.GetGold())
+        switch (index)
         {
-            // gold will not be used here, need to check if it blocks the last path later
-            //Debug.Log("TC: Enough gold to build");
-        }
-        else
-        {
-            Debug.Log("TC: Not enough gold to build");
-            // TODO: display the message
-            _notificationPanel.SetNotificationType("NotEnoughMoney");
-            _notificationPanel.Appear();
-            Destroy(_towerGameObject);
-            return null;
+            case 0:
+                _tankTowerPtr = _towerGameObject.GetComponent<TankTower>(); // get scripts
+                if (_tankTowerPtr.BuildCost > _levelManager.GetGold())
+                {
+                    Debug.Log("TC: Not enough gold to build");
+                    // TODO: display the message
+                    _notificationPanel.SetNotificationType("NotEnoughMoney");
+                    _notificationPanel.Appear();
+                    Destroy(_towerGameObject);
+                    return null;
+                }
+                break;
+            case 1:
+                _rangeTowerPtr = _towerGameObject.GetComponent<RangeTower>(); // get scripts
+                if (_rangeTowerPtr.BuildCost > _levelManager.GetGold())
+                {
+                    Debug.Log("TC: Not enough gold to build");
+                    // TODO: display the message
+                    _notificationPanel.SetNotificationType("NotEnoughMoney");
+                    _notificationPanel.Appear();
+                    Destroy(_towerGameObject);
+                    return null;
+                }
+                break;
+            // TODO
         }
         //Debug.Log("TC: Tower object created");
         return _towerGameObject;
@@ -63,9 +78,20 @@ public class TowerController : MonoBehaviour
     public int CheckTowerInfo(int index, int[] info) // return the tower range, store other info array
     {
         _towerGameObject = Instantiate(Towers[index], new Vector3(), Quaternion.identity) as GameObject;
-        _TanktowerPtr = _towerGameObject.GetComponent<TankTower>();
-        _TanktowerPtr.GetTowerInfo(info);
-        _TanktowerPtr.Remove();
+        switch (index)
+        {
+            case 0:
+                _tankTowerPtr = _towerGameObject.GetComponent<TankTower>();
+                _tankTowerPtr.GetTowerInfo(info);
+                _tankTowerPtr.Remove();
+                break;
+            case 1:
+                _rangeTowerPtr = _towerGameObject.GetComponent<RangeTower>();
+                _rangeTowerPtr.GetTowerInfo(info);
+                _rangeTowerPtr.Remove();
+                break;
+            // TODO
+        }
         Destroy(_towerGameObject);
         return info[0];
     }

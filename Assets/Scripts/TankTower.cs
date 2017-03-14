@@ -21,15 +21,14 @@ public class TankTower : Tower
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
         TowerController = TowerController.Instance;
-        //TowerAnimator = new Animator();
-        //TowerAnimator.GetComponent<Animator>();
-        //GetComponent < Animator > = TowerAnimator;
+        TowerAnimator = GetComponent<Animator>();
     }
 
 
     void LateUpdate()
     {
-        //Debug.Log("TT: Tower 1 searching");
+        if (DestroyByEnemy) return;
+        //Debug.Log("TT: Tower 0 searching");
         if (0 != _enemies.Count)
         {
             float attackS = (float)AttackSpeed[CurrentLevel] - 0.95f;
@@ -47,22 +46,10 @@ public class TankTower : Tower
         }
     }
 
-    /*
-    public new void Setup(TileEventHandler tileEventHandler)
-    {
-        X = tileEventHandler.GridX;
-        Y = tileEventHandler.GridY;
-    }
-
-
-    public new void Remove()
-    {
-        Destroy(gameObject);
-    }
-    */
 
     public override void AddEnemy(Enemy t)
     {
+        if (DestroyByEnemy) return;
         //Debug.Log("TT: Enemy added");
         _enemies.Add(t);
         TowerController.AddEnemy(t);
@@ -71,6 +58,7 @@ public class TankTower : Tower
 
     public new void AttackEnemy(Enemy t)
     {
+        if (DestroyByEnemy) return;
         //Debug.Log("TT: AttackEnemy~~~~~~~~~~~~~~~~~");
         if (TowerController.CheckIfEnemyAlive(t))
         {
@@ -78,7 +66,8 @@ public class TankTower : Tower
             GameObject target = t.gameObject;
             Transform endTransform = target.transform;
             Vector3 end = endTransform.position;
-            DrawLine(start, end, Color.yellow);
+            Color result = new Color(0, 1, 1, 1.0f);
+            DrawLine(start, end, result);
             t.GetDamaged(AttackDamage[CurrentLevel]);
             //Debug.Log("TT: Attacks");
         }
@@ -86,74 +75,6 @@ public class TankTower : Tower
         {
             //Debug.Log("T: Targeted enemy died");
         }
-    }
-
-    /*
-    public new void ReceiveAttack(int ad)
-    {
-        if (CurrentHp > ad)
-        {
-            CurrentHp -= ad;
-        }
-        else
-        {
-            Remove();
-            Debug.Log("T: Tower destoryed");
-        }
-    }
-    */
-
-    public new void Upgrade()
-    {
-        if (CurrentLevel < MaxLevel - 1)
-        {
-            CurrentLevel += 1;
-            CurrentHp = HitPoint[CurrentLevel];
-            LevelManager.UseGold(UpgradeCost);
-            //Debug.Log("T: Tower upgraded to level" + CurrentLevel);
-        }
-        else
-        {
-            //Debug.Log("T: Max Level");
-            NotificationPanel.SetNotificationType("MaxLevel");
-            NotificationPanel.Appear();
-        }
-    }
-
-    /*
-    public new void Repair()
-    {
-        CurrentHp = HitPoint[CurrentLevel];
-        LevelManager.UseGold(RepairCost[CurrentLevel]);
-        //Debug.Log("T: Tower Repaired, HP is " + _currentHp);
-    }
-
-
-    public new int GetLevel()
-    {
-        return CurrentLevel;
-    }
-
-
-    public new bool CheckMaxLevel()
-    {
-        return CurrentLevel == MaxLevel - 1;
-    }
-    */
-
-    public new void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
-    {
-        GameObject myLine = new GameObject();
-        myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.05f, 0.7f);
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-        lr.sortingLayerName = "Effects";
-        GameObject.Destroy(myLine, duration);
     }
 
 
