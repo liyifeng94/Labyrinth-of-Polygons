@@ -34,7 +34,7 @@ public class TileEventHandler : MonoBehaviour
     private SellButton _sellButton;
     private BCP_Yes _yesButton;
 
-    public enum Operation { Nop, Tower1, Tower2, Tower3, Tower4, Tower5, Upgrade, Repair, Sell}
+    public enum Operation { Nop, TankTower, Tower2, Tower3, Tower4, Tower5, Upgrade, Repair, Sell}
     public Operation TowerOperation;
 
 
@@ -86,14 +86,15 @@ public class TileEventHandler : MonoBehaviour
         {
             _clearBeforeBattle = false;
         }
-
+        //Debug.Log("~~~~~~~~~~~~~~~~~TEH: Confirmed operation is " + TowerOperation);
         if (_confirmed)
         {
+            Debug.Log("TEH: Confirmed operation is " + TowerOperation);
             switch (TowerOperation)
             {
                 case Operation.Nop:
                     break;
-                case Operation.Tower1:
+                case Operation.TankTower:
                     // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
@@ -120,6 +121,7 @@ public class TileEventHandler : MonoBehaviour
                             _levelManager.UseGold(_tankTowerPtr.BuildCost);
                         }
                     }
+                    TowerOperation = Operation.Nop;
                     break;
                 case Operation.Tower2:
                     break;
@@ -136,6 +138,7 @@ public class TileEventHandler : MonoBehaviour
                     _tankTowerPtr.Repair();
                     break;
                 case Operation.Sell:
+                    Debug.Log("TEH: Sell operation executing");
                     SellTower(false);
                     break;
             }
@@ -156,6 +159,7 @@ public class TileEventHandler : MonoBehaviour
                 _sellButton.setTowerEventHandler(this);
                 _upgradeButton.setTowerEventHandler(this);
                 _repairButton.setTowerEventHandler(this);
+                _yesButton.setTileEventHandler(this);
                 _towerOperationPanel.Appear();
                 int[] towerInfo = new int[11];
                 _tankTowerPtr.GetTowerInfo(towerInfo);
@@ -185,7 +189,7 @@ public class TileEventHandler : MonoBehaviour
 
     public void SellTower(bool blockCase)
     {
-        //Debug.Log("TEH: Trying to sell tower");
+        Debug.Log("TEH: Trying to sell tower");
         _gameBoard.ClearHighlightTiles();
         Destroy(_towerGameObject);
         _towerExist = false;
@@ -212,6 +216,7 @@ public class TileEventHandler : MonoBehaviour
     public void SetOperation(int op)
     {
         TowerOperation = (Operation) op;
+        Debug.Log("TEH: Operation reset to " + TowerOperation+ " at " + GridX + " " + GridY);
     }
 
 
