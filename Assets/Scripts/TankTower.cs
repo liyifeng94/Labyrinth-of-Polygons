@@ -21,7 +21,7 @@ public class TankTower : Tower
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
         TowerController = TowerController.Instance;
-        TowerAnimator = new Animator();
+        //TowerAnimator = new Animator();
         //TowerAnimator.GetComponent<Animator>();
         //GetComponent < Animator > = TowerAnimator;
     }

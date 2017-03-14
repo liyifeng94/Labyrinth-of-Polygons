@@ -23,7 +23,7 @@ using System.Linq;
     public int[] SellGain;
     public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
     public TowerType Type;
-    public Animator TowerAnimator;
+    //public Animator TowerAnimator;
 
 
     //public void Setup(TileEventHandler tileEventHandler) { }
@@ -55,7 +55,7 @@ using System.Linq;
 
     public void Remove()
     {
-        TowerAnimator.SetTrigger("TowerDestroyed");
+        //TowerAnimator.SetTrigger("TowerDestroyed");
         Destroy(gameObject);
     }
 
