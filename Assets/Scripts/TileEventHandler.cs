@@ -89,7 +89,7 @@ public class TileEventHandler : MonoBehaviour
         //Debug.Log("~~~~~~~~~~~~~~~~~TEH: Confirmed operation is " + TowerOperation);
         if (_confirmed)
         {
-            Debug.Log("TEH: Confirmed operation is " + TowerOperation);
+            //Debug.Log("TEH: Confirmed operation is " + TowerOperation);
             switch (TowerOperation)
             {
                 case Operation.Nop:
@@ -138,7 +138,7 @@ public class TileEventHandler : MonoBehaviour
                     _tankTowerPtr.Repair();
                     break;
                 case Operation.Sell:
-                    Debug.Log("TEH: Sell operation executing");
+                    //Debug.Log("TEH: Sell operation executing");
                     SellTower(false);
                     break;
             }
@@ -197,7 +197,7 @@ public class TileEventHandler : MonoBehaviour
         {
             _levelManager.AddGold(_tankTowerPtr.SellGain[_tankTowerPtr.GetLevel()]);
         }
-        //_towerPtr.Remove();
+        //_tankTowerPtr.Remove();
         Debug.Log("TEH: Tower object removed");
     }
 

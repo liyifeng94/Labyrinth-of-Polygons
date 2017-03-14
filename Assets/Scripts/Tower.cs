@@ -13,7 +13,7 @@ using System.Linq;
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public TowerController TowerController;
     [HideInInspector] public NotificationPanel NotificationPanel;
-    public int MaxLevel;
+    public int MaxLevel; 
     public int[] HitPoint;
     public int AttackRange;
     public int[] AttackSpeed;
@@ -23,20 +23,18 @@ using System.Linq;
     public int[] SellGain;
     public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
     public TowerType Type;
+    public Animator TowerAnimator;
 
 
-    public void Setup(TileEventHandler tileEventHandler) { }
-    public virtual void Remove() { }
-    public virtual void AddEnemy(Enemy t)
-    {
-         //Debug.Log("T: Enemy added");
-    }
+    //public void Setup(TileEventHandler tileEventHandler) { }
+    //public virtual void Remove() { }
+    public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
     public virtual void AttackEnemy(Enemy t) {}
-    public virtual void ReceiveAttack(int ad) { }
+    //public virtual void ReceiveAttack(int ad) { }
     public virtual void Upgrade() { }
-    public virtual void Repair() { }
-    public virtual int GetLevel() { return 0; }
-    public virtual bool CheckMaxLevel() { return false; }
+    //public virtual void Repair() { }
+    //public virtual int GetLevel() { return 0; }
+    //public virtual bool CheckMaxLevel() { return false; }
     public virtual void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f) { }
     public virtual int GetAttackRange() { return 0; }
     public void GetTowerInfo(int[] info) { }
@@ -47,68 +45,9 @@ using System.Linq;
         return DestroyByEnemy;
     }
 
-    /*
-    public uint X { get; private set; }
-    public uint Y { get; private set; }
-
-    public int buildCost;
-    public int AttackRange;
-    public int[] HitPoint;
-    public int[] AttackDamage;
-    public int[] AttackSpeed;
-    public int upgradeCost;
-    public int[] sellGain;
-    public int[] repairCost;
-    public int MaxLevel;
-    public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
-    public TowerType Type;
-    private int _currentHp;
-    private int _currentLevel;
-
-    private HashSet<Enemy> _enemies;
-    private LevelManager _levelManager;
-    private float _loadingTime;
-    private TowerController _towerController;
-
-    private NotificationPanel _notificationPanel;
-
-
-    void Start ()
-    {
-        _levelManager = GameManager.Instance.CurrentLevelManager;
-        _enemies = new HashSet<Enemy>();
-        _towerController = TowerController.Instance;
-        _currentLevel = 0;
-        _loadingTime = AttackSpeed[_currentLevel];
-        _currentHp = HitPoint[_currentLevel];
-        _notificationPanel = NotificationPanel.Instance;
-    }
-
-
-	void LateUpdate ()
-    {
-        //Debug.Log("T: Tower 1 searching");
-        if (0 != _enemies.Count)
-        {
-            float attackS = (float)AttackSpeed[_currentLevel] - 0.95f;
-            if (_loadingTime >= attackS)
-	        {
-                AttackEnemy(_enemies.First()); // make this simple, just attack the first one
-                _loadingTime = 0.0f;
-                _enemies.Clear();
-                _towerController.ClearEnemis();
-	        }
-	        else
-	        {
-                _loadingTime += Time.deltaTime;
-	        }
-        }
-    }
-
 
     public void Setup(TileEventHandler tileEventHandler)
     {
-        //_tileEventHandler = tileEventHandler;
         X = tileEventHandler.GridX;
         Y = tileEventHandler.GridY;
     }
@@ -116,122 +55,233 @@ using System.Linq;
 
     public void Remove()
     {
+        TowerAnimator.SetTrigger("TowerDestroyed");
         Destroy(gameObject);
     }
-    
 
-    public void AddEnemy(Enemy t)
-    {
-        _enemies.Add(t);
-        _towerController.AddEnemy(t);
-    }
-
-
-    public void AttackEnemy(Enemy t)
-    {
-        if (_towerController.CheckIfEnemyAlive(t))
-        {
-            Vector3 start = transform.position;
-            GameObject target = t.gameObject;
-            Transform endTransform = target.transform;
-            Vector3 end = endTransform.position;
-            DrawLine(start, end, Color.yellow);
-            t.GetDamaged(AttackDamage[_currentLevel]);
-            Debug.Log("T: Attacks");
-        }
-        else
-        {
-            Debug.Log("T: Targeted enemy died");
-        }
-    }
-    
 
     public void ReceiveAttack(int ad)
     {
-        if (_currentHp > ad)
+        if (CurrentHp > ad)
         {
-            _currentHp -= ad;
+            CurrentHp -= ad;
         }
         else
         {
             Remove();
-            Debug.Log("T: Tower destoryed");
+            DestroyByEnemy = true;
+            // TODO: load the destroy-image
+            Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
         }
     }
-
-
-    public void Upgrade()
-    {
-        if (_currentLevel < MaxLevel - 1)
-        {
-            _currentLevel += 1;
-            _currentHp = HitPoint[_currentLevel];
-            _levelManager.UseGold(upgradeCost);
-            Debug.Log("T: Tower upgraded to level" + _currentLevel);
-        }
-        else
-        {
-            Debug.Log("T: Max Level");
-            _notificationPanel.SetNotificationType("MaxLevel");
-        }
-    }
-
 
     public void Repair()
     {
-        _currentHp = HitPoint[_currentLevel];
-        _levelManager.UseGold(repairCost[_currentLevel]);
-        Debug.Log("T: Tower Repaired, HP is " + _currentHp);
+        CurrentHp = HitPoint[CurrentLevel];
+        LevelManager.UseGold(RepairCost[CurrentLevel]);
+        DestroyByEnemy = false;
+        // TODO: reload the alive-image
+        //Debug.Log("T: Tower Repaired, HP is " + _currentHp);
     }
 
 
     public int GetLevel()
     {
-        return _currentLevel;
+        return CurrentLevel;
     }
 
 
     public bool CheckMaxLevel()
     {
-        return _currentLevel == MaxLevel - 1;
+        return CurrentLevel == MaxLevel - 1;
     }
 
 
-    void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
-    {
-        GameObject myLine = new GameObject();
-        myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.05f, 0.7f);
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-        lr.sortingLayerName = "Effects"; 
-        GameObject.Destroy(myLine, duration);
-    }
-
-
-    public int GetAttackRange()
-    {
-        return AttackRange;
-    }
-
-
-    public void GetTowerInfo(int[] info)
-    {
-        info[0] = AttackRange;
-        info[1] = _currentLevel;
-        info[2] = (int)Type;
-        info[3] = _currentHp;
-        info[4] = HitPoint[_currentLevel];
-        info[5] = AttackDamage[_currentLevel];
-        info[6] = AttackSpeed[_currentLevel];
-        info[7] = upgradeCost;
-        info[8] = repairCost[_currentLevel];
-        info[9] = sellGain[_currentLevel];
-        info[10] = buildCost;
-    }
-    */
-}
+     /*
+     public uint X { get; private set; }
+     public uint Y { get; private set; }
+ 
+     public int buildCost;
+     public int AttackRange;
+     public int[] HitPoint;
+     public int[] AttackDamage;
+     public int[] AttackSpeed;
+     public int upgradeCost;
+     public int[] sellGain;
+     public int[] repairCost;
+     public int MaxLevel;
+     public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
+     public TowerType Type;
+     private int _currentHp;
+     private int _currentLevel;
+ 
+     private HashSet<Enemy> _enemies;
+     private LevelManager _levelManager;
+     private float _loadingTime;
+     private TowerController _towerController;
+ 
+     private NotificationPanel _notificationPanel;
+ 
+ 
+     void Start ()
+     {
+         _levelManager = GameManager.Instance.CurrentLevelManager;
+         _enemies = new HashSet<Enemy>();
+         _towerController = TowerController.Instance;
+         _currentLevel = 0;
+         _loadingTime = AttackSpeed[_currentLevel];
+         _currentHp = HitPoint[_currentLevel];
+         _notificationPanel = NotificationPanel.Instance;
+     }
+ 
+ 
+     void LateUpdate ()
+     {
+         //Debug.Log("T: Tower 1 searching");
+         if (0 != _enemies.Count)
+         {
+             float attackS = (float)AttackSpeed[_currentLevel] - 0.95f;
+             if (_loadingTime >= attackS)
+             {
+                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
+                 _loadingTime = 0.0f;
+                 _enemies.Clear();
+                 _towerController.ClearEnemis();
+             }
+             else
+             {
+                 _loadingTime += Time.deltaTime;
+             }
+         }
+     }
+ 
+ 
+     public void Setup(TileEventHandler tileEventHandler)
+     {
+         //_tileEventHandler = tileEventHandler;
+         X = tileEventHandler.GridX;
+         Y = tileEventHandler.GridY;
+     }
+ 
+ 
+     public void Remove()
+     {
+         Destroy(gameObject);
+     }
+     
+ 
+     public void AddEnemy(Enemy t)
+     {
+         _enemies.Add(t);
+         _towerController.AddEnemy(t);
+     }
+ 
+ 
+     public void AttackEnemy(Enemy t)
+     {
+         if (_towerController.CheckIfEnemyAlive(t))
+         {
+             Vector3 start = transform.position;
+             GameObject target = t.gameObject;
+             Transform endTransform = target.transform;
+             Vector3 end = endTransform.position;
+             DrawLine(start, end, Color.yellow);
+             t.GetDamaged(AttackDamage[_currentLevel]);
+             Debug.Log("T: Attacks");
+         }
+         else
+         {
+             Debug.Log("T: Targeted enemy died");
+         }
+     }
+     
+ 
+     public void ReceiveAttack(int ad)
+     {
+         if (_currentHp > ad)
+         {
+             _currentHp -= ad;
+         }
+         else
+         {
+             Remove();
+             Debug.Log("T: Tower destoryed");
+         }
+     }
+ 
+ 
+     public void Upgrade()
+     {
+         if (_currentLevel < MaxLevel - 1)
+         {
+             _currentLevel += 1;
+             _currentHp = HitPoint[_currentLevel];
+             _levelManager.UseGold(upgradeCost);
+             Debug.Log("T: Tower upgraded to level" + _currentLevel);
+         }
+         else
+         {
+             Debug.Log("T: Max Level");
+             _notificationPanel.SetNotificationType("MaxLevel");
+         }
+     }
+ 
+ 
+     public void Repair()
+     {
+         _currentHp = HitPoint[_currentLevel];
+         _levelManager.UseGold(repairCost[_currentLevel]);
+         Debug.Log("T: Tower Repaired, HP is " + _currentHp);
+     }
+ 
+ 
+     public int GetLevel()
+     {
+         return _currentLevel;
+     }
+ 
+ 
+     public bool CheckMaxLevel()
+     {
+         return _currentLevel == MaxLevel - 1;
+     }
+ 
+ 
+     void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
+     {
+         GameObject myLine = new GameObject();
+         myLine.transform.position = start;
+         myLine.AddComponent<LineRenderer>();
+         LineRenderer lr = myLine.GetComponent<LineRenderer>();
+         lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
+         lr.SetColors(color, color);
+         lr.SetWidth(0.05f, 0.7f);
+         lr.SetPosition(0, start);
+         lr.SetPosition(1, end);
+         lr.sortingLayerName = "Effects"; 
+         GameObject.Destroy(myLine, duration);
+     }
+ 
+ 
+     public int GetAttackRange()
+     {
+         return AttackRange;
+     }
+ 
+ 
+     public void GetTowerInfo(int[] info)
+     {
+         info[0] = AttackRange;
+         info[1] = _currentLevel;
+         info[2] = (int)Type;
+         info[3] = _currentHp;
+         info[4] = HitPoint[_currentLevel];
+         info[5] = AttackDamage[_currentLevel];
+         info[6] = AttackSpeed[_currentLevel];
+         info[7] = upgradeCost;
+         info[8] = repairCost[_currentLevel];
+         info[9] = sellGain[_currentLevel];
+         info[10] = buildCost;
+     }
+     */
+ }
