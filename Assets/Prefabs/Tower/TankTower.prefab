@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000012705349504}
   - 212: {fileID: 212000013048375024}
   - 114: {fileID: 114000013909987968}
+  - 95: {fileID: 95000013760838220}
   m_Layer: 0
   m_Name: TankTower
   m_TagString: Untagged
@@ -41,6 +42,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!95 &95000013760838220
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014232591036}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40a0d8532f0f3ad44bb16b18e94eea58, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114000013909987968
 MonoBehaviour:
   m_ObjectHideFlags: 1
