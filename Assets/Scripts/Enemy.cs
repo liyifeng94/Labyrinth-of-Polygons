@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     public int Hp = 1;
     public int Gold = 5;
     public int Score = 10;
+    public int AttackDamage=0;
     private Direction Dir = Direction.Down ;
     public Type EnemyType;
     private int _pos = 0;
@@ -143,6 +144,7 @@ public class Enemy : MonoBehaviour
                 Speed = 2;
                 Score = 30;
                 _attackSpeed = 0.5f;
+                AttackDamage = 5;
                 break;
             case Type.Fast:
                 Hp = 3 + currentLevel;
@@ -180,7 +182,7 @@ public class Enemy : MonoBehaviour
         if (EnemyType != Type.Attacking) return;
         Debug.Log("enemy attacking");
         Tower tower = GetAttackTower();
-        if (tower != null) tower.ReceiveAttack(50);
+        if (tower != null) tower.ReceiveAttack(AttackDamage);
         
 
     }
