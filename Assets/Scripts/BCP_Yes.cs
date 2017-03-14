@@ -33,7 +33,8 @@ public class BCP_Yes : MonoBehaviour
 
     public void setTileEventHandler(TileEventHandler teh)
     {
-        if (null == _tileEventHandler)
+        _tileEventHandler = teh;
+        if (null == _gameBoard)
         {
             _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
             _towerBuildPanel = TowerBuildPanel.Instance;
@@ -42,7 +43,6 @@ public class BCP_Yes : MonoBehaviour
             _towerOperationPanel = TowerOperationPanel.Instance;
             _notificationPanel = NotificationPanel.Instance;
         }
-        _tileEventHandler = teh;
     }
 
 

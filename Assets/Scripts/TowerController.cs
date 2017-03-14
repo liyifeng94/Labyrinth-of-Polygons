@@ -93,10 +93,4 @@ public class TowerController : MonoBehaviour
     {
         _enemies.Remove(enemy);
     }
-
-
-    public int CheckInRangedEnemy()
-    {
-        return _enemies.Count;
-    }
 }

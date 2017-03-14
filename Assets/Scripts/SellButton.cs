@@ -19,17 +19,19 @@ public class SellButton : MonoBehaviour {
 
     public void setTowerEventHandler(TileEventHandler teh)
     {
-        if (null == _tileEventHandler)
+        _tileEventHandler = teh;
+        Debug.Log("SB: setTowerEventHandler called, position" + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
+        if (null == _buildCheckPanel)
         {
             _buildCheckPanel = BuildCheckPanel.Instance;
             _towerInfoPanel = TowerInfoPanel.Instance;
             _notificationPanel = NotificationPanel.Instance;
         }
-        _tileEventHandler = teh;
     }
 
     public void SellButtonSelected()
     {
+        Debug.Log("SB: Sell button clicked");
         _tileEventHandler.SetOperation(8);
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();

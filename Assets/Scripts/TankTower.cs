@@ -69,7 +69,6 @@ public class TankTower : Tower
     public new void AttackEnemy(Enemy t)
     {
         //Debug.Log("TT: AttackEnemy~~~~~~~~~~~~~~~~~");
-        Debug.Log("TT: Number of in ranged enemies " + TowerController.CheckInRangedEnemy()); 
         if (TowerController.CheckIfEnemyAlive(t))
         {
             Vector3 start = transform.position;
@@ -108,12 +107,13 @@ public class TankTower : Tower
             CurrentLevel += 1;
             CurrentHp = HitPoint[CurrentLevel];
             LevelManager.UseGold(UpgradeCost);
-            //Debug.Log("T: Tower upgraded to level" + _currentLevel);
+            Debug.Log("T: Tower upgraded to level" + CurrentLevel);
         }
         else
         {
-            //Debug.Log("T: Max Level");
+            Debug.Log("T: Max Level");
             NotificationPanel.SetNotificationType("MaxLevel");
+            NotificationPanel.Appear();
         }
     }
 

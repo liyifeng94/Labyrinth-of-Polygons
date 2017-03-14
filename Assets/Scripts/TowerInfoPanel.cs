@@ -40,7 +40,7 @@ public class TowerInfoPanel : MonoBehaviour {
                 Type.text = "Tank";
                 break;
         }
-        Level.text = "Lvl: " + info[2];
+        Level.text = "Lvl: " + (info[2]+1);
         // TODO: display more text about tower info
     }
 }

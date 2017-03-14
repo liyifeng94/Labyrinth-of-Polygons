@@ -41,6 +41,12 @@ using System.Linq;
     public virtual int GetAttackRange() { return 0; }
     public void GetTowerInfo(int[] info) { }
 
+
+    public bool IsDestory()
+    {
+        return DestroyByEnemy;
+    }
+
     /*
     public uint X { get; private set; }
     public uint Y { get; private set; }
