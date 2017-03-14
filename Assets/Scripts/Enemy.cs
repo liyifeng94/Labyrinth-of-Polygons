@@ -28,19 +28,20 @@ public class Enemy : MonoBehaviour
     public int Hp = 1;
     public int Gold = 5;
     public int Score = 10;
+    public int AttackDamage=0;
     private Direction Dir = Direction.Down ;
     public Type EnemyType;
     private int _pos = 0;
     private float _distance = (float)0.0;
     private GameBoard _gameBoard;
-    private LevelManager _levelManager;
+    private LevelManager _levelManager = GameManager.Instance.CurrentLevelManager;
     private EnemyController _enemyController;
     private HashSet<Tower> _towers;
+    private float _attackSpeed;
 
+    private float _start,_end;
     private List<GameBoard.Tile> _path;
     private List<GridSystem.Cell> _cells;
-    
-
     
 
     void Start()
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
         _enemyController = EnemyController.Instance;
+        _start = Time.time;
     }
 
     bool InTile(GameBoard.Tile tile)
@@ -82,7 +84,14 @@ public class Enemy : MonoBehaviour
     //Called every frame
     void Update()
     {
-        Attack();
+        _end = Time.time;
+
+        if (_end - _start > _attackSpeed)
+        {
+            _start = Time.time;
+            Attack();
+        }
+        
         Vector3 position = transform.position;
         if (((_pos == 0 || _pos+1 == _path.Count) && _distance>0.5) ||
             _distance>1)
@@ -114,6 +123,7 @@ public class Enemy : MonoBehaviour
 
     public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, Type type)
     {
+        int currentLevel = _levelManager.GetCurrentLevel();
         EnemyType = type;
         GridX = x;
         GridY = y;
@@ -123,25 +133,27 @@ public class Enemy : MonoBehaviour
         switch (EnemyType)
         {
             case Type.Normal:
-                Hp = 5;
+                Hp = 5 + currentLevel;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 10;
                 break;
             case Type.Attacking:
-                Hp = 500;
-                AttackRange = 20;
+                Hp = 5 + currentLevel;
+                AttackRange = 3;
                 Speed = 2;
                 Score = 30;
+                _attackSpeed = 0.5f;
+                AttackDamage = 5;
                 break;
             case Type.Fast:
-                Hp = 3;
+                Hp = 3 + currentLevel;
                 AttackRange = 0;
                 Speed = 4;
                 Score = 20;
                 break;
             case Type.Flying:
-                Hp = 5;
+                Hp = 5 + currentLevel;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 40;
@@ -168,9 +180,20 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         if (EnemyType != Type.Attacking) return;
+        Debug.Log("enemy attacking");
+        Tower tower = GetAttackTower();
+        if (tower != null) tower.ReceiveAttack(AttackDamage);
+        
 
-        //if (_towers.Count>0) _towers.First().ReceiveAttack(1000);
+    }
 
+    public Tower GetAttackTower()
+    {
+        foreach (var tower in _towers)
+        {
+            if (!tower.IsDestory()) return tower;
+        }
+        return null;
     }
 
     public void GetDamaged(int damage)
@@ -178,8 +201,8 @@ public class Enemy : MonoBehaviour
         Hp -= damage;
         if (Hp<=0)
         {
-            GameManager.Instance.CurrentLevelManager.AddGold(Gold);
-            GameManager.Instance.CurrentLevelManager.AddScore(Score);
+            _levelManager.AddGold(Gold);
+            _levelManager.AddScore(Score);
             Die();
         }
     }   
