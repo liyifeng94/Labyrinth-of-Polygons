@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     private HashSet<Tower> _towers;
     private float _attackSpeed;
 
+    private float _start,_end;
     private List<GameBoard.Tile> _path;
     private List<GridSystem.Cell> _cells;
     
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
         _enemyController = EnemyController.Instance;
+        _start = Time.time;
     }
 
     bool InTile(GameBoard.Tile tile)
@@ -81,7 +83,14 @@ public class Enemy : MonoBehaviour
     //Called every frame
     void Update()
     {
-        Attack();
+        _end = Time.time;
+
+        if (_end - _start > _attackSpeed)
+        {
+            _start = Time.time;
+            Attack();
+        }
+        
         Vector3 position = transform.position;
         if (((_pos == 0 || _pos+1 == _path.Count) && _distance>0.5) ||
             _distance>1)
@@ -130,9 +139,10 @@ public class Enemy : MonoBehaviour
                 break;
             case Type.Attacking:
                 Hp = 5 + currentLevel;
-                AttackRange = 20;
+                AttackRange = 3;
                 Speed = 2;
                 Score = 30;
+                _attackSpeed = 0.5f;
                 break;
             case Type.Fast:
                 Hp = 3 + currentLevel;
@@ -168,9 +178,20 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         if (EnemyType != Type.Attacking) return;
+        Debug.Log("enemy attacking");
+        Tower tower = GetAttackTower();
+        if (tower != null) tower.ReceiveAttack(50);
+        
 
-        //if (_towers.Count>0) _towers.First().ReceiveAttack(1000);
+    }
 
+    public Tower GetAttackTower()
+    {
+        foreach (var tower in _towers)
+        {
+            if (!tower.IsDestory()) return tower;
+        }
+        return null;
     }
 
     public void GetDamaged(int damage)
