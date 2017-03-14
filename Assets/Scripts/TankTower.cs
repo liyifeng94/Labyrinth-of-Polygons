@@ -21,6 +21,9 @@ public class TankTower : Tower
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
         TowerController = TowerController.Instance;
+        //TowerAnimator = new Animator();
+        //TowerAnimator.GetComponent<Animator>();
+        //GetComponent < Animator > = TowerAnimator;
     }
 
 
@@ -44,7 +47,7 @@ public class TankTower : Tower
         }
     }
 
-
+    /*
     public new void Setup(TileEventHandler tileEventHandler)
     {
         X = tileEventHandler.GridX;
@@ -56,7 +59,7 @@ public class TankTower : Tower
     {
         Destroy(gameObject);
     }
-
+    */
 
     public override void AddEnemy(Enemy t)
     {
@@ -77,15 +80,15 @@ public class TankTower : Tower
             Vector3 end = endTransform.position;
             DrawLine(start, end, Color.yellow);
             t.GetDamaged(AttackDamage[CurrentLevel]);
-            Debug.Log("TT: Attacks");
+            //Debug.Log("TT: Attacks");
         }
         else
         {
-            Debug.Log("T: Targeted enemy died");
+            //Debug.Log("T: Targeted enemy died");
         }
     }
 
-
+    /*
     public new void ReceiveAttack(int ad)
     {
         if (CurrentHp > ad)
@@ -98,7 +101,7 @@ public class TankTower : Tower
             Debug.Log("T: Tower destoryed");
         }
     }
-
+    */
 
     public new void Upgrade()
     {
@@ -107,17 +110,17 @@ public class TankTower : Tower
             CurrentLevel += 1;
             CurrentHp = HitPoint[CurrentLevel];
             LevelManager.UseGold(UpgradeCost);
-            Debug.Log("T: Tower upgraded to level" + CurrentLevel);
+            //Debug.Log("T: Tower upgraded to level" + CurrentLevel);
         }
         else
         {
-            Debug.Log("T: Max Level");
+            //Debug.Log("T: Max Level");
             NotificationPanel.SetNotificationType("MaxLevel");
             NotificationPanel.Appear();
         }
     }
 
-
+    /*
     public new void Repair()
     {
         CurrentHp = HitPoint[CurrentLevel];
@@ -136,7 +139,7 @@ public class TankTower : Tower
     {
         return CurrentLevel == MaxLevel - 1;
     }
-
+    */
 
     public new void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
     {
