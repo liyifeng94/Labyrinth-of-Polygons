@@ -59,10 +59,14 @@ public class TowerInfoPanel : MonoBehaviour {
                 Atk.text = "SRate\n" + info[5] + "%";
                 Aspd.text = "ASpd\n" + info[6] + "/s";
                 break;
+            case 3:
+                Type.text = "Heal";
+                Atk.text = "HAmt\n" + info[5];
+                Aspd.text = "HSpd\n" + info[6] + "/s";
+                break;
             case 4:
                 Type.text = "Money";
-                float money = info[5];
-                Atk.text = "Money\n" + money;
+                Atk.text = "MGain\n" + info[5];
                 Aspd.text = "MSpd\n0." + info[6] + "/s";
                 break;
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

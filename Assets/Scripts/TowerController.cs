@@ -10,13 +10,16 @@ public class TowerController : MonoBehaviour
     private TankTower _tankTowerPtr;
     private RangeTower _rangeTowerPtr;
     private SlowTower _slowTowerPtr;
+    private HealTower _healTowerPtr;
     private MoneyTower _moneyTowerPtr;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
     private HashSet<Enemy> _enemies;
+    private HashSet<TileEventHandler> _tileEventHandlers;
     private NotificationPanel _notificationPanel;
+
 
     void Awake()
     {
@@ -30,12 +33,13 @@ public class TowerController : MonoBehaviour
         _gameBoard = _levelManager.GameBoardSystem;
         _notificationPanel = NotificationPanel.Instance;
         _enemies = new HashSet<Enemy>();
+        _tileEventHandlers = new HashSet<TileEventHandler>();
     }
 	
 
 	void Update ()
     {
-
+        //TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~ for heal tower stuff
 	}
 
 
@@ -79,6 +83,17 @@ public class TowerController : MonoBehaviour
                     return null;
                 }
                 break;
+            case 3:
+                _healTowerPtr = _towerGameObject.GetComponent<HealTower>(); // get scripts
+                if (_healTowerPtr.BuildCost > _levelManager.GetGold())
+                {
+                    //Debug.Log("TC: Not enough gold to build");
+                    _notificationPanel.SetNotificationType("NotEnoughMoney");
+                    _notificationPanel.Appear();
+                    Destroy(_towerGameObject);
+                    return null;
+                }
+                break;
             case 4:
                 _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>(); // get scripts
                 if (_moneyTowerPtr.BuildCost > _levelManager.GetGold())
@@ -90,8 +105,7 @@ public class TowerController : MonoBehaviour
                     return null;
                 }
                 break;
-
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         //Debug.Log("TC: Tower object created");
         return _towerGameObject;
@@ -118,12 +132,17 @@ public class TowerController : MonoBehaviour
                 _slowTowerPtr.GetTowerInfo(info);
                 _slowTowerPtr.Remove();
                 break;
+            case 3:
+                _healTowerPtr = _towerGameObject.GetComponent<HealTower>();
+                _healTowerPtr.GetTowerInfo(info);
+                _healTowerPtr.Remove();
+                break;
             case 4:
                 _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>();
                 _moneyTowerPtr.GetTowerInfo(info);
                 _moneyTowerPtr.Remove();
                 break;
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Destroy(_towerGameObject);
         return info[0];

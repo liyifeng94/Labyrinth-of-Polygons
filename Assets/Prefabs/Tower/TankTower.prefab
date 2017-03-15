@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012705349504}
   - 212: {fileID: 212000013048375024}
-  - 114: {fileID: 114000013909987968}
   - 95: {fileID: 95000013760838220}
+  - 114: {fileID: 114000013909987968}
   m_Layer: 0
   m_Name: TankTower
   m_TagString: Untagged
@@ -75,15 +75,15 @@ MonoBehaviour:
   CurrentHp: 0
   CurrentLevel: 0
   DestroyByEnemy: 0
-  _start: 0
-  _end: 0
+  StartTime: 0
+  EndTime: 0
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
   MaxLevel: 3
   HitPoint: 64000000c80000002c010000
   AttackRange: 1
-  AttackSpeed: 020000000200000002000000
+  AttackSpeed: 010000000100000002000000
   BuildCost: 5
   UpgradeCost: 4
   RepairCost: 020000000400000006000000

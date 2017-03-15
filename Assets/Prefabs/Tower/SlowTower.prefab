@@ -75,22 +75,22 @@ MonoBehaviour:
   CurrentHp: 0
   CurrentLevel: 0
   DestroyByEnemy: 0
-  _start: 0
-  _end: 0
+  StartTime: 0
+  EndTime: 0
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
   MaxLevel: 3
   HitPoint: 460000008c000000d2000000
   AttackRange: 2
-  AttackSpeed: 010000000200000003000000
+  AttackSpeed: 010000000100000002000000
   BuildCost: 15
   UpgradeCost: 12
   RepairCost: 060000000c00000012000000
   SellGain: 09000000120000001b000000
   Type: 2
   TowerAnimator: {fileID: 0}
-  AttackDamage: 0a000000140000001e000000
+  SlowPercent: 0a000000140000001e000000
 --- !u!212 &212000013834593418
 SpriteRenderer:
   m_ObjectHideFlags: 1

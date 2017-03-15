@@ -5,7 +5,7 @@ using System.Linq;
 public class SlowTower : Tower
 {
 
-    public int[] AttackDamage;
+    public int[] SlowPercent;
     private HashSet<Enemy> _enemies;
 
 
@@ -62,7 +62,7 @@ public class SlowTower : Tower
             Color result = new Color(1, 0, 1, 1.0f);
             DrawLine(start, end, result);
             //t.GetDamaged((AttackDamage[CurrentLevel]));
-            t.SlowDown((float)(AttackDamage[CurrentLevel]) / 100);
+            t.SlowDown((float)(SlowPercent[CurrentLevel]) / 100);
             //Debug.Log("ST: Attacks");
         }
         else
@@ -79,7 +79,7 @@ public class SlowTower : Tower
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
         info[4] = HitPoint[CurrentLevel];
-        info[5] = AttackDamage[CurrentLevel];
+        info[5] = SlowPercent[CurrentLevel];
         info[6] = AttackSpeed[CurrentLevel];
         info[7] = UpgradeCost;
         info[8] = RepairCost[CurrentLevel];

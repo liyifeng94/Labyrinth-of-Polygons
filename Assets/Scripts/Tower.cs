@@ -69,6 +69,19 @@ using System.Linq;
         }
     }
 
+    public void ReceiveHeal(int heal)
+    {
+        if (CurrentHp + heal <= HitPoint[CurrentLevel])
+        {
+            CurrentHp += heal;
+        }
+        else
+        {
+            CurrentHp = HitPoint[CurrentLevel];
+        }
+        Debug.Log("T: Tower at " + X + " " + Y + " was received " + heal + " heal");
+    }
+
 
     public void Upgrade()
     {
@@ -116,12 +129,6 @@ using System.Linq;
         return CurrentLevel;
     }
 
-    /*
-    public int GetAttackRange()
-    {
-        return AttackRange;
-    }
-    */
 
     public bool CheckMaxLevel()
     {
