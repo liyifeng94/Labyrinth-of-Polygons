@@ -19,6 +19,7 @@ public class TileEventHandler : MonoBehaviour
     private TankTower _tankTowerPtr;
     private RangeTower _rangeTowerPtr;
     private SlowTower _slowTowerPtr;
+    private MoneyTower _moneyTowerPtr;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private int _currentTowerType;
@@ -32,6 +33,7 @@ public class TileEventHandler : MonoBehaviour
     private TankTowerButton _tankTowerButton;
     private RangeTowerButton _rangeTowerButton;
     private SlowTowerButton _slowTowerButton;
+    private MoneyTowerButton _moneyTowerButton;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private UpgradeButton _upgradeButton;
     private RepairButton _repairButton;
@@ -63,6 +65,7 @@ public class TileEventHandler : MonoBehaviour
         _tankTowerButton = TankTowerButton.Instance;
         _rangeTowerButton = RangeTowerButton.Instance;
         _slowTowerButton = SlowTowerButton.Instance;
+        _moneyTowerButton = MoneyTowerButton.Instance;
         // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         _upgradeButton = UpgradeButton.Instance;
         _repairButton = RepairButton.Instance;
@@ -190,19 +193,47 @@ public class TileEventHandler : MonoBehaviour
                 case Operation.HealTower:
                     break;
                 case Operation.MoneyTower:
+                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
+                    // ask tower controller to build(check avaliable gold)
+                    _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
+                    if (null == _towerGameObject)
+                    {
+                        Debug.Log("TEH: towerGameObject is null");
+                    }
+                    else
+                    {
+                        _towerExist = true;
+                        _currentTowerType = 4;
+                        _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>(); // get scripts
+                        _moneyTowerPtr.Setup(this);
+                        // check if it blocks the last path
+                        if (!_gameBoard.BuildTower(_moneyTowerPtr))
+                        {
+                            SellTower(true);
+                            _towerExist = false;
+                            //_notificationPanel.DisAppear();
+                            _notificationPanel.SetNotificationType("Block");
+                            _notificationPanel.Appear();
+                        }
+                        else
+                        {
+                            _levelManager.UseGold(_moneyTowerPtr.BuildCost);
+                        }
+                    }
                     break;
                 case Operation.Upgrade:
-                    Debug.Log("TEH: Upgrade Operation called");
+                    //Debug.Log("TEH: Upgrade Operation called");
                     if (0 == _currentTowerType) { _tankTowerPtr.Upgrade(); }
                     if (1 == _currentTowerType) { _rangeTowerPtr.Upgrade(); }
                     if (2 == _currentTowerType) { _slowTowerPtr.Upgrade(); }
+                    if (4 == _currentTowerType) { _moneyTowerPtr.Upgrade(); }
                     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     break;
                 case Operation.Repair:
                     if (0 == _currentTowerType) { _tankTowerPtr.Repair(); }
                     if (1 == _currentTowerType) { _rangeTowerPtr.Repair(); }
                     if (2 == _currentTowerType) { _slowTowerPtr.Repair(); }
-
+                    if (4 == _currentTowerType) { _moneyTowerPtr.Repair(); }
                     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     break;
                 case Operation.Sell:
@@ -224,7 +255,7 @@ public class TileEventHandler : MonoBehaviour
             _gameBoard.HighlightTileAt(GridX, GridY);
             if (_towerExist)
             {
-                Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
+                //Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
                 _sellButton.setTowerEventHandler(this);
                 _upgradeButton.setTowerEventHandler(this);
                 _repairButton.setTowerEventHandler(this);
@@ -234,6 +265,7 @@ public class TileEventHandler : MonoBehaviour
                 if (0 == _currentTowerType) { DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo)); }
                 if (1 == _currentTowerType) { DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo)); }
                 if (2 == _currentTowerType) { DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo)); }
+                if (4 == _currentTowerType) { DisplayAttackRange(_moneyTowerPtr.GetTowerInfo(towerInfo)); }
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
@@ -246,6 +278,7 @@ public class TileEventHandler : MonoBehaviour
                 _tankTowerButton.setTowerEventHandler(this);
                 _rangeTowerButton.setTowerEventHandler(this);
                 _slowTowerButton.setTowerEventHandler(this);
+                _moneyTowerButton.setTowerEventHandler(this);
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _yesButton.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
@@ -271,6 +304,7 @@ public class TileEventHandler : MonoBehaviour
             if (0 == _currentTowerType) { _levelManager.AddGold(_tankTowerPtr.SellGain[_tankTowerPtr.GetLevel()]); }
             if (1 == _currentTowerType) { _levelManager.AddGold(_rangeTowerPtr.SellGain[_rangeTowerPtr.GetLevel()]); }
             if (2 == _currentTowerType) { _levelManager.AddGold(_slowTowerPtr.SellGain[_slowTowerPtr.GetLevel()]); }
+            if (4 == _currentTowerType) { _levelManager.AddGold(_moneyTowerPtr.SellGain[_slowTowerPtr.GetLevel()]); }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         }
@@ -302,6 +336,7 @@ public class TileEventHandler : MonoBehaviour
         if (0 == _currentTowerType) { return _tankTowerPtr; }
         if (1 == _currentTowerType) { return _rangeTowerPtr; }
         if (2 == _currentTowerType) { return _slowTowerPtr; }
+        if (4 == _currentTowerType) { return _moneyTowerPtr; }
         //TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         return null;

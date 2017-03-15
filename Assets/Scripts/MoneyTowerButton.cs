@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SlowTowerButton : MonoBehaviour
+public class MoneyTowerButton : MonoBehaviour
 {
 
-    public static SlowTowerButton Instance;
+    public static MoneyTowerButton Instance;
 
     private GameBoard _gameBoard;
 
@@ -34,19 +34,19 @@ public class SlowTowerButton : MonoBehaviour
         }
     }
 
-    public void SlowTowerSelected()
+    public void MoneyTowerSelected()
     {
         _gameBoard.ClearHighlightTiles();
-        _tileEventHandler.SelectTowerType(2);
-        _tileEventHandler.SetOperation(3);
+        _tileEventHandler.SelectTowerType(4);
+        _tileEventHandler.SetOperation(5);
         int[] towerInfo = new int[11];
-        int range = _towerController.CheckTowerInfo(2, towerInfo);
-        //Debug.Log("Slow is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
+        int range = _towerController.CheckTowerInfo(4, towerInfo);
+        //Debug.Log("Money is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
         _tileEventHandler.DisplayAttackRange(range);
         _buildCheckPanel.Appear();
         _towerInfoPanel.SetTowerInfo(towerInfo);
         _towerInfoPanel.Appear();
-        _notificationPanel.SetNotificationType("Slow");
+        _notificationPanel.SetNotificationType("Money");
         _notificationPanel.Appear();
     }
 }

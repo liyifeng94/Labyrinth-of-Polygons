@@ -13,7 +13,7 @@ public class SlowTower : Tower
     {
         CurrentLevel = 0;
         DestroyByEnemy = false;
-        _start = Time.time;
+        StartTime = Time.time;
         CurrentHp = HitPoint[CurrentLevel];
         _enemies = new HashSet<Enemy>();
 
@@ -30,11 +30,11 @@ public class SlowTower : Tower
         //Debug.Log("ST: Tower 0 searching");
         if (0 != _enemies.Count)
         {
-            _end = Time.time;
-            if (_end - _start > (float)(1 / AttackSpeed[CurrentLevel]))
+            EndTime = Time.time;
+            if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
             {
-                _start = Time.time;
-                SlowEnemy(_enemies.First()); // make this simple, just attack the first one
+                StartTime = Time.time;
+                SlowEnemy(_enemies.First()); // make this simple, just slow the first one
                 _enemies.Clear();
             }
         }
@@ -72,13 +72,7 @@ public class SlowTower : Tower
     }
 
 
-    public new int GetAttackRange()
-    {
-        return AttackRange;
-    }
-
-
-    public new int GetTowerInfo(int[] info)
+   public new int GetTowerInfo(int[] info)
     {
         info[0] = AttackRange;
         info[1] = (int)Type;

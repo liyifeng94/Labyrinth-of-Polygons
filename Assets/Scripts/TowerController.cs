@@ -10,6 +10,7 @@ public class TowerController : MonoBehaviour
     private TankTower _tankTowerPtr;
     private RangeTower _rangeTowerPtr;
     private SlowTower _slowTowerPtr;
+    private MoneyTower _moneyTowerPtr;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private GameBoard _gameBoard;
@@ -78,7 +79,19 @@ public class TowerController : MonoBehaviour
                     return null;
                 }
                 break;
-            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            case 4:
+                _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>(); // get scripts
+                if (_moneyTowerPtr.BuildCost > _levelManager.GetGold())
+                {
+                    //Debug.Log("TC: Not enough gold to build");
+                    _notificationPanel.SetNotificationType("NotEnoughMoney");
+                    _notificationPanel.Appear();
+                    Destroy(_towerGameObject);
+                    return null;
+                }
+                break;
+
+                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         //Debug.Log("TC: Tower object created");
         return _towerGameObject;
@@ -105,7 +118,12 @@ public class TowerController : MonoBehaviour
                 _slowTowerPtr.GetTowerInfo(info);
                 _slowTowerPtr.Remove();
                 break;
-            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            case 4:
+                _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>();
+                _moneyTowerPtr.GetTowerInfo(info);
+                _moneyTowerPtr.Remove();
+                break;
+                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Destroy(_towerGameObject);
         return info[0];

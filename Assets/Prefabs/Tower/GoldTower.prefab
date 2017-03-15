@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000013247441652}
   - 212: {fileID: 212000010550497774}
   - 95: {fileID: 95000013909071390}
+  - 114: {fileID: 114000012302649100}
   m_Layer: 0
   m_Name: GoldTower
   m_TagString: Untagged
@@ -58,6 +59,38 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000012302649100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013374595410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f61d34abcda7b44187e2b7556dad574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 0
+  CurrentHp: 0
+  CurrentLevel: 0
+  DestroyByEnemy: 0
+  StartTime: 0
+  EndTime: 0
+  LevelManager: {fileID: 0}
+  TowerController: {fileID: 0}
+  NotificationPanel: {fileID: 0}
+  MaxLevel: 3
+  HitPoint: 1e0000003c0000005a000000
+  AttackRange: 0
+  AttackSpeed: 010000000100000001000000
+  BuildCost: 25
+  UpgradeCost: 20
+  RepairCost: 0a000000140000001e000000
+  SellGain: 0f0000001e0000002d000000
+  Type: 4
+  TowerAnimator: {fileID: 0}
+  MoneyPerTenSec: 020000000400000006000000
 --- !u!212 &212000010550497774
 SpriteRenderer:
   m_ObjectHideFlags: 1

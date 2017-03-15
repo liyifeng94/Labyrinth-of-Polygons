@@ -13,7 +13,7 @@ public class TankTower : Tower
     {
         CurrentLevel = 0;
         DestroyByEnemy = false;
-        _start = Time.time;
+        StartTime = Time.time;
         CurrentHp = HitPoint[CurrentLevel];
         _enemies = new HashSet<Enemy>();
 
@@ -30,10 +30,10 @@ public class TankTower : Tower
         //Debug.Log("TT: Tower 0 searching");
         if (0 != _enemies.Count)
         {
-            _end = Time.time;
-            if (_end - _start > (float)(1 / AttackSpeed[CurrentLevel]))
+            EndTime = Time.time;
+            if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
             {
-                _start = Time.time;
+                StartTime = Time.time;
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 _enemies.Clear();
             }
@@ -50,7 +50,7 @@ public class TankTower : Tower
     }
 
 
-    public new void AttackEnemy(Enemy t)
+    public void AttackEnemy(Enemy t)
     {
         if (DestroyByEnemy) return;
         //Debug.Log("TT: AttackEnemy~~~~~~~~~~~~~~~~~");
@@ -69,12 +69,6 @@ public class TankTower : Tower
         {
             //Debug.Log("T: Targeted enemy died");
         }
-    }
-
-
-    public new int GetAttackRange()
-    {
-        return AttackRange;
     }
 
 
