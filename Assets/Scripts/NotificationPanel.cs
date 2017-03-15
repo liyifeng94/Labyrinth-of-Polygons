@@ -40,6 +40,9 @@ public class NotificationPanel : MonoBehaviour {
             case "Range":
                 FixText.text = "Range Tower creation" + towerOperationReuqst;
                 break;
+            case "Slow":
+                FixText.text = "Slow Tower creation" + towerOperationReuqst;
+                break;
             // TODO
             case "NotEnoughMoney":
                 FixText.text = "Not enough gold to build.\n" + rejectedCase;

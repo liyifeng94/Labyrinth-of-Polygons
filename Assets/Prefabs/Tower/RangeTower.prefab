@@ -81,13 +81,13 @@ MonoBehaviour:
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
   MaxLevel: 3
-  HitPoint: 50000000a0000000f0000000
+  HitPoint: 460000008c000000d2000000
   AttackRange: 3
   AttackSpeed: 010000000100000001000000
   BuildCost: 10
-  UpgradeCost: 6
-  RepairCost: 040000000600000008000000
-  SellGain: 06000000080000000a000000
+  UpgradeCost: 8
+  RepairCost: 04000000080000000c000000
+  SellGain: 060000000c00000012000000
   Type: 1
   TowerAnimator: {fileID: 0}
   AttackDamage: 010000000200000003000000

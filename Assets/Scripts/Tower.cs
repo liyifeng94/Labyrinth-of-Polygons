@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +31,7 @@ using System.Linq;
 
     public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
     public virtual void AttackEnemy(Enemy t) {}
+    //public virtual void SlowEnemy(Enemy t) { }
     public virtual int GetAttackRange() { return 0; }
     public virtual int GetTowerInfo(int[] info) { return 0; }
 
@@ -65,7 +68,7 @@ using System.Linq;
             TowerAnimator.SetTrigger("TowerDestroyed");
             //Remove();
             DestroyByEnemy = true;
-            Debug.Log("T``````````````````````````: Tower at " + X + " " + Y + " is destoryed by enemy");
+            Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
         }
     }
 
@@ -78,7 +81,6 @@ using System.Linq;
             NotificationPanel.Appear();
             return;
         }
-        // TODO notification panel
         if (CurrentLevel < MaxLevel - 1)
         {
             CurrentLevel += 1;
@@ -124,7 +126,7 @@ using System.Linq;
     }
 
 
-    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.04f)
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
     {
         GameObject myLine = new GameObject();
         myLine.transform.position = start;

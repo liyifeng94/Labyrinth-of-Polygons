@@ -54,6 +54,11 @@ public class TowerInfoPanel : MonoBehaviour {
                 Atk.text = "ATK\n" + info[5];
                 Aspd.text = "ASPB\n" + info[6];
                 break;
+            case 2:
+                Type.text = "Slow";
+                Atk.text = "SRate\n" + info[5] + "%";
+                Aspd.text = "ASPB\n" + info[6];
+                break;
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Level.text = "Lvl: " + (info[2]+1);

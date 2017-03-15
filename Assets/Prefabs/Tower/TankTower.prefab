@@ -86,7 +86,7 @@ MonoBehaviour:
   AttackSpeed: 020000000200000002000000
   BuildCost: 5
   UpgradeCost: 4
-  RepairCost: 020000000300000004000000
+  RepairCost: 020000000400000006000000
   SellGain: 030000000600000009000000
   Type: 0
   TowerAnimator: {fileID: 0}
