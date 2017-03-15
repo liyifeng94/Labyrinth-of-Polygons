@@ -58,6 +58,8 @@ MonoBehaviour:
   Hp: 1
   Gold: 5
   Score: 10
+  AttackDamage: 0
+  EnemyType: 0
 --- !u!212 &212000011856922786
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -87,7 +89,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 03a6579c4f9e8a649855a0418a4f32b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dfe838b6d5ff27c468ed9e0e1db79ed9, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
