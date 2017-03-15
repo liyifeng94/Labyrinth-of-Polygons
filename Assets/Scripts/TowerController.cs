@@ -9,7 +9,7 @@ public class TowerController : MonoBehaviour
     public List<GameObject> Towers;
     private TankTower _tankTowerPtr;
     private RangeTower _rangeTowerPtr;
-    // TODO
+    // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private GameBoard _gameBoard;
     private LevelManager _levelManager;
@@ -48,8 +48,7 @@ public class TowerController : MonoBehaviour
                 _tankTowerPtr = _towerGameObject.GetComponent<TankTower>(); // get scripts
                 if (_tankTowerPtr.BuildCost > _levelManager.GetGold())
                 {
-                    Debug.Log("TC: Not enough gold to build");
-                    // TODO: display the message
+                    //Debug.Log("TC: Not enough gold to build");
                     _notificationPanel.SetNotificationType("NotEnoughMoney");
                     _notificationPanel.Appear();
                     Destroy(_towerGameObject);
@@ -60,15 +59,14 @@ public class TowerController : MonoBehaviour
                 _rangeTowerPtr = _towerGameObject.GetComponent<RangeTower>(); // get scripts
                 if (_rangeTowerPtr.BuildCost > _levelManager.GetGold())
                 {
-                    Debug.Log("TC: Not enough gold to build");
-                    // TODO: display the message
+                    //Debug.Log("TC: Not enough gold to build");
                     _notificationPanel.SetNotificationType("NotEnoughMoney");
                     _notificationPanel.Appear();
                     Destroy(_towerGameObject);
                     return null;
                 }
                 break;
-            // TODO
+            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         //Debug.Log("TC: Tower object created");
         return _towerGameObject;
@@ -90,7 +88,7 @@ public class TowerController : MonoBehaviour
                 _rangeTowerPtr.GetTowerInfo(info);
                 _rangeTowerPtr.Remove();
                 break;
-            // TODO
+            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Destroy(_towerGameObject);
         return info[0];

@@ -6,7 +6,6 @@ public class TankTower : Tower
 {
 
     public int[] AttackDamage;
-    private float _loadingTime;
     private HashSet<Enemy> _enemies;
 
 
@@ -14,7 +13,7 @@ public class TankTower : Tower
     {
         CurrentLevel = 0;
         DestroyByEnemy = false;
-        _loadingTime = AttackSpeed[CurrentLevel];
+        _start = Time.time;
         CurrentHp = HitPoint[CurrentLevel];
         _enemies = new HashSet<Enemy>();
 
@@ -31,17 +30,12 @@ public class TankTower : Tower
         //Debug.Log("TT: Tower 0 searching");
         if (0 != _enemies.Count)
         {
-            float attackS = (float)AttackSpeed[CurrentLevel] - 0.95f;
-            if (_loadingTime >= attackS)
+            _end = Time.time;
+            if (_end - _start > (float)(1 / AttackSpeed[CurrentLevel]))
             {
-            // todo check if target enemy is still alive from controller
+                _start = Time.time;
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
-                _loadingTime = 0.0f;
                 _enemies.Clear();
-            }
-            else
-            {
-                _loadingTime += Time.deltaTime;
             }
         }
     }
@@ -84,7 +78,7 @@ public class TankTower : Tower
     }
 
 
-    public new void GetTowerInfo(int[] info)
+    public new int GetTowerInfo(int[] info)
     {
         info[0] = AttackRange;
         info[1] = (int)Type;
@@ -97,5 +91,6 @@ public class TankTower : Tower
         info[8] = RepairCost[CurrentLevel];
         info[9] = SellGain[CurrentLevel];
         info[10] = BuildCost;
+        return info[0];
     }
 }

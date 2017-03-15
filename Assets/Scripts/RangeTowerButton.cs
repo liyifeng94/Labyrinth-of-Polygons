@@ -41,32 +41,8 @@ public class RangeTowerButton : MonoBehaviour
         _tileEventHandler.SetOperation(2);
         int[] towerInfo = new int[11];
         int range = _towerController.CheckTowerInfo(1, towerInfo);
-        Debug.Log("Range is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
-        for (uint i = 0; i <= range; i++)
-        {
-            for (uint j = 0; j <= range; j++)
-            {
-                if (_tileEventHandler.GridX + i < 10 && _tileEventHandler.GridY + j < 20)
-                {
-                    _gameBoard.HighlightTileAt(_tileEventHandler.GridX + i, _tileEventHandler.GridY + j);
-                }
-                if (_tileEventHandler.GridX >= i && _tileEventHandler.GridY >= j)
-                {
-                    _gameBoard.HighlightTileAt(_tileEventHandler.GridX - i, _tileEventHandler.GridY - j);
-                }
-                if (i != 0 && j != 0)
-                {
-                    if (_tileEventHandler.GridX + i < 10 && _tileEventHandler.GridY >= j)
-                    {
-                        _gameBoard.HighlightTileAt(_tileEventHandler.GridX + i, _tileEventHandler.GridY - j);
-                    }
-                    if (_tileEventHandler.GridX >= i && _tileEventHandler.GridY + j < 20)
-                    {
-                        _gameBoard.HighlightTileAt(_tileEventHandler.GridX - i, _tileEventHandler.GridY + j);
-                    }
-                }
-            }
-        }
+        //Debug.Log("Range is " + range + " " + _tileEventHandler.GridX + " " + _tileEventHandler.GridY);
+        _tileEventHandler.DisplayAttackRange(range);
         _buildCheckPanel.Appear();
         _towerInfoPanel.SetTowerInfo(towerInfo);
         _towerInfoPanel.Appear();

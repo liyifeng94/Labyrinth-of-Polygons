@@ -10,6 +10,7 @@ using System.Linq;
     [HideInInspector] public int CurrentHp;
     [HideInInspector] public int CurrentLevel;
     [HideInInspector] public bool DestroyByEnemy;
+    [HideInInspector] public float _start, _end;
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public TowerController TowerController;
     [HideInInspector] public NotificationPanel NotificationPanel;
@@ -29,7 +30,7 @@ using System.Linq;
     public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
     public virtual void AttackEnemy(Enemy t) {}
     public virtual int GetAttackRange() { return 0; }
-    public void GetTowerInfo(int[] info) { }
+    public virtual int GetTowerInfo(int[] info) { return 0; }
 
 
     public bool IsDestory()
@@ -137,6 +138,7 @@ using System.Linq;
         lr.sortingLayerName = "Effects";
         GameObject.Destroy(myLine, duration);
     }
+
 
     /*
     public uint X { get; private set; }

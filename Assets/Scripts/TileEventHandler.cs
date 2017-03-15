@@ -18,7 +18,7 @@ public class TileEventHandler : MonoBehaviour
     private TowerController _towerController;
     private TankTower _tankTowerPtr;
     private RangeTower _rangeTowerPtr;
-    // TODO
+    // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private int _currentTowerType;
 
@@ -30,7 +30,7 @@ public class TileEventHandler : MonoBehaviour
 
     private TankTowerButton _tankTowerButton;
     private RangeTowerButton _rangeTowerButton;
-    // TODO: more tower button here
+    // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private UpgradeButton _upgradeButton;
     private RepairButton _repairButton;
     private SellButton _sellButton;
@@ -60,7 +60,7 @@ public class TileEventHandler : MonoBehaviour
 
         _tankTowerButton = TankTowerButton.Instance;
         _rangeTowerButton = RangeTowerButton.Instance;
-        // TODO: more tower button here
+        // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         _upgradeButton = UpgradeButton.Instance;
         _repairButton = RepairButton.Instance;
         _sellButton = SellButton.Instance;
@@ -89,7 +89,7 @@ public class TileEventHandler : MonoBehaviour
         {
             _clearBeforeBattle = false;
         }
-        //Debug.Log("~~~~~~~~~~~~~~~~~TEH: Confirmed operation is " + TowerOperation);
+        //Debug.Log("TEH: Confirmed operation is " + TowerOperation);
         if (_confirmed)
         {
             //Debug.Log("TEH: Confirmed operation is " + TowerOperation);
@@ -183,7 +183,7 @@ public class TileEventHandler : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
+        //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
         if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
             _gameBoard.ClearHighlightTiles();
@@ -196,10 +196,9 @@ public class TileEventHandler : MonoBehaviour
                 _yesButton.setTileEventHandler(this);
                 _towerOperationPanel.Appear();
                 int[] towerInfo = new int[11];
-                if (0 == _currentTowerType) { _tankTowerPtr.GetTowerInfo(towerInfo); }
-                if (1 == _currentTowerType) { _rangeTowerPtr.GetTowerInfo(towerInfo); }
-                // TODO
-
+                if (0 == _currentTowerType) { DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo)); }
+                if (1 == _currentTowerType) { DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo)); }
+                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
                 _towerBuildPanel.DisAppear();
@@ -210,8 +209,7 @@ public class TileEventHandler : MonoBehaviour
             {
                 _tankTowerButton.setTowerEventHandler(this);
                 _rangeTowerButton.setTowerEventHandler(this);
-                // TODO: set the rest four towers
-
+                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _yesButton.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
                 _towerOperationPanel.DisAppear();
@@ -227,7 +225,7 @@ public class TileEventHandler : MonoBehaviour
 
     public void SellTower(bool blockCase)
     {
-        Debug.Log("TEH: Trying to sell tower");
+        //Debug.Log("TEH: Trying to sell tower");
         _gameBoard.ClearHighlightTiles();
         Destroy(_towerGameObject);
         _towerExist = false;
@@ -238,10 +236,7 @@ public class TileEventHandler : MonoBehaviour
             if (1 == _currentTowerType) { _levelManager.AddGold(_rangeTowerPtr.SellGain[_rangeTowerPtr.GetLevel()]); }
 
         }
-        //_tankTowerPtr.Remove();
-        //_tankTowerPtr.TowerAnimator.SetTrigger("TowerDestroyed");
-        //_tankTowerPtr.DestroyByEnemy = true;
-        Debug.Log("TEH: Tower object removed");
+        //Debug.Log("TEH: Tower object removed");
     }
 
     public void OperationConfirmed()
@@ -259,7 +254,7 @@ public class TileEventHandler : MonoBehaviour
     public void SetOperation(int op)
     {
         TowerOperation = (Operation) op;
-        Debug.Log("TEH: Operation reset to " + TowerOperation+ " at " + GridX + " " + GridY);
+        //Debug.Log("TEH: Operation reset to " + TowerOperation+ " at " + GridX + " " + GridY);
     }
 
 
@@ -269,5 +264,35 @@ public class TileEventHandler : MonoBehaviour
         if (1 == _currentTowerType) { return _rangeTowerPtr; }
 
         return null;
+    }
+
+
+    public void DisplayAttackRange(int range)
+    {
+        for (uint i = 0; i <= range; i++)
+        {
+            for (uint j = 0; j <= range; j++)
+            {
+                if (GridX + i < 10 && GridY + j < 20)
+                {
+                    _gameBoard.HighlightTileAt(GridX + i, GridY + j);
+                }
+                if (GridX >= i && GridY >= j)
+                {
+                    _gameBoard.HighlightTileAt(GridX - i, GridY - j);
+                }
+                if (i != 0 && j != 0)
+                {
+                    if (GridX + i < 10 && GridY >= j)
+                    {
+                        _gameBoard.HighlightTileAt(GridX + i, GridY - j);
+                    }
+                    if (GridX >= i && GridY + j < 20)
+                    {
+                        _gameBoard.HighlightTileAt(GridX - i, GridY + j);
+                    }
+                }
+            }
+        }
     }
 }
