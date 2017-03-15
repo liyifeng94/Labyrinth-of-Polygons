@@ -34,8 +34,7 @@ public class Enemy : MonoBehaviour
     private int _pos = 0;
     private float _distance = (float)0.0;
     private GameBoard _gameBoard;
-    private LevelManager _levelManager = GameManager.Instance.CurrentLevelManager;
-
+    private LevelManager _levelManager;
     private EnemyController _enemyController;
     private HashSet<Tower> _towers;
     private float _attackSpeed;
@@ -63,11 +62,28 @@ public class Enemy : MonoBehaviour
 
     void ChangeDir()
     {
-        if (_path[_pos + 1].Position.x >_path[_pos].Position.x) Dir = Direction.Right;
-        if (_path[_pos + 1].Position.x < _path[_pos].Position.x) Dir = Direction.Left;
-        if (_path[_pos + 1].Position.y > _path[_pos].Position.y) Dir = Direction.Up;
-        if (_path[_pos + 1].Position.y < _path[_pos].Position.y) Dir = Direction.Down;
-
+        Quaternion rotation = transform.localRotation;
+        if (_path[_pos + 1].Position.x > _path[_pos].Position.x)
+        {
+            rotation.z = 0.7071f;
+            Dir = Direction.Right;
+        }
+        if (_path[_pos + 1].Position.x < _path[_pos].Position.x)
+        {
+            rotation.z = -0.7071f;
+            Dir = Direction.Left;
+        }
+        if (_path[_pos + 1].Position.y > _path[_pos].Position.y)
+        {
+            rotation.z = 2f;
+            Dir = Direction.Up;
+        }
+        if (_path[_pos + 1].Position.y < _path[_pos].Position.y)
+        {
+            rotation.z = 0;
+            Dir = Direction.Down;
+        }
+        transform.localRotation = rotation;
     }
 
     void ReachTileCenter()
@@ -124,7 +140,7 @@ public class Enemy : MonoBehaviour
 
     public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, Type type)
     {
-        int currentLevel = _levelManager.GetCurrentLevel();
+        int currentLevel = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
         EnemyType = type;
         GridX = x;
         GridY = y;
@@ -141,11 +157,11 @@ public class Enemy : MonoBehaviour
                 break;
             case Type.Attacking:
                 Hp = 5 + currentLevel;
-                AttackRange = 3;
+                AttackRange = 2;
                 Speed = 2;
                 Score = 30;
                 _attackSpeed = 0.5f;
-                AttackDamage = 5;
+                AttackDamage = 3;
                 break;
             case Type.Fast:
                 Hp = 3 + currentLevel;
@@ -181,9 +197,13 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         if (EnemyType != Type.Attacking) return;
-        Debug.Log("enemy attacking");
         Tower tower = GetAttackTower();
-        if (tower != null) tower.ReceiveAttack(AttackDamage);
+        if (tower != null)
+        {
+            Debug.Log("enemy attacking");
+            tower.ReceiveAttack(AttackDamage);
+            _towers.Clear();
+        }
         
 
     }
