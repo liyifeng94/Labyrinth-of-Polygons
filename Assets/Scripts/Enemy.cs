@@ -34,7 +34,8 @@ public class Enemy : MonoBehaviour
     private int _pos = 0;
     private float _distance = (float)0.0;
     private GameBoard _gameBoard;
-    private LevelManager _levelManager;
+    private LevelManager _levelManager = GameManager.Instance.CurrentLevelManager;
+
     private EnemyController _enemyController;
     private HashSet<Tower> _towers;
     private float _attackSpeed;

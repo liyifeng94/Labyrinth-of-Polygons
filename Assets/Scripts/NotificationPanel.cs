@@ -10,6 +10,7 @@ public class NotificationPanel : MonoBehaviour {
     //public Text AutoDisappearText;
     private string _type;
     private string towerOperationReuqst;
+    private string rejectedCase;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class NotificationPanel : MonoBehaviour {
         ThisPanel.SetActive(false);
         _type = "Nop";
         towerOperationReuqst = " request received.\nPress Yes to confirm.\nPress No to refuse.";
+        rejectedCase = "Request refused. Click another tile or EnterBattle to continue.";
     }
 
 
@@ -40,10 +42,10 @@ public class NotificationPanel : MonoBehaviour {
                 break;
             // TODO
             case "NotEnoughMoney":
-                FixText.text = "Not enough gold to build.\nClick another tile or EnterBattle to continue.";
+                FixText.text = "Not enough gold to build.\n" + rejectedCase;
                 break;
             case "Block":
-                FixText.text = "You were tried to build a tower that blocks the last path.\nClick another tile or EnterBattle to continue.";
+                FixText.text = "You were tried to build a tower that blocks the last path.\n" + rejectedCase;
                 break;
             case "Upgrade":
                 FixText.text = _type + towerOperationReuqst;
@@ -55,7 +57,7 @@ public class NotificationPanel : MonoBehaviour {
                 FixText.text = _type + towerOperationReuqst;
                 break;
             case "RepairWithFullHp":
-                FixText.text = "You were tried to repair a full HP tower, request ";
+                FixText.text = "You were tried to repair a full HP tower.\n" + rejectedCase;
                 break;
             case "Remove":
                 FixText.text = _type + towerOperationReuqst;
