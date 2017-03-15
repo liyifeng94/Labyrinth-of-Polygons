@@ -168,12 +168,11 @@ public class TileEventHandler : MonoBehaviour
                     break;
                 case Operation.Repair:
                     if (0 == _currentTowerType) { _tankTowerPtr.Repair(); }
-                    if (1 == _currentTowerType) { _rangeTowerPtr.Upgrade(); }
+                    if (1 == _currentTowerType) { _rangeTowerPtr.Repair(); }
 
                     break;
                 case Operation.Sell:
                     //Debug.Log("TEH: Sell operation executing");
-                    _currentTowerType = -1;
                     SellTower(false);
                     break;
             }
@@ -184,7 +183,7 @@ public class TileEventHandler : MonoBehaviour
 
     void OnMouseDown()
     {
-        //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist);
+        Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
         if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
             _gameBoard.ClearHighlightTiles();
@@ -197,11 +196,9 @@ public class TileEventHandler : MonoBehaviour
                 _yesButton.setTileEventHandler(this);
                 _towerOperationPanel.Appear();
                 int[] towerInfo = new int[11];
-                if (0 == _currentTowerType)
-                {
-                    _tankTowerPtr.GetTowerInfo(towerInfo);
-                }
+                if (0 == _currentTowerType) { _tankTowerPtr.GetTowerInfo(towerInfo); }
                 if (1 == _currentTowerType) { _rangeTowerPtr.GetTowerInfo(towerInfo); }
+                // TODO
 
                 _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
@@ -214,6 +211,7 @@ public class TileEventHandler : MonoBehaviour
                 _tankTowerButton.setTowerEventHandler(this);
                 _rangeTowerButton.setTowerEventHandler(this);
                 // TODO: set the rest four towers
+
                 _yesButton.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
                 _towerOperationPanel.DisAppear();
@@ -233,6 +231,7 @@ public class TileEventHandler : MonoBehaviour
         _gameBoard.ClearHighlightTiles();
         Destroy(_towerGameObject);
         _towerExist = false;
+        _currentTowerType = -1;
         if (! blockCase) // there is money refund for the non-blockCase
         {
             if (0 == _currentTowerType) { _levelManager.AddGold(_tankTowerPtr.SellGain[_tankTowerPtr.GetLevel()]); }

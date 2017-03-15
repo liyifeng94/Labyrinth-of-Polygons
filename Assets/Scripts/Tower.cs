@@ -60,6 +60,7 @@ using System.Linq;
         }
         else
         {
+            CurrentHp = 0;
             TowerAnimator.SetTrigger("TowerDestroyed");
             //Remove();
             DestroyByEnemy = true;
@@ -70,7 +71,12 @@ using System.Linq;
 
     public void Upgrade()
     {
-        if (DestroyByEnemy) return;
+        if (DestroyByEnemy)
+        {
+            NotificationPanel.SetNotificationType("UpgradeWhenDestroied");
+            NotificationPanel.Appear();
+            return;
+        }
         // TODO notification panel
         if (CurrentLevel < MaxLevel - 1)
         {
@@ -90,11 +96,13 @@ using System.Linq;
 
     public void Repair()
     {
-        if ((CurrentHp) == HitPoint[CurrentLevel])
+        if (CurrentHp == HitPoint[CurrentLevel])
         {
-            NotificationPanel.SetNotificationType("");
+            NotificationPanel.SetNotificationType("RepairWithFullHp");
             NotificationPanel.Appear();
+            return;
         }
+        Debug.Log(CurrentHp + " " + HitPoint[CurrentLevel]);
         CurrentHp = HitPoint[CurrentLevel];
         LevelManager.UseGold(RepairCost[CurrentLevel]);
         DestroyByEnemy = false;
