@@ -50,6 +50,9 @@ public class NotificationPanel : MonoBehaviour {
             case "Upgrade":
                 FixText.text = _type + towerOperationReuqst;
                 break;
+            case "UpgradeWhenDestroied":
+                FixText.text = "The selected tower is destroyed. You can only repair or sell it.\n" + rejectedCase;
+                break;
             case "MaxLevel":
                 FixText.text = "Max level reached.\nPress Yes or No to go back.";
                 break;
