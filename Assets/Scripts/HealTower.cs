@@ -37,12 +37,14 @@ public class HealTower : Tower
             EndTime = Time.time;
             if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
             {
+                //Debug.Log("~~~~~~~~~~~~~~" + EndTime + " " + StartTime);
                 StartTime = Time.time;
                 for (int i = 0; i < _towers.Count; i++)
                 {
                     if (!_towerList[i].IsDestory() && !_towerList[i].IsFullHealth())
                     {
                         HealAlly(_towerList[i]);
+                        //break; heal mutiple towers
                     }
                 }
             }
