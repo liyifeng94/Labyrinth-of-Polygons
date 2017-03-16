@@ -97,7 +97,10 @@ public class PathFinding
     {
         var path = ((List<GridSystem.Cell>)_initialpath[x]);
         if (path.Count == 0)
+        {
             path = Search(x, y);
+            _initialpath[x] = path;
+        }
         return path;
     }
 
