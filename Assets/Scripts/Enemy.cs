@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour
             case Type.Fast:
                 Hp = 3 + currentLevel;
                 AttackRange = 0;
-                Speed = 4;
+                Speed = 3;
                 Score = 20;
                 break;
             case Type.Flying:

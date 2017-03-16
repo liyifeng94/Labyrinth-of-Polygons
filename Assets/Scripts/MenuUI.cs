@@ -8,7 +8,7 @@ public class MenuUI : MonoBehaviour
 
     void Start()
     {
-        VersionText.text = Application.version;
+        if (VersionText) VersionText.text = Application.version;
     }
 
     public static void LoadLevelByIndex(int index)
