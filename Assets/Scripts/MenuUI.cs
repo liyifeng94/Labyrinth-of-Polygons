@@ -11,12 +11,12 @@ public class MenuUI : MonoBehaviour
         VersionText.text = Application.version;
     }
 
-    public void LoadLevelByIndex(int index)
+    public static void LoadLevelByIndex(int index)
     {
         SceneManager.LoadScene(index);
     }
 
-    public void LoadLevelByName(string scene)
+    public static void LoadLevelByName(string scene)
     {
         SceneManager.LoadScene(scene);
     }
