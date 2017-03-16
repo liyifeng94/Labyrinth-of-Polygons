@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Xml.Schema;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class ScoreLevelUI : MonoBehaviour
@@ -24,12 +25,21 @@ public class ScoreLevelUI : MonoBehaviour
         }
         ResultText.text = "";
 	    int score = 0;
+	    int health = 0;
+	    int level = 0;
+	    int obstacle = 0;
 	    string temp;
 	    
         score = GameManager.Instance.CurrentLevelManager.GetScore();
+	    health = GameManager.Instance.CurrentLevelManager.GetHealth();
+	    level = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
+	    //obstacle = GameManager.Instance.LastLevelState.Level;
 
-	    temp = BASICSCORE + score.ToString() + "\n";
-	    temp = HEALTH + GameManager.Instance.CurrentLevelManager.GetHealth();
+        temp = BASICSCORE + score.ToString() + "\n";
+	    temp += HEALTH + health.ToString() + "\n";
+	    temp += LEVEL + level.ToString() + "\n";
+	    temp += OBSTACLES + obstacle.ToString() + "\n";
+
 	    ResultText.text = temp;
 	}
 	
