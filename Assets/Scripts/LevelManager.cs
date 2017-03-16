@@ -48,6 +48,7 @@ public class LevelManager : MonoBehaviour
 
     public void EnterBattePhase()
     {
+        NextLevel();
         GameBoardSystem.EnterBattlePhase();
         EnemyController.StartSpawning();
 
@@ -103,6 +104,11 @@ public class LevelManager : MonoBehaviour
     public int GetScore()
     {
         return _currentLevelState.Score;
+    }
+
+    public void NextLevel()
+    {
+        ++_currentLevelState.Level;
     }
 
     public int GetCurrentLevel()

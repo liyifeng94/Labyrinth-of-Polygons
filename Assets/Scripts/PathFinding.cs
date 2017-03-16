@@ -96,9 +96,8 @@ public class PathFinding
     public List<GridSystem.Cell> SearchFlying(uint x, uint y)
     {
         var path = ((List<GridSystem.Cell>)_initialpath[x]);
-        if (path.Count > 0)
-            return path;
-        path = Search(x, y);
+        if (path.Count == 0)
+            path = Search(x, y);
         return path;
     }
 
@@ -109,7 +108,6 @@ public class PathFinding
      *           if there are no available path, the list should be EMPTY!    */
     public List<GridSystem.Cell> Search(uint x, uint y)
     {
-        
         var path = ((List<GridSystem.Cell>) _hashpath[x]);
         if (path.Count > 0)
         {

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
     private const string HighScoreBoardPath = "Assets/Resources/Local/GameJSONData/Runtime/HighScore.json";
 #else
-    private const string HighScoreBoardPath = "GameData/Resources/GameJSONData/HighScore.json";
+    private const string HighScoreBoardPath = "HighScore.json";
 #endif
 
     private string _highScoreBoardPath;
