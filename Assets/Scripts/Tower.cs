@@ -141,7 +141,7 @@ using System.Linq;
          return CurrentHp == HitPoint[CurrentLevel];
      }
 
-
+    /*
     public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
     {
         GameObject myLine = new GameObject();
@@ -156,6 +156,7 @@ using System.Linq;
         lr.sortingLayerName = "Effects";
         GameObject.Destroy(myLine, duration);
     }
+    */
 
 
     /*

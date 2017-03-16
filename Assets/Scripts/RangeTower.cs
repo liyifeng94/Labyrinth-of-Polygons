@@ -72,6 +72,22 @@ public class RangeTower : Tower
     }
 
 
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
+    {
+        GameObject myLine = new GameObject();
+        myLine.transform.position = start;
+        myLine.AddComponent<LineRenderer>();
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
+        lr.SetColors(color, color);
+        lr.SetWidth(0.25f, 0.05f);
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        lr.sortingLayerName = "Effects";
+        GameObject.Destroy(myLine, duration);
+    }
+
+
     public new int GetTowerInfo(int[] info)
     {
         info[0] = AttackRange;
