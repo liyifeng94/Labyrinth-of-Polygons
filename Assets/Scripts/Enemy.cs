@@ -6,10 +6,10 @@ using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
-    private const float Tolerance=(float)0.01;
+    private const float Tolerance = (float)0.01;
 
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
-    public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, Boss = 4}
+    public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, Boss = 4 }
 
     public uint GridX { get; private set; }
     public uint GridY { get; private set; }
@@ -21,15 +21,15 @@ public class Enemy : MonoBehaviour
             return Tolerance;
         }
     }
-    
-    public float Speed;
+
+    public float Speed, OriginalSpeed;
     public uint AttackRange;
     public int Damage = 1;
     public int Hp = 1;
     public int Gold = 5;
     public int Score = 10;
-    public int AttackDamage=0;
-    private Direction Dir = Direction.Down ;
+    public int AttackDamage = 0;
+    private Direction Dir = Direction.Down;
     public Type EnemyType;
     private int _pos = 0;
     private float _distance = (float)0.0;
@@ -38,11 +38,11 @@ public class Enemy : MonoBehaviour
     private EnemyController _enemyController;
     private HashSet<Tower> _towers;
     private float _attackSpeed;
-
-    private float _start,_end;
+    private bool _isSlowed;
+    private float _start, _end, _slowstart, _slowend;
     private List<GameBoard.Tile> _path;
     private List<GridSystem.Cell> _cells;
-    
+
 
     void Start()
     {
@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
     bool InTile(GameBoard.Tile tile)
     {
         if ((Math.Abs(transform.position.x - tile.Position.x) > 0.5) ||
-            (Math.Abs(transform.position.y - tile.Position.y) > 0.5)) 
+            (Math.Abs(transform.position.y - tile.Position.y) > 0.5))
             return false;
         return true;
     }
@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour
 
     void ReachTileCenter()
     {
-        if (_pos==_path.Count-1) ReachEnd();
+        if (_pos == _path.Count - 1) ReachEnd();
         else ChangeDir();
     }
 
@@ -101,17 +101,17 @@ public class Enemy : MonoBehaviour
     //Called every frame
     void Update()
     {
-        _end = Time.time;
+        StopSlowing();
+        Attack();
 
-        if (_end - _start > _attackSpeed)
-        {
-            _start = Time.time;
-            Attack();
-        }
-        
+        EnemyMove();
+    }
+
+    private void EnemyMove()
+    {
         Vector3 position = transform.position;
-        if (((_pos == 0 || _pos+1 == _path.Count) && _distance>0.5) ||
-            _distance>1)
+        if (((_pos == 0 || _pos + 1 == _path.Count) && _distance > 0.5) ||
+            _distance > 1)
         {
             _pos++;
             GridX = _cells[_pos].X;
@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour
             _gameBoard.UpdateEnemyPosition(this);
             _distance = 0;
         }
-        if ((transform.position.x >_path[_pos].Position.x && Dir==Direction.Right) ||
+        if ((transform.position.x > _path[_pos].Position.x && Dir == Direction.Right) ||
             (transform.position.x < _path[_pos].Position.x && Dir == Direction.Left) ||
             (transform.position.y > _path[_pos].Position.y && Dir == Direction.Up) ||
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
@@ -134,11 +134,10 @@ public class Enemy : MonoBehaviour
         if (Dir == Direction.Down) position.y -= temp;
 
         transform.position = position;
-
     }
 
 
-    public void SetupEnemy(uint x, uint y,List<GameBoard.Tile> path,List<GridSystem.Cell> cells, Type type)
+    public void SetupEnemy(uint x, uint y, List<GameBoard.Tile> path, List<GridSystem.Cell> cells, Type type)
     {
         int currentLevel = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
         EnemyType = type;
@@ -146,6 +145,7 @@ public class Enemy : MonoBehaviour
         GridY = y;
         _path = path;
         _cells = cells;
+        _isSlowed = false;
         _towers = new HashSet<Tower>();
         switch (EnemyType)
         {
@@ -184,7 +184,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SetPos(uint xPos, uint yPos) {
+    public void SetPos(uint xPos, uint yPos)
+    {
         GridX = xPos;
         GridY = yPos;
     }
@@ -196,7 +197,9 @@ public class Enemy : MonoBehaviour
 
     public void Attack()
     {
-        if (EnemyType != Type.Attacking) return;
+        _end = Time.time;
+        if (EnemyType != Type.Attacking || _end - _start < _attackSpeed) return;
+
         Tower tower = GetAttackTower();
         if (tower != null)
         {
@@ -204,7 +207,7 @@ public class Enemy : MonoBehaviour
             tower.ReceiveAttack(AttackDamage);
             _towers.Clear();
         }
-        
+        _start = Time.time;
 
     }
 
@@ -220,13 +223,13 @@ public class Enemy : MonoBehaviour
     public void GetDamaged(int damage)
     {
         Hp -= damage;
-        if (Hp<=0)
+        if (Hp <= 0)
         {
             _levelManager.AddGold(Gold);
             _levelManager.AddScore(Score);
             Die();
         }
-    }   
+    }
 
     public void Die()
     {
@@ -236,7 +239,18 @@ public class Enemy : MonoBehaviour
 
     public void SlowDown(float p)
     {
-        
+        _isSlowed = true;
+        OriginalSpeed = Speed;
+        Speed *= p;
+        _slowstart = Time.time;
     }
 
+    public void StopSlowing()
+    {
+        _slowend = Time.time;
+        if (_isSlowed && _slowend - _slowstart > 2)
+        {
+            Speed = OriginalSpeed;
+        }
+    }
 }
