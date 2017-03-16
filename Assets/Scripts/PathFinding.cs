@@ -104,6 +104,14 @@ public class PathFinding
         return path;
     }
 
+    private void RefreshCache(uint x, List<GridSystem.Cell> path)
+    {
+        _queue = new List<GridSystem.Cell>();
+        FillMax(dist, _queue);
+        prev = new GridSystem.Cell[grid.Width, grid.Height];
+        _hashpath[x] = path;
+    }
+
     /* argument: (x): uint. As the x-coordinate of the starting point, and
      *           (y): uint. As an y-coordinate of the starting point.
      * return: List<GridSystem.Cell>: the list contains all cells on the path 
@@ -128,12 +136,8 @@ public class PathFinding
                 return path;
         }
         
-
-        //var path = new List<GridSystem.Cell>();
-
         var u = new GridSystem.Cell(0,0);
         var neigh = new GridSystem.Cell(0, 0);
-
         dist[x, y] = 0;
 
         /* keep searching until we run out all cells */
@@ -144,10 +148,7 @@ public class PathFinding
                pathfinding fail.                             */
             if (!GetNextCell(ref u))
             {
-                _queue = new List<GridSystem.Cell>();
-                FillMax(dist, _queue);
-                prev = new GridSystem.Cell[grid.Width, grid.Height];
-                _hashpath[x] = new List<GridSystem.Cell>();
+                RefreshCache(x, path);
                 return path;
             }
 
@@ -192,10 +193,7 @@ public class PathFinding
             path.Add(neigh);
         }
         path.Reverse();
-
-        _queue = new List<GridSystem.Cell>();
-        FillMax(dist, _queue);
-        prev = new GridSystem.Cell[grid.Width, grid.Height];
+        RefreshCache(x, path);
 
         return path;
     }
