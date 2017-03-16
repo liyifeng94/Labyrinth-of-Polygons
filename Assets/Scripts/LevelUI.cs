@@ -11,6 +11,7 @@ public class LevelUI : MonoBehaviour
     public Text WaveCount;
 
     public GameObject BuildingPhasePanel;
+    public GameObject BattlePhasePanel;
 
     private LevelManager _levelManager;
 
@@ -37,7 +38,9 @@ public class LevelUI : MonoBehaviour
 	    if (_currentGamePhase == GameBoard.GamePhase.BuildingPhase)
 	    {
 	        BuildingPhasePanel.SetActive(true);
-	    }
+            BattlePhasePanel.SetActive(false);
+
+        }
 
         int intScoreCount = _levelManager.GetScore();
 	    int intHealthCount = _levelManager.GetHealth();
@@ -59,5 +62,6 @@ public class LevelUI : MonoBehaviour
         }
         _levelManager.EnterBattePhase();
         BuildingPhasePanel.SetActive(false);
+        BattlePhasePanel.SetActive(true);
     }
 }
