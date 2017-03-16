@@ -95,7 +95,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.Polyrinth.Labyrinth_of_Polygons
-  bundleVersion: 0.02a
+  bundleVersion: 0.02d
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
   xboxOneDisableKinectGpuReservation: 0
