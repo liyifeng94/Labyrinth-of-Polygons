@@ -253,24 +253,114 @@ public class TileEventHandler : MonoBehaviour
                         else
                         {
                             _levelManager.UseGold(_moneyTowerPtr.BuildCost);
-                                            _towerController.AddTileEventHandler(this);
+                            _towerController.AddTileEventHandler(this);
                         }
                     }
                     break;
                 case Operation.Upgrade:
                     //Debug.Log("TEH: Upgrade Operation called");
-                    if (0 == _currentTowerType) { _tankTowerPtr.Upgrade(); }
-                    if (1 == _currentTowerType) { _rangeTowerPtr.Upgrade(); }
-                    if (2 == _currentTowerType) { _slowTowerPtr.Upgrade(); }
-                    if (3 == _currentTowerType) { _healTowerPtr.Upgrade(); }
-                    if (4 == _currentTowerType) { _moneyTowerPtr.Upgrade(); }
+                    if (0 == _currentTowerType)
+                    {
+                        if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _tankTowerPtr.Upgrade();
+                    }
+                    if (1 == _currentTowerType)
+                    {
+                        if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _rangeTowerPtr.Upgrade();
+                    }
+                    if (2 == _currentTowerType)
+                    {
+                        if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _slowTowerPtr.Upgrade();
+                    }
+                    if (3 == _currentTowerType)
+                    {
+                        if (_healTowerPtr.UpgradeCost > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _healTowerPtr.Upgrade();
+                    }
+                    if (4 == _currentTowerType)
+                    {
+                        if (_moneyTowerPtr.UpgradeCost > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _moneyTowerPtr.Upgrade();
+                    }
                     break;
                 case Operation.Repair:
-                    if (0 == _currentTowerType) { _tankTowerPtr.Repair(); }
-                    if (1 == _currentTowerType) { _rangeTowerPtr.Repair(); }
-                    if (2 == _currentTowerType) { _slowTowerPtr.Repair(); }
-                    if (3 == _currentTowerType) { _healTowerPtr.Repair(); }
-                    if (4 == _currentTowerType) { _moneyTowerPtr.Repair(); }
+                    if (0 == _currentTowerType)
+                    {
+                        if (_tankTowerPtr.RepairCost[_tankTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _tankTowerPtr.Repair();
+                    }
+                    if (1 == _currentTowerType)
+                    {
+                        if (_rangeTowerPtr.RepairCost[_rangeTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _rangeTowerPtr.Repair();
+                    }
+                    if (2 == _currentTowerType)
+                    {
+                        if (_slowTowerPtr.RepairCost[_slowTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _slowTowerPtr.Repair();
+                    }
+                    if (3 == _currentTowerType)
+                    {
+                        if (_healTowerPtr.RepairCost[_healTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _healTowerPtr.Repair();
+                    }
+                    if (4 == _currentTowerType)
+                    {
+                        if (_moneyTowerPtr.RepairCost[_moneyTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        {
+                            _notificationPanel.SetNotificationType("NotEnoughMoney");
+                            _notificationPanel.Appear();
+                            break;
+                        }
+                        _moneyTowerPtr.Repair();
+                    }
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     break;
                 case Operation.Sell:
