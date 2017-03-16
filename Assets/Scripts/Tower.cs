@@ -65,12 +65,13 @@ using System.Linq;
             TowerAnimator.SetTrigger("TowerDestroyed");
             //Remove();
             DestroyByEnemy = true;
-            Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
+            //Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
         }
     }
 
     public void ReceiveHeal(int heal)
     {
+        //Debug.Log("T: Tower at " + X + " " + Y + " was received " + heal + " heal");
         if (CurrentHp + heal <= HitPoint[CurrentLevel])
         {
             CurrentHp += heal;
@@ -79,7 +80,6 @@ using System.Linq;
         {
             CurrentHp = HitPoint[CurrentLevel];
         }
-        Debug.Log("T: Tower at " + X + " " + Y + " was received " + heal + " heal");
     }
 
 
@@ -134,6 +134,12 @@ using System.Linq;
     {
         return CurrentLevel == MaxLevel - 1;
     }
+
+
+     public bool IsFullHealth()
+     {
+         return CurrentHp == HitPoint[CurrentLevel];
+     }
 
 
     public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)

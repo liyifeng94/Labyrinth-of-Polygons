@@ -132,6 +132,7 @@ public class TileEventHandler : MonoBehaviour
                         else
                         {
                             _levelManager.UseGold(_tankTowerPtr.BuildCost);
+                            _towerController.AddTileEventHandler(this);
                         }
                     }
                     break;
@@ -161,6 +162,7 @@ public class TileEventHandler : MonoBehaviour
                         else
                         {
                             _levelManager.UseGold(_rangeTowerPtr.BuildCost);
+                            _towerController.AddTileEventHandler(this);
                         }
                     }
                     break;
@@ -190,6 +192,7 @@ public class TileEventHandler : MonoBehaviour
                         else
                         {
                             _levelManager.UseGold(_slowTowerPtr.BuildCost);
+                            _towerController.AddTileEventHandler(this);
                         }
                     }
                     break;
@@ -219,6 +222,8 @@ public class TileEventHandler : MonoBehaviour
                         else
                         {
                             _levelManager.UseGold(_healTowerPtr.BuildCost);
+                            _towerController.AddTileEventHandler(this);
+                            _towerController.AddHealTileEventHandler(this);
                         }
                     }
                     break;
@@ -248,6 +253,7 @@ public class TileEventHandler : MonoBehaviour
                         else
                         {
                             _levelManager.UseGold(_moneyTowerPtr.BuildCost);
+                                            _towerController.AddTileEventHandler(this);
                         }
                     }
                     break;
@@ -340,6 +346,7 @@ public class TileEventHandler : MonoBehaviour
             if (3 == _currentTowerType) { _levelManager.AddGold(_healTowerPtr.SellGain[_healTowerPtr.GetLevel()]); }
             if (4 == _currentTowerType) { _levelManager.AddGold(_moneyTowerPtr.SellGain[_moneyTowerPtr.GetLevel()]); }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            _towerController.RemoveTileEventHandler(this);
         }
         _currentTowerType = -1;
         //Debug.Log("TEH: Tower object removed");
@@ -404,4 +411,16 @@ public class TileEventHandler : MonoBehaviour
             }
         }
     }
+
+
+    public int GetHealTowerRange()
+    {
+        return _healTowerPtr.AttackRange;
+    }
+
+
+    public HealTower GetHealTowerPtr()
+    {
+        return _healTowerPtr;
+    }    
 }

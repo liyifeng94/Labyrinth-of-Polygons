@@ -8,6 +8,7 @@ public class HealTower : Tower
 
     public int[] HealAmount;
     private HashSet<Tower> _towers;
+    private List<Tower> _towerList;
     private bool _setAllyTower;
     private bool _clearAllyTower;
 
@@ -19,8 +20,6 @@ public class HealTower : Tower
         StartTime = Time.time;
         CurrentHp = HitPoint[CurrentLevel];
         _towers = new HashSet<Tower>();
-        _setAllyTower = false;
-        _clearAllyTower = true;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
@@ -32,39 +31,39 @@ public class HealTower : Tower
     void LateUpdate()
     {
         if (DestroyByEnemy) return;
-        if (!_setAllyTower && LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
-        {
-            //TODO: at the beginning of battlePhase, add all ally nearby tower once
-            _setAllyTower = true;
-            _clearAllyTower = false;
-        }
-        if (!_clearAllyTower && LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
-        {
-            //TODO: clear all nearby towers
-            _setAllyTower = false;
-            _clearAllyTower = true;
-        }
-        //Debug.Log("TT: Tower 0 searching");
-        /*
-        if (0 != _enemies.Count)
+        if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase) return;
+        if (0 != _towers.Count)
         {
             EndTime = Time.time;
             if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
             {
                 StartTime = Time.time;
-                AttackEnemy(_enemies.First()); // make this simple, just attack the first one
-                _enemies.Clear();
+                for (int i = 0; i < _towers.Count; i++)
+                {
+                    if (!_towerList[i].IsDestory() && !_towerList[i].IsFullHealth())
+                    {
+                        HealAlly(_towerList[i]);
+                    }
+                }
             }
         }
-        */
     }
 
 
     public void AddTower(Tower t)
     {
         if (DestroyByEnemy) return;
-        //Debug.Log("HT: Enemy added");
         _towers.Add(t);
+        //Debug.Log("HT: Add ally successfully " + _towers.Count);
+        _towerList = _towers.ToList();
+    }
+
+
+    public void RemoveTower(Tower t)
+    {
+        _towers.Remove(t);
+        //Debug.Log("HT: Remove ally successfully " + _towers.Count);
+        _towerList = _towers.ToList();
     }
 
 
@@ -79,7 +78,7 @@ public class HealTower : Tower
         Color result = new Color(0, 1, 0, 1.0f);
         DrawLine(start, end, result);
         t.ReceiveHeal(HealAmount[CurrentLevel]);
-        Debug.Log("HT: Heals ally tower");
+        //Debug.Log("HT: Heals ally tower");
     }
 
 

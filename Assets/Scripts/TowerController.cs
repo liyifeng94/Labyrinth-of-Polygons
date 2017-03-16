@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Channels;
 
 public class TowerController : MonoBehaviour
@@ -18,7 +19,12 @@ public class TowerController : MonoBehaviour
     private LevelManager _levelManager;
     private HashSet<Enemy> _enemies;
     private HashSet<TileEventHandler> _tileEventHandlers;
+    private List<TileEventHandler> Teh;
+    private HashSet<TileEventHandler> _healtileEventHandlers;
+    private List<TileEventHandler> HealTeh;
     private NotificationPanel _notificationPanel;
+    private bool _setAllyTower;
+    private bool _clearAllyTower;
 
 
     void Awake()
@@ -29,18 +35,56 @@ public class TowerController : MonoBehaviour
 
 	void Start ()
     {
+        _setAllyTower = false;
+        _clearAllyTower = true;
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = _levelManager.GameBoardSystem;
         _notificationPanel = NotificationPanel.Instance;
         _enemies = new HashSet<Enemy>();
         _tileEventHandlers = new HashSet<TileEventHandler>();
+        _healtileEventHandlers = new HashSet<TileEventHandler>();
     }
 	
 
 	void Update ()
     {
-        //TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~ for heal tower stuff
-	}
+        if (!_setAllyTower && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
+        {
+            //Debug.Log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Teh = _tileEventHandlers.ToList();
+            HealTeh = _healtileEventHandlers.ToList();
+            //Debug.Log("TC: # of ally tower is " + _tileEventHandlers.Count + ", # of heal tower is " + _healtileEventHandlers.Count);
+            for (int i = 0; i < _healtileEventHandlers.Count; i++)
+            {
+                uint healX = HealTeh[i].GridX;
+                uint healY = HealTeh[i].GridY;
+                int range = HealTeh[i].GetHealTowerRange();
+                //Debug.Log("TC: The range of the heal tower at " + healX + " " + healY + " is " + range);
+                for (int j = 0; j < _tileEventHandlers.Count; j++)
+                {
+                    uint allyX = Teh[j].GridX;
+                    uint allyY = Teh[j].GridY;
+                    if (healX == allyX && healY == allyY) continue;
+                    if ((-range <= healX-allyX || healX - allyX <= range) && (-range <= healY - allyY || healY - allyY <= range))
+                    {
+                        HealTower _healTowerPtr = HealTeh[i].GetHealTowerPtr();
+                        _healTowerPtr.AddTower(Teh[j].GetTowerScript());
+                        //Debug.Log("TC: Add an ally tower to the heal tower");
+                    }
+                }
+            }
+            _setAllyTower = true;
+            _clearAllyTower = false;
+        }
+        if (!_clearAllyTower && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        {
+            //_tileEventHandlers.Clear();
+            //_healtileEventHandlers.Clear();
+            _setAllyTower = false;
+            _clearAllyTower = true;
+        }
+
+    }
 
 
     public GameObject BuildTower(TileEventHandler teh,uint x, uint y, int index)
@@ -170,5 +214,33 @@ public class TowerController : MonoBehaviour
     public void RemoveEnemy(Enemy enemy)
     {
         _enemies.Remove(enemy);
+    }
+
+
+    public void AddTileEventHandler(TileEventHandler teh)
+    {
+        _tileEventHandlers.Add(teh);
+        //Debug.Log("TC: Add a tileEventHandler, total " + _tileEventHandlers.Count);
+    }
+
+
+    public void AddHealTileEventHandler(TileEventHandler teh)
+    {
+        _healtileEventHandlers.Add(teh);
+        //Debug.Log("TC: Add a healTileEventHandler, total " + _healtileEventHandlers.Count);
+    }
+
+
+    public void RemoveTileEventHandler(TileEventHandler teh)
+    {
+        _tileEventHandlers.Remove(teh);
+        _healtileEventHandlers.Remove(teh);
+        for (int i = 0; i < _healtileEventHandlers.Count; i++)
+        {
+            HealTower _healTowerPtr = HealTeh[i].GetHealTowerPtr();
+            _healTowerPtr.RemoveTower(teh.GetTowerScript());
+        }
+        //Debug.Log("TC: Remove a tileEventHandler, total " + _tileEventHandlers.Count);
+        //Debug.Log("TC: Remove a tileEventHandlerForHealTower, total " + _healtileEventHandlers.Count);
     }
 }
