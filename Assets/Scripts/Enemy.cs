@@ -239,9 +239,9 @@ public class Enemy : MonoBehaviour
 
     public void SlowDown(float p)
     {
+        if (!_isSlowed) OriginalSpeed = Speed;
         _isSlowed = true;
-        OriginalSpeed = Speed;
-        Speed *= p;
+        Speed *= (1-p);
         _slowstart = Time.time;
     }
 
