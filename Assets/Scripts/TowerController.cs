@@ -65,7 +65,7 @@ public class TowerController : MonoBehaviour
                     uint allyX = Teh[j].GridX;
                     uint allyY = Teh[j].GridY;
                     if (healX == allyX && healY == allyY) continue;
-                    if ((-range <= healX-allyX || healX - allyX <= range) && (-range <= healY - allyY || healY - allyY <= range))
+                    if (_gameBoard.TargetInRange((int)healX,(int)healY,range,(int)allyX,(int)allyY))
                     {
                         HealTower _healTowerPtr = HealTeh[i].GetHealTowerPtr();
                         _healTowerPtr.AddTower(Teh[j].GetTowerScript());
@@ -235,11 +235,6 @@ public class TowerController : MonoBehaviour
     {
         _tileEventHandlers.Remove(teh);
         _healtileEventHandlers.Remove(teh);
-        for (int i = 0; i < _healtileEventHandlers.Count; i++)
-        {
-            HealTower _healTowerPtr = HealTeh[i].GetHealTowerPtr();
-            _healTowerPtr.RemoveTower(teh.GetTowerScript());
-        }
         //Debug.Log("TC: Remove a tileEventHandler, total " + _tileEventHandlers.Count);
         //Debug.Log("TC: Remove a tileEventHandlerForHealTower, total " + _healtileEventHandlers.Count);
     }

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class SellButton : MonoBehaviour {
+public class SellButton : Button {
 
     public static SellButton Instance;
 
@@ -16,6 +17,7 @@ public class SellButton : MonoBehaviour {
     {
         Instance = this;
     }
+    
 
     public void setTowerEventHandler(TileEventHandler teh)
     {
@@ -28,6 +30,7 @@ public class SellButton : MonoBehaviour {
             _notificationPanel = NotificationPanel.Instance;
         }
     }
+
 
     public void SellButtonSelected()
     {

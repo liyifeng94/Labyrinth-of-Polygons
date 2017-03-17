@@ -8,6 +8,7 @@ public class MoneyTower : Tower
     public int[] MoneyPerTenSec;
     private float _currentReservedMoney;
     private bool _reservedMoneyTransfered;
+    //private GameBoard _gameBoard;
 
 
     void Start()
@@ -22,6 +23,7 @@ public class MoneyTower : Tower
                 LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
         TowerController = TowerController.Instance;
+        //_gameBoard = LevelManager.GameBoardSystem;
         TowerAnimator = GetComponent<Animator>();
     }
 
@@ -45,8 +47,6 @@ public class MoneyTower : Tower
         {
             LevelManager.AddGold((int)_currentReservedMoney);
             Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
-            _currentReservedMoney = 0;
-            _reservedMoneyTransfered = true;
         }
     }
 
@@ -55,7 +55,26 @@ public class MoneyTower : Tower
     {
         _currentReservedMoney += money;
         Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
-    }  
+        //TODO: call highlight from gameboard
+        _currentReservedMoney = 0;
+        _reservedMoneyTransfered = true;
+    }
+
+
+    public void DrawSquare(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
+    {
+        GameObject myLine = new GameObject();
+        myLine.transform.position = start;
+        myLine.AddComponent<LineRenderer>();
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
+        lr.SetColors(color, color);
+        lr.SetWidth(0.5f, 0.5f);
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        lr.sortingLayerName = "Effects";
+        GameObject.Destroy(myLine, duration);
+    }
 
 
     public new int GetTowerInfo(int[] info)

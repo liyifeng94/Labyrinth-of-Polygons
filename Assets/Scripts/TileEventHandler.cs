@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TileEventHandler : MonoBehaviour
 {
@@ -376,13 +377,23 @@ public class TileEventHandler : MonoBehaviour
     void OnMouseDown()
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
-        if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        //if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        if(true)
         {
             _gameBoard.ClearHighlightTiles();
             _gameBoard.HighlightTileAt(GridX, GridY);
             if (_towerExist)
             {
-                //Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
+                Debug.Log("~~~~~~~~~~~~~~~~~~1" + _sellButton.interactable);
+                _sellButton.interactable = true;
+                Debug.Log("~~~~~~~~~~~~~~~~~~2" + _sellButton.interactable);
+                if (_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
+                {
+                    Debug.Log("~~~~~~~~~~~~~~~~~~3" + _sellButton.interactable);
+                    _sellButton.interactable = false;
+                    Debug.Log("~~~~~~~~~~~~~~~~~~4" + _sellButton.interactable);
+                }
+                Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
                 _sellButton.setTowerEventHandler(this);
                 _upgradeButton.setTowerEventHandler(this);
                 _repairButton.setTowerEventHandler(this);
@@ -426,7 +437,6 @@ public class TileEventHandler : MonoBehaviour
     {
         //Debug.Log("TEH: Trying to sell tower");
         _gameBoard.ClearHighlightTiles();
-        Destroy(_towerGameObject);
         _towerExist = false;
         if (! blockCase) // there is money refund for the non-blockCase
         {
@@ -439,6 +449,7 @@ public class TileEventHandler : MonoBehaviour
             _towerController.RemoveTileEventHandler(this);
         }
         _currentTowerType = -1;
+        Destroy(_towerGameObject);
         //Debug.Log("TEH: Tower object removed");
     }
 
