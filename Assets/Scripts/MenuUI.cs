@@ -8,11 +8,10 @@ public class MenuUI : MonoBehaviour
 
     void Start()
     {
-        if(VersionText != null)
-            VersionText.text = Application.version;
+        VersionText.text = Application.version;
     }
 
-    public void LoadLevelByIndex(int index)
+    public static void LoadLevelByIndex(int index)
     {
         SceneManager.LoadScene(index);
     }
