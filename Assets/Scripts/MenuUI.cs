@@ -8,7 +8,7 @@ public class MenuUI : MonoBehaviour
 
     void Start()
     {
-        if(VersionText != null)
+        if (VersionText!=null)
             VersionText.text = Application.version;
     }
 
@@ -17,7 +17,7 @@ public class MenuUI : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public static void LoadLevelByName(string scene)
+    public void LoadLevelByName(string scene)
     {
         SceneManager.LoadScene(scene);
     }

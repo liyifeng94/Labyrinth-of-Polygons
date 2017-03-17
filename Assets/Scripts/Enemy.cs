@@ -62,28 +62,31 @@ public class Enemy : MonoBehaviour
 
     void ChangeDir()
     {
-        Quaternion rotation = transform.localRotation;
+        
         if (_path[_pos + 1].Position.x > _path[_pos].Position.x)
         {
-            rotation.z = 0.7071f;
+            if (Dir == Direction.Down) transform.Rotate(Vector3.forward * 90);
+            if (Dir == Direction.Up) transform.Rotate(Vector3.forward * -90);
             Dir = Direction.Right;
         }
         if (_path[_pos + 1].Position.x < _path[_pos].Position.x)
         {
-            rotation.z = -0.7071f;
+            if (Dir == Direction.Down) transform.Rotate(Vector3.forward * -90);
+            if (Dir == Direction.Up) transform.Rotate(Vector3.forward * 90);
             Dir = Direction.Left;
         }
         if (_path[_pos + 1].Position.y > _path[_pos].Position.y)
         {
-            rotation.z = 2f;
+            if (Dir == Direction.Left) transform.Rotate(Vector3.forward * -90);
+            if (Dir == Direction.Right) transform.Rotate(Vector3.forward * 90);
             Dir = Direction.Up;
         }
         if (_path[_pos + 1].Position.y < _path[_pos].Position.y)
         {
-            rotation.z = 0;
+            if (Dir == Direction.Left) transform.Rotate(Vector3.forward * 90);
+            if (Dir == Direction.Right) transform.Rotate(Vector3.forward * -90);
             Dir = Direction.Down;
         }
-        transform.localRotation = rotation;
     }
 
     void ReachTileCenter()
@@ -110,8 +113,8 @@ public class Enemy : MonoBehaviour
     private void EnemyMove()
     {
         Vector3 position = transform.position;
-        if (((_pos == 0 || _pos + 1 == _path.Count) && _distance > 0.5) ||
-            _distance > 1)
+        if ((((_pos == 0 || _pos + 1 == _path.Count) && _distance > 0.5) ||
+            _distance > 1) && _pos<_cells.Count-1)
         {
             _pos++;
             GridX = _cells[_pos].X;
@@ -125,6 +128,10 @@ public class Enemy : MonoBehaviour
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
+            position.x = _path[_pos].Position.x;
+            position.y = _path[_pos].Position.y;
+            transform.position = position;
+
         }
         float temp = Speed * Time.deltaTime;
         _distance += temp;
