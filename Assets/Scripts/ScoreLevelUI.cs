@@ -39,6 +39,7 @@ public class ScoreLevelUI : MonoBehaviour
 	    temp += HEALTH + health.ToString() + "\n";
 	    temp += LEVEL + level.ToString() + "\n";
 	    temp += OBSTACLES + obstacle.ToString() + "\n";
+	    temp += BOSSKILLED + "yes" + "\n";
 
 	    ResultText.text = temp;
 	}
