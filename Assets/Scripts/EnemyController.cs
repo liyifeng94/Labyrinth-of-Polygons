@@ -21,8 +21,10 @@ public class EnemyController : MonoBehaviour
         List<GridSystem.Cell> entrances = GameManager.Instance.CurrentLevelManager.GameBoardSystem.GameGridSystem.MainGameGrid.Entrances;
         int entrance = Random.Range(0, entrances.Count);
 
-        List<GridSystem.Cell> path = GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
-        List<GridSystem.Cell> flyingPath = GameManager.Instance.SearchFlyingPath(entrances[entrance].X, entrances[entrance].Y);
+        int temp = Random.Range(0, 4);
+        List<GridSystem.Cell> path;
+        if ((Enemy.Type)temp != Enemy.Type.Flying) path =  GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
+        else path = GameManager.Instance.SearchFlyingPath(entrances[entrance].X, entrances[entrance].Y);
         var tiles = new List<GameBoard.Tile>();
         foreach (GridSystem.Cell t in path)
         {
@@ -33,7 +35,6 @@ public class EnemyController : MonoBehaviour
         GameBoard.Tile startTile = tiles[0];
 
 
-        int temp = Random.Range(0, 4);
         Vector3 spawnPosition = startTile.Position;
 
         GameObject enemeyGameObject = Instantiate(Enemies[temp], spawnPosition, Quaternion.identity) as GameObject;
@@ -44,7 +45,7 @@ public class EnemyController : MonoBehaviour
             Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
             _enemies.Add(enemy);
-            enemy.SetupEnemy(startCell.X,startCell.Y,tiles, flyingPath, (Enemy.Type) temp);
+            enemy.SetupEnemy(startCell.X,startCell.Y,tiles, path, (Enemy.Type) temp);
             _gameBoard.AddEnemy(enemy);
         }
     }
