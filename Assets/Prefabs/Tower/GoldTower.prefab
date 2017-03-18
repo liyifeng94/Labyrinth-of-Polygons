@@ -16,12 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013247441652}
-  - 212: {fileID: 212000010550497774}
-  - 95: {fileID: 95000013909071390}
-  - 114: {fileID: 114000012302649100}
+  - component: {fileID: 4000013247441652}
+  - component: {fileID: 212000010550497774}
+  - component: {fileID: 95000013909071390}
+  - component: {fileID: 114689577770656448}
   m_Layer: 0
   m_Name: GoldTower
   m_TagString: Untagged
@@ -38,10 +38,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95000013909071390
 Animator:
   serializedVersion: 3
@@ -59,7 +59,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000012302649100
+--- !u!114 &114689577770656448
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013374595410}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f61d34abcda7b44187e2b7556dad574, type: 3}
+  m_Script: {fileID: 11500000, guid: e7ff36d84e10866468175941b0984a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   X: 0
@@ -80,17 +80,17 @@ MonoBehaviour:
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
-  MaxLevel: 3
-  HitPoint: 1e0000003c0000005a000000
+  MaxLevel: 0
+  HitPoint: 0a000000
   AttackRange: 0
-  AttackSpeed: 010000000100000001000000
-  BuildCost: 25
+  AttackSpeed: 00000000
+  BuildCost: 40
   UpgradeCost: 20
-  RepairCost: 0a000000140000001e000000
-  SellGain: 0f0000001e0000002d000000
+  RepairCost: 0a000000
+  SellGain: 01000000
   Type: 4
   TowerAnimator: {fileID: 0}
-  MoneyPerTenSec: 020000000400000006000000
+  MoneyPerTenSec: 04000000
 --- !u!212 &212000010550497774
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -105,7 +105,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -113,7 +115,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
