@@ -17,7 +17,8 @@ public class GameBoard : MonoBehaviour
 
     public GridSystem GameGridSystem { get; private set; }
 
-    public uint BlockSize = 10;
+
+    public float TileSize = 1f;
     public uint GridWidth = 10;
     public uint GridHeight = 20;
     public uint GridEntrances = 4;
@@ -28,8 +29,6 @@ public class GameBoard : MonoBehaviour
     public GameObject TileExit;
     public GameObject TileObstacles;
     public GameObject TileHighlight;
-
-    public float TileSize { get; private set; }
 
     public Tile[,] BoardTiles { get; private set; } 
 
@@ -93,7 +92,6 @@ public class GameBoard : MonoBehaviour
 
     public GameOptions GameBoardSetup(GameOptions gameOptions)
     {
-        TileSize = TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
         _gmInstance = GameManager.Instance;
         _levelManager = _gmInstance.CurrentLevelManager;
         CurrentGamePhase = GamePhase.BuildingPhase;
@@ -177,7 +175,6 @@ public class GameBoard : MonoBehaviour
             if (!valid)
             {
                 towerCell.SetCell(false);
-                paths = _gmInstance.SearchPathFrom(entrance.X, entrance.Y);
                 return false;
             }
         }
@@ -210,17 +207,17 @@ public class GameBoard : MonoBehaviour
     // Updates the game board of the movement of the enemy position and notifies the towers of enemies in range
     public void UpdateEnemyPosition(Enemy enemyPtr)
     {
-        int enemyX = (int)enemyPtr.GridX;
-        int enemyY = (int)enemyPtr.GridY;
+        int enemyX = enemyPtr.GridX;
+        int enemyY = enemyPtr.GridY;
 
         //TODO: update the position of the enemy and notify the towers
 
         foreach (var towerPtr in _towersHolder)
         {
             //check if the enemy is in range of a tower
-            int towerX = (int)towerPtr.X;
-            int towerY = (int)towerPtr.Y;
-            int towerRange = (int)towerPtr.AttackRange;
+            int towerX = towerPtr.X;
+            int towerY = towerPtr.Y;
+            int towerRange = towerPtr.AttackRange;
             if (TargetInRange(towerX,towerY,towerRange,enemyX,enemyY))
             {
                 //enemy in range of the towers
@@ -228,7 +225,7 @@ public class GameBoard : MonoBehaviour
             }
 
             // check if the tower is in range of of the current enemy
-            int enemyRange = (int) enemyPtr.AttackRange;
+            int enemyRange = enemyPtr.AttackRange;
             if (TargetInRange(enemyX, enemyY, enemyRange, towerX, towerY))
             {
                 enemyPtr.AddTower(towerPtr);
