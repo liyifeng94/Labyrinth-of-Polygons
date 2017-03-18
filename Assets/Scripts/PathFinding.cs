@@ -112,8 +112,8 @@ public class PathFinding
         _hashpath[x] = path;
     }
 
-    /* argument: (x): uint. As the x-coordinate of the starting point, and
-     *           (y): uint. As an y-coordinate of the starting point.
+    /* argument: (x): int. As the x-coordinate of the starting point, and
+     *           (y): int. As an y-coordinate of the starting point.
      * return: List<GridSystem.Cell>: the list contains all cells on the path 
      *           from the starting point to the closest exit point; However,
      *           if there are no available path, the list should be EMPTY!    */
