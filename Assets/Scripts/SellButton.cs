@@ -2,9 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class SellButton : Button {
+public class SellButton : MonoBehaviour {
 
     public static SellButton Instance;
+
+    [HideInInspector]
+    public Button SellOptButton;
 
     private TileEventHandler _tileEventHandler;
 
@@ -16,6 +19,7 @@ public class SellButton : Button {
     void Awake()
     {
         Instance = this;
+        SellOptButton = GetComponent<Button>();
     }
     
 

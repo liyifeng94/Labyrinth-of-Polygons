@@ -46,7 +46,6 @@ public class TileEventHandler : MonoBehaviour
     public enum Operation { Nop, TankTower, RangeTower, SlowTower, HealTower, MoneyTower, Upgrade, Repair, Sell}
     public Operation TowerOperation;
 
-
     void Start ()
     {
         _towerExist = false;
@@ -381,17 +380,13 @@ public class TileEventHandler : MonoBehaviour
         if(true)
         {
             _gameBoard.ClearHighlightTiles();
-            _gameBoard.HighlightTileAt(GridX, GridY);
+            _gameBoard.HighlightTileAt(GridX, GridY, new Color(0f,1f,0.2f,0.5f));
             if (_towerExist)
             {
-                Debug.Log("~~~~~~~~~~~~~~~~~~1" + _sellButton.interactable);
-                _sellButton.interactable = true;
-                Debug.Log("~~~~~~~~~~~~~~~~~~2" + _sellButton.interactable);
+                _sellButton.SellOptButton.interactable = true;
                 if (_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
                 {
-                    Debug.Log("~~~~~~~~~~~~~~~~~~3" + _sellButton.interactable);
-                    _sellButton.interactable = false;
-                    Debug.Log("~~~~~~~~~~~~~~~~~~4" + _sellButton.interactable);
+                    _sellButton.SellOptButton.interactable = false;
                 }
                 Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
                 _sellButton.setTowerEventHandler(this);
@@ -492,21 +487,21 @@ public class TileEventHandler : MonoBehaviour
             {
                 if (GridX + i < 10 && GridY + j < 20)
                 {
-                    _gameBoard.HighlightTileAt(GridX + i, GridY + j);
+                    _gameBoard.HighlightTileAt(GridX + i, GridY + j, new Color(1f,1f,1f,0.5f));
                 }
                 if (GridX >= i && GridY >= j)
                 {
-                    _gameBoard.HighlightTileAt(GridX - i, GridY - j);
+                    _gameBoard.HighlightTileAt(GridX - i, GridY - j, new Color(1f, 1f, 1f, 0.5f));
                 }
                 if (i != 0 && j != 0)
                 {
                     if (GridX + i < 10 && GridY >= j)
                     {
-                        _gameBoard.HighlightTileAt(GridX + i, GridY - j);
+                        _gameBoard.HighlightTileAt(GridX + i, GridY - j, new Color(1f, 1f, 1f, 0.5f));
                     }
                     if (GridX >= i && GridY + j < 20)
                     {
-                        _gameBoard.HighlightTileAt(GridX - i, GridY + j);
+                        _gameBoard.HighlightTileAt(GridX - i, GridY + j, new Color(1f, 1f, 1f, 0.5f));
                     }
                 }
             }
