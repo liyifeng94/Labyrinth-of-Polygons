@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class TileEventHandler : MonoBehaviour
 {
     [HideInInspector]
-    public uint GridX;
+    public int GridX;
     [HideInInspector]
-    public uint GridY;
+    public int GridY;
 
     private bool _towerExist;
     private bool _confirmed;

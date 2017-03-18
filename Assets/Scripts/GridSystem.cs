@@ -14,13 +14,13 @@ public class GridSystem
 
     public class Cell
     {
-        public readonly uint X;
-        public readonly uint Y;
+        public readonly int X;
+        public readonly int Y;
         public bool IsBlocked { get; private set; }
         public bool IsEntrance { get; private set; }
         public bool IsExit { get; private set; }
 
-        public Cell(uint x, uint y)
+        public Cell(int x, int y)
         {
             X = x;
             Y = y;
@@ -79,9 +79,9 @@ public class GridSystem
 
 
             //Create grid
-            for (uint y = 0; y < Height; ++y)
+            for (int y = 0; y < Height; ++y)
             {
-                for (uint x = 0; x < Width; ++x)
+                for (int x = 0; x < Width; ++x)
                 {
                     Cell newCell = new Cell(x, y);
                     _grid[x, y] = newCell;
@@ -93,7 +93,7 @@ public class GridSystem
             }
 
             //create entrances and exits
-            for (uint i = 0; i < Width; ++i)
+            for (int i = 0; i < Width; ++i)
             {
                 _grid[i, Height - 1].SetEntrance();
                 Entrances.Add(_grid[i, Height - 1]);
@@ -102,7 +102,7 @@ public class GridSystem
             }
         }
 
-        public Cell GetCellAt(uint x, uint y)
+        public Cell GetCellAt(int x, int y)
         {
             return _grid[x, y];
         }

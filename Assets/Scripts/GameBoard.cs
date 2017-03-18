@@ -46,19 +46,19 @@ public class GameBoard : MonoBehaviour
         public GameObject TileObject { get; private set; }
 
         public readonly Vector3 Position;
-        public readonly uint GridX;
-        public readonly uint GridY;
+        public readonly int GridX;
+        public readonly int GridY;
         public readonly float BlockSize;
 
-        public Tile(GameObject gameObject, uint x, uint y, float blockSize, Transform parentTransform, Vector3 startPosition)
+        public Tile(GameObject gameObject, int x, int y, float blockSize, Transform parentTransform, Vector3 startPosition)
         {
             GridX = x;
             GridY = y;
             BlockSize = blockSize;
             Vector3 tilePosition = startPosition;
 
-            tilePosition.x += (int)GridX * blockSize + blockSize / 2;
-            tilePosition.y += (int)GridY * blockSize + blockSize / 2;
+            tilePosition.x += GridX * blockSize + blockSize / 2;
+            tilePosition.y += GridY * blockSize + blockSize / 2;
             tilePosition.z += 0f;
 
             Position = tilePosition;
@@ -93,7 +93,7 @@ public class GameBoard : MonoBehaviour
 
     public GameOptions GameBoardSetup(GameOptions gameOptions)
     {
-        TileSize = (uint)TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
+        TileSize = TileGound.GetComponent<SpriteRenderer>().bounds.size.x;
         _gmInstance = GameManager.Instance;
         _levelManager = _gmInstance.CurrentLevelManager;
         CurrentGamePhase = GamePhase.BuildingPhase;
@@ -136,9 +136,9 @@ public class GameBoard : MonoBehaviour
         startPosition.z = 0f;
 
         //Create grid
-        for (uint y = 0; y < GridHeight; ++y)
+        for (int y = 0; y < GridHeight; ++y)
         {
-            for (uint x = 0; x < GridWidth; ++x)
+            for (int x = 0; x < GridWidth; ++x)
             {
                 GridSystem.Cell cell = gameGrid.GetCellAt(x, y);
 
@@ -254,7 +254,7 @@ public class GameBoard : MonoBehaviour
         _levelManager.RemoveHealth(enemyPtr.Damage);
     }
 
-    public void HighlightTileAt(uint x, uint y, Color color)
+    public void HighlightTileAt(int x, int y, Color color)
     {
         Tile targetTile = BoardTiles[x, y];
 
