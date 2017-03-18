@@ -70,12 +70,12 @@ public class GameManager : MonoBehaviour
         return CurrentGameOptions;
     }
 
-    public List<GridSystem.Cell> SearchPathFrom(uint x, uint y)
+    public List<GridSystem.Cell> SearchPathFrom(int x, int y)
     {
         return _pathingFinder.Search(x, y);
     }
 
-    public List<GridSystem.Cell> SearchFlyingPath(uint x, uint y)
+    public List<GridSystem.Cell> SearchFlyingPath(int x, int y)
     {
         return _pathingFinder.SearchFlying(x, y);
     }

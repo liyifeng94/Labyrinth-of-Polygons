@@ -93,7 +93,7 @@ public class PathFinding
         return false;
     }
 
-    public List<GridSystem.Cell> SearchFlying(uint x, uint y)
+    public List<GridSystem.Cell> SearchFlying(int x, int y)
     {
         var path = ((List<GridSystem.Cell>)_initialpath[x]);
         if (path.Count == 0)
@@ -117,7 +117,7 @@ public class PathFinding
      * return: List<GridSystem.Cell>: the list contains all cells on the path 
      *           from the starting point to the closest exit point; However,
      *           if there are no available path, the list should be EMPTY!    */
-    public List<GridSystem.Cell> Search(uint x, uint y)
+    public List<GridSystem.Cell> Search(int x, int y)
     {
         var path = ((List<GridSystem.Cell>) _hashpath[x]);
         if (path.Count > 0)
