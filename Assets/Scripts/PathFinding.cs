@@ -35,9 +35,9 @@ public class PathFinding
 
     private void FillMax(int[,] arr, List<GridSystem.Cell> q)
     {
-        for (uint i = 0; i < grid.Width; i++)
+        for (int i = 0; i < grid.Width; i++)
         {
-            for (uint j = 0; j < grid.Height; j++)
+            for (int j = 0; j < grid.Height; j++)
             {
                 arr[i, j] = int.MaxValue;
                 q.Add(grid.GetCellAt(i, j));
@@ -104,7 +104,7 @@ public class PathFinding
         return path;
     }
 
-    private void RefreshCache(uint x, List<GridSystem.Cell> path)
+    private void RefreshCache(int x, List<GridSystem.Cell> path)
     {
         _queue = new List<GridSystem.Cell>();
         FillMax(dist, _queue);

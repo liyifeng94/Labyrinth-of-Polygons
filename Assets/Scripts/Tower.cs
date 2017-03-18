@@ -7,8 +7,8 @@ using System.Linq;
  public abstract class Tower : MonoBehaviour
  {
 
-    [HideInInspector] public uint X;// { get; private set; }
-    [HideInInspector] public uint Y;// { get; private set; }
+    [HideInInspector] public int X;// { get; private set; }
+    [HideInInspector] public int Y;// { get; private set; }
     [HideInInspector] public int CurrentHp;
     [HideInInspector] public int CurrentLevel;
     [HideInInspector] public bool DestroyByEnemy;

@@ -56,14 +56,14 @@ public class TowerController : MonoBehaviour
             //Debug.Log("TC: # of ally tower is " + _tileEventHandlers.Count + ", # of heal tower is " + _healtileEventHandlers.Count);
             for (int i = 0; i < _healtileEventHandlers.Count; i++)
             {
-                uint healX = HealTeh[i].GridX;
-                uint healY = HealTeh[i].GridY;
+                int healX = HealTeh[i].GridX;
+                int healY = HealTeh[i].GridY;
                 int range = HealTeh[i].GetHealTowerRange();
                 //Debug.Log("TC: The range of the heal tower at " + healX + " " + healY + " is " + range);
                 for (int j = 0; j < _tileEventHandlers.Count; j++)
                 {
-                    uint allyX = Teh[j].GridX;
-                    uint allyY = Teh[j].GridY;
+                    int allyX = Teh[j].GridX;
+                    int allyY = Teh[j].GridY;
                     if (healX == allyX && healY == allyY) continue;
                     if (_gameBoard.TargetInRange((int)healX,(int)healY,range,(int)allyX,(int)allyY))
                     {
@@ -87,7 +87,7 @@ public class TowerController : MonoBehaviour
     }
 
 
-    public GameObject BuildTower(TileEventHandler teh,uint x, uint y, int index)
+    public GameObject BuildTower(TileEventHandler teh,int x, int y, int index)
     {
 
         Vector3 gamePosition = _gameBoard.BoardTiles[x, y].TileObject.transform.position;
