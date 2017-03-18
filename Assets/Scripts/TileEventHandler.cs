@@ -481,9 +481,9 @@ public class TileEventHandler : MonoBehaviour
 
     public void DisplayAttackRange(int range)
     {
-        for (uint i = 0; i <= range; i++)
+        for (int i = 0; i <= range; i++)
         {
-            for (uint j = 0; j <= range; j++)
+            for (int j = 0; j <= range; j++)
             {
                 if (GridX + i < 10 && GridY + j < 20)
                 {

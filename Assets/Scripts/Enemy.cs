@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
     public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, Boss = 4 }
 
-    public uint GridX { get; private set; }
-    public uint GridY { get; private set; }
+    public int GridX { get; private set; }
+    public int GridY { get; private set; }
 
     public static float Tolerance1
     {
@@ -23,12 +23,13 @@ public class Enemy : MonoBehaviour
     }
 
     public float Speed, OriginalSpeed;
-    public uint AttackRange;
+    public int AttackRange;
     public int Damage = 1;
     public int Hp = 1;
     public int Gold = 5;
     public int Score = 10;
     public int AttackDamage = 0;
+
     private Direction Dir = Direction.Down;
     public Type EnemyType;
     private int _pos = 0;
@@ -144,7 +145,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void SetupEnemy(uint x, uint y, List<GameBoard.Tile> path, List<GridSystem.Cell> cells, Type type)
+    public void SetupEnemy(int x, int y, List<GameBoard.Tile> path, List<GridSystem.Cell> cells, Type type)
     {
         int currentLevel = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
         EnemyType = type;
@@ -191,7 +192,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SetPos(uint xPos, uint yPos)
+    public void SetPos(int xPos, int yPos)
     {
         GridX = xPos;
         GridY = yPos;
