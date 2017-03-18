@@ -254,13 +254,14 @@ public class GameBoard : MonoBehaviour
         _levelManager.RemoveHealth(enemyPtr.Damage);
     }
 
-    public void HighlightTileAt(uint x, uint y)
+    public void HighlightTileAt(uint x, uint y, Color color)
     {
         Tile targetTile = BoardTiles[x, y];
 
         Vector3 tilePositon = targetTile.TileObject.gameObject.transform.position;
         GameObject newHighlight = Instantiate(TileHighlight, tilePositon, Quaternion.identity) as GameObject;
-
+        SpriteRenderer spriteRenderer = newHighlight.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = color;
         _highlightTile.Add(newHighlight);
     }
 
