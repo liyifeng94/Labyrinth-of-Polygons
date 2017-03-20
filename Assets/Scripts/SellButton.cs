@@ -6,8 +6,7 @@ public class SellButton : MonoBehaviour {
 
     public static SellButton Instance;
 
-    [HideInInspector]
-    public Button SellOptButton;
+    [HideInInspector] public Button SellOptButton;
 
     private TileEventHandler _tileEventHandler;
 

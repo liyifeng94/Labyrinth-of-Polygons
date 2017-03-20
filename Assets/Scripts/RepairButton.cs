@@ -5,6 +5,8 @@ public class RepairButton : MonoBehaviour {
 
     public static RepairButton Instance;
 
+    private bool _enoughGold;
+
     private TileEventHandler _tileEventHandler;
 
     private BuildCheckPanel _buildCheckPanel;
@@ -20,6 +22,7 @@ public class RepairButton : MonoBehaviour {
 
     public void setTowerEventHandler(TileEventHandler teh)
     {
+        _enoughGold = true;
         if (null == _tileEventHandler)
         {
             _buildCheckPanel = BuildCheckPanel.Instance;
@@ -32,10 +35,23 @@ public class RepairButton : MonoBehaviour {
 
     public void RepairButtonSelected()
     {
+        if (!_enoughGold)
+        {
+            _notificationPanel.SetNotificationType("NotEnoughMoney");
+            _notificationPanel.Appear();
+            _buildCheckPanel.DisAppear();
+            return;
+        }
         _tileEventHandler.SetOperation(7);
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();
         _notificationPanel.SetNotificationType("Repair");
         _notificationPanel.Appear();
+    }
+
+
+    public void SetGoldCheckFlag()
+    {
+        _enoughGold = false;
     }
 }

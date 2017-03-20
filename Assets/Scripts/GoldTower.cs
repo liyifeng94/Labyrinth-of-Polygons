@@ -34,6 +34,7 @@ public class GoldTower : Tower
         if (DestroyByEnemy) return;
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
+            // TODO clear single highlighted tiles instead clear all of them
             _gameBoard.ClearHighlightTiles();
             EndTime = Time.time;
             if (EndTime - StartTime > (float)(1 / AttackSpeed))
@@ -59,7 +60,7 @@ public class GoldTower : Tower
     public void MoneyGain(float money)
     {
         _currentReservedMoney += money;
-        Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
+        //Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
     }
 
 

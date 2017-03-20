@@ -10,7 +10,9 @@ public class NotificationPanel : MonoBehaviour {
     //public Text AutoDisappearText;
     private string _type;
     private string _towerOperationReuqst;
-    private string _rejectedCase;
+    //private string _rejectedCase;
+    private float _starTime, _endTime;
+    private bool _autoDisappearSet;
     //public float StartTime, EndTime;
 
     void Awake()
@@ -24,19 +26,26 @@ public class NotificationPanel : MonoBehaviour {
         ThisPanel.SetActive(false);
         _type = "Nop";
         _towerOperationReuqst = " request received.\nPress Yes to confirm.\nPress No to refuse.";
-        _rejectedCase = "Request refused. Click another tile or EnterBattle to continue.";
+        //_rejectedCase = "Request refused. Click another tile or EnterBattle to continue.";
+        _autoDisappearSet = false;
     }
 
-    /*
-    void update()
+    
+    void Update()
     {
-        //if ()
+        if (_autoDisappearSet)
+        {
+            if (_endTime - Time.time < 0)
+            {
+                DisAppear();
+            }
+        }
     }
-    */
+    
 
     public void Appear()
     {
-        //StartTime = Time.time;
+        _endTime = Time.time + 3; // auto disappear countdown
         ThisPanel.SetActive(true);
         switch (_type)
         {
@@ -58,25 +67,29 @@ public class NotificationPanel : MonoBehaviour {
                 FixText.text = "Gold Tower creation" + _towerOperationReuqst;
                 break;
             case "NotEnoughMoney":
-                FixText.text = "Not enough gold to build.\n" + _rejectedCase;
+                FixText.text = "Not enough gold to perform.\nRequest refused.";
+                _autoDisappearSet = true;
                 break;
             case "Block":
-                FixText.text = "You were tried to build a tower that blocks the last path.\n" + _rejectedCase;
+                FixText.text = "You were tried to build a tower that blocks the last path.\nRequest refused.";
+                _autoDisappearSet = true;
                 break;
             case "Upgrade":
                 FixText.text = _type + _towerOperationReuqst;
                 break;
             case "UpgradeWhenDestroied":
-                FixText.text = "The selected tower is destroyed. You can only repair or sell it.\n" + _rejectedCase;
+                FixText.text = "The selected tower is destroyed. You can only repair or sell it.\nRequest refused.";
+                _autoDisappearSet = true;
                 break;
-            case "MaxLevel":
+            /*case "MaxLevel":
                 FixText.text = "Max level reached.\nPress Yes or No to go back.";
-                break;
+                break;*/
             case "Repair":
                 FixText.text = _type + _towerOperationReuqst;
                 break;
             case "RepairWithFullHp":
-                FixText.text = "You were tried to repair a full HP tower.\n" + _rejectedCase;
+                FixText.text = "You were tried to repair a full HP tower.\nRequest refused.";
+                _autoDisappearSet = true;
                 break;
             case "Remove":
                 FixText.text = _type + _towerOperationReuqst;
@@ -84,9 +97,6 @@ public class NotificationPanel : MonoBehaviour {
             case "Sell":
                 FixText.text = _type + _towerOperationReuqst;
                 break;
-
-
-            // TODO: stiwch case for block cases
         }
     }
 

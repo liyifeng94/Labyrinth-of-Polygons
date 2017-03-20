@@ -259,56 +259,11 @@ public class TileEventHandler : MonoBehaviour
                     break;
                 case Operation.Upgrade:
                     //Debug.Log("TEH: Upgrade Operation called");
-                    if (0 == _currentTowerType)
-                    {
-                        if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold())
-                        {
-                            _notificationPanel.SetNotificationType("NotEnoughMoney");
-                            _notificationPanel.Appear();
-                            break;
-                        }
-                        _tankTowerPtr.Upgrade();
-                    }
-                    if (1 == _currentTowerType)
-                    {
-                        if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold())
-                        {
-                            _notificationPanel.SetNotificationType("NotEnoughMoney");
-                            _notificationPanel.Appear();
-                            break;
-                        }
-                        _rangeTowerPtr.Upgrade();
-                    }
-                    if (2 == _currentTowerType)
-                    {
-                        if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold())
-                        {
-                            _notificationPanel.SetNotificationType("NotEnoughMoney");
-                            _notificationPanel.Appear();
-                            break;
-                        }
-                        _slowTowerPtr.Upgrade();
-                    }
-                    if (3 == _currentTowerType)
-                    {
-                        if (_healTowerPtr.UpgradeCost > _levelManager.GetGold())
-                        {
-                            _notificationPanel.SetNotificationType("NotEnoughMoney");
-                            _notificationPanel.Appear();
-                            break;
-                        }
-                        _healTowerPtr.Upgrade();
-                    }
-                    if (4 == _currentTowerType)
-                    {
-                        if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold())
-                        {
-                            _notificationPanel.SetNotificationType("NotEnoughMoney");
-                            _notificationPanel.Appear();
-                            break;
-                        }
-                        _goldTowerPtr.Upgrade();
-                    }
+                    if (0 == _currentTowerType) _tankTowerPtr.Upgrade();
+                    if (1 == _currentTowerType) _rangeTowerPtr.Upgrade();
+                    if (2 == _currentTowerType) _slowTowerPtr.Upgrade();
+                    if (3 == _currentTowerType) _healTowerPtr.Upgrade();
+                    if (4 == _currentTowerType) _goldTowerPtr.Upgrade();
                     break;
                 case Operation.Repair:
                     if (0 == _currentTowerType)
@@ -395,11 +350,37 @@ public class TileEventHandler : MonoBehaviour
                 _yesButton.setTileEventHandler(this);
                 _towerOperationPanel.Appear();
                 int[] towerInfo = new int[11];
-                if (0 == _currentTowerType) { DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo)); }
-                if (1 == _currentTowerType) { DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo)); }
-                if (2 == _currentTowerType) { DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo)); }
-                if (3 == _currentTowerType) { DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo)); }
-                if (4 == _currentTowerType) { DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo)); }
+                // highlight attack range and if there is enough money to upgrade or repair
+                if (0 == _currentTowerType)
+                {
+                    DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo));
+                    if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                    if (_tankTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+                }
+                if (1 == _currentTowerType)
+                {
+                    DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo));
+                    if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                    if (_rangeTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+                }
+                if (2 == _currentTowerType)
+                {
+                    DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo));
+                    if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                    if (_slowTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+                }
+                if (3 == _currentTowerType)
+                {
+                    DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo));
+                    if (_healTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                    if (_healTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+                }
+                if (4 == _currentTowerType)
+                {
+                    DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo));
+                    if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                    if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+                }
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
