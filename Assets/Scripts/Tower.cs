@@ -24,7 +24,7 @@ using System.Linq;
     public int UpgradeCost;
     public int[] RepairCost;
     public int[] SellGain;
-    public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Money = 4 }
+    public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Gold = 4 }
     public TowerType Type;
     [HideInInspector]
     public Animator TowerAnimator;

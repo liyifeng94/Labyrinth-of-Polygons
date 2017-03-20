@@ -55,7 +55,7 @@ public class NotificationPanel : MonoBehaviour {
                 FixText.text = "Heal Tower creation" + _towerOperationReuqst;
                 break;
             case "Money":
-                FixText.text = "Money Tower creation" + _towerOperationReuqst;
+                FixText.text = "Gold Tower creation" + _towerOperationReuqst;
                 break;
             case "NotEnoughMoney":
                 FixText.text = "Not enough gold to build.\n" + _rejectedCase;

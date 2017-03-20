@@ -244,7 +244,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 111246455}
-        m_MethodName: MoneyTowerSelected
+        m_MethodName: GoldTowerSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 111246450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee53600a9c1c46547bd42d9475637630, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c524f3e0e9bd1c49b71bf471128281a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &172001100

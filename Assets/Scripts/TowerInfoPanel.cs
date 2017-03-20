@@ -16,6 +16,14 @@ public class TowerInfoPanel : MonoBehaviour {
     public Text SGain;
     public Text BCost;
 
+    /*private TankTower _tankTower;
+    private RangeTower _rangeTower;
+    private SlowTower _slowTower;
+    private HealTower _healTower;
+    private GoldTower _goldTower;
+    private Tower _tower;
+    private LevelManager _levelManager;*/
+
     void Awake()
     {
         Instance = this;
@@ -23,8 +31,16 @@ public class TowerInfoPanel : MonoBehaviour {
 
 
     void Start () {
-	    ThisPanel.SetActive(false);
-	}
+        ThisPanel.SetActive(false);
+        //_levelManager = GameManager.Instance.CurrentLevelManager;
+    }
+
+
+    /*void LateUpdate()
+    {
+        if (GameBoard.GamePhase.BuildingPhase == _levelManager.CurrentGamePhase()) { return; }
+        DisplayTowerInfo();
+    }*/
 
 
     public void Appear()
@@ -37,6 +53,24 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         ThisPanel.SetActive(false);
     }
+
+
+    /*public void SetTower(TankTower tower, Tower.TowerType type)
+    {
+        if (Tower.TowerType.Tank == type)
+        {
+            _tankTower = tower;
+        }
+    }
+
+
+    public void DisplayTowerInfo()
+    {
+        Debug.Log("TIP: Display tower info called");
+        int[] info = new int[11];
+        _tankTower.GetTowerInfo(info);
+        SetTowerInfo(info);
+    }*/
 
 
     public void SetTowerInfo(int[] info)
@@ -65,9 +99,9 @@ public class TowerInfoPanel : MonoBehaviour {
                 Aspd.text = "HSpd\n" + info[6] + "/s";
                 break;
             case 4:
-                Type.text = "Money";
-                Atk.text = "MGain\n" + info[5];
-                Aspd.text = "MSpd\n0." + info[6] + "/s";
+                Type.text = "Gold";
+                Atk.text = "GoldG\n" + info[5];
+                Aspd.text = "GSpd\n0." + info[6] + "/s";
                 break;
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }

@@ -79,8 +79,12 @@ public class TankTower : Tower
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.05f, 0.5f);
+        lr.startColor = color;
+        lr.endColor = color;
+        //lr.SetColors(color, color);
+        lr.startWidth = 0.05f;
+        lr.endWidth = 0.5f;
+        //lr.SetWidth(0.05f, 0.5f);
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         lr.sortingLayerName = "Effects";

@@ -12,7 +12,7 @@ public class TowerController : MonoBehaviour
     private RangeTower _rangeTowerPtr;
     private SlowTower _slowTowerPtr;
     private HealTower _healTowerPtr;
-    private MoneyTower _moneyTowerPtr;
+    private GoldTower _goldTowerPtr;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private GameBoard _gameBoard;
@@ -139,8 +139,8 @@ public class TowerController : MonoBehaviour
                 }
                 break;
             case 4:
-                _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>(); // get scripts
-                if (_moneyTowerPtr.BuildCost > _levelManager.GetGold())
+                _goldTowerPtr = _towerGameObject.GetComponent<GoldTower>(); // get scripts
+                if (_goldTowerPtr.BuildCost > _levelManager.GetGold())
                 {
                     //Debug.Log("TC: Not enough gold to build");
                     _notificationPanel.SetNotificationType("NotEnoughMoney");
@@ -182,9 +182,9 @@ public class TowerController : MonoBehaviour
                 _healTowerPtr.Remove();
                 break;
             case 4:
-                _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>();
-                _moneyTowerPtr.GetTowerInfo(info);
-                _moneyTowerPtr.Remove();
+                _goldTowerPtr = _towerGameObject.GetComponent<GoldTower>();
+                _goldTowerPtr.GetTowerInfo(info);
+                _goldTowerPtr.Remove();
                 break;
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }

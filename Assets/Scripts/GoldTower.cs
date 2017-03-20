@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class MoneyTower : Tower
+public class GoldTower : Tower
 {
 
     public int[] MoneyPerTenSec;
     private float _currentReservedMoney;
     private bool _reservedMoneyTransfered;
+    private GameBoard _gameBoard;
     //private GameBoard _gameBoard;
 
 
@@ -20,7 +21,8 @@ public class MoneyTower : Tower
         _currentReservedMoney = 0;
         _reservedMoneyTransfered = true;
 
-                LevelManager = GameManager.Instance.CurrentLevelManager;
+        LevelManager = GameManager.Instance.CurrentLevelManager;
+        _gameBoard = LevelManager.GameBoardSystem;
         NotificationPanel = NotificationPanel.Instance;
         TowerController = TowerController.Instance;
         //_gameBoard = LevelManager.GameBoardSystem;
@@ -33,10 +35,12 @@ public class MoneyTower : Tower
         if (DestroyByEnemy) return;
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
+            _gameBoard.ClearHighlightTiles();
             EndTime = Time.time;
             if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
             {
                 StartTime = Time.time;
+                _gameBoard.HighlightTileAt(X, Y, new Color(1, 1, 0, 1));
                 MoneyGain((float)(MoneyPerTenSec[CurrentLevel])/10);
             }
             _reservedMoneyTransfered = false;
@@ -46,7 +50,9 @@ public class MoneyTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_reservedMoneyTransfered)
         {
             LevelManager.AddGold((int)_currentReservedMoney);
-            Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
+            //Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
+            _currentReservedMoney = 0;
+            _reservedMoneyTransfered = true;
         }
     }
 
@@ -54,26 +60,7 @@ public class MoneyTower : Tower
     public void MoneyGain(float money)
     {
         _currentReservedMoney += money;
-        Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
-        //TODO: call highlight from gameboard
-        _currentReservedMoney = 0;
-        _reservedMoneyTransfered = true;
-    }
-
-
-    public void DrawSquare(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
-    {
-        GameObject myLine = new GameObject();
-        myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.5f, 0.5f);
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-        lr.sortingLayerName = "Effects";
-        GameObject.Destroy(myLine, duration);
+        //Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
     }
 
 

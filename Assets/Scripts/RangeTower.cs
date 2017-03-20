@@ -79,8 +79,12 @@ public class RangeTower : Tower
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Mobile/Particles/Additive"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.25f, 0.05f);
+        lr.startColor = color;
+        lr.endColor = color;
+        //lr.SetColors(color, color);
+        lr.startWidth = 0.25f;
+        lr.endWidth = 0.05f;
+        //lr.SetWidth(0.25f, 0.05f);
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         lr.sortingLayerName = "Effects";

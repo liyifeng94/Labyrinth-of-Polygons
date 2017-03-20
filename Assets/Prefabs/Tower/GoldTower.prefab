@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4000013247441652}
   - component: {fileID: 212000010550497774}
   - component: {fileID: 95000013909071390}
-  - component: {fileID: 114689577770656448}
+  - component: {fileID: 114365395771075240}
   m_Layer: 0
   m_Name: GoldTower
   m_TagString: Untagged
@@ -59,7 +59,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114689577770656448
+--- !u!114 &114365395771075240
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013374595410}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ff36d84e10866468175941b0984a3d, type: 3}
+  m_Script: {fileID: 11500000, guid: bc789c6e70784a046bf0aab17fd41fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   X: 0
@@ -80,17 +80,17 @@ MonoBehaviour:
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
-  MaxLevel: 0
-  HitPoint: 0a000000
+  MaxLevel: 3
+  HitPoint: 280000005000000078000000
   AttackRange: 0
-  AttackSpeed: 00000000
-  BuildCost: 40
+  AttackSpeed: 010000000100000002000000
+  BuildCost: 25
   UpgradeCost: 20
-  RepairCost: 0a000000
-  SellGain: 01000000
+  RepairCost: 050000000a0000000f000000
+  SellGain: 0f0000001e0000002d000000
   Type: 4
   TowerAnimator: {fileID: 0}
-  MoneyPerTenSec: 04000000
+  MoneyPerTenSec: 020000000400000006000000
 --- !u!212 &212000010550497774
 SpriteRenderer:
   m_ObjectHideFlags: 1

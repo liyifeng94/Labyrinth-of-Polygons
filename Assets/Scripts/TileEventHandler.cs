@@ -21,7 +21,7 @@ public class TileEventHandler : MonoBehaviour
     private RangeTower _rangeTowerPtr;
     private SlowTower _slowTowerPtr;
     private HealTower _healTowerPtr;
-    private MoneyTower _moneyTowerPtr;
+    private GoldTower _goldTowerPtr;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private GameObject _towerGameObject;
     private int _currentTowerType;
@@ -36,14 +36,14 @@ public class TileEventHandler : MonoBehaviour
     private RangeTowerButton _rangeTowerButton;
     private SlowTowerButton _slowTowerButton;
     private HealTowerButton _healTowerButton;
-    private MoneyTowerButton _moneyTowerButton;
+    private GoldTowerButton _goldTowerButton;
     // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private UpgradeButton _upgradeButton;
     private RepairButton _repairButton;
     private SellButton _sellButton;
     private BCP_Yes _yesButton;
 
-    public enum Operation { Nop, TankTower, RangeTower, SlowTower, HealTower, MoneyTower, Upgrade, Repair, Sell}
+    public enum Operation { Nop, TankTower, RangeTower, SlowTower, HealTower, GoldTower, Upgrade, Repair, Sell}
     public Operation TowerOperation;
 
     void Start ()
@@ -68,7 +68,7 @@ public class TileEventHandler : MonoBehaviour
         _rangeTowerButton = RangeTowerButton.Instance;
         _slowTowerButton = SlowTowerButton.Instance;
         _healTowerButton = HealTowerButton.Instance;
-        _moneyTowerButton = MoneyTowerButton.Instance;
+        _goldTowerButton = GoldTowerButton.Instance;
         // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         _upgradeButton = UpgradeButton.Instance;
         _repairButton = RepairButton.Instance;
@@ -227,7 +227,7 @@ public class TileEventHandler : MonoBehaviour
                         }
                     }
                     break;
-                case Operation.MoneyTower:
+                case Operation.GoldTower:
                     // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
@@ -239,10 +239,10 @@ public class TileEventHandler : MonoBehaviour
                     {
                         _towerExist = true;
                         _currentTowerType = 4;
-                        _moneyTowerPtr = _towerGameObject.GetComponent<MoneyTower>(); // get scripts
-                        _moneyTowerPtr.Setup(this);
+                        _goldTowerPtr = _towerGameObject.GetComponent<GoldTower>(); // get scripts
+                        _goldTowerPtr.Setup(this);
                         // check if it blocks the last path
-                        if (!_gameBoard.BuildTower(_moneyTowerPtr))
+                        if (!_gameBoard.BuildTower(_goldTowerPtr))
                         {
                             SellTower(true);
                             _towerExist = false;
@@ -252,7 +252,7 @@ public class TileEventHandler : MonoBehaviour
                         }
                         else
                         {
-                            _levelManager.UseGold(_moneyTowerPtr.BuildCost);
+                            _levelManager.UseGold(_goldTowerPtr.BuildCost);
                             _towerController.AddTileEventHandler(this);
                         }
                     }
@@ -301,13 +301,13 @@ public class TileEventHandler : MonoBehaviour
                     }
                     if (4 == _currentTowerType)
                     {
-                        if (_moneyTowerPtr.UpgradeCost > _levelManager.GetGold())
+                        if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
                             break;
                         }
-                        _moneyTowerPtr.Upgrade();
+                        _goldTowerPtr.Upgrade();
                     }
                     break;
                 case Operation.Repair:
@@ -353,13 +353,13 @@ public class TileEventHandler : MonoBehaviour
                     }
                     if (4 == _currentTowerType)
                     {
-                        if (_moneyTowerPtr.RepairCost[_moneyTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        if (_goldTowerPtr.RepairCost[_goldTowerPtr.CurrentLevel] > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
                             break;
                         }
-                        _moneyTowerPtr.Repair();
+                        _goldTowerPtr.Repair();
                     }
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     break;
@@ -388,7 +388,7 @@ public class TileEventHandler : MonoBehaviour
                 {
                     _sellButton.SellOptButton.interactable = false;
                 }
-                Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
+                //Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
                 _sellButton.setTowerEventHandler(this);
                 _upgradeButton.setTowerEventHandler(this);
                 _repairButton.setTowerEventHandler(this);
@@ -399,7 +399,7 @@ public class TileEventHandler : MonoBehaviour
                 if (1 == _currentTowerType) { DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo)); }
                 if (2 == _currentTowerType) { DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo)); }
                 if (3 == _currentTowerType) { DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo)); }
-                if (4 == _currentTowerType) { DisplayAttackRange(_moneyTowerPtr.GetTowerInfo(towerInfo)); }
+                if (4 == _currentTowerType) { DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo)); }
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _towerInfoPanel.SetTowerInfo(towerInfo);
                 _towerInfoPanel.Appear();
@@ -413,7 +413,7 @@ public class TileEventHandler : MonoBehaviour
                 _rangeTowerButton.setTowerEventHandler(this);
                 _slowTowerButton.setTowerEventHandler(this);
                 _healTowerButton.setTowerEventHandler(this);
-                _moneyTowerButton.setTowerEventHandler(this);
+                _goldTowerButton.setTowerEventHandler(this);
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 _yesButton.setTileEventHandler(this);
                 _towerBuildPanel.Appear();
@@ -439,7 +439,7 @@ public class TileEventHandler : MonoBehaviour
             if (1 == _currentTowerType) { _levelManager.AddGold(_rangeTowerPtr.SellGain[_rangeTowerPtr.GetLevel()]); }
             if (2 == _currentTowerType) { _levelManager.AddGold(_slowTowerPtr.SellGain[_slowTowerPtr.GetLevel()]); }
             if (3 == _currentTowerType) { _levelManager.AddGold(_healTowerPtr.SellGain[_healTowerPtr.GetLevel()]); }
-            if (4 == _currentTowerType) { _levelManager.AddGold(_moneyTowerPtr.SellGain[_moneyTowerPtr.GetLevel()]); }
+            if (4 == _currentTowerType) { _levelManager.AddGold(_goldTowerPtr.SellGain[_goldTowerPtr.GetLevel()]); }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             _towerController.RemoveTileEventHandler(this);
         }
@@ -473,7 +473,7 @@ public class TileEventHandler : MonoBehaviour
         if (1 == _currentTowerType) { return _rangeTowerPtr; }
         if (2 == _currentTowerType) { return _slowTowerPtr; }
         if (3 == _currentTowerType) { return _healTowerPtr; }
-        if (4 == _currentTowerType) { return _moneyTowerPtr; }
+        if (4 == _currentTowerType) { return _goldTowerPtr; }
         //TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         return null;
     }

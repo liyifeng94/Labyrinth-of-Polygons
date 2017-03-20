@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoneyTowerButton : MonoBehaviour
+public class GoldTowerButton : MonoBehaviour
 {
 
-    public static MoneyTowerButton Instance;
+    public static GoldTowerButton Instance;
 
     private GameBoard _gameBoard;
 
@@ -34,7 +34,7 @@ public class MoneyTowerButton : MonoBehaviour
         }
     }
 
-    public void MoneyTowerSelected()
+    public void GoldTowerSelected()
     {
         _gameBoard.ClearHighlightTiles();
         _tileEventHandler.SelectTowerType(4);
