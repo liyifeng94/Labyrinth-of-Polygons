@@ -6,7 +6,6 @@ using System.Linq;
 public class HealTower : Tower
 {
 
-    public int[] HealAmount;
     private HashSet<Tower> _towers;
     private List<Tower> _towerList;
     private bool _setAllyTower;
@@ -15,10 +14,10 @@ public class HealTower : Tower
 
     void Start()
     {
-        CurrentLevel = 0;
+        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint[CurrentLevel];
+        CurrentHp = HitPoint;
         _towers = new HashSet<Tower>();
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
@@ -35,7 +34,7 @@ public class HealTower : Tower
         if (0 != _towers.Count)
         {
             EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
+            if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {
                 //Debug.Log("~~~~~~~~~~~~~~" + EndTime + " " + StartTime);
                 StartTime = Time.time;
@@ -79,7 +78,7 @@ public class HealTower : Tower
         Vector3 end = endTransform.position;
         Color result = new Color(0, 1, 0, 1.0f);
         DrawLine(start, end, result);
-        t.ReceiveHeal(HealAmount[CurrentLevel]);
+        t.ReceiveHeal(HealAmount);
         //Debug.Log("HT: Heals ally tower");
     }
 
@@ -110,12 +109,12 @@ public class HealTower : Tower
         info[1] = (int)Type;
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
-        info[4] = HitPoint[CurrentLevel];
-        info[5] = HealAmount[CurrentLevel];
-        info[6] = AttackSpeed[CurrentLevel];
+        info[4] = HitPoint;
+        info[5] = HealAmount;
+        info[6] = AttackSpeed;
         info[7] = UpgradeCost;
-        info[8] = RepairCost[CurrentLevel];
-        info[9] = SellGain[CurrentLevel];
+        info[8] = RepairCost;
+        info[9] = SellGain;
         info[10] = BuildCost;
         return info[0];
     }

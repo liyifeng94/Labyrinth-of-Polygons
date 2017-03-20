@@ -80,17 +80,19 @@ MonoBehaviour:
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
-  MaxLevel: 3
-  HitPoint: 280000005000000078000000
+  TowerAnimator: {fileID: 0}
+  HitPoint: 40
   AttackRange: 0
-  AttackSpeed: 010000000100000002000000
+  AttackSpeed: 1
   BuildCost: 25
   UpgradeCost: 20
-  RepairCost: 050000000a0000000f000000
-  SellGain: 0f0000001e0000002d000000
+  RepairCost: 10
+  SellGain: 15
+  AttackDamage: 0
+  SlowPercent: 0
+  HealAmount: 0
+  GoldPerTenSec: 2
   Type: 4
-  TowerAnimator: {fileID: 0}
-  MoneyPerTenSec: 020000000400000006000000
 --- !u!212 &212000010550497774
 SpriteRenderer:
   m_ObjectHideFlags: 1

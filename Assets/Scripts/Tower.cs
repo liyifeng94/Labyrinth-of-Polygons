@@ -16,18 +16,23 @@ using System.Linq;
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public TowerController TowerController;
     [HideInInspector] public NotificationPanel NotificationPanel;
-    public int MaxLevel; 
-    public int[] HitPoint;
+    [HideInInspector] public Animator TowerAnimator;
+    //public int MaxLevel; 
+    public int HitPoint;
     public int AttackRange;
-    public int[] AttackSpeed;
+    public int AttackSpeed;
     public int BuildCost;
     public int UpgradeCost;
-    public int[] RepairCost;
-    public int[] SellGain;
+    public int RepairCost;
+    public int SellGain;
+
+    public int AttackDamage;
+    public int SlowPercent;
+    public int HealAmount;
+    public int GoldPerTenSec;
+
     public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Gold = 4 }
     public TowerType Type;
-    [HideInInspector]
-    public Animator TowerAnimator;
 
 
     public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
@@ -73,13 +78,13 @@ using System.Linq;
     public void ReceiveHeal(int heal)
     {
         //Debug.Log("T: Tower at " + X + " " + Y + " was received " + heal + " heal");
-        if (CurrentHp + heal <= HitPoint[CurrentLevel])
+        if (CurrentHp + heal <= HitPoint)
         {
             CurrentHp += heal;
         }
         else
         {
-            CurrentHp = HitPoint[CurrentLevel];
+            CurrentHp = HitPoint;
         }
     }
 
@@ -92,10 +97,38 @@ using System.Linq;
             NotificationPanel.Appear();
             return;
         }
-        if (CurrentLevel < MaxLevel - 1)
+        LevelManager.UseGold(UpgradeCost);
+
+
+        int PrevioutLevel = CurrentLevel;
+        CurrentLevel += 1;
+        HitPoint = HitPoint / PrevioutLevel * CurrentLevel;
+        CurrentHp = HitPoint;
+        UpgradeCost = UpgradeCost / PrevioutLevel * CurrentLevel;
+        RepairCost = RepairCost / PrevioutLevel * CurrentLevel;
+        SellGain = SellGain / PrevioutLevel * CurrentLevel;
+        switch (Type)
+        {
+            case TowerType.Tank:
+                AttackDamage = AttackDamage / PrevioutLevel * CurrentLevel;
+                break;
+            case TowerType.Range:
+                AttackDamage = AttackDamage / PrevioutLevel * CurrentLevel;
+                break;
+            case TowerType.Slow:
+                SlowPercent = SlowPercent / PrevioutLevel * CurrentLevel;
+                break;
+            case TowerType.Heal:
+                HealAmount = HealAmount / PrevioutLevel * CurrentLevel;
+                break;
+            case TowerType.Gold:
+                GoldPerTenSec = GoldPerTenSec / PrevioutLevel * CurrentLevel;
+                break;
+        }
+        /*if (CurrentLevel < MaxLevel - 1)
         {
             CurrentLevel += 1;
-            CurrentHp = HitPoint[CurrentLevel];
+            CurrentHp = HitPoint;
             LevelManager.UseGold(UpgradeCost);
             //Debug.Log("T: Tower upgraded to level" + CurrentLevel);
         }
@@ -104,21 +137,21 @@ using System.Linq;
             //Debug.Log("T: Max Level");
             NotificationPanel.SetNotificationType("MaxLevel");
             NotificationPanel.Appear();
-        }
+        }*/
     }
 
 
     public void Repair()
     {
-        if (CurrentHp == HitPoint[CurrentLevel])
+        if (CurrentHp == HitPoint)
         {
             NotificationPanel.SetNotificationType("RepairWithFullHp");
             NotificationPanel.Appear();
             return;
         }
-        Debug.Log(CurrentHp + " " + HitPoint[CurrentLevel]);
-        CurrentHp = HitPoint[CurrentLevel];
-        LevelManager.UseGold(RepairCost[CurrentLevel]);
+        Debug.Log(CurrentHp + " " + HitPoint);
+        CurrentHp = HitPoint;
+        LevelManager.UseGold(RepairCost);
         DestroyByEnemy = false;
         TowerAnimator.SetTrigger("TowerFixed");
         //Debug.Log("T: Tower Repaired, HP is " + _currentHp);
@@ -130,16 +163,16 @@ using System.Linq;
         return CurrentLevel;
     }
 
-
-    public bool CheckMaxLevel()
+    
+    /*public bool CheckMaxLevel()
     {
         return CurrentLevel == MaxLevel - 1;
-    }
+    }*/
 
 
      public bool IsFullHealth()
      {
-         return CurrentHp == HitPoint[CurrentLevel];
+         return CurrentHp == HitPoint;
      }
 
     /*

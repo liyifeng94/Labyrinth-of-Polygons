@@ -105,7 +105,7 @@ public class TowerInfoPanel : MonoBehaviour {
                 break;
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
-        Level.text = "Lvl: " + (info[2]+1);
+        Level.text = "Lvl: " + (info[2]);
         CurHp.text = "CurHP\n" + info[3];
         MaxHp.text = "MaxHP\n" + info[4];
         UCost.text = "UCost\n" + info[7] + "G";

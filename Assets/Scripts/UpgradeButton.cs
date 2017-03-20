@@ -36,14 +36,15 @@ public class UpgradeButton : MonoBehaviour {
         _tileEventHandler.SetOperation(6);
         _buildCheckPanel.Appear();
         _towerInfoPanel.Appear();
-        if (_tileEventHandler.GetTowerScript().CheckMaxLevel())
+        /*if (_tileEventHandler.GetTowerScript().CheckMaxLevel())
         {
             _notificationPanel.SetNotificationType("MaxLevel");
         }
         else
         {
             _notificationPanel.SetNotificationType("Upgrade");
-        }
+        }*/
+        _notificationPanel.SetNotificationType("Upgrade");
         _notificationPanel.Appear();
     }
 }

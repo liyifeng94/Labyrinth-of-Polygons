@@ -313,7 +313,7 @@ public class TileEventHandler : MonoBehaviour
                 case Operation.Repair:
                     if (0 == _currentTowerType)
                     {
-                        if (_tankTowerPtr.RepairCost[_tankTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        if (_tankTowerPtr.RepairCost > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
@@ -323,7 +323,7 @@ public class TileEventHandler : MonoBehaviour
                     }
                     if (1 == _currentTowerType)
                     {
-                        if (_rangeTowerPtr.RepairCost[_rangeTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        if (_rangeTowerPtr.RepairCost > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
@@ -333,7 +333,7 @@ public class TileEventHandler : MonoBehaviour
                     }
                     if (2 == _currentTowerType)
                     {
-                        if (_slowTowerPtr.RepairCost[_slowTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        if (_slowTowerPtr.RepairCost > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
@@ -343,7 +343,7 @@ public class TileEventHandler : MonoBehaviour
                     }
                     if (3 == _currentTowerType)
                     {
-                        if (_healTowerPtr.RepairCost[_healTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        if (_healTowerPtr.RepairCost > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
@@ -353,7 +353,7 @@ public class TileEventHandler : MonoBehaviour
                     }
                     if (4 == _currentTowerType)
                     {
-                        if (_goldTowerPtr.RepairCost[_goldTowerPtr.CurrentLevel] > _levelManager.GetGold())
+                        if (_goldTowerPtr.RepairCost > _levelManager.GetGold())
                         {
                             _notificationPanel.SetNotificationType("NotEnoughMoney");
                             _notificationPanel.Appear();
@@ -435,11 +435,11 @@ public class TileEventHandler : MonoBehaviour
         _towerExist = false;
         if (! blockCase) // there is money refund for the non-blockCase
         {
-            if (0 == _currentTowerType) { _levelManager.AddGold(_tankTowerPtr.SellGain[_tankTowerPtr.GetLevel()]); }
-            if (1 == _currentTowerType) { _levelManager.AddGold(_rangeTowerPtr.SellGain[_rangeTowerPtr.GetLevel()]); }
-            if (2 == _currentTowerType) { _levelManager.AddGold(_slowTowerPtr.SellGain[_slowTowerPtr.GetLevel()]); }
-            if (3 == _currentTowerType) { _levelManager.AddGold(_healTowerPtr.SellGain[_healTowerPtr.GetLevel()]); }
-            if (4 == _currentTowerType) { _levelManager.AddGold(_goldTowerPtr.SellGain[_goldTowerPtr.GetLevel()]); }
+            if (0 == _currentTowerType) { _levelManager.AddGold(_tankTowerPtr.SellGain); }
+            if (1 == _currentTowerType) { _levelManager.AddGold(_rangeTowerPtr.SellGain); }
+            if (2 == _currentTowerType) { _levelManager.AddGold(_slowTowerPtr.SellGain); }
+            if (3 == _currentTowerType) { _levelManager.AddGold(_healTowerPtr.SellGain); }
+            if (4 == _currentTowerType) { _levelManager.AddGold(_goldTowerPtr.SellGain); }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             _towerController.RemoveTileEventHandler(this);
         }

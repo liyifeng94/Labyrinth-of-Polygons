@@ -5,16 +5,16 @@ using System.Linq;
 public class TankTower : Tower
 {
 
-    public int[] AttackDamage;
+    //public int AttackDamage;
     private HashSet<Enemy> _enemies;
 
 
     void Start()
     {
-        CurrentLevel = 0;
+        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint[CurrentLevel];
+        CurrentHp = HitPoint;
         _enemies = new HashSet<Enemy>();
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
@@ -31,7 +31,7 @@ public class TankTower : Tower
         if (0 != _enemies.Count)
         {
             EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
+            if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {
                 StartTime = Time.time;
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
@@ -62,7 +62,7 @@ public class TankTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(0, 1, 1, 1.0f);
             DrawLine(start, end, result);
-            t.GetDamaged(AttackDamage[CurrentLevel]);
+            t.GetDamaged(AttackDamage);
             //Debug.Log("TT: Attacks");
         }
         else
@@ -98,12 +98,12 @@ public class TankTower : Tower
         info[1] = (int)Type;
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
-        info[4] = HitPoint[CurrentLevel];
-        info[5] = AttackDamage[CurrentLevel];
-        info[6] = AttackSpeed[CurrentLevel];
+        info[4] = HitPoint;
+        info[5] = AttackDamage;
+        info[6] = AttackSpeed;
         info[7] = UpgradeCost;
-        info[8] = RepairCost[CurrentLevel];
-        info[9] = SellGain[CurrentLevel];
+        info[8] = RepairCost;
+        info[9] = SellGain;
         info[10] = BuildCost;
         return info[0];
     }

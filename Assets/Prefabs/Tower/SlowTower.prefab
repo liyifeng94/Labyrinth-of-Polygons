@@ -16,12 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010831899216}
-  - 212: {fileID: 212000013834593418}
-  - 95: {fileID: 95000013553854536}
-  - 114: {fileID: 114000010429337778}
+  - component: {fileID: 4000010831899216}
+  - component: {fileID: 212000013834593418}
+  - component: {fileID: 95000013553854536}
+  - component: {fileID: 114000010429337778}
   m_Layer: 0
   m_Name: SlowTower
   m_TagString: Untagged
@@ -38,10 +38,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95000013553854536
 Animator:
   serializedVersion: 3
@@ -80,17 +80,16 @@ MonoBehaviour:
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
-  MaxLevel: 3
-  HitPoint: 460000008c000000d2000000
+  TowerAnimator: {fileID: 0}
+  HitPoint: 70
   AttackRange: 2
-  AttackSpeed: 010000000100000002000000
+  AttackSpeed: 1
   BuildCost: 15
   UpgradeCost: 12
-  RepairCost: 060000000c00000012000000
-  SellGain: 09000000120000001b000000
+  RepairCost: 6
+  SellGain: 9
   Type: 2
-  TowerAnimator: {fileID: 0}
-  SlowPercent: 0a000000140000001e000000
+  SlowPercent: 10
 --- !u!212 &212000013834593418
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -105,7 +104,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -113,7 +114,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

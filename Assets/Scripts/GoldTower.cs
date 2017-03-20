@@ -5,7 +5,6 @@ using System.Linq;
 public class GoldTower : Tower
 {
 
-    public int[] MoneyPerTenSec;
     private float _currentReservedMoney;
     private bool _reservedMoneyTransfered;
     private GameBoard _gameBoard;
@@ -14,10 +13,10 @@ public class GoldTower : Tower
 
     void Start()
     {
-        CurrentLevel = 0;
+        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint[CurrentLevel];
+        CurrentHp = HitPoint;
         _currentReservedMoney = 0;
         _reservedMoneyTransfered = true;
 
@@ -37,11 +36,11 @@ public class GoldTower : Tower
         {
             _gameBoard.ClearHighlightTiles();
             EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1 / AttackSpeed[CurrentLevel]))
+            if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {
                 StartTime = Time.time;
                 _gameBoard.HighlightTileAt(X, Y, new Color(1, 1, 0, 1));
-                MoneyGain((float)(MoneyPerTenSec[CurrentLevel])/10);
+                MoneyGain((float)(GoldPerTenSec) /10);
             }
             _reservedMoneyTransfered = false;
         }
@@ -50,7 +49,7 @@ public class GoldTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_reservedMoneyTransfered)
         {
             LevelManager.AddGold((int)_currentReservedMoney);
-            //Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
+            Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
             _currentReservedMoney = 0;
             _reservedMoneyTransfered = true;
         }
@@ -60,7 +59,7 @@ public class GoldTower : Tower
     public void MoneyGain(float money)
     {
         _currentReservedMoney += money;
-        //Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
+        Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
     }
 
 
@@ -70,12 +69,12 @@ public class GoldTower : Tower
         info[1] = (int)Type;
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
-        info[4] = HitPoint[CurrentLevel];
-        info[5] = MoneyPerTenSec[CurrentLevel];
-        info[6] = AttackSpeed[CurrentLevel];
+        info[4] = HitPoint;
+        info[5] = GoldPerTenSec;
+        info[6] = AttackSpeed;
         info[7] = UpgradeCost;
-        info[8] = RepairCost[CurrentLevel];
-        info[9] = SellGain[CurrentLevel];
+        info[8] = RepairCost;
+        info[9] = SellGain;
         info[10] = BuildCost;
         return info[0];
     }
