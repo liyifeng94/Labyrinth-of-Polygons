@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
     public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, Boss = 4 }
 
-    public uint GridX { get; private set; }
-    public uint GridY { get; private set; }
+    public int GridX { get; private set; }
+    public int GridY { get; private set; }
 
     public static float Tolerance1
     {
