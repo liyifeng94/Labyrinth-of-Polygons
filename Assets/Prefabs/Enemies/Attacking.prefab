@@ -61,6 +61,8 @@ MonoBehaviour:
   Score: 10
   AttackDamage: 0
   EnemyType: 3
+  Bullets:
+  - {fileID: 1961486205250904, guid: 380c87acdda8a17498ef8e2714010f9a, type: 2}
 --- !u!212 &212000012292744644
 SpriteRenderer:
   m_ObjectHideFlags: 1

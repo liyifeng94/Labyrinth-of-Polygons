@@ -29,9 +29,9 @@ public class Enemy : MonoBehaviour
     public int Gold = 5;
     public int Score = 10;
     public int AttackDamage = 0;
-
     private Direction Dir = Direction.Down;
     public Type EnemyType;
+    public List<GameObject> Bullets;
     private int _pos = 0;
     private float _distance = (float)0.0;
     private GameBoard _gameBoard;
@@ -168,7 +168,7 @@ public class Enemy : MonoBehaviour
                 AttackRange = 2;
                 Speed = 2;
                 Score = 30;
-                _attackSpeed = 0.5f;
+                _attackSpeed = 1.0f;
                 AttackDamage = 3;
                 break;
             case Type.Fast:
@@ -209,12 +209,14 @@ public class Enemy : MonoBehaviour
         if (EnemyType != Type.Attacking || _end - _start < _attackSpeed) return;
 
         Tower tower = GetAttackTower();
-        if (tower != null)
-        {
-            Debug.Log("enemy attacking");
-            tower.ReceiveAttack(AttackDamage);
-            _towers.Clear();
-        }
+        if (tower == null) return;
+        GameObject bulletObj = Instantiate(Bullets[0], transform.position, Quaternion.identity) as GameObject;
+        Bullet bullet = bulletObj.GetComponent<Bullet>();
+        bullet.MakeBullet(transform.position.x,transform.position.y,tower.transform.position.x,tower.transform.position.y,Vector3.Distance(transform.position,tower.transform.position), tower, AttackDamage);
+
+        Debug.Log("enemy attacking");
+        tower.ReceiveAttack(AttackDamage);
+        _towers.Clear();
         _start = Time.time;
 
     }

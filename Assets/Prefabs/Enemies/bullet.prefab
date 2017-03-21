@@ -9,32 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000010615119336}
+  m_RootGameObject: {fileID: 1961486205250904}
   m_IsPrefabParent: 1
---- !u!1 &1000010615119336
+--- !u!1 &1961486205250904
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4000010831899216}
-  - component: {fileID: 212000013834593418}
-  - component: {fileID: 95000013553854536}
-  - component: {fileID: 114000010429337778}
+  - component: {fileID: 4775031677194792}
+  - component: {fileID: 212128276194629848}
+  - component: {fileID: 114925079658206346}
   m_Layer: 0
-  m_Name: SlowTower
+  m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000010831899216
+--- !u!4 &4775031677194792
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010615119336}
+  m_GameObject: {fileID: 1961486205250904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -42,63 +41,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95000013553854536
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010615119336}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d8f8aebd0d8c89346a34f7d20d1d2c0a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010429337778
+--- !u!114 &114925079658206346
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010615119336}
+  m_GameObject: {fileID: 1961486205250904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e635cb358c8e0245a88d83e73008d49, type: 3}
+  m_Script: {fileID: 11500000, guid: 70bf440b535ba4641b98cc511a9bd40a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  X: 0
-  Y: 0
-  CurrentHp: 0
-  CurrentLevel: 0
-  DestroyByEnemy: 0
-  StartTime: 0
-  EndTime: 0
-  LevelManager: {fileID: 0}
-  TowerController: {fileID: 0}
-  NotificationPanel: {fileID: 0}
-  TowerAnimator: {fileID: 0}
-  HitPoint: 70
-  AttackRange: 2
-  AttackSpeed: 2
-  BuildCost: 15
-  UpgradeCost: 12
-  RepairCost: 6
-  SellGain: 9
-  AttackDamage: 0
-  SlowPercent: 30
-  HealAmount: 0
-  GoldPerTenSec: 0
-  Type: 2
---- !u!212 &212000013834593418
+  StartX: 0
+  StartY: 0
+  EndX: 0
+  EndY: 0
+  SpeedX: 0
+  SpeedY: 0
+  length: 0
+  speed: 2
+--- !u!212 &212128276194629848
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010615119336}
+  m_GameObject: {fileID: 1961486205250904}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -122,9 +89,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -780406595
+  m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 791d79bc27176954e8c63640787e832f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c73ffd4d9f9bf546a6486e4911e1101, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

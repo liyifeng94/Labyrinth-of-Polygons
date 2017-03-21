@@ -107,4 +107,20 @@ public class TankTower : Tower
         info[10] = BuildCost;
         return info[0];
     }
+
+
+    public new void GetTowerUpgradedInfo(int[] info)
+    {
+        info[0] = AttackRange;
+        info[1] = (int)Type;
+        info[2] = CurrentLevel + 1;
+        info[3] = CurrentHp;
+        info[4] = HitPoint / CurrentLevel * CurrentLevel;
+        info[5] = AttackDamage;
+        info[6] = AttackSpeed;
+        info[7] = UpgradeCost / CurrentLevel * CurrentLevel;
+        info[8] = RepairCost / CurrentLevel * CurrentLevel;
+        info[9] = SellGain / CurrentLevel * CurrentLevel;
+        info[10] = BuildCost;
+    }
 }
