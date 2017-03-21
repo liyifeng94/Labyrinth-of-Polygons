@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PosKey
+public struct PosKey
 {
     public readonly int X;
     public readonly int Y;

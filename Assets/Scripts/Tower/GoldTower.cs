@@ -34,8 +34,8 @@ public class GoldTower : Tower
         if (DestroyByEnemy) return;
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
-            // TODO clear single highlighted tiles instead clear all of them
-            _gameBoard.ClearHighlightTiles();
+            _gameBoard.ClearHighlightTileAt(X, Y);
+            Debug.Log("cleared at " + X + Y);
             EndTime = Time.time;
             if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {
