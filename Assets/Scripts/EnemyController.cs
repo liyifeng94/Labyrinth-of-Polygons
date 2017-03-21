@@ -22,6 +22,9 @@ public class EnemyController : MonoBehaviour
         int entrance = Random.Range(0, entrances.Count);
 
         int temp = Random.Range(0, 4);
+
+        temp = 3;
+
         List<GridSystem.Cell> path;
         if ((Enemy.Type)temp != Enemy.Type.Flying) path =  GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         else path = GameManager.Instance.SearchFlyingPath(entrances[entrance].X, entrances[entrance].Y);
