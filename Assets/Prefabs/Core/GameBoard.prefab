@@ -16,10 +16,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012712190972}
-  - 114: {fileID: 114000012744701448}
+  - component: {fileID: 4000012712190972}
+  - component: {fileID: 114000012744701448}
   m_Layer: 0
   m_Name: GameBoard
   m_TagString: Untagged
@@ -36,10 +36,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114000012744701448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cc8558c0330c344bcf91e6afeb780f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockSize: 10
+  TileSize: 1
   GridWidth: 10
   GridHeight: 20
   GridEntrances: 4

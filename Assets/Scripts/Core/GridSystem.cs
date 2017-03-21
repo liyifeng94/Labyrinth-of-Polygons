@@ -135,7 +135,7 @@ public class GridSystem
             Obstacles = new List<Cell>();
             uint obstacles = 0;
             Cell lastCell = null;
-            do
+            while (obstacles < n)
             {
                 Cell obstacleCell = obstacleQueue.Dequeue();
                 obstacleCell.SetCell(true);
@@ -160,7 +160,7 @@ public class GridSystem
                     }
 
                 }
-            } while (obstacles != n);
+            }
             Debug.Log("Obstacles: " + obstacles);
             return obstacles;
         }

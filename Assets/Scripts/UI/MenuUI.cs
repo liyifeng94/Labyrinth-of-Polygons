@@ -1,24 +1,52 @@
-﻿using UnityEngine;
+﻿using System.Xml.Serialization;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
+    public Slider ObstaclesSlider;
+    public Text NumOfObstacles;
+    public InputField NameInput;
+    public Text NamePlaceHolder;
     public Text VersionText;
+    public GameObject MainMenuPanel;
+    public GameObject StartOptionsPanel;
+
+    private GameManager _gameManager;
 
     void Start()
     {
+        _gameManager = GameManager.Instance;
+        NamePlaceHolder.text = _gameManager.PlayerName;
+        MainMenuPanel.SetActive(true);
+        StartOptionsPanel.SetActive(false);
         if (VersionText!=null)
             VersionText.text = Application.version;
     }
 
-    public void LoadLevelByIndex(int index)
+    public void ChangeName()
     {
-        SceneManager.LoadScene(index);
+        string newName = NameInput.text;
+        _gameManager.PlayerName = newName;
     }
 
-    public void LoadLevelByName(string scene)
+    public void UpdateObstacles()
     {
-        SceneManager.LoadScene(scene);
+        uint obsacles = (uint)ObstaclesSlider.value;
+        NumOfObstacles.text = obsacles.ToString();
+        _gameManager.Obstacles = obsacles;
+    }
+
+    public void BackToMainMenu()
+    {
+        StartOptionsPanel.SetActive(false);
+        MainMenuPanel.SetActive(true);
+    }
+
+    public void SetStartOptions()
+    {
+        StartOptionsPanel.SetActive(true);
+        MainMenuPanel.SetActive(false);
     }
 }
