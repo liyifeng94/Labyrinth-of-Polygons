@@ -5,33 +5,46 @@ using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
+    public Slider ObstaclesSlider;
+    public Text NumOfObstacles;
+    public InputField NameInput;
+    public Text NamePlaceHolder;
     public Text VersionText;
     public GameObject MainMenuPanel;
     public GameObject StartOptionsPanel;
 
+    private GameManager _gameManager;
+
     void Start()
     {
+        _gameManager = GameManager.Instance;
+        NamePlaceHolder.text = _gameManager.PlayerName;
         if (VersionText!=null)
             VersionText.text = Application.version;
     }
 
+    public void ChangeName()
+    {
+        string newName = NameInput.text;
+        _gameManager.PlayerName = newName;
+    }
+
+    public void UpdateObstacles()
+    {
+        uint obsacles = (uint)ObstaclesSlider.value;
+        NumOfObstacles.text = obsacles.ToString();
+        _gameManager.Obstacles = obsacles;
+    }
+
     public void BackToMainMenu()
     {
-        
+        StartOptionsPanel.SetActive(false);
+        MainMenuPanel.SetActive(true);
     }
 
     public void SetStartOptions()
     {
-        
-    }
-
-    public void LoadLevelByIndex(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
-
-    public void LoadLevelByName(string scene)
-    {
-        SceneManager.LoadScene(scene);
+        StartOptionsPanel.SetActive(true);
+        MainMenuPanel.SetActive(false);
     }
 }
