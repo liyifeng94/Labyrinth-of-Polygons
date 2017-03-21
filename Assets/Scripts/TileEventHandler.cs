@@ -466,6 +466,11 @@ public class TileEventHandler : MonoBehaviour
         {
             for (int j = 0; j <= range; j++)
             {
+                if (0 == i && 0 == j)
+                {
+                    _gameBoard.HighlightTileAt(GridX + i, GridY + j, new Color(0, 1, 0.2f, 0.5f));
+                    continue;
+                }
                 if (GridX + i < 10 && GridY + j < 20)
                 {
                     _gameBoard.HighlightTileAt(GridX + i, GridY + j, new Color(1,0,0,0.25f));
