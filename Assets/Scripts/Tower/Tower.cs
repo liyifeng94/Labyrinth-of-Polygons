@@ -116,7 +116,7 @@ using System.Linq;
                 AttackDamage = AttackDamage / PrevioutLevel * CurrentLevel;
                 break;
             case TowerType.Slow:
-                SlowPercent = SlowPercent / PrevioutLevel * CurrentLevel;
+                //SlowPercent = SlowPercent / PrevioutLevel * CurrentLevel;
                 break;
             case TowerType.Heal:
                 HealAmount = HealAmount / PrevioutLevel * CurrentLevel;
