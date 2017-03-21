@@ -1321,7 +1321,7 @@ Prefab:
     - target: {fileID: 114000012744701448, guid: 54d29aaf0170c1d489e1589b0fc73486,
         type: 2}
       propertyPath: GridObstacles
-      value: 70
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54d29aaf0170c1d489e1589b0fc73486, type: 2}
@@ -3061,8 +3061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8106cfbb7f5ea409c2277cc82f519b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisPanel: {fileID: 1198866382}
-  Text: {fileID: 717856164}
 --- !u!114 &1198866385
 MonoBehaviour:
   m_ObjectHideFlags: 0

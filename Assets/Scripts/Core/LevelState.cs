@@ -7,7 +7,7 @@ public class LevelState
     public int Health = 0;
     public int Gold = 0;
     public int Level = 0;
-    public uint FinalScore;
+    public uint FinalScore = 0;
     public bool BossKilled = false;
 
     //TODO: Gems
@@ -20,7 +20,7 @@ public class LevelState
         FinalScore = (uint) Score;
         FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
         FinalScore *= (uint)Level;
-        FinalScore += (uint) Score * ((160 - gameOptions.Obstacles) / 2);
+        FinalScore += (uint) Score * ((100 - gameOptions.Obstacles) / 2);
         FinalScore += (uint)Gold;
         return FinalScore;
     }
