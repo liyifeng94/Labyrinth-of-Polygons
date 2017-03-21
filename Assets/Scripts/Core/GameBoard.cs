@@ -11,7 +11,7 @@ public class GameBoard : MonoBehaviour
 
     private LevelManager _levelManager;
 
-    private List<GameObject> _highlightTile;
+    private Dictionary<PosKey,GameObject> _highlightTiles;
 
     private GameManager _gmInstance;
 
@@ -98,7 +98,7 @@ public class GameBoard : MonoBehaviour
         _boardHolder = new GameObject("Board").transform;
         _enemiesHolder = new HashSet<Enemy>();
         _towersHolder = new HashSet<Tower>();
-        _highlightTile = new List<GameObject>();
+        _highlightTiles = new Dictionary<PosKey, GameObject>();
 
         if (gameOptions == null)
         {
@@ -254,20 +254,40 @@ public class GameBoard : MonoBehaviour
     public void HighlightTileAt(int x, int y, Color color)
     {
         Tile targetTile = BoardTiles[x, y];
-
+        PosKey key = new PosKey(x,y);
         Vector3 tilePositon = targetTile.TileObject.gameObject.transform.position;
         GameObject newHighlight = Instantiate(TileHighlight, tilePositon, Quaternion.identity) as GameObject;
         SpriteRenderer spriteRenderer = newHighlight.GetComponent<SpriteRenderer>();
         spriteRenderer.color = color;
-        _highlightTile.Add(newHighlight);
+
+        if (_highlightTiles.ContainsKey(key))
+        {
+            Destroy(_highlightTiles[key]);
+        }
+        else
+        {
+            _highlightTiles[key] = newHighlight;
+        }
+    }
+
+    public void ClearHighlightTileAt(int x, int y)
+    {
+        PosKey key = new PosKey(x,y);
+
+        if (_highlightTiles.ContainsKey(key))
+        {
+            Destroy(_highlightTiles[key]);
+            _highlightTiles.Remove(key);
+        }
     }
 
     public void ClearHighlightTiles()
     {
-        foreach (var tile in _highlightTile)
+        foreach (var tile in _highlightTiles)
         {
-            Destroy(tile);
+            Destroy(tile.Value);
         }
+        _highlightTiles.Clear();
     }
 
     public void EnterBattlePhase()
