@@ -35,7 +35,6 @@ public class GoldTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
             _gameBoard.ClearHighlightTileAt(X, Y);
-            Debug.Log("cleared at " + X + Y);
             EndTime = Time.time;
             if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {

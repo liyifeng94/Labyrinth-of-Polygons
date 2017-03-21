@@ -331,80 +331,87 @@ public class TileEventHandler : MonoBehaviour
     void OnMouseDown()
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
-        //if(_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
-        if(true)
+        _gameBoard.ClearHighlightTiles();
+        if (_towerExist)
         {
-            _gameBoard.ClearHighlightTiles();
-            _gameBoard.HighlightTileAt(GridX, GridY, new Color(0f,1f,0.2f,0.5f));
-            if (_towerExist)
+            _sellButton.SellOptButton.interactable = true;
+            if (_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
             {
-                _sellButton.SellOptButton.interactable = true;
-                if (_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
-                {
-                    _sellButton.SellOptButton.interactable = false;
-                }
-                //Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
-                _sellButton.setTowerEventHandler(this);
-                _upgradeButton.setTowerEventHandler(this);
-                _repairButton.setTowerEventHandler(this);
-                _yesButton.setTileEventHandler(this);
-                _towerOperationPanel.Appear();
-                int[] towerInfo = new int[11];
-                // highlight attack range and if there is enough money to upgrade or repair
-                if (0 == _currentTowerType)
-                {
-                    DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo));
-                    if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
-                    if (_tankTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
-                }
-                if (1 == _currentTowerType)
-                {
-                    DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo));
-                    if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
-                    if (_rangeTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
-                }
-                if (2 == _currentTowerType)
-                {
-                    DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo));
-                    if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
-                    if (_slowTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
-                }
-                if (3 == _currentTowerType)
-                {
-                    DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo));
-                    if (_healTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
-                    if (_healTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
-                }
-                if (4 == _currentTowerType)
-                {
-                    DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo));
-                    if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
-                    if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
-                }
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                _towerInfoPanel.SetTowerInfo(towerInfo);
-                _towerInfoPanel.Appear();
-                _towerBuildPanel.DisAppear();
-                _buildCheckPanel.DisAppear();
-                _notificationPanel.DisAppear();
+                _sellButton.SellOptButton.interactable = false;
             }
-            else
+            //Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
+            _sellButton.setTowerEventHandler(this);
+            _upgradeButton.setTowerEventHandler(this);
+            _repairButton.setTowerEventHandler(this);
+            _yesButton.setTileEventHandler(this);
+            _towerOperationPanel.Appear();
+            int[] towerInfo = new int[11];
+            int[] upgradedTowerInfo = new int[11];
+            // highlight attack range and if there is enough money to upgrade or repair
+            if (0 == _currentTowerType)
             {
-                _tankTowerButton.setTowerEventHandler(this);
-                _rangeTowerButton.setTowerEventHandler(this);
-                _slowTowerButton.setTowerEventHandler(this);
-                _healTowerButton.setTowerEventHandler(this);
-                _goldTowerButton.setTowerEventHandler(this);
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                _yesButton.setTileEventHandler(this);
-                _towerBuildPanel.Appear();
-                _towerOperationPanel.DisAppear();
-                _towerInfoPanel.DisAppear();
-                _buildCheckPanel.DisAppear();
-                _notificationPanel.DisAppear();
+                DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo));
+                _tankTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                if (_tankTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
+            if (1 == _currentTowerType)
+            {
+                DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo));
+                if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                if (_rangeTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+            }
+            if (2 == _currentTowerType)
+            {
+                DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo));
+                if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                if (_slowTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+            }
+            if (3 == _currentTowerType)
+            {
+                DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo));
+                if (_healTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                if (_healTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+            }
+            if (4 == _currentTowerType)
+            {
+                DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo));
+                if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
+                if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+            }
+            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            _towerInfoPanel.SetTowerInfo(towerInfo);
+            // set tower upgrade info
+            _towerInfoPanel.Appear();
+            _towerBuildPanel.DisAppear();
+            _buildCheckPanel.DisAppear();
+            _notificationPanel.DisAppear();
         }
-
+        else
+        {
+            _gameBoard.HighlightTileAt(GridX, GridY, new Color(0f, 1f, 0.2f, 0.5f));
+            if (GameBoard.GamePhase.BattlePhase == _gameBoard.CurrentGamePhase)
+            {
+                _gameBoard.ClearHighlightTiles();
+                _buildCheckPanel.DisAppear();
+                _towerInfoPanel.DisAppear();
+                _towerOperationPanel.DisAppear();
+                _notificationPanel.DisAppear();
+                return;
+            }
+            _tankTowerButton.setTowerEventHandler(this);
+            _rangeTowerButton.setTowerEventHandler(this);
+            _slowTowerButton.setTowerEventHandler(this);
+            _healTowerButton.setTowerEventHandler(this);
+            _goldTowerButton.setTowerEventHandler(this);
+            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            _yesButton.setTileEventHandler(this);
+            _towerBuildPanel.Appear();
+            _towerOperationPanel.DisAppear();
+            _towerInfoPanel.DisAppear();
+            _buildCheckPanel.DisAppear();
+            _notificationPanel.DisAppear();
+        }
 
     }
 

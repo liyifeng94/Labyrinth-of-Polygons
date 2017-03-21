@@ -83,13 +83,16 @@ MonoBehaviour:
   TowerAnimator: {fileID: 0}
   HitPoint: 70
   AttackRange: 2
-  AttackSpeed: 1
+  AttackSpeed: 2
   BuildCost: 15
   UpgradeCost: 12
   RepairCost: 6
   SellGain: 9
+  AttackDamage: 0
+  SlowPercent: 30
+  HealAmount: 0
+  GoldPerTenSec: 0
   Type: 2
-  SlowPercent: 10
 --- !u!212 &212000013834593418
 SpriteRenderer:
   m_ObjectHideFlags: 1
