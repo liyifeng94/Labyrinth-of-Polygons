@@ -20,7 +20,7 @@ public class LevelState
         FinalScore = (uint) Score;
         FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
         FinalScore *= (uint)Level;
-        FinalScore += (uint) Score * gameOptions.Obstacles;
+        FinalScore += (uint) Score * ((160 - gameOptions.Obstacles) / 2);
         FinalScore += (uint)Gold;
         return FinalScore;
     }
