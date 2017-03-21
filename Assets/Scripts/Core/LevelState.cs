@@ -7,7 +7,6 @@ public class LevelState
     public int Health = 0;
     public int Gold = 0;
     public int Level = 0;
-    public int Wave = 0;
     public uint FinalScore;
     public bool BossKilled = false;
 
