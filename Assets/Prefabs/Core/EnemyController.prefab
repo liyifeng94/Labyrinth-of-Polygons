@@ -16,10 +16,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012531483860}
-  - 114: {fileID: 114000010562447306}
+  - component: {fileID: 4000012531483860}
+  - component: {fileID: 114000010562447306}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -36,10 +36,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114000010562447306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,4 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 1000011485324616, guid: 58ff917d4085cac4e83fcd1865187446, type: 2}
+  - {fileID: 1000013705239418, guid: 8bb7990921d06cb4da15565c7d1cff70, type: 2}
+  - {fileID: 1000013431670856, guid: fdf980089d6a4d048abbc623ab67565f, type: 2}
+  - {fileID: 1000010066973348, guid: 8606b4081c55eec429828c2bb2c4af27, type: 2}
+  - {fileID: 1000012179781950, guid: 7ac28ceb8e65c4a44b7cf2e00be4efd5, type: 2}
