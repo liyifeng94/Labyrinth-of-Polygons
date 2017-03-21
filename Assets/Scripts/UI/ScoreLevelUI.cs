@@ -26,7 +26,7 @@ public class ScoreLevelUI : MonoBehaviour
 	    int score = 0;
 	    int health = 0;
 	    int level = 0;
-	    int obstacle = 0;
+	    uint obstacle = 0;
 	    string tiltetemp, scoretemp;
 
         /* should only be true in testing */
@@ -35,11 +35,11 @@ public class ScoreLevelUI : MonoBehaviour
 	        score = GameManager.Instance.CurrentLevelManager.GetScore();
 	        health = GameManager.Instance.CurrentLevelManager.GetHealth();
 	        level = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
-	        //obstacle = GameManager.Instance.LastLevelState.Level;
+	        obstacle = GameManager.Instance.CurrentGameOptions.Obstacles;
 	    }
 
-	    tiltetemp = SPACE + BASICSCORE + "\n";
-	    scoretemp = score.ToString() + SPACE + "\n";
+	    tiltetemp = BASICSCORE + "\n";
+	    scoretemp = "+" + score.ToString() + "\n";
 
         tiltetemp += HEALTH + "\n";
         scoretemp += health.ToString() + "\n";
