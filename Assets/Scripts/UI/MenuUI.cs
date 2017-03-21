@@ -19,6 +19,8 @@ public class MenuUI : MonoBehaviour
     {
         _gameManager = GameManager.Instance;
         NamePlaceHolder.text = _gameManager.PlayerName;
+        MainMenuPanel.SetActive(true);
+        StartOptionsPanel.SetActive(false);
         if (VersionText!=null)
             VersionText.text = Application.version;
     }
