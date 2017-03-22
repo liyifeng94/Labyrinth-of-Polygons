@@ -383,6 +383,7 @@ GameObject:
   - component: {fileID: 395487523}
   - component: {fileID: 395487522}
   - component: {fileID: 395487521}
+  - component: {fileID: 395487525}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -465,6 +466,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &395487525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 395487520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c993c583eec0fc2488fac583b08d5200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameManagerPrefab: {fileID: 0}
 --- !u!1 &562021976
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,7 +985,6 @@ GameObject:
   - component: {fileID: 978326259}
   - component: {fileID: 978326258}
   - component: {fileID: 978326257}
-  - component: {fileID: 978326260}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1038,8 +1050,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 978326260}
-        m_MethodName: LoadLevelByIndex
+      - m_Target: {fileID: 978326255}
+        m_MethodName: 
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1070,7 +1082,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 9a32a6cc2cb803443983d45d4a513506, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1084,18 +1096,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 978326255}
---- !u!114 &978326260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 978326255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1354f48d3893c4699e8a1dfcae6d8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VersionText: {fileID: 0}
 --- !u!1 &1597430675
 GameObject:
   m_ObjectHideFlags: 0
