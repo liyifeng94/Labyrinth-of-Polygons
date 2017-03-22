@@ -26,6 +26,9 @@ public class ClearScreenHandler : MonoBehaviour {
     {
         _buildCheckPanel.DisAppear();
         _towerInfoPanel.DisAppear();
+        _notificationPanel.DisAppear();
+        _towerBuildPanel.DisAppear();
+        _towerOperationPanel.DisAppear();
     }
 
 }

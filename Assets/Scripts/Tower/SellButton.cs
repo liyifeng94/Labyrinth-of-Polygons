@@ -9,7 +9,6 @@ public class SellButton : MonoBehaviour {
     [HideInInspector] public Button SellOptButton;
 
     private bool _reActive;
-    private bool _active;
     private LevelManager _levelManager;
     private TileEventHandler _tileEventHandler;
     private BuildCheckPanel _buildCheckPanel;
@@ -27,7 +26,6 @@ public class SellButton : MonoBehaviour {
     void Start()
     {
         _reActive = false;
-        _active = true;
         _levelManager = GameManager.Instance.CurrentLevelManager;
     }
 
@@ -36,8 +34,13 @@ public class SellButton : MonoBehaviour {
     {
         if (!_reActive && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
-            this.SellOptButton.interactable = false;
+            this.SellOptButton.interactable = true;
             _reActive = true;
+            return;
+        }
+        if (_levelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
+        {
+            _reActive = false;
         }
     }
 
