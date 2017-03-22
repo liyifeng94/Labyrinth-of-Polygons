@@ -9,6 +9,7 @@ public class SellButton : MonoBehaviour {
     [HideInInspector] public Button SellOptButton;
 
     private bool _reActive;
+    private bool _active;
     private LevelManager _levelManager;
     private TileEventHandler _tileEventHandler;
     private BuildCheckPanel _buildCheckPanel;
@@ -19,22 +20,23 @@ public class SellButton : MonoBehaviour {
     void Awake()
     {
         Instance = this;
+        SellOptButton = GetComponent<Button>();
     }
 
 
-    void start()
+    void Start()
     {
         _reActive = false;
-        SellOptButton = GetComponent<Button>();
+        _active = true;
         _levelManager = GameManager.Instance.CurrentLevelManager;
     }
 
 
-    void update()
+    void Update()
     {
-        if (! _reActive && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        if (!_reActive && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
         {
-
+            this.SellOptButton.interactable = false;
             _reActive = true;
         }
     }
