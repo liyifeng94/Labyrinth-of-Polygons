@@ -14,6 +14,7 @@ public class ClearScreenHandler : MonoBehaviour {
 
 
     void Start () {
+        _gameBoard = GameManager.Instance.CurrentLevelManager.GameBoardSystem;
         _buildCheckPanel = BuildCheckPanel.Instance;
         _towerInfoPanel = TowerInfoPanel.Instance;
         _notificationPanel = NotificationPanel.Instance;
@@ -22,13 +23,15 @@ public class ClearScreenHandler : MonoBehaviour {
     }
 
 
-    void Clicked()
+    void OnMouseDown()
     {
+        //Debug.Log("CSH: Clicked useless tile.");
         _buildCheckPanel.DisAppear();
         _towerInfoPanel.DisAppear();
         _notificationPanel.DisAppear();
         _towerBuildPanel.DisAppear();
         _towerOperationPanel.DisAppear();
+        _gameBoard.ClearHighlightTiles();
     }
 
 }
