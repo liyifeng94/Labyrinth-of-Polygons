@@ -40,6 +40,8 @@ public class SellButton : MonoBehaviour {
         //Debug.Log("SB: Sell button clicked");
         _tileEventHandler.SetOperation(8);
         _buildCheckPanel.Appear();
+        _towerInfoPanel.ResetTextColor();
+        _towerInfoPanel.SetOriginalowerInfo();
         _towerInfoPanel.Appear();
         _notificationPanel.SetNotificationType("Sell");
         _notificationPanel.Appear();

@@ -115,12 +115,12 @@ public class TankTower : Tower
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp;
-        info[4] = HitPoint / CurrentLevel * CurrentLevel;
-        info[5] = AttackDamage;
+        info[4] = HitPoint / CurrentLevel * (CurrentLevel+1);
+        info[5] = AttackDamage / CurrentLevel * (CurrentLevel + 1);
         info[6] = AttackSpeed;
-        info[7] = UpgradeCost / CurrentLevel * CurrentLevel;
-        info[8] = RepairCost / CurrentLevel * CurrentLevel;
-        info[9] = SellGain / CurrentLevel * CurrentLevel;
+        info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
+        info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
+        info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
         info[10] = BuildCost;
     }
 }

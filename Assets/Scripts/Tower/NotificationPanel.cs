@@ -71,14 +71,14 @@ public class NotificationPanel : MonoBehaviour {
                 _autoDisappearSet = true;
                 break;
             case "Block":
-                FixText.text = "You were tried to build a tower that blocks the last path.\nRequest refused.";
+                FixText.text = "Cannot block the last path.\nRequest refused.";
                 _autoDisappearSet = true;
                 break;
             case "Upgrade":
                 FixText.text = _type + _towerOperationReuqst;
                 break;
             case "UpgradeWhenDestroied":
-                FixText.text = "The selected tower is destroyed. You can only repair or sell it.\nRequest refused.";
+                FixText.text = "The selected tower is destroyed. Repair or sell it.\nRequest refused.";
                 _autoDisappearSet = true;
                 break;
             /*case "MaxLevel":
@@ -88,7 +88,7 @@ public class NotificationPanel : MonoBehaviour {
                 FixText.text = _type + _towerOperationReuqst;
                 break;
             case "RepairWithFullHp":
-                FixText.text = "You were tried to repair a full HP tower.\nRequest refused.";
+                FixText.text = "Cannot repair a full HP tower.\nRequest refused.";
                 _autoDisappearSet = true;
                 break;
             case "Remove":

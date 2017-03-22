@@ -44,6 +44,8 @@ public class RepairButton : MonoBehaviour {
         }
         _tileEventHandler.SetOperation(7);
         _buildCheckPanel.Appear();
+        _towerInfoPanel.ResetTextColor();
+        _towerInfoPanel.SetOriginalowerInfo();
         _towerInfoPanel.Appear();
         _notificationPanel.SetNotificationType("Repair");
         _notificationPanel.Appear();
