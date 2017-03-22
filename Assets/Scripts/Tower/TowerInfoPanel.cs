@@ -50,8 +50,20 @@ public class TowerInfoPanel : MonoBehaviour {
             case Tower.TowerType.Tank:
                 _tankTower.GetTowerInfo(info);
                 break;
+            case Tower.TowerType.Range:
+                _rangeTower.GetTowerInfo(info);
+                break;
+            case Tower.TowerType.Slow:
+                _slowTower.GetTowerInfo(info);
+                break;
+            case Tower.TowerType.Heal:
+                _healTower.GetTowerInfo(info);
+                break;
+            case Tower.TowerType.Gold:
+                _goldTower.GetTowerInfo(info);
+                break;
         }
-        SetTowerInfo(info);
+        UpdateTowerCurrentHp(info[3]);
     }
 
 
@@ -67,13 +79,38 @@ public class TowerInfoPanel : MonoBehaviour {
     }
 
 
-    public void SetTower(TankTower tower, Tower.TowerType type)
+    public void SetTankTower(TankTower tower)
     {
-        _type = type;
-        if (Tower.TowerType.Tank == type)
-        {
-            _tankTower = tower;
-        }
+        _type = Tower.TowerType.Tank;
+        _tankTower = tower;
+    }
+
+
+    public void SetRangeTower(RangeTower tower)
+    {
+        _type = Tower.TowerType.Range;
+        _rangeTower = tower;
+    }
+
+
+    public void SetSlowTower(SlowTower tower)
+    {
+        _type = Tower.TowerType.Slow;
+        _slowTower = tower;
+    }
+
+
+    public void SetHealTower(HealTower tower)
+    {
+        _type = Tower.TowerType.Heal;
+        _healTower = tower;
+    }
+
+
+    public void SetGoldTower(GoldTower tower)
+    {
+        _type = Tower.TowerType.Gold;
+        _goldTower = tower;
     }
 
 
@@ -149,7 +186,7 @@ public class TowerInfoPanel : MonoBehaviour {
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Level.text = "Lvl: " + _upgradeTowerInfo[2];
-        CurHp.text = "CurHP\n" + _upgradeTowerInfo[4];
+        //CurHp.text = "CurHP\n" + _upgradeTowerInfo[4];
         MaxHp.text = "MaxHP\n" + _upgradeTowerInfo[4];
         UCost.text = "UCost\n" + _upgradeTowerInfo[7] + "G";
         RCost.text = "RCost\n" + _upgradeTowerInfo[8] + "G";
@@ -186,6 +223,11 @@ public class TowerInfoPanel : MonoBehaviour {
         SGain.text = "SGain\n" + _towerInfo[9] + "G";
     }
 
+
+    public void UpdateTowerCurrentHp(int hp)
+    {
+        CurHp.text = "CurHP\n" + hp;
+    }
 
     public void SetUpgradingColor()
     {

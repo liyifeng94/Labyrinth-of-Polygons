@@ -353,36 +353,44 @@ public class TileEventHandler : MonoBehaviour
             {
                 DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo));
                 _tankTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
-                _towerInfoPanel.SetTower(_tankTowerPtr, _tankTowerPtr.Type);
+                _towerInfoPanel.SetTankTower(_tankTowerPtr);
                 if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_tankTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (1 == _currentTowerType)
             {
                 DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo));
+                _rangeTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                _towerInfoPanel.SetRangeTower(_rangeTowerPtr);
                 if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_rangeTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (2 == _currentTowerType)
             {
                 DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo));
+                _slowTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                _towerInfoPanel.SetSlowTower(_slowTowerPtr);
                 if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_slowTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (3 == _currentTowerType)
             {
                 DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo));
+                _healTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                _towerInfoPanel.SetHealTower(_healTowerPtr);
                 if (_healTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_healTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (4 == _currentTowerType)
             {
                 DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo));
+                _goldTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                _towerInfoPanel.SetGoldTower(_goldTowerPtr);
                 if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            //_towerInfoPanel.SetTowerInfo(towerInfo);
+            _towerInfoPanel.SetTowerInfo(towerInfo);
             _towerInfoPanel.SetUpgradedTowerInfo(upgradedTowerInfo);
             _towerInfoPanel.Appear();
             _towerBuildPanel.DisAppear();
