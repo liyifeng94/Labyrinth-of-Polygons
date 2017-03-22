@@ -33,7 +33,7 @@ public class ScoreLevelUI : MonoBehaviour
 	        score = GameManager.Instance.CurrentLevelManager.GetScore();
 	        health = GameManager.Instance.CurrentLevelManager.GetHealth();
 	        level = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
-	        //obstacle = GameManager.Instance.LastLevelState.ob;
+	        obstacle = GameManager.Instance.Obstacles;
 	    }
 
 	    titletemp = BASICSCORE + "\n";
