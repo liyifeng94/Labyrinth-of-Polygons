@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000011451386230}
   - component: {fileID: 212000013488366106}
   - component: {fileID: 61969284838357926}
+  - component: {fileID: 114110486746986788}
   m_Layer: 0
   m_Name: ObstaclesTile
   m_TagString: Untagged
@@ -55,6 +56,17 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.1, y: 1.1}
+--- !u!114 &114110486746986788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012335623424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed8f7c13d27fa741a2712d31aa5388a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212000013488366106
 SpriteRenderer:
   m_ObjectHideFlags: 1
