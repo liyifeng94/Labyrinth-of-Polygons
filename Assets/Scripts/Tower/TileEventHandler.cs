@@ -360,24 +360,32 @@ public class TileEventHandler : MonoBehaviour
             if (1 == _currentTowerType)
             {
                 DisplayAttackRange(_rangeTowerPtr.GetTowerInfo(towerInfo));
+                //_rangeTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                //_towerInfoPanel.SetTower(_rangeTowerPtr, _rangeTowerPtr.Type);
                 if (_rangeTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_rangeTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (2 == _currentTowerType)
             {
                 DisplayAttackRange(_slowTowerPtr.GetTowerInfo(towerInfo));
+                //_slowTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                //_towerInfoPanel.SetTower(_slowTowerPtr, _slowTowerPtr.Type);
                 if (_slowTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_slowTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (3 == _currentTowerType)
             {
                 DisplayAttackRange(_healTowerPtr.GetTowerInfo(towerInfo));
+                //_healTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                //_towerInfoPanel.SetTower(_healTowerPtr, _healTowerPtr.Type);
                 if (_healTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_healTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             if (4 == _currentTowerType)
             {
                 DisplayAttackRange(_goldTowerPtr.GetTowerInfo(towerInfo));
+                //_goldTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                //_towerInfoPanel.SetTower(_goldTowerPtr, _goldTowerPtr.Type);
                 if (_goldTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }

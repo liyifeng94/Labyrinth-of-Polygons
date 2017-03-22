@@ -20,7 +20,7 @@ public class TowerInfoPanel : MonoBehaviour {
     private int[] _towerInfo;
 
     private Tower.TowerType _type;
-    private TankTower _tankTower;
+    private Tower _tankTower;
     private RangeTower _rangeTower;
     private SlowTower _slowTower;
     private HealTower _healTower;
@@ -67,7 +67,7 @@ public class TowerInfoPanel : MonoBehaviour {
     }
 
 
-    public void SetTower(TankTower tower, Tower.TowerType type)
+    public void SetTower(Tower tower, Tower.TowerType type)
     {
         _type = type;
         if (Tower.TowerType.Tank == type)
