@@ -214,7 +214,6 @@ public class Enemy : MonoBehaviour
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.MakeBullet(transform.position.x,transform.position.y,tower.transform.position.x,tower.transform.position.y,Vector3.Distance(transform.position,tower.transform.position), tower, AttackDamage);
 
-        Debug.Log("enemy attacking");
         _towers.Clear();
         _start = Time.time;
 
@@ -222,11 +221,20 @@ public class Enemy : MonoBehaviour
 
     public Tower GetAttackTower()
     {
+        int i = 10;
+        Tower ret = null;
         foreach (var tower in _towers)
         {
-            if (!tower.IsDestory()) return tower;
+            int type = (int) tower.Type;
+            //if (type == 0) return tower;
+            Debug.Log("type: " +type);
+            if (!tower.IsDestory() && i>type)
+            {
+                ret = tower;
+                i = type;
+            }
         }
-        return null;
+        return ret;
     }
 
     public void GetDamaged(int damage)
