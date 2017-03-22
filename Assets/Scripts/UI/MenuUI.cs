@@ -21,8 +21,16 @@ public class MenuUI : MonoBehaviour
         NamePlaceHolder.text = _gameManager.PlayerName;
         MainMenuPanel.SetActive(true);
         StartOptionsPanel.SetActive(false);
-        if (VersionText!=null)
+
+        if (VersionText != null)
+        {
             VersionText.text = Application.version;
+#if UNITY_IOS
+            VersionText.text += " iOS not official supported.";
+#elif UNITY_ANDROID
+            VersionText.text += " Android";
+#endif
+        }
     }
 
     public void ChangeName()
