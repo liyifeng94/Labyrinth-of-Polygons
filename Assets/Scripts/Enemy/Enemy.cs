@@ -215,7 +215,6 @@ public class Enemy : MonoBehaviour
         bullet.MakeBullet(transform.position.x,transform.position.y,tower.transform.position.x,tower.transform.position.y,Vector3.Distance(transform.position,tower.transform.position), tower, AttackDamage);
 
         Debug.Log("enemy attacking");
-        tower.ReceiveAttack(AttackDamage);
         _towers.Clear();
         _start = Time.time;
 
