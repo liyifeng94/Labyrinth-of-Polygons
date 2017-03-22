@@ -31,7 +31,7 @@ using System.Linq;
     public int HealAmount;
     public int GoldPerTenSec;
 
-    public enum TowerType { Tank = 0, Range = 1, Slow = 2, Heal = 3, Gold = 4 }
+    public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
     public TowerType Type;
 
 
