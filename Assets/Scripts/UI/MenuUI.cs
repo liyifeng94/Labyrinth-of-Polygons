@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
@@ -21,7 +19,7 @@ public class MenuUI : MonoBehaviour
         NamePlaceHolder.text = _gameManager.PlayerName;
         MainMenuPanel.SetActive(true);
         StartOptionsPanel.SetActive(false);
-
+        UpdateObstacles();
         if (VersionText != null)
         {
             VersionText.text = Application.version;
