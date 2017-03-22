@@ -45,7 +45,11 @@ public class LevelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	    
+        if (_currentLevelState.Health <= 0)
+        {
+            _currentLevelState.CalculateFinalScore(_currentGameOptions);
+            ChangeLevel.LoadLevelByName("ScoreLevel");
+        }
 	}
 
     public void EnterBattePhase()
