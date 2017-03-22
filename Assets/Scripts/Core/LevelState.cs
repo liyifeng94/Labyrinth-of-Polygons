@@ -9,6 +9,7 @@ public class LevelState
     public int Level = 0;
     public uint FinalScore;
     public bool BossKilled = false;
+    public GameOptions LastGameOptions;
 
     //TODO: Gems
     //public Gems
@@ -17,6 +18,7 @@ public class LevelState
 
     public uint CalculateFinalScore(GameOptions gameOptions)
     {
+        LastGameOptions = gameOptions;
         FinalScore = (uint) Score;
         FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
         FinalScore *= (uint)Level;

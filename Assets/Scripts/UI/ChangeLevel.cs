@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 public class ChangeLevel : MonoBehaviour {
 
 
-    public void LoadLevelByIndex(int index)
+    public static void LoadLevelByIndex(int index)
     {
         SceneManager.LoadScene(index);
     }
 
-    public void LoadLevelByName(string scene)
+    public static void LoadLevelByName(string scene)
     {
         SceneManager.LoadScene(scene);
     }
