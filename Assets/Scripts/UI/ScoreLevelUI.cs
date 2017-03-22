@@ -35,7 +35,7 @@ public class ScoreLevelUI : MonoBehaviour
 	        score = GameManager.Instance.CurrentLevelManager.GetScore();
 	        health = GameManager.Instance.CurrentLevelManager.GetHealth();
 	        level = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
-	        obstacle = GameManager.Instance.CurrentGameOptions.Obstacles;
+	        //obstacle = GameManager.Instance.LastLevelState.ob;
 	    }
 
 	    tiltetemp = BASICSCORE + "\n";
