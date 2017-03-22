@@ -92,7 +92,7 @@ MonoBehaviour:
   SlowPercent: 0
   HealAmount: 0
   GoldPerTenSec: 0
-  Type: 1
+  Type: 3
 --- !u!212 &212000013834593418
 SpriteRenderer:
   m_ObjectHideFlags: 1
