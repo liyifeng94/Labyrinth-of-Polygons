@@ -45,6 +45,8 @@ public class UpgradeButton : MonoBehaviour {
         }
         _tileEventHandler.SetOperation(6);
         _buildCheckPanel.Appear();
+        _towerInfoPanel.SetUpgradingColor();
+        _towerInfoPanel.DisplayUpgradedInfo();
         _towerInfoPanel.Appear();
         /*if (_tileEventHandler.GetTowerScript().CheckMaxLevel())
         {

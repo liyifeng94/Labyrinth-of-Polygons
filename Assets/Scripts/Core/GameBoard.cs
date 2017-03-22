@@ -106,7 +106,7 @@ public class GameBoard : MonoBehaviour
             gameOptions.Width = GridWidth;
             gameOptions.Height = GridHeight;
             gameOptions.Entrances = GridEntrances;
-            gameOptions.Obstacles = GridObstacles;
+            gameOptions.Obstacles = _gmInstance.Obstacles;
             GameGridSystem = new GridSystem(gameOptions);
         }
         else

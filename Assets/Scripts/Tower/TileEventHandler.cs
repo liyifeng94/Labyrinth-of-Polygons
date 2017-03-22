@@ -332,6 +332,7 @@ public class TileEventHandler : MonoBehaviour
     {
         //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
         _gameBoard.ClearHighlightTiles();
+        _towerInfoPanel.ResetTextColor();
         if (_towerExist)
         {
             _sellButton.SellOptButton.interactable = true;
@@ -352,6 +353,7 @@ public class TileEventHandler : MonoBehaviour
             {
                 DisplayAttackRange(_tankTowerPtr.GetTowerInfo(towerInfo));
                 _tankTowerPtr.GetTowerUpgradedInfo(upgradedTowerInfo);
+                _towerInfoPanel.SetTower(_tankTowerPtr, _tankTowerPtr.Type);
                 if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_tankTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
@@ -380,8 +382,8 @@ public class TileEventHandler : MonoBehaviour
                 if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            _towerInfoPanel.SetTowerInfo(towerInfo);
-            // set tower upgrade info
+            //_towerInfoPanel.SetTowerInfo(towerInfo);
+            _towerInfoPanel.SetUpgradedTowerInfo(upgradedTowerInfo);
             _towerInfoPanel.Appear();
             _towerBuildPanel.DisAppear();
             _buildCheckPanel.DisAppear();

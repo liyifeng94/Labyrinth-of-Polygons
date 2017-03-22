@@ -72,7 +72,7 @@ public class PathFinding
     }
 
     /* return true if the (neigh) is an exit point */
-    private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from,int alt)
+    private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from, int alt)
     {
         // Debug.Log("pathfinding triggered");
         if (neigh.IsExit)
@@ -181,8 +181,6 @@ public class PathFinding
                 if (_CheckNeighbour(neigh, u, alt)) break;
             }
         }
-
-        // List<GridSystem.Cell> path = new List<GridSystem.Cell>();
 
         /* if the program hits here, the neigh now should be one of exit points.
          * push it to the path, and tracking backwards to the start points       */

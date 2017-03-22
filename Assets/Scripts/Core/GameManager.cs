@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
 public class GameManager : MonoBehaviour
 {
-    private PathFinding _pathingFinder;
-
     public static GameManager Instance;
 
     [HideInInspector]
@@ -20,11 +17,16 @@ public class GameManager : MonoBehaviour
 
     private string _highScoreBoardPath;
 
+    private PathFinding _pathingFinder;
+
+    public string PlayerName = "player";
+
     public HighScoreBoard LocalHighScoreBoard { get; private set; }
 
     //Returns the last game state. If no games had finished, it returns null
     public LevelState LastLevelState { get; private set; }
 
+    public uint Obstacles;
     public GameOptions CurrentGameOptions;
 
     // Use this for initialization
@@ -39,7 +41,6 @@ public class GameManager : MonoBehaviour
 #else
             _highScoreBoardPath = Application.persistentDataPath + "/" + HighScoreBoardPath;
 #endif
-            Debug.LogWarning("HighScoreBoardPath: "  + _highScoreBoardPath);
             LoadHighScoreBoard();
             CurrentGameOptions = null;
             LastLevelState = null;

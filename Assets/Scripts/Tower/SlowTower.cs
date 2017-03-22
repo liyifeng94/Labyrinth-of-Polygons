@@ -106,4 +106,20 @@ public class SlowTower : Tower
         info[10] = BuildCost;
         return info[0];
     }
+
+
+    public new void GetTowerUpgradedInfo(int[] info)
+    {
+        info[0] = AttackRange;
+        info[1] = (int)Type;
+        info[2] = CurrentLevel + 1;
+        info[3] = CurrentHp;
+        info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
+        info[5] = SlowPercent;
+        info[6] = AttackSpeed;
+        info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
+        info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
+        info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
+        info[10] = BuildCost;
+    }
 }
