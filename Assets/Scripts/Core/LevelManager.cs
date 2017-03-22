@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour
         if (_currentLevelState.Health <= 0)
         {
             _currentLevelState.CalculateFinalScore(_currentGameOptions);
-            ChangeLevel.LoadLevelByName("ScoreLevel");
+            ChangeLevel.LoadLevel("ScoreLevel");
         }
 	}
 
