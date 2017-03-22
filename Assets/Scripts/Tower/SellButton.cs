@@ -8,8 +8,9 @@ public class SellButton : MonoBehaviour {
 
     [HideInInspector] public Button SellOptButton;
 
+    private bool _reActive;
+    private LevelManager _levelManager;
     private TileEventHandler _tileEventHandler;
-
     private BuildCheckPanel _buildCheckPanel;
     private TowerInfoPanel _towerInfoPanel;
     private NotificationPanel _notificationPanel;
@@ -18,9 +19,26 @@ public class SellButton : MonoBehaviour {
     void Awake()
     {
         Instance = this;
-        SellOptButton = GetComponent<Button>();
     }
-    
+
+
+    void start()
+    {
+        _reActive = false;
+        SellOptButton = GetComponent<Button>();
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+    }
+
+
+    void update()
+    {
+        if (! _reActive && _levelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase)
+        {
+
+            _reActive = true;
+        }
+    }
+
 
     public void setTowerEventHandler(TileEventHandler teh)
     {

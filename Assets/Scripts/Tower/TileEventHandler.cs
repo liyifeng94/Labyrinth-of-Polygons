@@ -233,7 +233,7 @@ public class TileEventHandler : MonoBehaviour
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
                     {
-                        Debug.Log("TEH: towerGameObject is null");
+                        //Debug.Log("TEH: towerGameObject is null");
                     }
                     else
                     {
@@ -433,11 +433,31 @@ public class TileEventHandler : MonoBehaviour
         _towerExist = false;
         if (! blockCase) // there is money refund for the non-blockCase
         {
-            if (0 == _currentTowerType) { _levelManager.AddGold(_tankTowerPtr.SellGain); }
-            if (1 == _currentTowerType) { _levelManager.AddGold(_rangeTowerPtr.SellGain); }
-            if (2 == _currentTowerType) { _levelManager.AddGold(_slowTowerPtr.SellGain); }
-            if (3 == _currentTowerType) { _levelManager.AddGold(_healTowerPtr.SellGain); }
-            if (4 == _currentTowerType) { _levelManager.AddGold(_goldTowerPtr.SellGain); }
+            if (0 == _currentTowerType)
+            {
+                _levelManager.AddGold(_tankTowerPtr.SellGain);
+                _gameBoard.RemoveTower(_tankTowerPtr);
+            }
+            if (1 == _currentTowerType)
+            {
+                _levelManager.AddGold(_rangeTowerPtr.SellGain);
+                _gameBoard.RemoveTower(_rangeTowerPtr);
+            }
+            if (2 == _currentTowerType)
+            {
+                _levelManager.AddGold(_slowTowerPtr.SellGain);
+                _gameBoard.RemoveTower(_slowTowerPtr);
+            }
+            if (3 == _currentTowerType)
+            {
+                _levelManager.AddGold(_healTowerPtr.SellGain);
+                _gameBoard.RemoveTower(_healTowerPtr);
+            }
+            if (4 == _currentTowerType)
+            {
+                _levelManager.AddGold(_goldTowerPtr.SellGain);
+                _gameBoard.RemoveTower(_goldTowerPtr);
+            }
             // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             _towerController.RemoveTileEventHandler(this);
         }
