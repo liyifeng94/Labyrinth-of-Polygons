@@ -16,8 +16,6 @@ public class ScoreLevelUI : MonoBehaviour
     private string BOSSKILLED = "BossKilled: ";
     private string FINALSCORE = "Final score: ";
 
-    private string SPACE = "  ";
-
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,7 +25,7 @@ public class ScoreLevelUI : MonoBehaviour
 	    int health = 0;
 	    int level = 0;
 	    uint obstacle = 0;
-	    string tiltetemp, scoretemp;
+	    string titletemp, scoretemp;
 
         /* should only be true in testing */
         if (GameManager.Instance != null)
@@ -38,22 +36,28 @@ public class ScoreLevelUI : MonoBehaviour
 	        //obstacle = GameManager.Instance.LastLevelState.ob;
 	    }
 
-	    tiltetemp = BASICSCORE + "\n";
+	    titletemp = BASICSCORE + "\n";
 	    scoretemp = "+" + score.ToString() + "\n";
 
-        tiltetemp += HEALTH + "\n";
+        titletemp += HEALTH + "\n";
         scoretemp += health.ToString() + "\n";
 
-        tiltetemp += LEVEL + "\n";
+        titletemp += LEVEL + "\n";
         scoretemp += level.ToString() + "\n";
 
-        tiltetemp += OBSTACLES + "\n";
+        titletemp += OBSTACLES + "\n";
         scoretemp += obstacle.ToString() + "\n";
 
-        tiltetemp += BOSSKILLED + "\n";
+        titletemp += BOSSKILLED + "\n";
         scoretemp += "yes" + "\n";
 
-        TitleText.text = tiltetemp;
+	    titletemp += "\n";
+	    scoretemp += "\n";
+
+	    titletemp += FINALSCORE + "\n";
+	    scoretemp += "0 \n";
+
+        TitleText.text = titletemp;
 	    ScoreText.text = scoretemp;
 	}
 	
