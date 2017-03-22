@@ -58,8 +58,9 @@ MonoBehaviour:
   EndY: 0
   SpeedX: 0
   SpeedY: 0
-  length: 0
-  speed: 2
+  Length: 0
+  Speed: 0.05
+  Damage: 0
 --- !u!212 &212128276194629848
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -90,7 +91,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 8c73ffd4d9f9bf546a6486e4911e1101, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
