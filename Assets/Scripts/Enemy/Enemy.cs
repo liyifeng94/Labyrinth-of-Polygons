@@ -114,8 +114,20 @@ public class Enemy : MonoBehaviour
     private void EnemyMove()
     {
         Vector3 position = transform.position;
+        float temp = Speed * Time.deltaTime;
+        if (_distance + temp >= 1)
+        {
+            temp = 1 - _distance;
+        }
+        _distance += temp;
+        if (Dir == Direction.Right) position.x += temp;
+        if (Dir == Direction.Left) position.x -= temp;
+        if (Dir == Direction.Up) position.y += temp;
+        if (Dir == Direction.Down) position.y -= temp;
+
+        transform.position = position;
         if ((((_pos == 0 || _pos + 1 == _path.Count) && _distance > 0.5) ||
-            _distance > 1) && _pos<_cells.Count-1)
+            _distance >= 1) && _pos<_cells.Count-1)
         {
             _pos++;
             GridX = _cells[_pos].X;
@@ -129,19 +141,11 @@ public class Enemy : MonoBehaviour
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
-            position.x = _path[_pos].Position.x;
-            position.y = _path[_pos].Position.y;
-            transform.position = position;
+            //position.x = _path[_pos].Position.x;
+            //position.y = _path[_pos].Position.y;
+            //transform.position = position;
 
         }
-        float temp = Speed * Time.deltaTime;
-        _distance += temp;
-        if (Dir == Direction.Right) position.x += temp;
-        if (Dir == Direction.Left) position.x -= temp;
-        if (Dir == Direction.Up) position.y += temp;
-        if (Dir == Direction.Down) position.y -= temp;
-
-        transform.position = position;
     }
 
 
