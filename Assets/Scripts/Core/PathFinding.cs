@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.Rendering;
 
 public class PathFinding
 {
-    
+
     GridSystem.Grid grid; // get through game manager
     private GridSystem.Cell[,] prev; /* for every cell at (x,y), which cell is the previous cell in the shortest path */
     private int[,] dist; /* the distance between every cell and entrance */
@@ -58,13 +60,12 @@ public class PathFinding
             ret = grid.GetCellAt(t.X, t.Y);
         }
 
-        /* if every cell has a distance == INFINITE, it means there are no available paths */
+        /* if every cell has a distance == INFINITE, 
+         * it means there are no available paths  */
         if (min == int.MaxValue)
         {
             return false;
         }
-
-        // if (ret == null) return false;
 
         u = ret;
         _queue.Remove(ret);
@@ -74,7 +75,6 @@ public class PathFinding
     /* return true if the (neigh) is an exit point */
     private bool _CheckNeighbour(GridSystem.Cell neigh, GridSystem.Cell from, int alt)
     {
-        // Debug.Log("pathfinding triggered");
         if (neigh.IsExit)
         {
             dist[neigh.X, neigh.Y] = alt;
@@ -96,20 +96,40 @@ public class PathFinding
     public List<GridSystem.Cell> SearchFlying(int x, int y)
     {
         var path = ((List<GridSystem.Cell>)_initialpath[x]);
-        if (path.Count == 0)
-        {
-            path = Search(x, y);
-            _initialpath[x] = path;
-        }
+        if (path.Count != 0) return path;
+        path = Search(x, y);
+        _initialpath[x] = path;
+        if (((List<GridSystem.Cell>) _hashpath[x]).Count == 0)
+            _hashpath[x] = path;
         return path;
     }
 
-    private void RefreshCache(int x, List<GridSystem.Cell> path)
+    public List<GridSystem.Cell> SearchCache(int x, int y)
+    {
+        var path = ((List<GridSystem.Cell>)_hashpath[x]);
+        if (path.Count > 0)
+        {
+            var modified = path.Any(e => e.IsBlocked);
+            if (!modified) return path;
+        }
+        path = Search(x, y);
+        _hashpath[x] = path;
+        return path;
+    }
+
+    public void ResetPathCache()
+    {
+        foreach (var entry in grid.Entrances)
+        {
+            _hashpath[entry] = new List<GridSystem.Cell>();
+        }
+    }
+
+    private void RefreshCache()
     {
         _queue = new List<GridSystem.Cell>();
         FillMax(dist, _queue);
         prev = new GridSystem.Cell[grid.Width, grid.Height];
-        _hashpath[x] = path;
     }
 
     /* argument: (x): int. As the x-coordinate of the starting point, and
@@ -119,24 +139,8 @@ public class PathFinding
      *           if there are no available path, the list should be EMPTY!    */
     public List<GridSystem.Cell> Search(int x, int y)
     {
-        var path = ((List<GridSystem.Cell>) _hashpath[x]);
-        if (path.Count > 0)
-        {
-            bool modified = false;
-            foreach (var e in path)
-            {
-                if (e.IsBlocked)
-                {
-                    modified = true;
-                    path = new List<GridSystem.Cell>();
-                    break;
-                }
-            }
-            if (!modified)
-                return path;
-        }
-        
-        var u = new GridSystem.Cell(0,0);
+        var path = new List<GridSystem.Cell>();
+        var u = new GridSystem.Cell(0, 0);
         var neigh = new GridSystem.Cell(0, 0);
         dist[x, y] = 0;
 
@@ -148,7 +152,7 @@ public class PathFinding
                pathfinding fail.                             */
             if (!GetNextCell(ref u))
             {
-                RefreshCache(x, path);
+                RefreshCache();
                 return path;
             }
 
@@ -191,8 +195,7 @@ public class PathFinding
             path.Add(neigh);
         }
         path.Reverse();
-        RefreshCache(x, path);
-
+        RefreshCache();
         return path;
     }
 }
