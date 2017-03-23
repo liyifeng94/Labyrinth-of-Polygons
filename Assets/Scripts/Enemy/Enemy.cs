@@ -117,7 +117,7 @@ public class Enemy : MonoBehaviour
         float temp = Speed * Time.deltaTime;
         if (_distance + temp >= 1)
         {
-            temp = 1 - _distance;
+           // temp = 1 - _distance;
         }
         _distance += temp;
         if (Dir == Direction.Right) position.x += temp;
@@ -141,9 +141,9 @@ public class Enemy : MonoBehaviour
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
-            //position.x = _path[_pos].Position.x;
+            position.x = _path[_pos].Position.x;
             //position.y = _path[_pos].Position.y;
-            //transform.position = position;
+            transform.position = position;
 
         }
     }
