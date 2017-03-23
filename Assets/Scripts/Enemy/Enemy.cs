@@ -233,7 +233,6 @@ public class Enemy : MonoBehaviour
         foreach (var tower in _towers)
         {
             int type = (int) tower.Type;
-            if (type == 0) return tower;
             if (!tower.IsDestory() && i>type)
             {
                 ret = tower;
