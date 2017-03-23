@@ -15,6 +15,8 @@ public class GameBoard : MonoBehaviour
 
     private GameManager _gmInstance;
 
+    private LevelState _currentLevelState;
+
     public GridSystem GameGridSystem { get; private set; }
 
 
@@ -90,7 +92,7 @@ public class GameBoard : MonoBehaviour
 
     }
 
-    public GameOptions GameBoardSetup(GameOptions gameOptions)
+    public GameOptions GameBoardSetup(GameOptions gameOptions, LevelState currentLevelState)
     {
         _gmInstance = GameManager.Instance;
         _levelManager = _gmInstance.CurrentLevelManager;
@@ -116,6 +118,7 @@ public class GameBoard : MonoBehaviour
         
 
         CreateBoardTiles();
+        _currentLevelState = currentLevelState;
         return gameOptions;
     }
 
@@ -235,18 +238,37 @@ public class GameBoard : MonoBehaviour
 
     public void AddEnemy(Enemy enemyPtr)
     {
-        //TODO: addEnemy
         _enemiesHolder.Add(enemyPtr);
     }
 
     public void RemoveEnemy(Enemy enemyPtr)
     {
         _levelManager.TowerController.RemoveEnemy(enemyPtr);
+        Enemy.Type type = enemyPtr.EnemyType;
+        switch (type)
+        {
+            case Enemy.Type.Normal:
+                ++_currentLevelState.NormalKilled;
+                break;
+            case Enemy.Type.Attacking:
+                ++_currentLevelState.AttackKilled;
+                break;
+            case Enemy.Type.Fast:
+                ++_currentLevelState.FastKilled;
+                break;
+            case Enemy.Type.Flying:
+                ++_currentLevelState.FlyingKilled;
+                break;
+            case Enemy.Type.Boss:
+                ++_currentLevelState.BossKilled;
+                break;
+        }
         _enemiesHolder.Remove(enemyPtr);
     }
 
     public void EnemyReachedExit(Enemy enemyPtr)
     {
+        _levelManager.TowerController.RemoveEnemy(enemyPtr);
         _enemiesHolder.Remove(enemyPtr);
         _levelManager.RemoveHealth(enemyPtr.Damage);
     }

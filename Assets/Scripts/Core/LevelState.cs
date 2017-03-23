@@ -8,6 +8,10 @@ public class LevelState
     public int Gold = 0;
     public int Level = 0;
     public uint FinalScore = 0;
+    public uint NormalKilled = 0;
+    public uint AttackKilled = 0;
+    public uint FlyingKilled = 0;
+    public uint FastKilled = 0;
     public uint BossKilled = 0;
     public GameOptions LastGameOptions;
 
