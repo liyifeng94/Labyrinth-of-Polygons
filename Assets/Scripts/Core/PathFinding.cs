@@ -137,7 +137,7 @@ public class PathFinding
      * return: List<GridSystem.Cell>: the list contains all cells on the path 
      *           from the starting point to the closest exit point; However,
      *           if there are no available path, the list should be EMPTY!    */
-    public List<GridSystem.Cell> Search(int x, int y)
+    private List<GridSystem.Cell> Search(int x, int y)
     {
         var path = new List<GridSystem.Cell>();
         var u = new GridSystem.Cell(0, 0);
