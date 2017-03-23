@@ -12,6 +12,7 @@ public class LevelUI : MonoBehaviour
 
     public GameObject BuildingPhasePanel;
     public GameObject BattlePhasePanel;
+    public GameObject QuitPanel;
 
     private LevelManager _levelManager;
 
@@ -20,7 +21,10 @@ public class LevelUI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    _levelManager = GameManager.Instance.CurrentLevelManager;
+        BuildingPhasePanel.SetActive(true);
+        BattlePhasePanel.SetActive(false);
+        QuitPanel.SetActive(false);
+        _levelManager = GameManager.Instance.CurrentLevelManager;
 	    ScoreCount.text = "";
 	    HealthCount.text = "";
 	    GoldCount.text = "";
@@ -63,5 +67,20 @@ public class LevelUI : MonoBehaviour
         _levelManager.EnterBattePhase();
         BuildingPhasePanel.SetActive(false);
         BattlePhasePanel.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        _levelManager.QuitGame();
+    }
+
+    public void QuitPopup()
+    {
+        QuitPanel.SetActive(true);
+    }
+
+    public void QuitCancelled()
+    {
+        QuitPanel.SetActive(false);
     }
 }
