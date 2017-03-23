@@ -86,6 +86,11 @@ public class GameManager : MonoBehaviour
         _pathingFinder = new PathFinding(gameGrid);
     }
 
+    public void ResetPathCache()
+    {
+        _pathingFinder.ResetPathCache();
+    }
+
     void LoadHighScoreBoard()
     {
         LocalHighScoreBoard = null;
