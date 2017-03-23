@@ -216,7 +216,11 @@ public class Enemy : MonoBehaviour
         if (AttackDamage <= 0 || _end - _start < _attackSpeed) return;
 
         Tower tower = GetAttackTower();
-        if (tower == null) return;
+        if (tower == null)
+        {
+            _towers.Clear();
+            return;
+        }
         GameObject bulletObj = Instantiate(Bullets[0], transform.position, Quaternion.identity) as GameObject;
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.MakeBullet(transform.position.x,transform.position.y,tower.transform.position.x,tower.transform.position.y,Vector3.Distance(transform.position,tower.transform.position), tower, AttackDamage);
