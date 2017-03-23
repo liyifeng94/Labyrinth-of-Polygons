@@ -293,7 +293,7 @@ public class GameBoard : MonoBehaviour
     public void EnterBattlePhase()
     {
         CurrentGamePhase = GamePhase.BattlePhase;
-        
+        _gmInstance.ResetPathCache();
     }
 
     public void EnterBuildingPhase()
