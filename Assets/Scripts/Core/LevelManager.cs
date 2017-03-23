@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
 	    _currentLevelState.Health = StartingHealth;
 
         _currentGameOptions = _gameManagerInstance.StartGameLevel(this);
-        _currentGameOptions = GameBoardSystem.GameBoardSetup(_currentGameOptions);
+        _currentGameOptions = GameBoardSystem.GameBoardSetup(_currentGameOptions, _currentLevelState);
 
         GameObject towerControllerGameObject = Instantiate(TowerControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(towerControllerGameObject != null, "towerControllerGameObject != null");
@@ -67,13 +67,6 @@ public class LevelManager : MonoBehaviour
     public GameBoard.GamePhase CurrentGamePhase()
     {
         return GameBoardSystem.CurrentGamePhase;
-    }
-
-    //Adds the score value of the enemy
-    public void DestoryEnemy(Enemy enemyPtr)
-    {
-        GameBoardSystem.RemoveEnemy(enemyPtr);
-        //TODO: add the score value of the enemy
     }
 
     public int GetGold()
