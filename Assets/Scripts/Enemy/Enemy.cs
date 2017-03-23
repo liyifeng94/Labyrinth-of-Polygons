@@ -99,7 +99,8 @@ public class Enemy : MonoBehaviour
     void ReachEnd()
     {
         _gameBoard.EnemyReachedExit(this);
-        Die();
+        _enemyController.RemoveEnemy(this);
+        Destroy(gameObject);
     }
 
     //Called every frame
@@ -173,7 +174,7 @@ public class Enemy : MonoBehaviour
                 Speed = 2;
                 Score = 30;
                 _attackSpeed = 1.0f;
-                AttackDamage = 3;
+                AttackDamage = 3 + currentLevel;
                 break;
             case Type.Fast:
                 Hp = 3 + currentLevel;
@@ -188,10 +189,12 @@ public class Enemy : MonoBehaviour
                 Score = 40;
                 break;
             case Type.Boss:
-                Hp = 50;
-                AttackRange = 0;
+                Hp = 200 + 10 * currentLevel;
+                AttackRange = 4;
                 Speed = 1;
                 Score = 100;
+                _attackSpeed = 0.5f;
+                AttackDamage = 5 + 3 * currentLevel;
                 break;
         }
     }
@@ -210,7 +213,7 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         _end = Time.time;
-        if (EnemyType != Type.Attacking || _end - _start < _attackSpeed) return;
+        if (AttackDamage <= 0 || _end - _start < _attackSpeed) return;
 
         Tower tower = GetAttackTower();
         if (tower == null) return;
@@ -253,6 +256,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        _gameBoard.RemoveEnemy(this);
         _enemyController.RemoveEnemy(this);
         Destroy(gameObject);
     }
