@@ -119,9 +119,9 @@ public class PathFinding
 
     public void ResetPathCache()
     {
-        foreach (var entry in grid.Entrances)
+        for (int i = 0; i < grid.Entrances.Count; ++i)
         {
-            _hashpath[entry] = new List<GridSystem.Cell>();
+            _hashpath[grid.Entrances[i].X] = new List<GridSystem.Cell>();
         }
     }
 
