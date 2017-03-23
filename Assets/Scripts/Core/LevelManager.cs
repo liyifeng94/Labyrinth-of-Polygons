@@ -47,8 +47,7 @@ public class LevelManager : MonoBehaviour
     {
         if (_currentLevelState.Health <= 0)
         {
-            _currentLevelState.CalculateFinalScore(_currentGameOptions);
-            ChangeLevel.LoadLevel("ScoreLevel");
+            QuitGame();
         }
 	}
 
@@ -122,10 +121,18 @@ public class LevelManager : MonoBehaviour
         return _currentLevelState.Level;
     }
 
+    public void QuitGame()
+    {
+        _currentLevelState.CalculateFinalScore(_currentGameOptions);
+        ChangeLevel.LoadLevel("ScoreLevel");
+    }
+
     void OnDestory()
     {
         EndGame();
     }
+
+
 
     public void EndGame()
     {
