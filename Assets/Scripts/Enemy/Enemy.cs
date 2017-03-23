@@ -114,8 +114,20 @@ public class Enemy : MonoBehaviour
     private void EnemyMove()
     {
         Vector3 position = transform.position;
+        float temp = Speed * Time.deltaTime;
+        if (_distance + temp >= 1)
+        {
+            temp = 1 - _distance;
+        }
+        _distance += temp;
+        if (Dir == Direction.Right) position.x += temp;
+        if (Dir == Direction.Left) position.x -= temp;
+        if (Dir == Direction.Up) position.y += temp;
+        if (Dir == Direction.Down) position.y -= temp;
+
+        transform.position = position;
         if ((((_pos == 0 || _pos + 1 == _path.Count) && _distance > 0.5) ||
-            _distance > 1) && _pos<_cells.Count-1)
+            _distance >= 1) && _pos<_cells.Count-1)
         {
             _pos++;
             GridX = _cells[_pos].X;
@@ -129,19 +141,11 @@ public class Enemy : MonoBehaviour
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
-            position.x = _path[_pos].Position.x;
-            position.y = _path[_pos].Position.y;
-            transform.position = position;
+            //position.x = _path[_pos].Position.x;
+            //position.y = _path[_pos].Position.y;
+            //transform.position = position;
 
         }
-        float temp = Speed * Time.deltaTime;
-        _distance += temp;
-        if (Dir == Direction.Right) position.x += temp;
-        if (Dir == Direction.Left) position.x -= temp;
-        if (Dir == Direction.Up) position.y += temp;
-        if (Dir == Direction.Down) position.y -= temp;
-
-        transform.position = position;
     }
 
 
@@ -214,7 +218,6 @@ public class Enemy : MonoBehaviour
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.MakeBullet(transform.position.x,transform.position.y,tower.transform.position.x,tower.transform.position.y,Vector3.Distance(transform.position,tower.transform.position), tower, AttackDamage);
 
-        Debug.Log("enemy attacking");
         _towers.Clear();
         _start = Time.time;
 
@@ -222,11 +225,19 @@ public class Enemy : MonoBehaviour
 
     public Tower GetAttackTower()
     {
+        int i = 10;
+        Tower ret = null;
         foreach (var tower in _towers)
         {
-            if (!tower.IsDestory()) return tower;
+            int type = (int) tower.Type;
+            if (type == 0) return tower;
+            if (!tower.IsDestory() && i>type)
+            {
+                ret = tower;
+                i = type;
+            }
         }
-        return null;
+        return ret;
     }
 
     public void GetDamaged(int damage)

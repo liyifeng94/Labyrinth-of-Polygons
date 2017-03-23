@@ -20,8 +20,7 @@ public class Bullet : MonoBehaviour
         SpeedY = (float) (Math.Sin(Math.Atan(Math.Abs(EndY - StartY) / Math.Abs(EndX - StartX))) * Speed);
         if (EX - SX < 0) SpeedX *= -1;
         if (EY - SY < 0) SpeedY *= -1;
-        Length = dis;
-        Debug.Log("SX: " + SX + " SY: " + SY + " EX: " + EX + " EY: " + EY + " length: " + Length);
+        Length = dis;;
         this.t = t;
         Damage = damage;
     }
