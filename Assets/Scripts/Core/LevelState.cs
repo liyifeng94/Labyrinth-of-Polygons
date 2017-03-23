@@ -8,7 +8,7 @@ public class LevelState
     public int Gold = 0;
     public int Level = 0;
     public uint FinalScore = 0;
-    public bool BossKilled = false;
+    public uint BossKilled = 0;
     public GameOptions LastGameOptions;
 
     //TODO: Gems
@@ -23,7 +23,7 @@ public class LevelState
         FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
         FinalScore *= (uint)Level;
         FinalScore += (uint) Score * ((100 - gameOptions.Obstacles) / 2);
-        FinalScore += (uint)Gold;
+        FinalScore += (uint)Gold; // delete startup money
         return FinalScore;
     }
 }

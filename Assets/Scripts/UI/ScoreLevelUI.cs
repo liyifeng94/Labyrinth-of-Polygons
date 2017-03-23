@@ -48,8 +48,8 @@ public class ScoreLevelUI : MonoBehaviour
         titletemp += OBSTACLES + "\n";
         scoretemp += obstacle.ToString() + "\n";
 
-        titletemp += BOSSKILLED + "\n";
-        scoretemp += "yes" + "\n";
+        titletemp += BOSSKILLED + "    *5" +  "\n";
+        scoretemp += "5 x 1000" + "\n";
 
 	    titletemp += "\n";
 	    scoretemp += "\n";
