@@ -29,8 +29,6 @@ public class EnemyController : MonoBehaviour
         if (wave == 4) temp = 3;
         if (wave % 5 == 0) temp = 4;
 
-        temp = 3;
-
         List<GridSystem.Cell> path;
         if ((Enemy.Type)temp != Enemy.Type.Flying) path =  GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         else path = GameManager.Instance.SearchFlyingPath(entrances[entrance].X, entrances[entrance].Y);
