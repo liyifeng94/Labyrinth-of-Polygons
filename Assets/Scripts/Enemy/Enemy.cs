@@ -141,6 +141,9 @@ public class Enemy : MonoBehaviour
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
+            //position.x = _path[_pos].Position.x;
+            //position.y = _path[_pos].Position.y;
+            //transform.position = position;
 
         }
     }
