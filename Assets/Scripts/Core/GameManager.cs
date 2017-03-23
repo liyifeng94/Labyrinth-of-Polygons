@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public LevelState LastLevelState { get; private set; }
 
     public uint Obstacles;
-    public GameOptions CurrentGameOptions;
+    public GameOptions DefaultGameOptions;
 
     // Use this for initialization
     void Awake()
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
             _highScoreBoardPath = Application.persistentDataPath + "/" + HighScoreBoardPath;
 #endif
             LoadHighScoreBoard();
-            CurrentGameOptions = null;
+            DefaultGameOptions = null;
             LastLevelState = null;
         }
         else
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     public GameOptions StartGameLevel(LevelManager currentLevelManager)
     {
         CurrentLevelManager = currentLevelManager;
-        return CurrentGameOptions;
+        return DefaultGameOptions;
     }
 
     public List<GridSystem.Cell> SearchPathFrom(int x, int y)
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
     public void SaveGameState(LevelState levelState)
     {
         LastLevelState = levelState;
-        LastLevelState.CalculateFinalScore(CurrentGameOptions);
+        LastLevelState.CalculateFinalScore(levelState.LastGameOptions);
     }
 
     public void AddScoreEntry(LevelState levelState, string playerName)
