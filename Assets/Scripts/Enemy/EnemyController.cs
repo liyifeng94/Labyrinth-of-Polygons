@@ -16,12 +16,18 @@ public class EnemyController : MonoBehaviour
     private float _start,_end;
     private Enemy.Type type = Enemy.Type.Normal;
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(int wave)
     {
         List<GridSystem.Cell> entrances = GameManager.Instance.CurrentLevelManager.GameBoardSystem.GameGridSystem.MainGameGrid.Entrances;
         int entrance = Random.Range(0, entrances.Count);
 
         int temp = Random.Range(0, 4);
+
+        if (wave == 1) temp = 0;
+        if (wave == 2) temp = 1;
+        if (wave == 3) temp = 2;
+        if (wave == 4) temp = 3;
+        if (wave % 5 == 0) temp = 4;
 
         temp = 3;
 
@@ -65,7 +71,7 @@ public class EnemyController : MonoBehaviour
 
     public void RemoveEnemy(Enemy ptr)
     {
-        _gameBoard.RemoveEnemy(ptr);
+        
         _enemies.Remove(ptr);
     }
 
@@ -96,7 +102,7 @@ public class EnemyController : MonoBehaviour
 	        _start = Time.time;
 	        _end = Time.time;
 	        _num--;
-	        SpawnEnemy();
+	        SpawnEnemy(_levelManager.GetCurrentLevel());
 	        if (_num == 0)
 	        {
 	            _spawn = false;
@@ -107,7 +113,10 @@ public class EnemyController : MonoBehaviour
 	    {
 	        _levelManager.EnterBuildingPhase();
 
-	        _num = 5;
+	        int level = _levelManager.GetCurrentLevel();
+	        if (level < 4) _num = 5;
+	        else if ((level + 1) % 5 == 0) _num = 1+level/5;
+            else _num = 5 + level;
 	        _build = false;
 	    }
     }
