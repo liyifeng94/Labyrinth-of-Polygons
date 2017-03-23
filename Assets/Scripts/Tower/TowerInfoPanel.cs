@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 public class TowerInfoPanel : MonoBehaviour {
 
@@ -9,8 +8,10 @@ public class TowerInfoPanel : MonoBehaviour {
     public Text Level;
     public Text CurHp;
     public Text MaxHp;
-    public Text Atk;
+    public Text AtkText;
+    public Text AtkNum;
     public Text Aspd;
+    public Text AspdNum;
     public Text UCost;
     public Text RCost;
     public Text SGain;
@@ -122,38 +123,48 @@ public class TowerInfoPanel : MonoBehaviour {
         {
             case 0:
                 Type.text = "Tank";
-                Atk.text = "ATK\n" + info[5];
-                Aspd.text = "ASpd\n" + info[6] + "/s";
-                break;
-            case 1:
-                Type.text = "Range";
-                Atk.text = "ATK\n" + info[5];
-                Aspd.text = "ASpd\n" + info[6] + "/s";
-                break;
-            case 2:
-                Type.text = "Slow";
-                Atk.text = "SRate\n" + info[5] + "%";
-                Aspd.text = "ASpd\n" + info[6] + "/s";
+                AtkText.text = "ATK";
+                AtkNum.text = "" + info[5];
+                Aspd.text = "ASpd";
+                AspdNum.text = "" + info[6] + "/s";
                 break;
             case 3:
-                Type.text = "Heal";
-                Atk.text = "HAmt\n" + info[5];
-                Aspd.text = "HSpd\n" + info[6] + "/s";
+                Type.text = "Range";
+                AtkText.text = "ATK";
+                AtkNum.text = "" + info[5];
+                Aspd.text = "ASpd";
+                AspdNum.text = "" + info[6] + "/s";
                 break;
             case 4:
+                Type.text = "Slow";
+                AtkText.text = "Slow";
+                AtkNum.text = "" + info[5] + "%";
+                Aspd.text = "ASpd";
+                AspdNum.text = "" + info[6] + "/s";
+                break;
+            case 1:
+                Type.text = "Heal";
+                AtkText.text = "Heal";
+                AtkNum.text = "" + info[5];
+                Aspd.text = "HSpd";
+                AspdNum.text = "" + info[6] + "/s";
+                break;
+            case 2:
                 Type.text = "Gold";
-                Atk.text = "GoldG\n" + info[5];
-                Aspd.text = "GSpd\n0." + info[6] + "/s";
+                AtkText.text = "Gold";
+                AtkNum.text = "" + info[5];
+                Aspd.text = "GSpd";
+                AspdNum.text = "" + info[6] + "/s";
                 break;
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
-        Level.text = "Lvl: " + info[2];
-        CurHp.text = "CurHP\n" + info[3];
-        MaxHp.text = "MaxHP\n" + info[4];
-        UCost.text = "UCost\n" + info[7] + "G";
-        RCost.text = "RCost\n" + info[8] + "G";
-        SGain.text = "SGain\n" + info[9] + "G";
-        BCost.text = "BCost\n" + info[10] + "G";
+        Level.text = "" + info[2];
+        CurHp.text = "" + info[3];
+        MaxHp.text = "" + info[4];
+        UCost.text = "" + info[7] + "G";
+        RCost.text = "" + info[8] + "G";
+        SGain.text = "" + info[9] + "G";
+        BCost.text = "" + info[10] + "G";
     }
 
 
@@ -169,28 +180,32 @@ public class TowerInfoPanel : MonoBehaviour {
         switch (_upgradeTowerInfo[1])
         {
             case 0:
-                Atk.text = "ATK\n" + _upgradeTowerInfo[5];
-                break;
-            case 1:
-                Atk.text = "ATK\n" + _upgradeTowerInfo[5];
-                break;
-            case 2:
-                Atk.text = "SRate\n" + _upgradeTowerInfo[5] + "%";
+                AtkText.text = "ATK";
+                AtkNum.text = "" + _upgradeTowerInfo[5];
                 break;
             case 3:
-                Atk.text = "HAmt\n" + _upgradeTowerInfo[5];
+                AtkText.text = "ATK";
+                AtkNum.text = "" + _upgradeTowerInfo[5];
                 break;
             case 4:
-                Atk.text = "GoldG\n" + _upgradeTowerInfo[5];
+                AtkText.text = "Slow";
+                AtkNum.text = "" + _upgradeTowerInfo[5] + "%";
+                break;
+            case 1:
+                AtkText.text = "Heal";
+                AtkNum.text = "" + _upgradeTowerInfo[5];
+                break;
+            case 2:
+                AtkText.text = "Gold";
+                AtkNum.text = "" + _upgradeTowerInfo[5];
                 break;
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
-        Level.text = "Lvl: " + _upgradeTowerInfo[2];
-        //CurHp.text = "CurHP\n" + _upgradeTowerInfo[4];
-        MaxHp.text = "MaxHP\n" + _upgradeTowerInfo[4];
-        UCost.text = "UCost\n" + _upgradeTowerInfo[7] + "G";
-        RCost.text = "RCost\n" + _upgradeTowerInfo[8] + "G";
-        SGain.text = "SGain\n" + _upgradeTowerInfo[9] + "G";
+        Level.text = "" + _upgradeTowerInfo[2];
+        MaxHp.text = "" + _upgradeTowerInfo[4];
+        UCost.text = "" + _upgradeTowerInfo[7] + "G";
+        RCost.text = "" + _upgradeTowerInfo[8] + "G";
+        SGain.text = "" + _upgradeTowerInfo[9] + "G";
     }
 
 
@@ -199,40 +214,44 @@ public class TowerInfoPanel : MonoBehaviour {
         switch (_towerInfo[1])
         {
             case 0:
-                Atk.text = "ATK\n" + _towerInfo[5];
-                break;
-            case 1:
-                Atk.text = "ATK\n" + _towerInfo[5];
-                break;
-            case 2:
-                Atk.text = "SRate\n" + _towerInfo[5] + "%";
+                AtkText.text = "ATK";
+                AtkNum.text = "" + _towerInfo[5];
                 break;
             case 3:
-                Atk.text = "HAmt\n" + _towerInfo[5];
+                AtkText.text = "ATK";
+                AtkNum.text = "" + _towerInfo[5];
                 break;
             case 4:
-                Atk.text = "GoldG\n" + _towerInfo[5];
+                AtkText.text = "Slow";
+                AtkNum.text = "" + _towerInfo[5] + "%";
+                break;
+            case 1:
+                AtkText.text = "Heal";
+                AtkNum.text = "" + _towerInfo[5];
+                break;
+            case 2:
+                AtkText.text = "Gold";
+                AtkNum.text = "" + _towerInfo[5];
                 break;
                 // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
-        Level.text = "Lvl: " + _towerInfo[2];
-        CurHp.text = "CurHP\n" + _towerInfo[3];
-        MaxHp.text = "MaxHP\n" + _towerInfo[4];
-        UCost.text = "UCost\n" + _towerInfo[7] + "G";
-        RCost.text = "RCost\n" + _towerInfo[8] + "G";
-        SGain.text = "SGain\n" + _towerInfo[9] + "G";
+        Level.text = "" + _towerInfo[2];
+        MaxHp.text = "" + _towerInfo[4];
+        UCost.text = "" + _towerInfo[7] + "G";
+        RCost.text = "" + _towerInfo[8] + "G";
+        SGain.text = "" + _towerInfo[9] + "G";
     }
 
 
     public void UpdateTowerCurrentHp(int hp)
     {
-        CurHp.text = "CurHP\n" + hp;
+        CurHp.text = "" + hp;
     }
 
     public void SetUpgradingColor()
     {
         Level.color = new Color(0, 1, 0, 1);
-        Atk.color = new Color(0, 1, 0, 1);
+        AtkNum.color = new Color(0, 1, 0, 1);
         CurHp.color = new Color(0, 1, 0, 1);
         MaxHp.color = new Color(0, 1, 0, 1);
         UCost.color = new Color(1, 0, 0, 1);
@@ -245,7 +264,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         Level.color = new Color(1, 1, 1, 1);
         CurHp.color = new Color(1, 1, 1, 1);
-        Atk.color = new Color(1, 1, 1, 1);
+        AtkNum.color = new Color(1, 1, 1, 1);
         MaxHp.color = new Color(1, 1, 1, 1);
         UCost.color = new Color(1, 1, 1, 1);
         RCost.color = new Color(1, 1, 1, 1);
