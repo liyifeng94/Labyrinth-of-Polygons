@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     public List<GridSystem.Cell> SearchPathFrom(int x, int y)
     {
-        return _pathingFinder.Search(x, y);
+        return _pathingFinder.SearchCache(x, y);
     }
 
     public List<GridSystem.Cell> SearchFlyingPath(int x, int y)
