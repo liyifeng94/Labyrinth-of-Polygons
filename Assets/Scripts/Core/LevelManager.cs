@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
 
         _currentGameOptions = _gameManagerInstance.StartGameLevel(this);
         _currentGameOptions = GameBoardSystem.GameBoardSetup(_currentGameOptions, _currentLevelState);
+	    _currentLevelState.LastGameOptions = _currentGameOptions;
 
         GameObject towerControllerGameObject = Instantiate(TowerControllerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
 	    Debug.Assert(towerControllerGameObject != null, "towerControllerGameObject != null");
@@ -117,15 +118,9 @@ public class LevelManager : MonoBehaviour
     public void QuitGame()
     {
         _currentLevelState.CalculateFinalScore(_currentGameOptions);
+        EndGame();
         ChangeLevel.LoadLevel("ScoreLevel");
     }
-
-    void OnDestory()
-    {
-        EndGame();
-    }
-
-
 
     public void EndGame()
     {

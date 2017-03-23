@@ -1827,7 +1827,7 @@ Prefab:
     - target: {fileID: 224698897179724886, guid: 14386859b331e2c41995f27a0a8928f7,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -264.7822
+      value: -262.089
       objectReference: {fileID: 0}
     - target: {fileID: 224698897179724886, guid: 14386859b331e2c41995f27a0a8928f7,
         type: 2}
@@ -1837,7 +1837,7 @@ Prefab:
     - target: {fileID: 224698897179724886, guid: 14386859b331e2c41995f27a0a8928f7,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 54.444973
+      value: 52.059326
       objectReference: {fileID: 0}
     - target: {fileID: 224698897179724886, guid: 14386859b331e2c41995f27a0a8928f7,
         type: 2}
@@ -1898,6 +1898,16 @@ Prefab:
         type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 224667138097070822, guid: 14386859b331e2c41995f27a0a8928f7,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 224667138097070822, guid: 14386859b331e2c41995f27a0a8928f7,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14386859b331e2c41995f27a0a8928f7, type: 2}
