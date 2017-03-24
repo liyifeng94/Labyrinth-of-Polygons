@@ -24,7 +24,6 @@ public class LeaderBoardUI : MonoBehaviour
 	        TimeResultText.text += entry.DateTime + "\n";
 	        ScoreResultText.text += entry.Score.ToString() + "\n";
 	    }
-
 	}
 	
 	// Update is called once per frame
