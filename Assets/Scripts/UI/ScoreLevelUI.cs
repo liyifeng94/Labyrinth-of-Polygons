@@ -29,6 +29,8 @@ public class ScoreLevelUI : MonoBehaviour
     private uint BossKilled = 0;
     private uint finalscore = 0;
 
+    private GameManager gm;
+
     // Use this for initialization
     void Start ()
 	{
@@ -36,12 +38,13 @@ public class ScoreLevelUI : MonoBehaviour
 	    ScoreText.text = "";
 	    
         string titletemp, scoretemp;
-
+	    gm = GameManager.Instance;
         /* should only be true in testing */
-        if (GameManager.Instance != null)
+        if (gm != null)
 	    {
-	        score = (uint) GameManager.Instance.CurrentLevelManager.GetScore();
-	        level = (uint) GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
+            gm.LocalHighScoreBoard.AddEntry(gm.LastLevelState.FinalScore,gm.PlayerName);
+	        score = (uint) gm.CurrentLevelManager.GetScore();
+	        level = (uint)gm.CurrentLevelManager.GetCurrentLevel();
 	        obstacle = GameManager.Instance.Obstacles;
 	        NormalKilled = GameManager.Instance.LastLevelState.NormalKilled;
 	        AttackKilled = GameManager.Instance.LastLevelState.AttackKilled;

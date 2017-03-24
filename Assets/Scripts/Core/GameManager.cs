@@ -107,29 +107,33 @@ public class GameManager : MonoBehaviour
 
     void LoadHighScoreBoard()
     {
-        LocalHighScoreBoard = null;
-        
+        HighScoreBoard.HighScoreList scoreList = null;
+
         if (File.Exists(_highScoreBoardPath))
         {
             string rawJson = File.ReadAllText(_highScoreBoardPath);
-            LocalHighScoreBoard = JsonUtility.FromJson<HighScoreBoard>(rawJson);
+            scoreList = JsonUtility.FromJson<HighScoreBoard.HighScoreList>(rawJson);
+            LocalHighScoreBoard = new HighScoreBoard(scoreList);
         }
        
 
-        if (LocalHighScoreBoard == null)
+        if (scoreList == null)
         {
-            LocalHighScoreBoard = new HighScoreBoard();
+            LocalHighScoreBoard = new HighScoreBoard(null);
         }
     }
 
     void SaveHighScoreBoard()
     {
+        Debug.Log("debug: start saving");
         if (!File.Exists(_highScoreBoardPath))
         {
             File.Create(_highScoreBoardPath);
         }
-        string jsonDataString = JsonUtility.ToJson(LocalHighScoreBoard);
+        string jsonDataString = JsonUtility.ToJson(LocalHighScoreBoard.ScoreList);
+        Debug.Log("data string = " + jsonDataString);
         File.WriteAllText(_highScoreBoardPath, jsonDataString);
+        
     }
 
     void OnApplicationQuit()
@@ -142,11 +146,6 @@ public class GameManager : MonoBehaviour
     {
         LastLevelState = levelState;
         LastLevelState.CalculateFinalScore(levelState.LastGameOptions);
-    }
-
-    public void AddScoreEntry(LevelState levelState, string playerName)
-    {
-        LocalHighScoreBoard.AddEntry(levelState.FinalScore,playerName);
     }
 
     public void PlayStartSound()

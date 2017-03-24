@@ -17,8 +17,8 @@ public class LeaderBoardUI : MonoBehaviour
 	    ScoreResultText.text = "";
 
 	    HighScoreBoard temp = GameManager.Instance.LocalHighScoreBoard;
-	    List<HighScoreBoard.HighScoreEntry> HighScoreList = temp.HighScoreList;
-	    foreach (var entry in HighScoreList)
+	    List<HighScoreBoard.HighScoreEntry> highScoreList = temp.ScoreList.MainList;
+	    foreach (var entry in highScoreList)
 	    {
 	        NameResultText.text += entry.Name + "\n";
 	        TimeResultText.text += entry.DateTime + "\n";

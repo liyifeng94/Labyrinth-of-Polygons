@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-[Serializable]
 public class HighScoreBoard
 {
     [Serializable]
@@ -12,12 +11,27 @@ public class HighScoreBoard
         public string DateTime;
     }
 
-    public List<HighScoreEntry> HighScoreList { get; private set; }
+    [Serializable]
+    public class HighScoreList
+    {
+        public List<HighScoreEntry> MainList;
+
+        public HighScoreList()
+        {
+            MainList = new List<HighScoreEntry>();
+        }
+    }
+
+    public HighScoreList ScoreList;
 
     //Creates a score board sorted by time
-    public HighScoreBoard()
+    public HighScoreBoard(HighScoreList scoreList)
     {
-        HighScoreList = new List<HighScoreEntry>();
+        ScoreList = scoreList;
+        if (ScoreList == null)
+        {
+            ScoreList = new HighScoreList();
+        }
     }
 
     public void AddEntry(uint score, string playerName)
@@ -27,6 +41,6 @@ public class HighScoreBoard
         newHighScoreEntry.Score = score;
         newHighScoreEntry.DateTime = DateTime.UtcNow.ToString();
 
-        HighScoreList.Add(newHighScoreEntry);
+        ScoreList.MainList.Add(newHighScoreEntry);
     }
 }
