@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
@@ -54,5 +55,10 @@ public class MenuUI : MonoBehaviour
     {
         StartOptionsPanel.SetActive(true);
         MainMenuPanel.SetActive(false);
+    }
+
+    public void GoToHelpLevel()
+    {
+        SceneManager.LoadScene("HelpLevel");
     }
 }
