@@ -117,7 +117,7 @@ public class EnemyController : MonoBehaviour
 	        int level = _levelManager.GetCurrentLevel();
 	        if (level < 4) _num = 5;
 	        else if ((level + 1) % 5 == 0) _num = 1+level/5;
-            else _num = 5 + level;
+            else _num = level;
 	        _build = false;
 	    }
     }
@@ -139,6 +139,35 @@ public class EnemyController : MonoBehaviour
             default:
                 return -1;
         }
+    }
+
+    public int GetHpGrowth(Enemy.Type type)
+    {
+        int level = _levelManager.GetCurrentLevel();
+        if (level <= 5) return 0;
+        level -= 6;
+        switch (type)
+        {
+            case Enemy.Type.Normal:
+                return 2 * level;
+            case Enemy.Type.Flying:
+                return 2 * level;
+            case Enemy.Type.Fast:
+                return level;
+            case Enemy.Type.Attacking:
+                return 2 * level;
+            default:
+                return 0;
+        }
+
+    }
+
+    public float GetGoldGrowth(Enemy.Type type)
+    {
+        int level = _levelManager.GetCurrentLevel();
+        if (level <= 5) return 1;
+        level -= 6;
+        return (float) Math.Pow(1.4, level);
     }
 
 }
