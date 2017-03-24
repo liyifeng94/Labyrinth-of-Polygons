@@ -11,7 +11,7 @@ public class NotificationPanel : MonoBehaviour {
     private string _type;
     private string _towerOperationReuqst;
     //private string _rejectedCase;
-    private float _starTime, _endTime;
+    private float _endTime;
     private bool _autoDisappearSet;
     //public float StartTime, EndTime;
 

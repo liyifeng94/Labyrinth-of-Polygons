@@ -61,6 +61,7 @@ public class SlowTower : Tower
             Color result = new Color(1, 0, 1, 1.0f);
             DrawLine(start, end, result);
             //t.GetDamaged((AttackDamage[CurrentLevel]));
+            FireSoundSource.PlayOneShot(FireSound);
             t.SlowDown((float)(SlowPercent) / 100);
             //Debug.Log("ST: Attacks");
         }
@@ -71,7 +72,7 @@ public class SlowTower : Tower
     }
 
 
-    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.1f)
     {
         GameObject myLine = new GameObject();
         myLine.transform.position = start;

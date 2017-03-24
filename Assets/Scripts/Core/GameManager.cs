@@ -27,7 +27,14 @@ public class GameManager : MonoBehaviour
     public LevelState LastLevelState { get; private set; }
 
     public uint Obstacles;
-    public GameOptions CurrentGameOptions;
+    public GameOptions DefaultGameOptions;
+
+    [HideInInspector] public AudioSource SoundSource;
+    [HideInInspector] public AudioSource StartSoundSource;
+    [HideInInspector] public AudioSource BattleSoundSource;
+    public AudioClip StartSound;
+    public AudioClip BattleSound;
+    private AudioSource[] _sounds;
 
     // Use this for initialization
     void Awake()
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviour
             _highScoreBoardPath = Application.persistentDataPath + "/" + HighScoreBoardPath;
 #endif
             LoadHighScoreBoard();
-            CurrentGameOptions = null;
+            DefaultGameOptions = null;
             LastLevelState = null;
         }
         else
@@ -51,6 +58,13 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        _sounds = GetComponents<AudioSource>();
+        StartSoundSource = _sounds[0];
+        BattleSoundSource = _sounds[1];
     }
 
     void Update()
@@ -68,7 +82,7 @@ public class GameManager : MonoBehaviour
     public GameOptions StartGameLevel(LevelManager currentLevelManager)
     {
         CurrentLevelManager = currentLevelManager;
-        return CurrentGameOptions;
+        return DefaultGameOptions;
     }
 
     public List<GridSystem.Cell> SearchPathFrom(int x, int y)
@@ -123,11 +137,24 @@ public class GameManager : MonoBehaviour
     public void SaveGameState(LevelState levelState)
     {
         LastLevelState = levelState;
-        LastLevelState.CalculateFinalScore(CurrentGameOptions);
+        LastLevelState.CalculateFinalScore(levelState.LastGameOptions);
     }
 
     public void AddScoreEntry(LevelState levelState, string playerName)
     {
         LocalHighScoreBoard.AddEntry(levelState.FinalScore,playerName);
+    }
+
+    public void PlayStartSound()
+    {
+        BattleSoundSource.Stop();
+        StartSoundSource.Play();
+    }
+
+
+    public void PlaybattleSound()
+    {
+        StartSoundSource.Stop();
+        BattleSoundSource.Play();
     }
 }

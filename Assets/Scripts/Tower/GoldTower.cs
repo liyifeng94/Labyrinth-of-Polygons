@@ -39,8 +39,9 @@ public class GoldTower : Tower
             if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {
                 StartTime = Time.time;
+                FireSoundSource.PlayOneShot(FireSound);
                 _gameBoard.HighlightTileAt(X, Y, new Color(1, 1, 0, 1));
-                MoneyGain((float)(GoldPerTenSec) /10);
+                MoneyGain((float)(GoldPerTenSec) / 10);
             }
             _reservedMoneyTransfered = false;
         }
@@ -49,7 +50,7 @@ public class GoldTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_reservedMoneyTransfered)
         {
             LevelManager.AddGold((int)_currentReservedMoney);
-            Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
+            //Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
             _currentReservedMoney = 0;
             _reservedMoneyTransfered = true;
         }

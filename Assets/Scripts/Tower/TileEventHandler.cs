@@ -202,7 +202,7 @@ public class TileEventHandler : MonoBehaviour
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
                     {
-                        Debug.Log("TEH: towerGameObject is null");
+                        //Debug.Log("TEH: not enough money or blocking the path");
                     }
                     else
                     {

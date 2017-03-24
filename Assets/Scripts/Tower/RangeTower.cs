@@ -7,7 +7,6 @@ public class RangeTower : Tower
 
     private HashSet<Enemy> _enemies;
 
-
     void Start()
     {
         CurrentLevel = 1;
@@ -61,6 +60,7 @@ public class RangeTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(1, 0, 0, 1.0f);
             DrawLine(start, end, result);
+            FireSoundSource.PlayOneShot(FireSound);
             t.GetDamaged(AttackDamage);
             //Debug.Log("RT: Attacks");
         }
@@ -71,7 +71,7 @@ public class RangeTower : Tower
     }
 
 
-    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.1f)
     {
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
