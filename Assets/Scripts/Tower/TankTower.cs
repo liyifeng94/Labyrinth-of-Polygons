@@ -5,7 +5,6 @@ using System.Linq;
 public class TankTower : Tower
 {
 
-    //public int AttackDamage;
     private HashSet<Enemy> _enemies;
 
 
@@ -62,6 +61,7 @@ public class TankTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(0, 1, 1, 1.0f);
             DrawLine(start, end, result);
+            FireSoundSource.PlayOneShot(FireSound);
             t.GetDamaged(AttackDamage);
             //Debug.Log("TT: Attacks");
         }
@@ -72,7 +72,7 @@ public class TankTower : Tower
     }
 
 
-    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.05f)
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.1f)
     {
         GameObject myLine = new GameObject();
         myLine.transform.position = start;

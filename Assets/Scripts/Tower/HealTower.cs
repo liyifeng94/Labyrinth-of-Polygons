@@ -5,11 +5,10 @@ using System.Linq;
 
 public class HealTower : Tower
 {
-
     private HashSet<Tower> _towers;
     private List<Tower> _towerList;
-    private bool _setAllyTower;
-    private bool _clearAllyTower;
+    //private bool _setAllyTower;
+    //private bool _clearAllyTower;
 
 
     void Start()
@@ -38,6 +37,7 @@ public class HealTower : Tower
             {
                 //Debug.Log("~~~~~~~~~~~~~~" + EndTime + " " + StartTime);
                 StartTime = Time.time;
+                if (null != FireSound) FireSoundSource.PlayOneShot(FireSound);
                 for (int i = 0; i < _towers.Count; i++)
                 {
                     if (!_towerList[i].IsDestory() && !_towerList[i].IsFullHealth())

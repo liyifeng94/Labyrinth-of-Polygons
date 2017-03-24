@@ -29,6 +29,13 @@ public class GameManager : MonoBehaviour
     public uint Obstacles;
     public GameOptions DefaultGameOptions;
 
+    [HideInInspector] public AudioSource SoundSource;
+    [HideInInspector] public AudioSource StartSoundSource;
+    [HideInInspector] public AudioSource BattleSoundSource;
+    public AudioClip StartSound;
+    public AudioClip BattleSound;
+    private AudioSource[] _sounds;
+
     // Use this for initialization
     void Awake()
     {
@@ -51,6 +58,13 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        _sounds = GetComponents<AudioSource>();
+        StartSoundSource = _sounds[0];
+        BattleSoundSource = _sounds[1];
     }
 
     void Update()
@@ -129,5 +143,18 @@ public class GameManager : MonoBehaviour
     public void AddScoreEntry(LevelState levelState, string playerName)
     {
         LocalHighScoreBoard.AddEntry(levelState.FinalScore,playerName);
+    }
+
+    public void PlayStartSound()
+    {
+        BattleSoundSource.Stop();
+        StartSoundSource.Play();
+    }
+
+
+    public void PlaybattleSound()
+    {
+        StartSoundSource.Stop();
+        BattleSoundSource.Play();
     }
 }
