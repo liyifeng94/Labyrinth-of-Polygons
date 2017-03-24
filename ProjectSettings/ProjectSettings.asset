@@ -52,7 +52,7 @@ PlayerSettings:
   m_MobileMTRendering: 0
   m_StackTraceTypes: 020000000200000002000000010000000200000001000000
   iosShowActivityIndicatorOnLoading: -1
-  androidShowActivityIndicatorOnLoading: -1
+  androidShowActivityIndicatorOnLoading: 0
   tizenShowActivityIndicatorOnLoading: -1
   iosAppInBackgroundBehavior: 0
   displayResolutionDialog: 1
@@ -472,7 +472,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Labyrinth of Polygons
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: LabyrinthOfPolygons
   metroCommandLineArgsFile: 
   metroTileShowName: 0
   metroMediumTileShowName: 0
