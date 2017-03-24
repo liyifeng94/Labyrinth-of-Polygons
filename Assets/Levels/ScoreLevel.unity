@@ -871,6 +871,7 @@ GameObject:
   - component: {fileID: 1319751407}
   - component: {fileID: 1319751409}
   - component: {fileID: 1319751408}
+  - component: {fileID: 1319751410}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -933,6 +934,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1319751406}
+--- !u!114 &1319751410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1319751406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8611c77dc2af5574b9560e52d23a4d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TitleText: {fileID: 1677511733}
+  ScoreText: {fileID: 1665410791}
 --- !u!1 &1364381096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1203,6 @@ GameObject:
   - component: {fileID: 1665410790}
   - component: {fileID: 1665410792}
   - component: {fileID: 1665410791}
-  - component: {fileID: 1665410793}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -1254,19 +1267,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1665410789}
---- !u!114 &1665410793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1665410789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8611c77dc2af5574b9560e52d23a4d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TitleText: {fileID: 1677511733}
-  ScoreText: {fileID: 1665410791}
 --- !u!1 &1677511731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,7 +1277,6 @@ GameObject:
   - component: {fileID: 1677511732}
   - component: {fileID: 1677511734}
   - component: {fileID: 1677511733}
-  - component: {fileID: 1677511735}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -1342,19 +1341,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1677511731}
---- !u!114 &1677511735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1677511731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8611c77dc2af5574b9560e52d23a4d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TitleText: {fileID: 1677511733}
-  ScoreText: {fileID: 1665410791}
 --- !u!1 &1781374406
 GameObject:
   m_ObjectHideFlags: 0
