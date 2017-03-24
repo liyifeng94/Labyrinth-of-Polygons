@@ -121,4 +121,24 @@ public class EnemyController : MonoBehaviour
 	        _build = false;
 	    }
     }
+
+    public int GetTowerPriority(Tower.TowerType type)
+    {
+        switch (type)
+        {
+            case Tower.TowerType.Tank:
+                return 0;
+            case Tower.TowerType.Heal:
+                return 1;
+            case Tower.TowerType.Gold:
+                return 2;
+            case Tower.TowerType.Range:
+                return 3;
+            case Tower.TowerType.Slow:
+                return 4;
+            default:
+                return -1;
+        }
+    }
+
 }
