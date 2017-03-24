@@ -124,6 +124,10 @@ public class GameManager : MonoBehaviour
 
     void SaveHighScoreBoard()
     {
+        if (!File.Exists(_highScoreBoardPath))
+        {
+            File.Create(_highScoreBoardPath);
+        }
         string jsonDataString = JsonUtility.ToJson(LocalHighScoreBoard);
         File.WriteAllText(_highScoreBoardPath, jsonDataString);
     }
