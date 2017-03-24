@@ -160,33 +160,40 @@ public class Enemy : MonoBehaviour
         _cells = cells;
         _isSlowed = false;
         _towers = new HashSet<Tower>();
+        _enemyController = EnemyController.Instance;
+        int hpGrowth = _enemyController.GetHpGrowth(EnemyType);
+        float goldFactor = _enemyController.GetGoldGrowth(EnemyType);
         switch (EnemyType)
         {
             case Type.Normal:
-                Hp = 5 + currentLevel;
+                Hp = 10 + hpGrowth;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 10;
+                Gold = (int)(20 * goldFactor);
                 break;
             case Type.Attacking:
-                Hp = 5 + currentLevel;
+                Hp = 10 + hpGrowth;
                 AttackRange = 2;
                 Speed = 2;
                 Score = 30;
                 _attackSpeed = 1.0f;
                 AttackDamage = 3 + currentLevel;
+                Gold = (int)(30 * goldFactor);
                 break;
             case Type.Fast:
-                Hp = 3 + currentLevel;
+                Hp = 8 + hpGrowth;
                 AttackRange = 0;
                 Speed = 4;
                 Score = 20;
+                Gold = (int)(20 * goldFactor);
                 break;
             case Type.Flying:
-                Hp = 5 + currentLevel;
+                Hp = 15 + hpGrowth;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 40;
+                Gold = (int)(25 * goldFactor);
                 break;
             case Type.Boss:
                 Hp = 200 + 10 * currentLevel;
@@ -197,6 +204,7 @@ public class Enemy : MonoBehaviour
                 AttackDamage = 5 + 3 * currentLevel;
                 break;
         }
+                Debug.Log(""+EnemyType+" hp:"+Hp + " Gold:"+Gold);
     }
 
     public void SetPos(int xPos, int yPos)
@@ -275,7 +283,7 @@ public class Enemy : MonoBehaviour
     public void StopSlowing()
     {
         _slowend = Time.time;
-        if (_isSlowed && _slowend - _slowstart > 2)
+        if (_isSlowed && _slowend - _slowstart > 3)
         {
             Speed = OriginalSpeed;
         }
