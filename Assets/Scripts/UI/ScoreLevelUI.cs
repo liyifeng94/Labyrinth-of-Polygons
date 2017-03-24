@@ -60,7 +60,7 @@ public class ScoreLevelUI : MonoBehaviour
         titletemp += OBSTACLES + "\n";
         scoretemp += "+" + obstacle.ToString() + "\n";
 
-	    titletemp += NORMALK + "*" + NormalKilled.ToString() + "\n";
+	    titletemp += NORMALK + /*"*" + NormalKilled.ToString()*/ "\n";
 	    scoretemp += NormalKilled.ToString() + "* 100" + "\n";
 
         titletemp += ATTK + "*" + AttackKilled.ToString() + "\n";
