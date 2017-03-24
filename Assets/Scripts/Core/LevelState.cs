@@ -24,10 +24,15 @@ public class LevelState
     {
         LastGameOptions = gameOptions;
         FinalScore = (uint) Score;
-        FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
         FinalScore *= (uint)Level;
-        FinalScore += (uint) Score * ((100 - gameOptions.Obstacles) / 2);
-        FinalScore += (uint)Gold; // delete startup money
+        // FinalScore *= gameOptions.Width + gameOptions.Height + gameOptions.Entrances;
+        FinalScore += gameOptions.Obstacles; // (uint) Score * ((100 - gameOptions.Obstacles) / 2);
+
+        FinalScore += NormalKilled * 100;
+        FinalScore += AttackKilled * 200;
+        FinalScore += FastKilled * 300;
+        FinalScore += FlyingKilled * 300;
+        FinalScore += BossKilled * 1000;
         return FinalScore;
     }
 }

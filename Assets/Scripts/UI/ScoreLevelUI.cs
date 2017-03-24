@@ -55,25 +55,25 @@ public class ScoreLevelUI : MonoBehaviour
 	    scoretemp = score.ToString() + "\n";
 
         titletemp += LEVEL + "\n";
-        scoretemp += "*" + level.ToString() + "\n";
+        scoretemp += "* " + level.ToString() + "\n";
 
         titletemp += OBSTACLES + "\n";
-        scoretemp += "+" + obstacle.ToString() + "\n";
+        scoretemp += "+ " + obstacle.ToString() + "\n";
 
-	    titletemp += NORMALK + "*" + NormalKilled.ToString() + "\n";
-	    scoretemp += NormalKilled.ToString() + "* 100" + "\n";
+	    titletemp += NORMALK + "\n";
+	    scoretemp += "+" + NormalKilled.ToString() + "* 100" + "\n";
 
-        titletemp += ATTK + "*" + AttackKilled.ToString() + "\n";
-        scoretemp += AttackKilled.ToString() + "* 200" + "\n";
+        titletemp += ATTK + "\n";
+        scoretemp += "+" + AttackKilled.ToString() + "* 200" + "\n";
 
-        titletemp += FASTK + "*" + FastKilled.ToString() + "\n";
-	    scoretemp += FastKilled.ToString() + "* 300" + "\n";
+        titletemp += FASTK + "\n";
+	    scoretemp += "+" + FastKilled.ToString() + "* 300" + "\n";
 
-        titletemp += FLYK + "*" + FlyingKilled.ToString() + "\n";
-	    scoretemp += FlyingKilled.ToString() + "* 300" + "\n";
+        titletemp += FLYK + "\n";
+	    scoretemp += "+" + FlyingKilled.ToString() + "* 300" + "\n";
 
-        titletemp += BOSSKILLED + " *" + BossKilled.ToString() + "\n";
-        scoretemp += BossKilled + " x 1000" + "\n";
+        titletemp += BOSSKILLED + "\n";
+        scoretemp += "+" + BossKilled + " x 1000" + "\n";
 
 	    titletemp += "\n";
 	    scoretemp += "\n";
