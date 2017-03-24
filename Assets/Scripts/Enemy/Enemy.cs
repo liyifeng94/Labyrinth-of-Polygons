@@ -236,8 +236,8 @@ public class Enemy : MonoBehaviour
         Tower ret = null;
         foreach (var tower in _towers)
         {
-            int type = (int) tower.Type;
-            if (!tower.IsDestory() && i>type)
+            int type = _enemyController.GetTowerPriority(tower.Type);
+            if (!tower.IsDestory() && i>type && type >-1)
             {
                 ret = tower;
                 i = type;
