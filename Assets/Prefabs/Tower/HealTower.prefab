@@ -251,7 +251,7 @@ MonoBehaviour:
   UpgradeCost: 16
   RepairCost: 8
   SellGain: 12
-  AttackDamage: 0
+  AttackDamage: 2
   SlowPercent: 0
   HealAmount: 2
   GoldPerMinute: 0
