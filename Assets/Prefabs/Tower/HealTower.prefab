@@ -244,7 +244,7 @@ MonoBehaviour:
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
   TowerAnimator: {fileID: 0}
-  HitPoint: 4
+  HitPoint: 40
   AttackRange: 2
   ReloadTime: 2
   BuildCost: 20

@@ -74,6 +74,8 @@ public class HealTower : Tower
 
     public void HealAlly(Tower t)
     {
+        if (null == t) return;
+        //Debug.Log("HT: Allay destoried case");
         if (DestroyByEnemy) return;
         // TODO: check if ally tower is destroied
         Vector3 start = transform.position;
