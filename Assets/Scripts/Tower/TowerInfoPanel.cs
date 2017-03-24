@@ -6,12 +6,11 @@ public class TowerInfoPanel : MonoBehaviour {
     public GameObject ThisPanel;
     public Text Type;
     public Text Level;
-    //public Text CurHp;
-    public Text MaxHp;
-    public Text AtkText;
-    public Text AtkNum;
-    public Text Aspd;
-    public Text AspdNum;
+    public Text Hp;
+    public Text DpmText;
+    public Text DpmNum;
+    public Text RTime;
+    public Text RTimeNum;
     public Text UCost;
     public Text RCost;
     public Text SGain;
@@ -21,7 +20,7 @@ public class TowerInfoPanel : MonoBehaviour {
     private int[] _towerInfo;
     private bool _displayUpgradedInfo;
     private int _upgradedHp;
-    private bool _requirCase;
+    private bool _repairCase;
 
     private Tower.TowerType _type;
     private TankTower _tankTower;
@@ -30,6 +29,7 @@ public class TowerInfoPanel : MonoBehaviour {
     private HealTower _healTower;
     private GoldTower _goldTower;
     private LevelManager _levelManager;
+    private RepairButton _repairButton;
 
     void Awake()
     {
@@ -42,14 +42,25 @@ public class TowerInfoPanel : MonoBehaviour {
         _upgradeTowerInfo = new int[11];
         _towerInfo = new int[11];
         _levelManager = GameManager.Instance.CurrentLevelManager;
+        _repairButton = RepairButton.Instance;
         _displayUpgradedInfo = false;
-        _requirCase = false;
+        _repairCase = false;
     }
 
 
     void LateUpdate()
     {
-        if (GameBoard.GamePhase.BuildingPhase == _levelManager.CurrentGamePhase()) { return; }
+        // at beginning, no towerPtr is initialized, has to return directly
+        if (GameBoard.GamePhase.BuildingPhase == _levelManager.CurrentGamePhase())
+        {
+            // if repair button is clicked in building phase, set current hp to color.green
+            if (_repairCase)
+            {
+                Hp.text = "<color=#00ff00ff>" + _towerInfo[3] + "</color>/" + _towerInfo[4];
+            }
+            return;
+        }
+        // record a current selected tower, if no tower is selected at the beginning, _type is null
         int[] info = new int[11];
         switch (_type)
         {
@@ -69,8 +80,16 @@ public class TowerInfoPanel : MonoBehaviour {
                 _goldTower.GetTowerInfo(info);
                 break;
         }
+        // dynamically update current tower hp
         UpdateTowerCurrentHp(info[3], _towerInfo[4], info[2]);
-        //Debug.Log("info: " + info[3] + info[4]);
+        if (info[3] == info[4])
+        {
+            _repairButton.SetHpCheckFlag();
+        }
+        else
+        {
+            _repairButton.ResetHpCheckFlag();
+        }
     }
 
 
@@ -121,54 +140,52 @@ public class TowerInfoPanel : MonoBehaviour {
     }
 
 
+    // when click on an existing tower, store this tower info and display the info
     public void SetTowerInfo(int[] info)
     {
-        _requirCase = false;
+        _repairCase = false;
         _displayUpgradedInfo = false;
         _towerInfo = info;
-        //Debug.Log("Tower Level is " + info[1]+1);
         switch (info[1])
         {
             case 0:
                 Type.text = "Tank";
-                AtkText.text = "ATK";
-                AtkNum.text = "" + info[5];
-                Aspd.text = "ASpd";
-                AspdNum.text = "" + info[6] + "/s";
+                DpmText.text = "Dpm";
+                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                RTime.text = "Reload";
+                RTimeNum.text = "" + info[6];
                 break;
             case 3:
                 Type.text = "Range";
-                AtkText.text = "ATK";
-                AtkNum.text = "" + info[5];
-                Aspd.text = "ASpd";
-                AspdNum.text = "" + info[6] + "/s";
+                DpmText.text = "Dpm";
+                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                RTime.text = "Reload";
+                RTimeNum.text = "" + info[6];
                 break;
             case 4:
                 Type.text = "Slow";
-                AtkText.text = "Slow";
-                AtkNum.text = "" + info[5] + "%";
-                Aspd.text = "ASpd";
-                AspdNum.text = "" + info[6] + "/s";
+                DpmText.text = "Slow";
+                DpmNum.text = "" + info[5] + "%";
+                RTime.text = "Reload";
+                RTimeNum.text = "" + info[6];
                 break;
             case 1:
                 Type.text = "Heal";
-                AtkText.text = "Heal";
-                AtkNum.text = "" + info[5];
-                Aspd.text = "HSpd";
-                AspdNum.text = "" + info[6] + "/s";
+                DpmText.text = "Hpm";
+                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                RTime.text = "Reload";
+                RTimeNum.text = "" + info[6];
                 break;
             case 2:
                 Type.text = "Gold";
-                AtkText.text = "Gold";
-                AtkNum.text = "" + info[5];
-                Aspd.text = "GSpd";
-                AspdNum.text = "" + info[6] + "/s";
+                DpmText.text = "Gpm";
+                DpmNum.text = "" + info[5];
+                RTime.text = "Reload";
+                RTimeNum.text = "" + info[6];
                 break;
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Level.text = "" + info[2];
-        //CurHp.text = "" + info[3];
-        MaxHp.text = info[3] + "/" + info[4];
+        Hp.text = info[3] + "/" + info[4];
         UCost.text = "" + info[7] + "G";
         RCost.text = "" + info[8] + "G";
         SGain.text = "" + info[9] + "G";
@@ -177,46 +194,44 @@ public class TowerInfoPanel : MonoBehaviour {
     }
 
 
+    // record a updated tower info
     public void SetUpgradedTowerInfo(int[] info)
     {
         _upgradeTowerInfo = info;
-        //Debug.Log("TIP: New tower curHP is  " + info[3]);
     }
 
 
+    // when upgrade button is clicked, this function would be called to show updated info
     public void DisplayUpgradedInfo()
     {
-        _requirCase = false;
-        //Debug.Log("TIP: New tower curHP is  " + _upgradeTowerInfo[3]);
+        _repairCase = false;
         _displayUpgradedInfo = true;
         switch (_upgradeTowerInfo[1])
         {
             case 0:
-                AtkText.text = "ATK";
-                AtkNum.text = "" + _upgradeTowerInfo[5];
+                DpmText.text = "Dpm";
+                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 3:
-                AtkText.text = "ATK";
-                AtkNum.text = "" + _upgradeTowerInfo[5];
+                DpmText.text = "Dpm";
+                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 4:
-                AtkText.text = "Slow";
-                AtkNum.text = "" + _upgradeTowerInfo[5] + "%";
+                DpmText.text = "Slow";
+                DpmNum.text = "" + _upgradeTowerInfo[5] + "%";
                 break;
             case 1:
-                AtkText.text = "Heal";
-                AtkNum.text = "" + _upgradeTowerInfo[5];
+                DpmText.text = "Hpm";
+                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 2:
-                AtkText.text = "Gold";
-                AtkNum.text = "" + _upgradeTowerInfo[5];
+                DpmText.text = "Gpm";
+                DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Level.text = "" + _upgradeTowerInfo[2];
         int updatedCurHp = _upgradeTowerInfo[3] + _upgradeTowerInfo[4] / _upgradeTowerInfo[2] * (_upgradeTowerInfo[2] - 1);
-        MaxHp.text = updatedCurHp + "/" + _upgradeTowerInfo[4];
-        //MaxHp.text = _upgradeTowerInfo[3] + "/" + _upgradeTowerInfo[4];
+        Hp.text = updatedCurHp + "/" + _upgradeTowerInfo[4];
         UCost.text = "" + _upgradeTowerInfo[7] + "G";
         RCost.text = "" + _upgradeTowerInfo[8] + "G";
         SGain.text = "" + _upgradeTowerInfo[9] + "G";
@@ -224,46 +239,46 @@ public class TowerInfoPanel : MonoBehaviour {
     }
 
 
+    // when repair button and sell button are clicked, this function would be 
+    // called  in case upgrade button early modify the displayed tower info 
     public void SetOriginalowerInfo()
     {
         _displayUpgradedInfo = false;
         switch (_towerInfo[1])
         {
             case 0:
-                AtkText.text = "ATK";
-                AtkNum.text = "" + _towerInfo[5];
+                DpmText.text = "Dpm";
+                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 3:
-                AtkText.text = "ATK";
-                AtkNum.text = "" + _towerInfo[5];
+                DpmText.text = "Dpm";
+                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 4:
-                AtkText.text = "Slow";
-                AtkNum.text = "" + _towerInfo[5] + "%";
+                DpmText.text = "Slow";
+                DpmNum.text = "" + _towerInfo[5] + "%";
                 break;
             case 1:
-                AtkText.text = "Heal";
-                AtkNum.text = "" + _towerInfo[5];
+                DpmText.text = "Hpm";
+                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 2:
-                AtkText.text = "Gold";
-                AtkNum.text = "" + _towerInfo[5];
+                DpmText.text = "Gpm";
+                DpmNum.text = "" + _towerInfo[5];
                 break;
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
         Level.text = "" + _towerInfo[2];
-        MaxHp.text = _towerInfo[3]  + "/" + _towerInfo[4];
+        Hp.text = _towerInfo[3]  + "/" + _towerInfo[4];
         UCost.text = "" + _towerInfo[7] + "G";
         RCost.text = "" + _towerInfo[8] + "G";
         SGain.text = "" + _towerInfo[9] + "G";
     }
 
 
+    // called every single frame when in battle phace to update current hp of a tower
     public void UpdateTowerCurrentHp(int curHp, int maxHp, int level)
     {
-        //Debug.Log("difference is " + curHp + " " + maxHp + " " + level);
-        //CurHp.text = curHp + "";
-        if (_displayUpgradedInfo)
+        if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
         {
             int updatedCurHp;
             if (1 == level)
@@ -274,45 +289,51 @@ public class TowerInfoPanel : MonoBehaviour {
             {
                 updatedCurHp = curHp + maxHp / level * (level - 1);
             }
-            MaxHp.text = updatedCurHp + "/" + _upgradedHp;
+            Hp.text = updatedCurHp + "/" + _upgradedHp;
         }
-        else if (_requirCase)
+        else if (_repairCase) // if repair button is clicked in battle phace
         {
-            //Debug.Log("repair case");
-            MaxHp.text = "<color=#00ff00ff>" + curHp + "</color>/" + _towerInfo[4];
+            Hp.text = "<color=#00ff00ff>" + curHp + "</color>/" + _towerInfo[4];
         }
-        else
+        else // sell button or no button is clicked in battoe phace
         {
-            MaxHp.text = curHp + "/" + _towerInfo[4];
+            Hp.text = curHp + "/" + _towerInfo[4];
         }
     }
 
+
+    // change upgrading tower info color to green
     public void SetUpgradingColor()
     {
         Level.color = new Color(0, 1, 0, 1);
-        AtkNum.color = new Color(0, 1, 0, 1);
-        //CurHp.color = new Color(0, 1, 0, 1);
-        MaxHp.color = new Color(0, 1, 0, 1);
+        DpmNum.color = new Color(0, 1, 0, 1);
+        Hp.color = new Color(0, 1, 0, 1);
         UCost.color = new Color(1, 0, 0, 1);
         RCost.color = new Color(1, 0, 0, 1);
         SGain.color = new Color(0, 1, 0, 1);
     }
 
 
+    // change back all tower info color to white
     public void ResetTextColor()
     {
         Level.color = new Color(1, 1, 1, 1);
-        //CurHp.color = new Color(1, 1, 1, 1);
-        AtkNum.color = new Color(1, 1, 1, 1);
-        MaxHp.color = new Color(1, 1, 1, 1);
+        DpmNum.color = new Color(1, 1, 1, 1);
+        Hp.color = new Color(1, 1, 1, 1);
         UCost.color = new Color(1, 1, 1, 1);
         RCost.color = new Color(1, 1, 1, 1);
         SGain.color = new Color(1, 1, 1, 1);
     }
 
 
-    public void RequireCase()
+    public void RepairCase()
     {
-        _requirCase = true;
+        _repairCase = true;
+    }
+
+    // used for sellbutton when previous clicked button is repair button
+    public void ResetRepairCase()
+    {
+        _repairCase = false;
     }
 }

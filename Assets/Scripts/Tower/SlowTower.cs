@@ -15,6 +15,7 @@ public class SlowTower : Tower
         StartTime = Time.time;
         CurrentHp = HitPoint;
         _enemies = new HashSet<Enemy>();
+        Reloading = false;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
@@ -25,16 +26,30 @@ public class SlowTower : Tower
 
     void LateUpdate()
     {
-        if (DestroyByEnemy) return;
+        if (DestroyByEnemy)
+        {
+            _enemies.Clear();
+            return;
+        }
         //Debug.Log("ST: Tower 0 searching");
         if (0 != _enemies.Count)
         {
-            EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1 / AttackSpeed))
+            if (!Reloading)
             {
-                StartTime = Time.time;
-                SlowEnemy(_enemies.First()); // make this simple, just slow the first one
+                //SlowEnemy(_enemies.First()); // slow one enemy
+                List<Enemy> _enemyList = _enemies.ToList();
+                for (int i = 0; i < _enemies.Count; i++)
+                {
+                    SlowEnemy(_enemyList[i]);
+                }
+                FireSoundSource.Play();
                 _enemies.Clear();
+                EndTime = Time.time + ReloadTime;
+                Reloading = true;
+            }
+            else
+            {
+                if (EndTime - Time.time < 0) Reloading = false;
             }
         }
     }
@@ -60,8 +75,6 @@ public class SlowTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(1, 0, 1, 1.0f);
             DrawLine(start, end, result);
-            //t.GetDamaged((AttackDamage[CurrentLevel]));
-            FireSoundSource.Play();
             t.SlowDown((float)(SlowPercent) / 100);
             //Debug.Log("ST: Attacks");
         }
@@ -100,7 +113,7 @@ public class SlowTower : Tower
         info[3] = CurrentHp;
         info[4] = HitPoint;
         info[5] = SlowPercent;
-        info[6] = AttackSpeed;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
         info[9] = SellGain;
@@ -117,10 +130,16 @@ public class SlowTower : Tower
         info[3] = CurrentHp;
         info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
         info[5] = SlowPercent;
-        info[6] = AttackSpeed;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
         info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
         info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
         info[10] = BuildCost;
+    }
+
+
+    public new void ClearEnemies()
+    {
+        _enemies.Clear();
     }
 }

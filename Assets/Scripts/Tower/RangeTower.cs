@@ -14,6 +14,7 @@ public class RangeTower : Tower
         StartTime = Time.time;
         CurrentHp = HitPoint;
         _enemies = new HashSet<Enemy>();
+        Reloading = false;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
@@ -24,16 +25,25 @@ public class RangeTower : Tower
 
     void LateUpdate()
     {
-        if (DestroyByEnemy) return;
+        if (DestroyByEnemy)
+        {
+            _enemies.Clear();
+            return;
+        }
         //Debug.Log("RT: Tower 1 searching");
         if (0 != _enemies.Count)
         {
-            EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1/AttackSpeed))
+            if (!Reloading)
             {
-                StartTime = Time.time;
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
+                FireSoundSource.Play();
                 _enemies.Clear();
+                EndTime = Time.time + ReloadTime;
+                Reloading = true;
+            }
+            else
+            {
+                if (EndTime - Time.time < 0) Reloading = false;
             }
         }
     }
@@ -60,7 +70,6 @@ public class RangeTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(1, 0, 0, 1.0f);
             DrawLine(start, end, result);
-            FireSoundSource.Play();
             t.GetDamaged(AttackDamage);
             //Debug.Log("RT: Attacks");
         }
@@ -99,7 +108,7 @@ public class RangeTower : Tower
         info[3] = CurrentHp;
         info[4] = HitPoint;
         info[5] = AttackDamage;
-        info[6] = AttackSpeed;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
         info[9] = SellGain;
@@ -116,7 +125,7 @@ public class RangeTower : Tower
         info[3] = CurrentHp;
         info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
         info[5] = AttackDamage / CurrentLevel * (CurrentLevel + 1);
-        info[6] = AttackSpeed;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
         info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
         info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);

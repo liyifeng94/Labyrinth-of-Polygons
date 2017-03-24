@@ -356,6 +356,7 @@ public class TileEventHandler : MonoBehaviour
                 _towerInfoPanel.SetTankTower(_tankTowerPtr);
                 if (_tankTowerPtr.UpgradeCost > _levelManager.GetGold()) _upgradeButton.SetGoldCheckFlag();
                 if (_tankTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
+                if (_tankTowerPtr.IsFullHealth()) _repairButton.SetHpCheckFlag();
             }
             if (1 == _currentTowerType)
             {

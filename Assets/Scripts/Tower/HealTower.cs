@@ -18,6 +18,7 @@ public class HealTower : Tower
         StartTime = Time.time;
         CurrentHp = HitPoint;
         _towers = new HashSet<Tower>();
+        Reloading = false;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
@@ -32,12 +33,8 @@ public class HealTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase) return;
         if (0 != _towers.Count)
         {
-            EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1 / AttackSpeed))
+            if (!Reloading)
             {
-                //Debug.Log("~~~~~~~~~~~~~~" + EndTime + " " + StartTime);
-                StartTime = Time.time;
-                FireSoundSource.Play();
                 for (int i = 0; i < _towers.Count; i++)
                 {
                     if (!_towerList[i].IsDestory() && !_towerList[i].IsFullHealth())
@@ -46,6 +43,13 @@ public class HealTower : Tower
                         //break; heal mutiple towers
                     }
                 }
+                FireSoundSource.Play();
+                EndTime = Time.time + ReloadTime;
+                Reloading = true;
+            }
+            else
+            {
+                if (EndTime - Time.time < 0) Reloading = false;
             }
         }
     }
@@ -111,7 +115,7 @@ public class HealTower : Tower
         info[3] = CurrentHp;
         info[4] = HitPoint;
         info[5] = HealAmount;
-        info[6] = AttackSpeed;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
         info[9] = SellGain;
@@ -128,7 +132,7 @@ public class HealTower : Tower
         info[3] = CurrentHp;
         info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
         info[5] = HealAmount / CurrentLevel * (CurrentLevel + 1);
-        info[6] = AttackSpeed;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
         info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
         info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);

@@ -239,24 +239,23 @@ MonoBehaviour:
   DestroyByEnemy: 0
   StartTime: 0
   EndTime: 0
+  Reloading: 0
   LevelManager: {fileID: 0}
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
   TowerAnimator: {fileID: 0}
   HitPoint: 100
   AttackRange: 1
-  AttackSpeed: 1
+  ReloadTime: 1
   BuildCost: 5
   UpgradeCost: 4
   RepairCost: 2
   SellGain: 3
-  AttackDamage: 2
+  AttackDamage: 1
   SlowPercent: 0
   HealAmount: 0
-  GoldPerTenSec: 0
+  GoldPerMinute: 0
   Type: 0
-  FireSound: {fileID: 8300000, guid: f2eacd8a81427a346ab389f26c321855, type: 3}
-  DestroySound: {fileID: 8300000, guid: 967b05db68ac1ae40ac925eee13cadc3, type: 3}
   FireSoundSource: {fileID: 0}
 --- !u!212 &212000013048375024
 SpriteRenderer:

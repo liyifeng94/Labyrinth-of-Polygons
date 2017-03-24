@@ -13,6 +13,7 @@ using System.Linq;
     [HideInInspector] public int CurrentLevel;
     [HideInInspector] public bool DestroyByEnemy;
     [HideInInspector] public float StartTime, EndTime;
+    [HideInInspector] public bool Reloading;
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public TowerController TowerController;
     [HideInInspector] public NotificationPanel NotificationPanel;
@@ -20,7 +21,8 @@ using System.Linq;
     //public int MaxLevel; 
     public int HitPoint;
     public int AttackRange;
-    public int AttackSpeed;
+    //public int AttackSpeed;
+    public int ReloadTime;
     public int BuildCost;
     public int UpgradeCost;
     public int RepairCost;
@@ -29,7 +31,7 @@ using System.Linq;
     public int AttackDamage;
     public int SlowPercent;
     public int HealAmount;
-    public int GoldPerTenSec;
+    public int GoldPerMinute;
     public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
     public TowerType Type;
 
@@ -75,7 +77,6 @@ using System.Linq;
         {
             CurrentHp = 0;
             TowerAnimator.SetTrigger("TowerDestroyed");
-            //Remove();
             _destroySoundSource.Play();
             DestroyByEnemy = true;
             //Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
@@ -129,7 +130,7 @@ using System.Linq;
                 HealAmount = HealAmount / previoutLevel * CurrentLevel;
                 break;
             case TowerType.Gold:
-                GoldPerTenSec = GoldPerTenSec / previoutLevel * CurrentLevel;
+                GoldPerMinute = GoldPerMinute / previoutLevel * CurrentLevel;
                 break;
         }
         /*if (CurrentLevel < MaxLevel - 1)
@@ -156,12 +157,13 @@ using System.Linq;
             NotificationPanel.Appear();
             return;
         }
-        Debug.Log(CurrentHp + " " + HitPoint);
         CurrentHp = HitPoint;
         LevelManager.UseGold(RepairCost);
-        DestroyByEnemy = false;
-        TowerAnimator.SetTrigger("TowerFixed");
-        //Debug.Log("T: Tower Repaired, HP is " + _currentHp);
+        if (DestroyByEnemy)
+        {
+            TowerAnimator.SetTrigger("TowerFixed");
+            DestroyByEnemy = false;
+        }
     }
 
 
@@ -177,8 +179,8 @@ using System.Linq;
     }*/
 
 
-     public bool IsFullHealth()
-     {
-         return CurrentHp == HitPoint;
-     }
+    public bool IsFullHealth()
+    {
+        return CurrentHp == HitPoint;
+    }
 }

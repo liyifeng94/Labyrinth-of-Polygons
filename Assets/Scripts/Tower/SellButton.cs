@@ -64,6 +64,7 @@ public class SellButton : MonoBehaviour {
         _tileEventHandler.SetOperation(8);
         _buildCheckPanel.Appear();
         _towerInfoPanel.ResetTextColor();
+        _towerInfoPanel.ResetRepairCase();
         _towerInfoPanel.SetOriginalowerInfo();
         _towerInfoPanel.Appear();
         _notificationPanel.SetNotificationType("Sell");

@@ -31,13 +31,14 @@ public class NotificationPanel : MonoBehaviour {
     }
 
     
-    void Update()
+    void LateUpdate()
     {
         if (_autoDisappearSet)
         {
             if (_endTime - Time.time < 0)
             {
                 DisAppear();
+                _autoDisappearSet = false;
             }
         }
     }

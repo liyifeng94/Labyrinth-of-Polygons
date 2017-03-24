@@ -19,6 +19,7 @@ public class GoldTower : Tower
         CurrentHp = HitPoint;
         _currentReservedMoney = 0;
         _reservedMoneyTransfered = true;
+        Reloading = false;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
         _gameBoard = LevelManager.GameBoardSystem;
@@ -35,13 +36,17 @@ public class GoldTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
             _gameBoard.ClearHighlightTileAt(X, Y);
-            EndTime = Time.time;
-            if (EndTime - StartTime > (float)(1 / AttackSpeed))
+            if (!Reloading)
             {
-                StartTime = Time.time;
-                FireSoundSource.Play();
                 _gameBoard.HighlightTileAt(X, Y, new Color(1, 1, 0, 1));
-                MoneyGain((float)(GoldPerTenSec) / 10);
+                MoneyGain((float)(GoldPerMinute) / 60);
+                FireSoundSource.Play();
+                EndTime = Time.time + ReloadTime;
+                Reloading = true;
+            }
+            else
+            {
+                if (EndTime - Time.time < 0) Reloading = false;
             }
             _reservedMoneyTransfered = false;
         }
@@ -50,7 +55,7 @@ public class GoldTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_reservedMoneyTransfered)
         {
             LevelManager.AddGold((int)_currentReservedMoney);
-            //Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
+            Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
             _currentReservedMoney = 0;
             _reservedMoneyTransfered = true;
         }
@@ -71,8 +76,8 @@ public class GoldTower : Tower
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
         info[4] = HitPoint;
-        info[5] = GoldPerTenSec;
-        info[6] = AttackSpeed;
+        info[5] = GoldPerMinute;
+        info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
         info[9] = SellGain;
@@ -88,8 +93,8 @@ public class GoldTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp;
         info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
-        info[5] = GoldPerTenSec / CurrentLevel * (CurrentLevel + 1);
-        info[6] = AttackSpeed;
+        info[5] = GoldPerMinute / CurrentLevel * (CurrentLevel + 1);
+        info[6] = ReloadTime;
         info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
         info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
         info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);

@@ -6,6 +6,7 @@ public class RepairButton : MonoBehaviour {
     public static RepairButton Instance;
 
     private bool _enoughGold;
+    private bool _fullHp;
 
     private TileEventHandler _tileEventHandler;
 
@@ -23,6 +24,7 @@ public class RepairButton : MonoBehaviour {
     public void setTowerEventHandler(TileEventHandler teh)
     {
         _enoughGold = true;
+        _fullHp = false;
         if (null == _tileEventHandler)
         {
             _buildCheckPanel = BuildCheckPanel.Instance;
@@ -42,9 +44,18 @@ public class RepairButton : MonoBehaviour {
             _buildCheckPanel.DisAppear();
             return;
         }
+        if (_fullHp)
+        {
+            _notificationPanel.SetNotificationType("RepairWithFullHp");
+            _notificationPanel.Appear();
+            _buildCheckPanel.DisAppear();
+            _towerInfoPanel.SetOriginalowerInfo();
+            _towerInfoPanel.ResetTextColor();
+            return;
+        }
         _tileEventHandler.SetOperation(7);
         _buildCheckPanel.Appear();
-        _towerInfoPanel.RequireCase();
+        _towerInfoPanel.RepairCase();
         _towerInfoPanel.ResetTextColor();
         _towerInfoPanel.SetOriginalowerInfo();
         _towerInfoPanel.Appear();
@@ -53,8 +64,22 @@ public class RepairButton : MonoBehaviour {
     }
 
 
+    // tileEventHandler would call this function when a existing tower is clicked
     public void SetGoldCheckFlag()
     {
         _enoughGold = false;
+    }
+
+    
+    // tileEventHandler would call this function when a existing tower is clicked
+    public void SetHpCheckFlag()
+    {
+        _fullHp = true;
+    }
+
+
+    public void ResetHpCheckFlag()
+    {
+        _fullHp = false;
     }
 }
