@@ -61,7 +61,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 35
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -135,7 +135,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f2eacd8a81427a346ab389f26c321855, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -257,7 +257,6 @@ MonoBehaviour:
   Type: 0
   FireSound: {fileID: 8300000, guid: f2eacd8a81427a346ab389f26c321855, type: 3}
   DestroySound: {fileID: 8300000, guid: 967b05db68ac1ae40ac925eee13cadc3, type: 3}
-  Sounds: []
   FireSoundSource: {fileID: 0}
 --- !u!212 &212000013048375024
 SpriteRenderer:

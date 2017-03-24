@@ -61,7 +61,7 @@ public class TankTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(0, 1, 1, 1.0f);
             DrawLine(start, end, result);
-            FireSoundSource.PlayOneShot(FireSound);
+            FireSoundSource.Play();
             t.GetDamaged(AttackDamage);
             //Debug.Log("TT: Attacks");
         }

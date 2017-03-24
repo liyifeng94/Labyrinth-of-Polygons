@@ -37,7 +37,7 @@ public class HealTower : Tower
             {
                 //Debug.Log("~~~~~~~~~~~~~~" + EndTime + " " + StartTime);
                 StartTime = Time.time;
-                if (null != FireSound) FireSoundSource.PlayOneShot(FireSound);
+                FireSoundSource.Play();
                 for (int i = 0; i < _towers.Count; i++)
                 {
                     if (!_towerList[i].IsDestory() && !_towerList[i].IsFullHealth())

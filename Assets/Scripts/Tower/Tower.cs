@@ -32,15 +32,14 @@ using System.Linq;
     public int GoldPerTenSec;
     public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
     public TowerType Type;
-    public AudioClip FireSound;
-    public AudioClip DestroySound;
-    public AudioSource[] Sounds;
-    [HideInInspector] public AudioSource FireSoundSource;
 
-    private AudioSource _destroySound;
     public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
     public virtual int GetTowerInfo(int[] info) { return 0; }
     public virtual void GetTowerUpgradedInfo(int[] info) { }
+
+    private AudioSource[] _sounds;
+    [HideInInspector] public AudioSource FireSoundSource;
+    private AudioSource _destroySoundSource;
 
 
     public bool IsDestory()
@@ -53,9 +52,9 @@ using System.Linq;
     {
         X = tileEventHandler.GridX;
         Y = tileEventHandler.GridY;
-        Sounds = GetComponents<AudioSource>();
-         if (Type != Tower.TowerType.Heal) FireSoundSource = Sounds[0];
-        _destroySound = Sounds[1];
+        _sounds = GetComponents<AudioSource>();
+        FireSoundSource = _sounds[0];
+        _destroySoundSource = _sounds[1];
     }
 
 
@@ -77,7 +76,7 @@ using System.Linq;
             CurrentHp = 0;
             TowerAnimator.SetTrigger("TowerDestroyed");
             //Remove();
-            _destroySound.PlayOneShot(DestroySound);
+            _destroySoundSource.Play();
             DestroyByEnemy = true;
             //Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
         }
@@ -110,8 +109,8 @@ using System.Linq;
 
         int previoutLevel = CurrentLevel;
         CurrentLevel += 1;
+        CurrentHp += HitPoint / previoutLevel;
         HitPoint = HitPoint / previoutLevel * CurrentLevel;
-        CurrentHp = HitPoint;
         UpgradeCost = UpgradeCost / previoutLevel * CurrentLevel;
         RepairCost = RepairCost / previoutLevel * CurrentLevel;
         SellGain = SellGain / previoutLevel * CurrentLevel;

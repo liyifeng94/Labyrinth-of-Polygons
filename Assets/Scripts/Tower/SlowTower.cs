@@ -61,7 +61,7 @@ public class SlowTower : Tower
             Color result = new Color(1, 0, 1, 1.0f);
             DrawLine(start, end, result);
             //t.GetDamaged((AttackDamage[CurrentLevel]));
-            FireSoundSource.PlayOneShot(FireSound);
+            FireSoundSource.Play();
             t.SlowDown((float)(SlowPercent) / 100);
             //Debug.Log("ST: Attacks");
         }

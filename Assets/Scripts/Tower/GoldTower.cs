@@ -39,7 +39,7 @@ public class GoldTower : Tower
             if (EndTime - StartTime > (float)(1 / AttackSpeed))
             {
                 StartTime = Time.time;
-                FireSoundSource.PlayOneShot(FireSound);
+                FireSoundSource.Play();
                 _gameBoard.HighlightTileAt(X, Y, new Color(1, 1, 0, 1));
                 MoneyGain((float)(GoldPerTenSec) / 10);
             }

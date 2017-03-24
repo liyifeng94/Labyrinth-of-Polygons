@@ -60,7 +60,7 @@ public class RangeTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(1, 0, 0, 1.0f);
             DrawLine(start, end, result);
-            FireSoundSource.PlayOneShot(FireSound);
+            FireSoundSource.Play();
             t.GetDamaged(AttackDamage);
             //Debug.Log("RT: Attacks");
         }
