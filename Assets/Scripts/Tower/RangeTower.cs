@@ -7,12 +7,22 @@ public class RangeTower : Tower
 
     private HashSet<Enemy> _enemies;
 
+
+    void Awake()
+    {
+        CurrentHp = HitPoint;
+        CurrentLevel = 1;
+        CurrentValue = BuildCost;
+        UpgradeCost = (int)(CurrentValue * 0.8);
+        RepairCost = (int)(CurrentValue * 0.3);
+        SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
+    }
+
+
     void Start()
     {
-        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint;
         _enemies = new HashSet<Enemy>();
         Reloading = false;
 
@@ -119,16 +129,17 @@ public class RangeTower : Tower
 
     public new void GetTowerUpgradedInfo(int[] info)
     {
+        int upgratedCurrentValue = CurrentValue + UpgradeCost;
         info[0] = AttackRange;
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
-        info[3] = CurrentHp;
-        info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
-        info[5] = AttackDamage / CurrentLevel * (CurrentLevel + 1);
+        info[3] = CurrentHp + (int)(HitPoint * 0.2);
+        info[4] = (int)(HitPoint * 1.2);
+        info[5] = AttackDamage + 4;
         info[6] = ReloadTime;
-        info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
-        info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
-        info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
+        info[7] = (int)(upgratedCurrentValue * 0.8);
+        info[8] = (int)(upgratedCurrentValue * 0.3);
+        info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }
 }

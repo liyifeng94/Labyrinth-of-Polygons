@@ -5,27 +5,31 @@ using System.Linq;
 public class GoldTower : Tower
 {
 
-    private float _currentReservedMoney;
-    private bool _reservedMoneyTransfered;
-    private GameBoard _gameBoard;
-    //private GameBoard _gameBoard;
+    private bool _transfered;
+
+
+    void Awake()
+    {
+        CurrentHp = HitPoint;
+        CurrentLevel = 1;
+        CurrentValue = BuildCost;
+        GlodPerRound = (int)(CurrentValue * 0.3);
+        UpgradeCost = (int)(CurrentValue * 0.8);
+        RepairCost = (int)(CurrentValue * 0.3);
+        SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
+    }
 
 
     void Start()
     {
-        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint;
-        _currentReservedMoney = 0;
-        _reservedMoneyTransfered = true;
+        _transfered = true;
         Reloading = false;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
-        _gameBoard = LevelManager.GameBoardSystem;
         NotificationPanel = NotificationPanel.Instance;
         TowerController = TowerController.Instance;
-        //_gameBoard = LevelManager.GameBoardSystem;
         TowerAnimator = GetComponent<Animator>();
     }
 
@@ -35,37 +39,16 @@ public class GoldTower : Tower
         if (DestroyByEnemy) return;
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
-            _gameBoard.ClearHighlightTileAt(X, Y);
-            if (!Reloading)
-            {
-                _gameBoard.HighlightTileAt(X, Y, new Color(1, 1, 0, 1));
-                MoneyGain((float)(GoldPerMinute) / 60);
-                FireSoundSource.Play();
-                EndTime = Time.time + ReloadTime;
-                Reloading = true;
-            }
-            else
-            {
-                if (EndTime - Time.time < 0) Reloading = false;
-            }
-            _reservedMoneyTransfered = false;
+            //_gameBoard.ClearHighlightTileAt(X, Y);
+            _transfered = false;
         }
 
         // after the first round, it starts transfering the money beforing entering the further rounds
-        if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_reservedMoneyTransfered)
+        if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_transfered)
         {
-            LevelManager.AddGold((int)_currentReservedMoney);
-            Debug.Log("MT: " + (int)_currentReservedMoney + " gold gained this round");
-            _currentReservedMoney = 0;
-            _reservedMoneyTransfered = true;
+            LevelManager.AddGold((int)GlodPerRound);
+            _transfered = true;
         }
-    }
-
-
-    public void MoneyGain(float money)
-    {
-        _currentReservedMoney += money;
-        //Debug.Log("MT: Total reserved money is " + _currentReservedMoney);
     }
 
 
@@ -76,7 +59,7 @@ public class GoldTower : Tower
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
         info[4] = HitPoint;
-        info[5] = GoldPerMinute;
+        info[5] = GlodPerRound;
         info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
@@ -88,16 +71,17 @@ public class GoldTower : Tower
 
     public new void GetTowerUpgradedInfo(int[] info)
     {
+        int upgratedCurrentValue = CurrentValue + UpgradeCost;
         info[0] = AttackRange;
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
-        info[3] = CurrentHp;
-        info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
-        info[5] = GoldPerMinute / CurrentLevel * (CurrentLevel + 1);
+        info[3] = CurrentHp + (int)(HitPoint * 0.1);
+        info[4] = (int)(HitPoint * 1.1);
+        info[5] = (int)(upgratedCurrentValue * 0.3);
         info[6] = ReloadTime;
-        info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
-        info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
-        info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
+        info[7] = (int)(upgratedCurrentValue * 0.8);
+        info[8] = (int)(upgratedCurrentValue * 0.3);
+        info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }
 }

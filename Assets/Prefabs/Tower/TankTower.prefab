@@ -244,17 +244,18 @@ MonoBehaviour:
   TowerController: {fileID: 0}
   NotificationPanel: {fileID: 0}
   TowerAnimator: {fileID: 0}
-  HitPoint: 100
+  HitPoint: 120
   AttackRange: 1
   ReloadTime: 1
-  BuildCost: 5
-  UpgradeCost: 4
+  BuildCost: 100
+  AttackDamage: 2
+  SlowPercent: 0
+  UpgradeCost: 80
+  CurrentValue: 0
+  HealAmount: 0
+  GlodPerRound: 0
   RepairCost: 2
   SellGain: 3
-  AttackDamage: 1
-  SlowPercent: 0
-  HealAmount: 0
-  GoldPerMinute: 0
   Type: 0
   FireSoundSource: {fileID: 0}
 --- !u!212 &212000013048375024

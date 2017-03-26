@@ -18,26 +18,30 @@ using System.Linq;
     [HideInInspector] public TowerController TowerController;
     [HideInInspector] public NotificationPanel NotificationPanel;
     [HideInInspector] public Animator TowerAnimator;
-    //public int MaxLevel; 
+
     public int HitPoint;
     public int AttackRange;
-    //public int AttackSpeed;
     public int ReloadTime;
     public int BuildCost;
-    public int UpgradeCost;
-    public int RepairCost;
-    public int SellGain;
-
     public int AttackDamage;
     public int SlowPercent;
-    public int HealAmount;
-    public int GoldPerMinute;
+    [HideInInspector] public int UpgradeCost;
+    [HideInInspector] public int CurrentValue;
+    [HideInInspector] public int GlodPerRound;
+
+
+    [HideInInspector] public int RepairCost;
+    [HideInInspector] public int SellGain;
+
     public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
     public TowerType Type;
+
+
 
     public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
     public virtual int GetTowerInfo(int[] info) { return 0; }
     public virtual void GetTowerUpgradedInfo(int[] info) { }
+    public virtual void UpdateSellGain() { }
 
     private AudioSource[] _sounds;
     [HideInInspector] public AudioSource FireSoundSource;
@@ -79,13 +83,12 @@ using System.Linq;
             TowerAnimator.SetTrigger("TowerDestroyed");
             _destroySoundSource.Play();
             DestroyByEnemy = true;
-            //Debug.Log("T: Tower at " + X + " " + Y + " is destoryed by enemy");
         }
     }
 
+
     public void ReceiveHeal(int heal)
     {
-        //Debug.Log("T: Tower at " + X + " " + Y + " was received " + heal + " heal");
         if (CurrentHp + heal <= HitPoint)
         {
             CurrentHp += heal;
@@ -106,46 +109,39 @@ using System.Linq;
             return;
         }
         LevelManager.UseGold(UpgradeCost);
-
-
-        int previoutLevel = CurrentLevel;
         CurrentLevel += 1;
-        CurrentHp += HitPoint / previoutLevel;
-        HitPoint = HitPoint / previoutLevel * CurrentLevel;
-        UpgradeCost = UpgradeCost / previoutLevel * CurrentLevel;
-        RepairCost = RepairCost / previoutLevel * CurrentLevel;
-        SellGain = SellGain / previoutLevel * CurrentLevel;
+        CurrentValue += UpgradeCost;
+        UpgradeCost = (int)(CurrentValue * 0.8);
+        RepairCost = (int)(CurrentValue * 0.3);
+        SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
         switch (Type)
         {
             case TowerType.Tank:
-                AttackDamage = AttackDamage / previoutLevel * CurrentLevel;
+                CurrentHp += (int)(HitPoint * 0.3);
+                HitPoint = (int)(HitPoint * 1.3);
+                AttackDamage += 2;
                 break;
             case TowerType.Range:
-                AttackDamage = AttackDamage / previoutLevel * CurrentLevel;
+                CurrentHp += (int)(HitPoint * 0.2);
+                HitPoint = (int)(HitPoint * 1.2);
+                AttackDamage += 4;
                 break;
             case TowerType.Slow:
-                //SlowPercent = SlowPercent / PrevioutLevel * CurrentLevel;
+                CurrentHp += (int)(HitPoint * 0.1);
+                HitPoint = (int)(HitPoint * 1.1);
+                AttackDamage += 1;
                 break;
             case TowerType.Heal:
-                HealAmount = HealAmount / previoutLevel * CurrentLevel;
+                CurrentHp += (int)(HitPoint * 0.1);
+                HitPoint = (int)(HitPoint * 1.1);
+                AttackDamage += 2;
                 break;
             case TowerType.Gold:
-                GoldPerMinute = GoldPerMinute / previoutLevel * CurrentLevel;
+                CurrentHp += (int)(HitPoint * 0.1);
+                HitPoint = (int)(HitPoint * 1.1);
+                GlodPerRound = (int)(CurrentValue * 0.3);
                 break;
         }
-        /*if (CurrentLevel < MaxLevel - 1)
-        {
-            CurrentLevel += 1;
-            CurrentHp = HitPoint;
-            LevelManager.UseGold(UpgradeCost);
-            //Debug.Log("T: Tower upgraded to level" + CurrentLevel);
-        }
-        else
-        {
-            //Debug.Log("T: Max Level");
-            NotificationPanel.SetNotificationType("MaxLevel");
-            NotificationPanel.Appear();
-        }*/
     }
 
 
@@ -171,12 +167,6 @@ using System.Linq;
     {
         return CurrentLevel;
     }
-
-    
-    /*public bool CheckMaxLevel()
-    {
-        return CurrentLevel == MaxLevel - 1;
-    }*/
 
 
     public bool IsFullHealth()

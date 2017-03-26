@@ -8,12 +8,22 @@ public class SlowTower : Tower
     private HashSet<Enemy> _enemies;
 
 
+    void Awake()
+    {
+        CurrentHp = HitPoint;
+        CurrentLevel = 1;
+        CurrentValue = BuildCost;
+        UpgradeCost = (int)(CurrentValue * 0.8);
+        RepairCost = (int)(CurrentValue * 0.3);
+        SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
+        //Debug.Log("RepairCost is " + RepairCost);
+    }
+
+
     void Start()
     {
-        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint;
         _enemies = new HashSet<Enemy>();
         Reloading = false;
 
@@ -36,11 +46,20 @@ public class SlowTower : Tower
         {
             if (!Reloading)
             {
-                //SlowEnemy(_enemies.First()); // slow one enemy
-                List<Enemy> _enemyList = _enemies.ToList();
-                for (int i = 0; i < _enemies.Count; i++)
+                List<Enemy> enemyList = _enemies.ToList();
+                int lessOrEqualThanThree;
+                if (_enemies.Count < 3)
                 {
-                    SlowEnemy(_enemyList[i]);
+                    lessOrEqualThanThree = _enemies.Count;
+                }
+                else
+                {
+                    lessOrEqualThanThree = 2;
+                }
+                for (int i = 0; i < lessOrEqualThanThree; i++)
+                {
+                    SlowEnemy(enemyList[i]);
+                    AttackEnemy(enemyList[i]);
                 }
                 FireSoundSource.Play();
                 _enemies.Clear();
@@ -66,7 +85,6 @@ public class SlowTower : Tower
 
     public void SlowEnemy(Enemy t)
     {
-        //Debug.Log("TT: AttackEnemy~~~~~~~~~~~~~~~~~");
         if (TowerController.CheckIfEnemyAlive(t))
         {
             Vector3 start = transform.position;
@@ -76,7 +94,22 @@ public class SlowTower : Tower
             Color result = new Color(1, 0, 1, 1.0f);
             DrawLine(start, end, result);
             t.SlowDown((float)(SlowPercent) / 100);
-            //Debug.Log("ST: Attacks");
+        }
+        else
+        {
+            //Debug.Log("ST: Targeted enemy died");
+        }
+    }
+
+
+    public void AttackEnemy(Enemy t)
+    {
+        if (DestroyByEnemy) return;
+        //Debug.Log("ST: AttackEnemy~~~~~~~~~~~~~~~~~");
+        if (TowerController.CheckIfEnemyAlive(t))
+        {
+            t.GetDamaged(AttackDamage);
+            //Debug.Log("ST: Attacks, damage is  "+ AttackDamage);
         }
         else
         {
@@ -112,7 +145,7 @@ public class SlowTower : Tower
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
         info[4] = HitPoint;
-        info[5] = SlowPercent;
+        info[5] = AttackDamage;
         info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
@@ -124,22 +157,17 @@ public class SlowTower : Tower
 
     public new void GetTowerUpgradedInfo(int[] info)
     {
+        int upgratedCurrentValue = CurrentValue + UpgradeCost;
         info[0] = AttackRange;
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
-        info[3] = CurrentHp;
-        info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
-        info[5] = SlowPercent;
+        info[3] = CurrentHp + (int)(HitPoint * 0.1);
+        info[4] = (int)(HitPoint * 1.1);
+        info[5] = AttackDamage + 1;
         info[6] = ReloadTime;
-        info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
-        info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
-        info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
+        info[7] = (int)(upgratedCurrentValue * 0.8);
+        info[8] = (int)(upgratedCurrentValue * 0.3);
+        info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
-    }
-
-
-    public new void ClearEnemies()
-    {
-        _enemies.Clear();
     }
 }

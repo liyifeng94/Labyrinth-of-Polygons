@@ -7,18 +7,27 @@ public class HealTower : Tower
 {
     private HashSet<Tower> _towers;
     private List<Tower> _towerList;
-    //private bool _setAllyTower;
-    //private bool _clearAllyTower;
+    private bool _healSound;
+
+
+    void Awake()
+    {
+        CurrentHp = HitPoint;
+        CurrentLevel = 1;
+        CurrentValue = BuildCost;
+        UpgradeCost = (int)(CurrentValue * 0.8);
+        RepairCost = (int)(CurrentValue * 0.3);
+        SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
+    }
 
 
     void Start()
     {
-        CurrentLevel = 1;
         DestroyByEnemy = false;
         StartTime = Time.time;
-        CurrentHp = HitPoint;
         _towers = new HashSet<Tower>();
         Reloading = false;
+        _healSound = true;
 
         LevelManager = GameManager.Instance.CurrentLevelManager;
         NotificationPanel = NotificationPanel.Instance;
@@ -35,6 +44,7 @@ public class HealTower : Tower
         {
             if (!Reloading)
             {
+                if (0 != _towers.Count) 
                 for (int i = 0; i < _towers.Count; i++)
                 {
                     if (!_towerList[i].IsDestory() && !_towerList[i].IsFullHealth())
@@ -43,9 +53,9 @@ public class HealTower : Tower
                         //break; heal mutiple towers
                     }
                 }
-                FireSoundSource.Play();
                 EndTime = Time.time + ReloadTime;
                 Reloading = true;
+                _healSound = true;
             }
             else
             {
@@ -59,7 +69,6 @@ public class HealTower : Tower
     {
         if (DestroyByEnemy) return;
         _towers.Add(t);
-        //Debug.Log("HT: Add ally successfully " + _towers.Count);
         _towerList = _towers.ToList();
     }
 
@@ -67,7 +76,6 @@ public class HealTower : Tower
     public void RemoveTower(Tower t)
     {
         _towers.Remove(t);
-        //Debug.Log("HT: Remove ally successfully " + _towers.Count);
         _towerList = _towers.ToList();
     }
 
@@ -75,17 +83,16 @@ public class HealTower : Tower
     public void HealAlly(Tower t)
     {
         if (null == t) return;
-        //Debug.Log("HT: Allay destoried case");
         if (DestroyByEnemy) return;
-        // TODO: check if ally tower is destroied
+        if (_healSound) FireSoundSource.Play();
+        _healSound = false;
         Vector3 start = transform.position;
         GameObject target = t.gameObject;
         Transform endTransform = target.transform;
         Vector3 end = endTransform.position;
         Color result = new Color(0, 1, 0, 1.0f);
         DrawLine(start, end, result);
-        t.ReceiveHeal(HealAmount);
-        //Debug.Log("HT: Heals ally tower");
+        t.ReceiveHeal(AttackDamage);
     }
 
 
@@ -116,7 +123,7 @@ public class HealTower : Tower
         info[2] = CurrentLevel;
         info[3] = CurrentHp;
         info[4] = HitPoint;
-        info[5] = HealAmount;
+        info[5] = AttackDamage;
         info[6] = ReloadTime;
         info[7] = UpgradeCost;
         info[8] = RepairCost;
@@ -128,16 +135,17 @@ public class HealTower : Tower
 
     public new void GetTowerUpgradedInfo(int[] info)
     {
+        int upgratedCurrentValue = CurrentValue + UpgradeCost;
         info[0] = AttackRange;
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
-        info[3] = CurrentHp;
-        info[4] = HitPoint / CurrentLevel * (CurrentLevel + 1);
-        info[5] = HealAmount / CurrentLevel * (CurrentLevel + 1);
+        info[3] = CurrentHp + (int)(HitPoint * 0.1);
+        info[4] = (int)(HitPoint * 1.1);
+        info[5] = AttackDamage + 2;
         info[6] = ReloadTime;
-        info[7] = UpgradeCost / CurrentLevel * (CurrentLevel + 1);
-        info[8] = RepairCost / CurrentLevel * (CurrentLevel + 1);
-        info[9] = SellGain / CurrentLevel * (CurrentLevel + 1);
+        info[7] = (int)(upgratedCurrentValue * 0.8);
+        info[8] = (int)(upgratedCurrentValue * 0.3);
+        info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }
 }
