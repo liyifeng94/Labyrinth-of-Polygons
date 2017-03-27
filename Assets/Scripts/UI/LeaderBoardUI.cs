@@ -34,9 +34,9 @@ public class LeaderBoardUI : MonoBehaviour
             Text timeresult = Instantiate(TimeResultText) as Text;
             timeresult.transform.SetParent(Child2.transform, false);
             timeresult.fontSize = 1;
-            timeresult.GetComponent<Text>().text = highScoreList[i].DateTime;
+            timeresult.GetComponent<Text>().text = highScoreList[i].DateTime.Substring(0, 10);
 
-            Text scoreresult = Instantiate(TimeResultText) as Text;
+            Text scoreresult = Instantiate(ScoreResultText) as Text;
             scoreresult.transform.SetParent(Child2.transform, false);
             scoreresult.fontSize = 1;
             scoreresult.GetComponent<Text>().text = highScoreList[i].Score.ToString();
