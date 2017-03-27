@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour
         {
             
             enemeyGameObject.transform.SetParent(this.transform);
-            Enemies.Add(enemeyGameObject);
+            //Enemies.Add(enemeyGameObject);
             Enemy enemy = enemeyGameObject.GetComponent<Enemy>();
             _enemies.Add(enemy);
             enemy.SetupEnemy(startCell.X,startCell.Y,tiles, path, (Enemy.Type) temp);
