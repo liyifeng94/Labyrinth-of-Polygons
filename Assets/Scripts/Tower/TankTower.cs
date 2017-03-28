@@ -59,7 +59,6 @@ public class TankTower : Tower
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
             SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
-            //Debug.Log("Sell gain is " + SellGain);
         }
     }
 

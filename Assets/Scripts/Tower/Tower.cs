@@ -80,6 +80,7 @@ using System.Linq;
         else
         {
             CurrentHp = 0;
+            SellGain = 0;
             TowerAnimator.SetTrigger("TowerDestroyed");
             _destroySoundSource.Play();
             DestroyByEnemy = true;
@@ -102,12 +103,6 @@ using System.Linq;
 
     public void Upgrade()
     {
-        if (DestroyByEnemy)
-        {
-            NotificationPanel.SetNotificationType("UpgradeWhenDestroied");
-            NotificationPanel.Appear();
-            return;
-        }
         LevelManager.UseGold(UpgradeCost);
         CurrentLevel += 1;
         CurrentValue += UpgradeCost;
