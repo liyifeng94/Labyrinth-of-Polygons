@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d50b1d1bb67baff459cff0fc9c7f3ae0
-timeCreated: 1490299962
+guid: a57e01218f5cd7c42b61a9e824bb58c4
+timeCreated: 1489096554
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -102,7 +102,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Towers
   userData: 
   assetBundleName: 
   assetBundleVariant: 
