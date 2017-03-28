@@ -155,7 +155,6 @@ public class GridSystem
                     }
                     else if (lastCell == obstacleCell)
                     {
-                        Debug.Log("Max obstacles: " + obstacles);
                         return obstacles;
                     }
 
