@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class LeaderBoardUI : MonoBehaviour
@@ -20,7 +22,9 @@ public class LeaderBoardUI : MonoBehaviour
         
         HighScoreBoard temp = GameManager.Instance.LocalHighScoreBoard;
 	    List<HighScoreBoard.HighScoreEntry> highScoreList = temp.ScoreList.MainList;
-	    for(int i = 0; i < highScoreList.Count; i++)
+        var query = highScoreList.OrderBy(w => w.Score).ToList();
+
+        for (int i = highScoreList.Count - 1; i >= 0; i--)
 	    {
 
             GameObject Child2 = Instantiate(ChildPanel);
@@ -28,9 +32,9 @@ public class LeaderBoardUI : MonoBehaviour
             
             var childlist = Child2.GetComponentsInChildren<Text>();
 
-            childlist[0].text = highScoreList[i].Name;
-            childlist[1].text = highScoreList[i].DateTime.Substring(0, 10);
-            childlist[2].text = highScoreList[i].Score.ToString();
+            childlist[0].text = query[i].Name;
+            childlist[1].text = query[i].DateTime.Substring(0, 10);
+            childlist[2].text = query[i].Score.ToString();
         }
 
         ChildPanel.SetActive(false);
