@@ -161,7 +161,6 @@ public class GridSystem
 
                 }
             }
-            Debug.Log("Obstacles: " + obstacles);
             return obstacles;
         }
 

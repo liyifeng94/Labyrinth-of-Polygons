@@ -27,10 +27,7 @@ public class EnemyController : MonoBehaviour
         if (wave == 2) temp = 1;
         if (wave == 3) temp = 2;
         if (wave == 4) temp = 3;
-        if (wave % 5 == 0) temp = 4;
-
-        //temp = 3;
-
+        if (wave % 5 == 0) temp = Random.Range(4, 7);
 
         List<GridSystem.Cell> path;
         if ((Enemy.Type)temp != Enemy.Type.Flying) path =  GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
@@ -92,7 +89,7 @@ public class EnemyController : MonoBehaviour
         //SpawnEnemy();
     }
 
-    private int _num = 5;
+    private int _num = 3;
 	// Update is called once per frame
 	void Update ()
 	{
@@ -115,9 +112,9 @@ public class EnemyController : MonoBehaviour
 	        _levelManager.EnterBuildingPhase();
 
 	        int level = _levelManager.GetCurrentLevel();
-	        if (level < 4) _num = 5;
+	        if (level < 4) _num = 3;
 	        else if ((level + 1) % 5 == 0) _num = 1+level/5;
-            else _num = level;
+            else _num = 3+(level-5)*2;
 	        _build = false;
 	    }
     }
@@ -156,6 +153,12 @@ public class EnemyController : MonoBehaviour
                 return level;
             case Enemy.Type.Attacking:
                 return 2 * level;
+            case Enemy.Type.BossAttack:
+                return 2 * level;
+            case Enemy.Type.BossFly:
+                return 1 * level;
+            case Enemy.Type.BossTank:
+                return 5 * level;
             default:
                 return 0;
         }

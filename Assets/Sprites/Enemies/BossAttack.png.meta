@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8c73ffd4d9f9bf546a6486e4911e1101
-timeCreated: 1490145788
+guid: cd5c0dca209c8454e8b9030c85bb9fd4
+timeCreated: 1490742034
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -58,11 +58,19 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Enemy
   userData: 
   assetBundleName: 
   assetBundleVariant: 
