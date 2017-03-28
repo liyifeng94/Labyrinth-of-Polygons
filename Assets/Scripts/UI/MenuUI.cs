@@ -11,6 +11,7 @@ public class MenuUI : MonoBehaviour
     public Text VersionText;
     public GameObject MainMenuPanel;
     public GameObject StartOptionsPanel;
+    public GameObject CreditPanel;
 
     private GameManager _gameManager;
 
@@ -20,6 +21,7 @@ public class MenuUI : MonoBehaviour
         NamePlaceHolder.text = _gameManager.PlayerName;
         MainMenuPanel.SetActive(true);
         StartOptionsPanel.SetActive(false);
+        CreditPanel.SetActive(false);
         UpdateObstacles();
         if (VersionText != null)
         {
@@ -48,12 +50,21 @@ public class MenuUI : MonoBehaviour
     public void BackToMainMenu()
     {
         StartOptionsPanel.SetActive(false);
+        CreditPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
     }
 
     public void SetStartOptions()
     {
         StartOptionsPanel.SetActive(true);
+        CreditPanel.SetActive(false);
+        MainMenuPanel.SetActive(false);
+    }
+
+    public void ShowCredits()
+    {
+        CreditPanel.SetActive(true);
+        StartOptionsPanel.SetActive(false);
         MainMenuPanel.SetActive(false);
     }
 
