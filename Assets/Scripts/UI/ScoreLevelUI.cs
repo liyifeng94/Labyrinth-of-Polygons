@@ -86,6 +86,9 @@ public class ScoreLevelUI : MonoBehaviour
 
         TitleText.text = titletemp;
 	    ScoreText.text = scoretemp;
+
+	    gm.SaveHighScoreBoard();
+
 	}
 	
 	// Update is called once per frame

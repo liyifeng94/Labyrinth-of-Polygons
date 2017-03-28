@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SaveHighScoreBoard()
+    public void SaveHighScoreBoard()
     {
         if (!File.Exists(_highScoreBoardPath))
         {

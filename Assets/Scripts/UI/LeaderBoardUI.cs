@@ -27,6 +27,7 @@ public class LeaderBoardUI : MonoBehaviour
             Child2.transform.SetParent(ContentPanel.transform, false);
             
             var childlist = Child2.GetComponentsInChildren<Text>();
+
             childlist[0].text = highScoreList[i].Name;
             childlist[1].text = highScoreList[i].DateTime.Substring(0, 10);
             childlist[2].text = highScoreList[i].Score.ToString();
