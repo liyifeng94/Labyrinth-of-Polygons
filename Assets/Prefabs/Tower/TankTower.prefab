@@ -252,7 +252,6 @@ MonoBehaviour:
   SlowPercent: 0
   UpgradeCost: 80
   CurrentValue: 0
-  HealAmount: 0
   GlodPerRound: 0
   RepairCost: 2
   SellGain: 3

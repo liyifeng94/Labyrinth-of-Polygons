@@ -6,6 +6,7 @@ public class UpgradeButton : MonoBehaviour {
     public static UpgradeButton Instance;
 
     private bool _enoughGold;
+    private bool _destroy;
 
     private TileEventHandler _tileEventHandler;
 
@@ -23,6 +24,7 @@ public class UpgradeButton : MonoBehaviour {
     public void setTowerEventHandler(TileEventHandler teh)
     {
         _enoughGold = true;
+        _destroy = false;
         if (null == _tileEventHandler)
         {
             _buildCheckPanel = BuildCheckPanel.Instance;
@@ -41,6 +43,15 @@ public class UpgradeButton : MonoBehaviour {
             _notificationPanel.SetNotificationType("NotEnoughMoney");
             _notificationPanel.Appear();
             _buildCheckPanel.DisAppear();
+            _towerInfoPanel.ResetTextColor();
+            return;
+        }
+        if (_destroy)
+        {
+            _notificationPanel.SetNotificationType("UpgradeWhenDestroied");
+            _notificationPanel.Appear();
+            _buildCheckPanel.DisAppear();
+            _towerInfoPanel.ResetTextColor();
             return;
         }
         _tileEventHandler.SetOperation(6);
@@ -64,5 +75,11 @@ public class UpgradeButton : MonoBehaviour {
     public void SetGoldCheckFlag()
     {
         _enoughGold = false;
+    }
+
+
+    public void setDestroyFlag()
+    {
+        _destroy = true;
     }
 }
