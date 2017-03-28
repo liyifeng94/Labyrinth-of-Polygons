@@ -13,9 +13,9 @@ public class GoldTower : Tower
         CurrentHp = HitPoint;
         CurrentLevel = 1;
         CurrentValue = BuildCost;
-        GlodPerRound = (int)(CurrentValue * 0.3);
+        GlodPerRound = (int)(CurrentValue * 0.15);
         UpgradeCost = (int)(CurrentValue * 0.8);
-        RepairCost = (int)(CurrentValue * 0.3);
+        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
     }
 
@@ -80,7 +80,7 @@ public class GoldTower : Tower
         info[5] = (int)(upgratedCurrentValue * 0.3);
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * 0.8);
-        info[8] = (int)(upgratedCurrentValue * 0.3);
+        info[8] = (int)(upgratedCurrentValue * 0.3 * CurrentHp / HitPoint);
         info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }

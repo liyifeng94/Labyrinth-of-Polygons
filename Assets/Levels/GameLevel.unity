@@ -3873,7 +3873,7 @@ Prefab:
     - target: {fileID: 114000011911444382, guid: 4b244aa4e67cc654baa38db75144a0dc,
         type: 2}
       propertyPath: StartingGold
-      value: 1000
+      value: 800
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b244aa4e67cc654baa38db75144a0dc, type: 2}
