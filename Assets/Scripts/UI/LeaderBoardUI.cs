@@ -25,22 +25,14 @@ public class LeaderBoardUI : MonoBehaviour
 
             GameObject Child2 = Instantiate(ChildPanel);
             Child2.transform.SetParent(ContentPanel.transform, false);
-
-            Text nameresult = Instantiate(NameResultText);
-            nameresult.transform.SetParent(Child2.transform, false);
-            nameresult.fontSize = 1;
-            nameresult.GetComponent<Text>().text = highScoreList[i].Name;
-
-            Text timeresult = Instantiate(TimeResultText) as Text;
-            timeresult.transform.SetParent(Child2.transform, false);
-            timeresult.fontSize = 1;
-            timeresult.GetComponent<Text>().text = highScoreList[i].DateTime.Substring(0, 10);
-
-            Text scoreresult = Instantiate(ScoreResultText) as Text;
-            scoreresult.transform.SetParent(Child2.transform, false);
-            scoreresult.fontSize = 1;
-            scoreresult.GetComponent<Text>().text = highScoreList[i].Score.ToString();
+            
+            var childlist = Child2.GetComponentsInChildren<Text>();
+            childlist[0].text = highScoreList[i].Name;
+            childlist[1].text = highScoreList[i].DateTime.Substring(0, 10);
+            childlist[2].text = highScoreList[i].Score.ToString();
         }
+
+        ChildPanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
