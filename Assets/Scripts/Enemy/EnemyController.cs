@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
         if (wave == 3) temp = 2;
         if (wave == 4) temp = 3;
         if (wave % 5 == 0) temp = Random.Range(4, 7);
-
+        temp = Random.Range(4, 7);
         List<GridSystem.Cell> path;
         if ((Enemy.Type)temp != Enemy.Type.Flying) path =  GameManager.Instance.SearchPathFrom(entrances[entrance].X, entrances[entrance].Y);
         else path = GameManager.Instance.SearchFlyingPath(entrances[entrance].X, entrances[entrance].Y);
@@ -190,13 +190,13 @@ public class EnemyController : MonoBehaviour
         switch (type)
         {
             case Enemy.Type.Attacking:
-                return (float)Math.Pow(1.2, level);
+                return (float)Math.Pow(1.4, level);
             case Enemy.Type.BossFly:
-                return (float)Math.Pow(1.1, level);
+                return (float)Math.Pow(1.2, level);
             case Enemy.Type.BossAttack:
-                return (float)Math.Pow(1.3, level);
+                return (float)Math.Pow(1.5, level);
             case Enemy.Type.BossTank:
-                return (float)Math.Pow(1.1, level);
+                return (float)Math.Pow(1.2, level);
         }
         return 0;
     }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Xml.Schema;
-using UnityEditorInternal;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
