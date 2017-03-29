@@ -73,6 +73,7 @@ using System.Linq;
     public void ReceiveAttack(int ad)
     {
         if (DestroyByEnemy) return;
+        TowerAnimator.SetTrigger("TowerDamaged");
         if (CurrentHp > ad)
         {
             CurrentHp -= ad;
