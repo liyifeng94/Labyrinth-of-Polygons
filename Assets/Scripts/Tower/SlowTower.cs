@@ -91,7 +91,7 @@ public class SlowTower : Tower
             Vector3 end = endTransform.position;
             Color result = new Color(1, 0, 1, 1.0f);
             DrawLine(start, end, result);
-            t.SlowDown((float)(SlowPercent) / 100);
+            t.SlowDown(0.5f);
         }
         else
         {

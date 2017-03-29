@@ -24,7 +24,6 @@ using System.Linq;
     public int ReloadTime;
     public int BuildCost;
     public int AttackDamage;
-    public int SlowPercent;
     [HideInInspector] public int UpgradeCost;
     [HideInInspector] public int CurrentValue;
 
@@ -80,6 +79,7 @@ using System.Linq;
         else
         {
             CurrentHp = 0;
+            RepairCost = (int) (CurrentValue * 0.3);
             SellGain = 0;
             TowerAnimator.SetTrigger("TowerDestroyed");
             _destroySoundSource.Play();

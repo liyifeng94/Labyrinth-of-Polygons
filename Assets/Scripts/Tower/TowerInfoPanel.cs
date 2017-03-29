@@ -157,35 +157,35 @@ public class TowerInfoPanel : MonoBehaviour {
         {
             case 0:
                 Type.text = "Tank";
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 3:
                 Type.text = "Range";
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 4:
                 Type.text = "Slow";
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 1:
                 Type.text = "Heal";
-                DpmText.text = "Hpm";
+                DpmText.text = "Heal";
                 DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 2:
                 Type.text = "Gold";
-                DpmText.text = "Gpr";
+                DpmText.text = "Gold";
                 DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "N/A";
@@ -215,23 +215,23 @@ public class TowerInfoPanel : MonoBehaviour {
         switch (_upgradeTowerInfo[1])
         {
             case 0:
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 3:
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 4:
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 1:
-                DpmText.text = "Hpm";
+                DpmText.text = "Heal";
                 DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
                 break;
             case 2:
-                DpmText.text = "Gpr";
+                DpmText.text = "Gold";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
         }
@@ -252,23 +252,23 @@ public class TowerInfoPanel : MonoBehaviour {
         switch (_towerInfo[1])
         {
             case 0:
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 3:
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 4:
-                DpmText.text = "Dpm";
+                DpmText.text = "Atk";
                 DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 1:
-                DpmText.text = "Hpm";
+                DpmText.text = "Heal";
                 DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
                 break;
             case 2:
-                DpmText.text = "Gpr";
+                DpmText.text = "Gold";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
         }
@@ -316,11 +316,11 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
         {
-            RCost.text = rCost + "G";
+            RCost.text = upgratedRCost + "G";
         }
         else // sell button or no button is clicked in battoe phace
         {
-            RCost.text = upgratedRCost + "G";
+            RCost.text = rCost + "G";
         }
     }
 
