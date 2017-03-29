@@ -248,7 +248,7 @@ MonoBehaviour:
   AttackRange: 2
   ReloadTime: 1
   BuildCost: 200
-  AttackDamage: 5
+  AttackDamage: 0
   SlowPercent: 0
   UpgradeCost: 16
   CurrentValue: 0

@@ -27,7 +27,6 @@ using System.Linq;
     public int SlowPercent;
     [HideInInspector] public int UpgradeCost;
     [HideInInspector] public int CurrentValue;
-    [HideInInspector] public int GlodPerRound;
 
 
     [HideInInspector] public int RepairCost;
@@ -39,7 +38,6 @@ using System.Linq;
 
 
     public virtual void AddEnemy(Enemy t) { /*Debug.Log("T: Enemy added");*/ }
-    public virtual int GetTowerInfo(int[] info) { return 0; }
     public virtual void GetTowerUpgradedInfo(int[] info) { }
     public virtual void UpdateSellGain() { }
 
@@ -76,6 +74,8 @@ using System.Linq;
         if (CurrentHp > ad)
         {
             CurrentHp -= ad;
+            RepairCost = (int)(CurrentValue * 0.3 * (1 - 1.0 * CurrentHp / HitPoint));
+            SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
         }
         else
         {
@@ -129,12 +129,12 @@ using System.Linq;
             case TowerType.Heal:
                 CurrentHp += (int)(HitPoint * 0.1);
                 HitPoint = (int)(HitPoint * 1.1);
-                AttackDamage += 2;
+                AttackDamage = (int)(HitPoint * 0.1);
                 break;
             case TowerType.Gold:
                 CurrentHp += (int)(HitPoint * 0.1);
                 HitPoint = (int)(HitPoint * 1.1);
-                GlodPerRound = (int)(CurrentValue * 0.3);
+                AttackDamage = (int)(CurrentValue * 0.3);
                 break;
         }
     }
@@ -150,6 +150,8 @@ using System.Linq;
         }
         CurrentHp = HitPoint;
         LevelManager.UseGold(RepairCost);
+        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
+        Debug.Log("Repair reset to "+ RepairCost);
         if (DestroyByEnemy)
         {
             TowerAnimator.SetTrigger("TowerFixed");
@@ -167,5 +169,22 @@ using System.Linq;
     public bool IsFullHealth()
     {
         return CurrentHp == HitPoint;
+    }
+
+
+    public int GetTowerInfo(int[] info)
+    {
+        info[0] = AttackRange;
+        info[1] = (int)Type;
+        info[2] = CurrentLevel;
+        info[3] = CurrentHp;
+        info[4] = HitPoint;
+        info[5] = AttackDamage;
+        info[6] = ReloadTime;
+        info[7] = UpgradeCost;
+        info[8] = RepairCost;
+        info[9] = SellGain;
+        info[10] = BuildCost;
+        return info[0];
     }
 }
