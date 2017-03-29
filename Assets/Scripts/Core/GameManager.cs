@@ -32,8 +32,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public AudioSource SoundSource;
     [HideInInspector] public AudioSource StartSoundSource;
     [HideInInspector] public AudioSource BattleSoundSource;
-    public AudioClip StartSound;
-    public AudioClip BattleSound;
     private AudioSource[] _sounds;
 
     // Use this for initialization

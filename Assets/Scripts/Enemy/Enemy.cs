@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     private const float Tolerance = (float)0.01;
 
     public enum Direction { Up = 0, Left = 1, Down = 2, Right = 3 }
-    public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, Boss = 4 }
+    public enum Type { Normal = 0, Fast = 1, Flying = 2, Attacking = 3, BossAttack = 4, BossFly = 5, BossTank = 6}
 
     public int GridX { get; private set; }
     public int GridY { get; private set; }
@@ -142,9 +142,6 @@ public class Enemy : MonoBehaviour
             (transform.position.y < _path[_pos].Position.y && Dir == Direction.Down))
         {
             ReachTileCenter();
-            //position.x = _path[_pos].Position.x;
-            //position.y = _path[_pos].Position.y;
-            //transform.position = position;
 
         }
     }
@@ -184,7 +181,7 @@ public class Enemy : MonoBehaviour
             case Type.Fast:
                 Hp = 8 + hpGrowth;
                 AttackRange = 0;
-                Speed = 4;
+                Speed = 3;
                 Score = 20;
                 Gold = (int)(20 * goldFactor);
                 break;
@@ -195,16 +192,33 @@ public class Enemy : MonoBehaviour
                 Score = 40;
                 Gold = (int)(25 * goldFactor);
                 break;
-            case Type.Boss:
-                Hp = 200 + 10 * currentLevel;
+            case Type.BossAttack:
+                Hp = 30 + hpGrowth;
+                AttackRange = 4;
+                Speed = 2;
+                Score = 100;
+                _attackSpeed = 0.5f;
+                AttackDamage = 5 + 2 * currentLevel;
+                Damage = 5;
+                Gold = (int)(100 * goldFactor);
+                break;
+            case Type.BossFly:
+                Hp = 15 + hpGrowth;
+                AttackRange = 4;
+                Speed = 3;
+                Score = 100;
+                Damage = 5;
+                Gold = (int)(100 * goldFactor);
+                break;
+            case Type.BossTank:
+                Hp = 80 + hpGrowth;
                 AttackRange = 4;
                 Speed = 1;
                 Score = 100;
-                _attackSpeed = 0.5f;
-                AttackDamage = 5 + 3 * currentLevel;
+                Damage = 5;
+                Gold = (int)(100 * goldFactor);
                 break;
         }
-                Debug.Log(""+EnemyType+" hp:"+Hp + " Gold:"+Gold);
     }
 
     public void SetPos(int xPos, int yPos)

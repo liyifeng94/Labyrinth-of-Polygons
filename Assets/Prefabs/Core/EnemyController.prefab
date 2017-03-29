@@ -52,8 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 1732153121881028, guid: 8b9a5d1075dfc2c4babe0e62cc3694af, type: 2}
+  - {fileID: 1163173520624064, guid: d3d6dd486657da540a85ac5e99cab579, type: 2}
   - {fileID: 1101588043741526, guid: 697817373cfaff045820510f41619458, type: 2}
   - {fileID: 1245511874056754, guid: 8606b4081c55eec429828c2bb2c4af27, type: 2}
   - {fileID: 1439478701907904, guid: 49752ef51aef0a44380a088cec3a2035, type: 2}
-  - {fileID: 1066061791687430, guid: 8f23eb8029d33fa4e93c9fa5a0264106, type: 2}
+  - {fileID: 1815168294201722, guid: d15b618b0b7b40c45a0ac1a1fcd21fd2, type: 2}
+  - {fileID: 1015295548897258, guid: cd149e1806232fb45929a843667e1021, type: 2}
+  - {fileID: 1934391892265438, guid: 201bfd6fbf30e2042a97dc7acdc506a1, type: 2}

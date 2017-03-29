@@ -51,9 +51,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2000aaf3e0605734fad47bdfc9b7ef70, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dcac6185fa59cfa46873275b327c3bd9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.65
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -137,9 +137,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: eee60a59e9b49824497df40061070730, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7a71b32d9a81bae44bf0f41d41cfe0a4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -229,5 +229,3 @@ MonoBehaviour:
   SoundSource: {fileID: 0}
   StartSoundSource: {fileID: 0}
   BattleSoundSource: {fileID: 0}
-  StartSound: {fileID: 8300000, guid: 2000aaf3e0605734fad47bdfc9b7ef70, type: 3}
-  BattleSound: {fileID: 8300000, guid: eee60a59e9b49824497df40061070730, type: 3}

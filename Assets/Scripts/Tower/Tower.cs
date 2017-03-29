@@ -107,7 +107,7 @@ using System.Linq;
         CurrentLevel += 1;
         CurrentValue += UpgradeCost;
         UpgradeCost = (int)(CurrentValue * 0.8);
-        RepairCost = (int)(CurrentValue * 0.3);
+        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
         switch (Type)
         {

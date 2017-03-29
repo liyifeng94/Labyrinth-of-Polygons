@@ -53,8 +53,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerController: {fileID: 0}
   EnemyController: {fileID: 0}
-  StartingHealth: 100
-  StartingGold: 100
+  StartingHealth: 50
+  StartingGold: 1000
   GameBoardSystem: {fileID: 0}
   TowerControllerPrefab: {fileID: 1000011245628898, guid: 3767a84caf6ae214fb7eb70af8855032,
     type: 2}

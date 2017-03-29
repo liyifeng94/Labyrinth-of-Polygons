@@ -259,7 +259,13 @@ public class GameBoard : MonoBehaviour
             case Enemy.Type.Flying:
                 ++_currentLevelState.FlyingKilled;
                 break;
-            case Enemy.Type.Boss:
+            case Enemy.Type.BossAttack:
+                ++_currentLevelState.BossKilled;
+                break;
+            case Enemy.Type.BossFly:
+                ++_currentLevelState.BossKilled;
+                break;
+            case Enemy.Type.BossTank:
                 ++_currentLevelState.BossKilled;
                 break;
         }
