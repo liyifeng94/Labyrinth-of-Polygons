@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Xml.Schema;
+using UnityEditorInternal;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -30,32 +31,34 @@ public class ScoreLevelUI : MonoBehaviour
     private uint finalscore = 0;
 
     private GameManager gm;
+    private LevelState gmi;
 
     // Use this for initialization
     void Start ()
 	{
         TitleText.text = "";
 	    ScoreText.text = "";
-	    
-        string titletemp, scoretemp;
+
 	    gm = GameManager.Instance;
+
         /* should only be true in testing */
         if (gm != null)
 	    {
+            gmi = gm.LastLevelState;
             gm.LocalHighScoreBoard.AddEntry(gm.LastLevelState.FinalScore,gm.PlayerName);
 	        score = (uint) gm.CurrentLevelManager.GetScore();
-	        level = (uint)gm.CurrentLevelManager.GetCurrentLevel();
-	        obstacle = GameManager.Instance.Obstacles;
-	        NormalKilled = GameManager.Instance.LastLevelState.NormalKilled;
-	        AttackKilled = GameManager.Instance.LastLevelState.AttackKilled;
-            FlyingKilled = GameManager.Instance.LastLevelState.FlyingKilled;
-	        FastKilled = GameManager.Instance.LastLevelState.FastKilled;
-	        BossKilled = GameManager.Instance.LastLevelState.BossKilled;
-	        finalscore = GameManager.Instance.LastLevelState.FinalScore;
+	        level = (uint) gm.CurrentLevelManager.GetCurrentLevel();
+	        obstacle = gm.Obstacles;
+	        NormalKilled = gmi.NormalKilled;
+	        AttackKilled = gmi.AttackKilled;
+            FlyingKilled = gmi.FlyingKilled;
+	        FastKilled = gmi.FastKilled;
+	        BossKilled = gmi.BossKilled;
+	        finalscore = gmi.FinalScore;
 	    }
 
-	    titletemp = BASICSCORE + "\n";
-	    scoretemp = score.ToString() + "\n";
+	    var titletemp = BASICSCORE + "\n";
+	    var scoretemp = score.ToString() + "\n";
 
         titletemp += LEVEL + "\n";
         scoretemp += "* " + level.ToString() + "\n";
@@ -88,7 +91,6 @@ public class ScoreLevelUI : MonoBehaviour
 	    ScoreText.text = scoretemp;
 
 	    gm.SaveHighScoreBoard();
-
 	}
 	
 	// Update is called once per frame
