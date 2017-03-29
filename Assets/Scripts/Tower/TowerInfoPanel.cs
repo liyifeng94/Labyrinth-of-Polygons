@@ -55,7 +55,7 @@ public class TowerInfoPanel : MonoBehaviour {
             // if repair button is clicked in building phase, set current hp to color.green
             if (_repairCase)
             {
-                Hp.text = "<color=#00ff00ff>" + _towerInfo[3] + "\n</color>/" + _towerInfo[4];
+                Hp.text = "<color=#00ff00ff>" + _towerInfo[4] + "\n</color>/" + _towerInfo[4];
             }
             RCost.text = 0 + "G";
             return;
