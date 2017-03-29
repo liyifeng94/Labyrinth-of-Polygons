@@ -70,19 +70,19 @@ public class Enemy : MonoBehaviour
             if (Dir == Direction.Up) transform.Rotate(Vector3.forward * -90);
             Dir = Direction.Right;
         }
-        if (_path[_pos + 1].Position.x < _path[_pos].Position.x)
+        else if (_path[_pos + 1].Position.x < _path[_pos].Position.x)
         {
             if (Dir == Direction.Down) transform.Rotate(Vector3.forward * -90);
-            if (Dir == Direction.Up) transform.Rotate(Vector3.forward * 90);
+            else if (Dir == Direction.Up) transform.Rotate(Vector3.forward * 90);
             Dir = Direction.Left;
         }
-        if (_path[_pos + 1].Position.y > _path[_pos].Position.y)
+        else if (_path[_pos + 1].Position.y > _path[_pos].Position.y)
         {
             if (Dir == Direction.Left) transform.Rotate(Vector3.forward * -90);
-            if (Dir == Direction.Right) transform.Rotate(Vector3.forward * 90);
+            else if (Dir == Direction.Right) transform.Rotate(Vector3.forward * 90);
             Dir = Direction.Up;
         }
-        if (_path[_pos + 1].Position.y < _path[_pos].Position.y)
+        else if (_path[_pos + 1].Position.y < _path[_pos].Position.y)
         {
             if (Dir == Direction.Left) transform.Rotate(Vector3.forward * 90);
             if (Dir == Direction.Right) transform.Rotate(Vector3.forward * -90);
@@ -210,34 +210,33 @@ public class Enemy : MonoBehaviour
                 Damage = 2;
                 break;
             case Type.BossAttack:
-                Hp = 80 + hpGrowth;
+                Hp = 40 + hpGrowth;
                 AttackRange = 4;
                 Speed = 2;
                 Score = 100;
                 _attackSpeed = 0.5f;
-                AttackDamage = 10 + 3 * currentLevel;
-                AttackDamage = (int)(20 * attackFactor);
+                AttackDamage = (int)(14 * attackFactor);
                 Gold = (int)(500 * goldFactor);
                 Damage = 10;
                 break;
             case Type.BossFly:
-                Hp = 50 + hpGrowth;
+                Hp = 40 + hpGrowth;
                 AttackRange = 2;
                 Speed = 3;
                 Score = 100;
                 Damage = 10;
                 _attackSpeed = 1f;
-                AttackDamage = (int) (10 * attackFactor);
+                AttackDamage = (int) (80 * attackFactor);
                 Gold = (int)(500 * goldFactor);
                 break;
             case Type.BossTank:
-                Hp = 100 + hpGrowth;
+                Hp = 80 + hpGrowth;
                 AttackRange = 3;
                 Speed = 1;
                 Score = 100;
                 Damage = 10;
-                _attackSpeed = 1f;
-                AttackDamage = (int)(10 * attackFactor);
+                _attackSpeed = 1.5f;
+                AttackDamage = (int)(80 * attackFactor);
                 Gold = (int)(500 * goldFactor);
                 break;
         }
