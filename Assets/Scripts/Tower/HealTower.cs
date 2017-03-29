@@ -125,9 +125,7 @@ public class HealTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp + (int)(HitPoint * 0.5);
         info[4] = (int)(HitPoint * 1.5);
-        Debug.Log("heal amount is " + info[4]);
         info[5] = (int)(info[4] * 0.2);
-        Debug.Log("updated heal amount is " + info[5]);
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * UpgradeFactor);
         info[8] = (int)(upgratedCurrentValue * RepairFactor * (1 - 1.0 * info[3] / info[4]));
