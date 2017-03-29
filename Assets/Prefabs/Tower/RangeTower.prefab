@@ -249,10 +249,8 @@ MonoBehaviour:
   ReloadTime: 2
   BuildCost: 100
   AttackDamage: 4
-  SlowPercent: 0
   UpgradeCost: 80
   CurrentValue: 0
-  GlodPerRound: 0
   RepairCost: 4
   SellGain: 6
   Type: 3
