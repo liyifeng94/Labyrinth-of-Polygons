@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     void ChangeDir()
     {
-        
+        Direction original = Dir;
         if (_path[_pos + 1].Position.x > _path[_pos].Position.x)
         {
             if (Dir == Direction.Down) transform.Rotate(Vector3.forward * 90);
@@ -87,6 +87,20 @@ public class Enemy : MonoBehaviour
             if (Dir == Direction.Left) transform.Rotate(Vector3.forward * 90);
             if (Dir == Direction.Right) transform.Rotate(Vector3.forward * -90);
             Dir = Direction.Down;
+        }
+        if (original != Dir && _pos>0)
+        {
+            Vector3 position = transform.position;
+            //Debug.Log("enemy: " + position.x + " " + position.y + ", tile: " + _path[_pos].Position.x + " " + _path[_pos].Position.y);
+            if (GridX != _cells[_pos].X || GridY != _cells[_pos].Y) Debug.Log("Grid enemy:" + GridX + " " + GridY + " cell: " + _cells[_pos].X + " " + _cells[_pos].Y);
+            
+            position.x = _path[_pos].Position.x;
+            position.y = _path[_pos].Position.y;
+
+
+   
+            transform.position = position;
+
         }
     }
 
@@ -116,10 +130,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 position = transform.position;
         float temp = Speed * Time.deltaTime;
-        if (_distance + temp >= 1)
-        {
-            temp = 1 - _distance;
-        }
+
         _distance += temp;
         if (Dir == Direction.Right) position.x += temp;
         if (Dir == Direction.Left) position.x -= temp;
@@ -134,7 +145,8 @@ public class Enemy : MonoBehaviour
             GridX = _cells[_pos].X;
             GridY = _cells[_pos].Y;
             _gameBoard.UpdateEnemyPosition(this);
-            _distance = 0;
+            if (_distance >= 1) _distance = _distance - 1;
+            else _distance -= 0.5f;
         }
         if ((transform.position.x > _path[_pos].Position.x && Dir == Direction.Right) ||
             (transform.position.x < _path[_pos].Position.x && Dir == Direction.Left) ||
