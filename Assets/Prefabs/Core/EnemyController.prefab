@@ -59,3 +59,7 @@ MonoBehaviour:
   - {fileID: 1815168294201722, guid: d15b618b0b7b40c45a0ac1a1fcd21fd2, type: 2}
   - {fileID: 1015295548897258, guid: cd149e1806232fb45929a843667e1021, type: 2}
   - {fileID: 1934391892265438, guid: 201bfd6fbf30e2042a97dc7acdc506a1, type: 2}
+  EnemyNum: 5
+  DefaultNum: 0
+  Customizable: 0
+  Timer: 1

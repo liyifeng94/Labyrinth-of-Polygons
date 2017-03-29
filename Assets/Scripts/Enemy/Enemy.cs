@@ -169,6 +169,7 @@ public class Enemy : MonoBehaviour
                 Speed = 2;
                 Score = 10;
                 Gold = (int)(20 * goldFactor);
+                Damage = 2;
                 break;
             case Type.Attacking:
                 Hp = 10 + hpGrowth;
@@ -178,6 +179,7 @@ public class Enemy : MonoBehaviour
                 _attackSpeed = 1.0f;
                 AttackDamage = (int)(10 * attackFactor);
                 Gold = (int)(30 * goldFactor);
+                Damage = 2;
                 break;
             case Type.Fast:
                 Hp = 8 + hpGrowth;
@@ -185,6 +187,7 @@ public class Enemy : MonoBehaviour
                 Speed = 3;
                 Score = 20;
                 Gold = (int)(20 * goldFactor);
+                Damage = 2;
                 break;
             case Type.Flying:
                 Hp = 15 + hpGrowth;
@@ -192,9 +195,10 @@ public class Enemy : MonoBehaviour
                 Speed = 2;
                 Score = 40;
                 Gold = (int)(25 * goldFactor);
+                Damage = 2;
                 break;
             case Type.BossAttack:
-                Hp = 30 + hpGrowth;
+                Hp = 80 + hpGrowth;
                 AttackRange = 4;
                 Speed = 2;
                 Score = 100;
@@ -202,9 +206,10 @@ public class Enemy : MonoBehaviour
                 AttackDamage = 10 + 3 * currentLevel;
                 AttackDamage = (int)(20 * attackFactor);
                 Gold = (int)(100 * goldFactor);
+                Damage = 10;
                 break;
             case Type.BossFly:
-                Hp = 15 + hpGrowth;
+                Hp = 50 + hpGrowth;
                 AttackRange = 4;
                 Speed = 3;
                 Score = 100;
@@ -214,7 +219,7 @@ public class Enemy : MonoBehaviour
                 Gold = (int)(100 * goldFactor);
                 break;
             case Type.BossTank:
-                Hp = 80 + hpGrowth;
+                Hp = 100 + hpGrowth;
                 AttackRange = 4;
                 Speed = 1;
                 Score = 100;

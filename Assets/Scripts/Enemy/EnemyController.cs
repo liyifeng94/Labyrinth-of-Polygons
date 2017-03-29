@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     private Enemy.Type type = Enemy.Type.Normal;
     public int EnemyNum = 5;
     public int DefaultNum = 0;
-    public bool Customizable = false;
+    public float Timer = 1.0f;
 
     public void SpawnEnemy(int wave)
     {
@@ -95,7 +95,8 @@ public class EnemyController : MonoBehaviour
 	{
 	    _end = Time.time;
 	    float diff =  _end - _start;
-	    if (_spawn && EnemyNum>0 && diff>1)
+	    Timer = GetTimer();
+	    if (_spawn && EnemyNum>0 && diff>Timer)
 	    {
 	        _start = Time.time;
 	        _end = Time.time;
@@ -162,11 +163,11 @@ public class EnemyController : MonoBehaviour
             case Enemy.Type.Attacking:
                 return 5 * level;
             case Enemy.Type.BossAttack:
-                return 7 * level;
+                return 14 * level;
             case Enemy.Type.BossFly:
-                return 5 * level;
-            case Enemy.Type.BossTank:
                 return 10 * level;
+            case Enemy.Type.BossTank:
+                return 20 * level;
             default:
                 return 0;
         }
@@ -200,4 +201,11 @@ public class EnemyController : MonoBehaviour
         return 0;
     }
 
+    public float GetTimer()
+    {
+        int level = _levelManager.GetCurrentLevel();
+        if (level <= 5) return 1;
+        level -= 6;
+        return (float)Math.Pow(0.95, level);
+    }
 }
