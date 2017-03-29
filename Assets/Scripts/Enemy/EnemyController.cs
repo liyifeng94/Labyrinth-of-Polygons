@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     private float _start,_end;
     private Enemy.Type type = Enemy.Type.Normal;
     public int EnemyNum = 5;
+    public int DefaultNum = 0;
+    public bool Customizable = false;
 
     public void SpawnEnemy(int wave)
     {
@@ -111,6 +113,7 @@ public class EnemyController : MonoBehaviour
 
 	        int level = _levelManager.GetCurrentLevel();
             EnemyNum = GetEnemyNum(level);
+	        if (DefaultNum > 0) EnemyNum = DefaultNum;
 	        _build = false;
 	    }
     }
