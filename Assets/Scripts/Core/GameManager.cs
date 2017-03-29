@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -155,5 +157,26 @@ public class GameManager : MonoBehaviour
     {
         StartSoundSource.Stop();
         BattleSoundSource.Play();
+    }
+
+    public int GetDifficultyMultiplier(uint obs)
+    {
+
+        var difswitch = new Dictionary<Func<uint, bool>, int>
+        {
+            {x => x >= 115, 20 },
+            {x => 115 > x && x >= 105, 18 },
+            {x => 105 > x && x >= 95, 17 },
+            {x => 95 > x && x >= 85, 16 },
+            {x => 85 > x && x >= 75, 12 },
+            {x => 75 > x && x >= 65, 11 },
+            {x => 65 > x && x >= 45, 10 },
+            {x => 45 > x && x >= 35, 11 },
+            {x => 35 > x && x >= 25, 13 },
+            {x => 25 > x && x >= 15, 15 },
+            {x => 15 > x && x >= 5, 17 },
+            {x => x < 5, 19 },
+        };
+        return difswitch.First(sw => sw.Key(obs)).Value;
     }
 }
