@@ -57,6 +57,7 @@ public class TowerInfoPanel : MonoBehaviour {
             {
                 Hp.text = "<color=#00ff00ff>" + _towerInfo[3] + "\n</color>/" + _towerInfo[4];
             }
+            RCost.text = 0 + "G";
             return;
         }
         // record a current selected tower, if no tower is selected at the beginning, _type is null

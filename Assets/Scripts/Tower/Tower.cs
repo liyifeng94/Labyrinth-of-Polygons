@@ -109,34 +109,34 @@ using System.Linq;
         LevelManager.UseGold(UpgradeCost);
         CurrentLevel += 1;
         CurrentValue += UpgradeCost;
-        UpgradeCost = (int)(CurrentValue * 0.5);
-        RepairCost = (int)(CurrentValue * 0.2 * CurrentHp / HitPoint);
-        SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
+        UpgradeCost = (int)(CurrentValue * UpgradeFactor);
+        RepairCost = (int)(CurrentValue * RepairFactor * CurrentHp / HitPoint);
+        SellGain = (int)(CurrentValue * SellFactor * CurrentHp / HitPoint);
         switch (Type)
         {
             case TowerType.Tank:
-                CurrentHp += (int)(HitPoint * 0.3);
-                HitPoint = (int)(HitPoint * 1.3);
+                CurrentHp += (int)(HitPoint * 0.7);
+                HitPoint = (int)(HitPoint * 1.7);
                 AttackDamage += 2;
                 break;
             case TowerType.Range:
-                CurrentHp += (int)(HitPoint * 0.2);
-                HitPoint = (int)(HitPoint * 1.2);
+                CurrentHp += (int)(HitPoint * 0.5);
+                HitPoint = (int)(HitPoint * 1.5);
                 AttackDamage += 4;
                 break;
             case TowerType.Slow:
-                CurrentHp += (int)(HitPoint * 0.1);
-                HitPoint = (int)(HitPoint * 1.1);
+                CurrentHp += (int)(HitPoint * 0.4);
+                HitPoint = (int)(HitPoint * 1.4);
                 AttackDamage += 1;
                 break;
             case TowerType.Heal:
-                CurrentHp += (int)(HitPoint * 0.1);
-                HitPoint = (int)(HitPoint * 1.1);
+                CurrentHp += (int)(HitPoint * 0.5);
+                HitPoint = (int)(HitPoint * 1.5);
                 AttackDamage = (int)(HitPoint * 0.1);
                 break;
             case TowerType.Gold:
-                CurrentHp += (int)(HitPoint * 0.1);
-                HitPoint = (int)(HitPoint * 1.1);
+                CurrentHp += (int)(HitPoint * 0.4);
+                HitPoint = (int)(HitPoint * 1.4);
                 AttackDamage = (int)(CurrentValue * 0.3);
                 break;
         }
@@ -152,8 +152,8 @@ using System.Linq;
             return;
         }
         CurrentHp = HitPoint;
-        LevelManager.UseGold(RepairCost);
-        RepairCost = (int)(CurrentValue * 0.2 * CurrentHp / HitPoint);
+        if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase) LevelManager.UseGold(RepairCost);
+        RepairCost = (int)(CurrentValue * RepairFactor * CurrentHp / HitPoint);
         Debug.Log("Repair reset to "+ RepairCost);
         if (DestroyByEnemy)
         {
