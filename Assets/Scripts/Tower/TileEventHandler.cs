@@ -22,7 +22,7 @@ public class TileEventHandler : MonoBehaviour
     private SlowTower _slowTowerPtr;
     private HealTower _healTowerPtr;
     private GoldTower _goldTowerPtr;
-    // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     private GameObject _towerGameObject;
     private int _currentTowerType;
 
@@ -37,7 +37,7 @@ public class TileEventHandler : MonoBehaviour
     private SlowTowerButton _slowTowerButton;
     private HealTowerButton _healTowerButton;
     private GoldTowerButton _goldTowerButton;
-    // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     private UpgradeButton _upgradeButton;
     private RepairButton _repairButton;
     private SellButton _sellButton;
@@ -69,7 +69,7 @@ public class TileEventHandler : MonoBehaviour
         _slowTowerButton = SlowTowerButton.Instance;
         _healTowerButton = HealTowerButton.Instance;
         _goldTowerButton = GoldTowerButton.Instance;
-        // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         _upgradeButton = UpgradeButton.Instance;
         _repairButton = RepairButton.Instance;
         _sellButton = SellButton.Instance;
@@ -98,21 +98,18 @@ public class TileEventHandler : MonoBehaviour
         {
             _clearBeforeBattle = false;
         }
-        //Debug.Log("TEH: Confirmed operation is " + TowerOperation);
         if (_confirmed)
         {
-            //Debug.Log("TEH: Confirmed operation is " + TowerOperation);
             switch (TowerOperation)
             {
                 case Operation.Nop:
                     break;
                 case Operation.TankTower:
-                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
                     {
-                        Debug.Log("TEH: towerGameObject is null");
+                        //Debug.Log("TEH: not enough money or blocking the path");
                     }
                     else
                     {
@@ -125,7 +122,6 @@ public class TileEventHandler : MonoBehaviour
                         {
                             SellTower(true);
                             _towerExist = false;
-                            //_notificationPanel.DisAppear();
                             _notificationPanel.SetNotificationType("Block");
                             _notificationPanel.Appear();
                         }
@@ -137,12 +133,11 @@ public class TileEventHandler : MonoBehaviour
                     }
                     break;
                 case Operation.RangeTower:
-                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
                     {
-                        Debug.Log("TEH: towerGameObject is null");
+                        //Debug.Log("TEH: not enough money or blocking the path");
                     }
                     else
                     {
@@ -155,7 +150,6 @@ public class TileEventHandler : MonoBehaviour
                         {
                             SellTower(true);
                             _towerExist = false;
-                            //_notificationPanel.DisAppear();
                             _notificationPanel.SetNotificationType("Block");
                             _notificationPanel.Appear();
                         }
@@ -167,12 +161,11 @@ public class TileEventHandler : MonoBehaviour
                     }
                     break;
                 case Operation.SlowTower:
-                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
                     {
-                        Debug.Log("TEH: towerGameObject is null");
+                        //Debug.Log("TEH: not enough money or blocking the path");
                     }
                     else
                     {
@@ -185,7 +178,6 @@ public class TileEventHandler : MonoBehaviour
                         {
                             SellTower(true);
                             _towerExist = false;
-                            //_notificationPanel.DisAppear();
                             _notificationPanel.SetNotificationType("Block");
                             _notificationPanel.Appear();
                         }
@@ -197,7 +189,6 @@ public class TileEventHandler : MonoBehaviour
                     }
                     break;
                 case Operation.HealTower:
-                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
@@ -228,12 +219,11 @@ public class TileEventHandler : MonoBehaviour
                     }
                     break;
                 case Operation.GoldTower:
-                    // Debug.Log("TEH: Trying to build a tower build at " + GridX + "," + GridY + "," + _towerExist + " " + _ongui);
                     // ask tower controller to build(check avaliable gold)
                     _towerGameObject = _towerController.BuildTower(this, GridX, GridY, _towerIndex);
                     if (null == _towerGameObject)
                     {
-                        //Debug.Log("TEH: towerGameObject is null");
+                        //Debug.Log("TEH: not enough money or blocking the path");
                     }
                     else
                     {
@@ -246,7 +236,6 @@ public class TileEventHandler : MonoBehaviour
                         {
                             SellTower(true);
                             _towerExist = false;
-                            //_notificationPanel.DisAppear();
                             _notificationPanel.SetNotificationType("Block");
                             _notificationPanel.Appear();
                         }
@@ -258,7 +247,6 @@ public class TileEventHandler : MonoBehaviour
                     }
                     break;
                 case Operation.Upgrade:
-                    //Debug.Log("TEH: Upgrade Operation called");
                     if (0 == _currentTowerType) _tankTowerPtr.Upgrade();
                     if (1 == _currentTowerType) _rangeTowerPtr.Upgrade();
                     if (2 == _currentTowerType) _slowTowerPtr.Upgrade();
@@ -316,10 +304,8 @@ public class TileEventHandler : MonoBehaviour
                         }
                         _goldTowerPtr.Repair();
                     }
-                // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     break;
                 case Operation.Sell:
-                    //Debug.Log("TEH: Sell operation executing");
                     SellTower(false);
                     break;
             }
@@ -330,7 +316,6 @@ public class TileEventHandler : MonoBehaviour
 
     void OnMouseDown()
     {
-        //Debug.Log("TEH: Pressed click at " + GridX + "," + GridY + "," + _towerExist + " " + _currentTowerType);
         _gameBoard.ClearHighlightTiles();
         _towerInfoPanel.ResetTextColor();
         if (_towerExist)
@@ -340,7 +325,6 @@ public class TileEventHandler : MonoBehaviour
             {
                 _sellButton.SellOptButton.interactable = false;
             }
-            //Debug.Log("TEH: Click on an existing tower at " + GridX + "," + GridY + ", type is " + _currentTowerType);
             _sellButton.setTowerEventHandler(this);
             _upgradeButton.setTowerEventHandler(this);
             _repairButton.setTowerEventHandler(this);
@@ -395,7 +379,6 @@ public class TileEventHandler : MonoBehaviour
                 if (_goldTowerPtr.IsDestory()) _upgradeButton.setDestroyFlag();
                 if (_goldTowerPtr.RepairCost > _levelManager.GetGold()) _repairButton.SetGoldCheckFlag();
             }
-            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             _towerInfoPanel.SetTowerInfo(towerInfo);
             _towerInfoPanel.SetUpgradedTowerInfo(upgradedTowerInfo);
             _towerInfoPanel.Appear();
@@ -420,7 +403,7 @@ public class TileEventHandler : MonoBehaviour
             _slowTowerButton.setTowerEventHandler(this);
             _healTowerButton.setTowerEventHandler(this);
             _goldTowerButton.setTowerEventHandler(this);
-            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
             _yesButton.setTileEventHandler(this);
             _towerBuildPanel.Appear();
             _towerOperationPanel.DisAppear();
@@ -434,7 +417,6 @@ public class TileEventHandler : MonoBehaviour
 
     public void SellTower(bool blockCase)
     {
-        //Debug.Log("TEH: Trying to sell tower");
         _gameBoard.ClearHighlightTiles();
         _towerExist = false;
         if (! blockCase) // there is money refund for the non-blockCase
@@ -464,14 +446,14 @@ public class TileEventHandler : MonoBehaviour
                 _levelManager.AddGold(_goldTowerPtr.SellGain);
                 _gameBoard.RemoveTower(_goldTowerPtr);
             }
-            // TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             _towerController.RemoveTileEventHandler(this);
         }
         _currentTowerType = -1;
         Destroy(_towerGameObject);
-        //Debug.Log("TEH: Tower object removed");
     }
 
+
+    // Yes and No confirm button will call this function
     public void OperationConfirmed()
     {
         _confirmed = true;
@@ -484,10 +466,10 @@ public class TileEventHandler : MonoBehaviour
     }
 
 
+    // tower building/operation buttons are selected, it will call this function
     public void SetOperation(int op)
     {
         TowerOperation = (Operation) op;
-        //Debug.Log("TEH: Operation reset to " + TowerOperation+ " at " + GridX + " " + GridY);
     }
 
 
@@ -498,7 +480,6 @@ public class TileEventHandler : MonoBehaviour
         if (2 == _currentTowerType) { return _slowTowerPtr; }
         if (3 == _currentTowerType) { return _healTowerPtr; }
         if (4 == _currentTowerType) { return _goldTowerPtr; }
-        //TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         return null;
     }
 
