@@ -77,6 +77,7 @@ public class NotificationPanel : MonoBehaviour {
                 break;
             case "Upgrade":
                 FixText.text = _type + _towerOperationReuqst;
+                _autoDisappearSet = false;
                 break;
             case "UpgradeWhenDestroied":
                 FixText.text = "The selected tower is destroyed. Repair or sell it.\nRequest refused.";
@@ -87,6 +88,7 @@ public class NotificationPanel : MonoBehaviour {
                 break;*/
             case "Repair":
                 FixText.text = _type + _towerOperationReuqst;
+                _autoDisappearSet = false;
                 break;
             case "RepairWithFullHp":
                 FixText.text = "Cannot repair a full HP tower.\nRequest refused.";

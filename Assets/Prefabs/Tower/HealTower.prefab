@@ -246,13 +246,11 @@ MonoBehaviour:
   TowerAnimator: {fileID: 0}
   HitPoint: 50
   AttackRange: 2
-  ReloadTime: 1
+  ReloadTime: 2
   BuildCost: 200
   AttackDamage: 0
-  SlowPercent: 0
   UpgradeCost: 16
   CurrentValue: 0
-  GlodPerRound: 0
   RepairCost: 8
   SellGain: 12
   Type: 1
