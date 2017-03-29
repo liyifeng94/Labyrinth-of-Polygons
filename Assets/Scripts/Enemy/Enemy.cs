@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 
     public float Speed, OriginalSpeed;
     public int AttackRange;
-    public int Damage = 1;
+    public int Damage = 2;
     public int Hp = 1;
     public int Gold = 5;
     public int Score = 10;
@@ -160,6 +160,7 @@ public class Enemy : MonoBehaviour
         _enemyController = EnemyController.Instance;
         int hpGrowth = _enemyController.GetHpGrowth(EnemyType);
         float goldFactor = _enemyController.GetGoldGrowth(EnemyType);
+        float attackFactor = _enemyController.GetAttackGrowth(EnemyType);
         switch (EnemyType)
         {
             case Type.Normal:
@@ -175,7 +176,7 @@ public class Enemy : MonoBehaviour
                 Speed = 2;
                 Score = 30;
                 _attackSpeed = 1.0f;
-                AttackDamage = 3 + currentLevel;
+                AttackDamage = (int)(10 * attackFactor);
                 Gold = (int)(30 * goldFactor);
                 break;
             case Type.Fast:
@@ -198,8 +199,8 @@ public class Enemy : MonoBehaviour
                 Speed = 2;
                 Score = 100;
                 _attackSpeed = 0.5f;
-                AttackDamage = 5 + 2 * currentLevel;
-                Damage = 5;
+                AttackDamage = 10 + 3 * currentLevel;
+                AttackDamage = (int)(20 * attackFactor);
                 Gold = (int)(100 * goldFactor);
                 break;
             case Type.BossFly:
@@ -207,7 +208,9 @@ public class Enemy : MonoBehaviour
                 AttackRange = 4;
                 Speed = 3;
                 Score = 100;
-                Damage = 5;
+                Damage = 10;
+                _attackSpeed = 1f;
+                AttackDamage = (int) (10 * attackFactor);
                 Gold = (int)(100 * goldFactor);
                 break;
             case Type.BossTank:
@@ -215,7 +218,9 @@ public class Enemy : MonoBehaviour
                 AttackRange = 4;
                 Speed = 1;
                 Score = 100;
-                Damage = 5;
+                Damage = 10;
+                _attackSpeed = 1f;
+                AttackDamage = (int)(10 * attackFactor);
                 Gold = (int)(100 * goldFactor);
                 break;
         }

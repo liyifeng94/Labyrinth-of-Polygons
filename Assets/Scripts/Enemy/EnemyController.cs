@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     private bool _build = false;
     private float _start,_end;
     private Enemy.Type type = Enemy.Type.Normal;
+    public int EnemyNum;
 
     public void SpawnEnemy(int wave)
     {
@@ -86,22 +87,21 @@ public class EnemyController : MonoBehaviour
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _enemies = new List<Enemy>();
         _start = Time.time;
+        EnemyNum = 5;
         //SpawnEnemy();
     }
-
-    private int _num = 3;
-	// Update is called once per frame
+    
 	void Update ()
 	{
 	    _end = Time.time;
 	    float diff =  _end - _start;
-	    if (_spawn && _num>0 && diff>1)
+	    if (_spawn && EnemyNum>0 && diff>1)
 	    {
 	        _start = Time.time;
 	        _end = Time.time;
-	        _num--;
+            EnemyNum--;
 	        SpawnEnemy(_levelManager.GetCurrentLevel());
-	        if (_num == 0)
+	        if (EnemyNum == 0)
 	        {
 	            _spawn = false;
             }
@@ -112,11 +112,18 @@ public class EnemyController : MonoBehaviour
 	        _levelManager.EnterBuildingPhase();
 
 	        int level = _levelManager.GetCurrentLevel();
-	        if (level < 4) _num = 3;
-	        else if ((level + 1) % 5 == 0) _num = 1+level/5;
-            else _num = 3+(level-5)*2;
+            EnemyNum = GetEnemyNum(level);
 	        _build = false;
 	    }
+    }
+
+    private int GetEnemyNum(int level)
+    {
+        int num;
+        if (level < 4) num = 5;
+        else if ((level + 1) % 5 == 0) num = 1 + level / 5;
+        else num = 5 + (level - 5) * 3;
+        return num;
     }
 
     public int GetTowerPriority(Tower.TowerType type)
@@ -124,11 +131,11 @@ public class EnemyController : MonoBehaviour
         switch (type)
         {
             case Tower.TowerType.Tank:
-                return 0;
-            case Tower.TowerType.Heal:
                 return 1;
-            case Tower.TowerType.Gold:
+            case Tower.TowerType.Heal:
                 return 2;
+            case Tower.TowerType.Gold:
+                return 0;
             case Tower.TowerType.Range:
                 return 3;
             case Tower.TowerType.Slow:
@@ -146,19 +153,19 @@ public class EnemyController : MonoBehaviour
         switch (type)
         {
             case Enemy.Type.Normal:
-                return 2 * level;
-            case Enemy.Type.Flying:
-                return 2 * level;
-            case Enemy.Type.Fast:
-                return level;
-            case Enemy.Type.Attacking:
-                return 2 * level;
-            case Enemy.Type.BossAttack:
-                return 2 * level;
-            case Enemy.Type.BossFly:
-                return 1 * level;
-            case Enemy.Type.BossTank:
                 return 5 * level;
+            case Enemy.Type.Flying:
+                return 5 * level;
+            case Enemy.Type.Fast:
+                return 3 * level;
+            case Enemy.Type.Attacking:
+                return 5 * level;
+            case Enemy.Type.BossAttack:
+                return 7 * level;
+            case Enemy.Type.BossFly:
+                return 5 * level;
+            case Enemy.Type.BossTank:
+                return 10 * level;
             default:
                 return 0;
         }
@@ -171,6 +178,25 @@ public class EnemyController : MonoBehaviour
         if (level <= 5) return 1;
         level -= 6;
         return (float) Math.Pow(1.4, level);
+    }
+
+    public float GetAttackGrowth(Enemy.Type type)
+    {
+        int level = _levelManager.GetCurrentLevel();
+        if (level <= 5) return 1;
+        level -= 6;
+        switch (type)
+        {
+            case Enemy.Type.Attacking:
+                return (float)Math.Pow(1.2, level);
+            case Enemy.Type.BossFly:
+                return (float)Math.Pow(1.1, level);
+            case Enemy.Type.BossAttack:
+                return (float)Math.Pow(1.3, level);
+            case Enemy.Type.BossTank:
+                return (float)Math.Pow(1.1, level);
+        }
+        return 0;
     }
 
 }
