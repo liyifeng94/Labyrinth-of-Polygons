@@ -176,7 +176,7 @@ public class Enemy : MonoBehaviour
         switch (EnemyType)
         {
             case Type.Normal:
-                Hp = 10 + hpGrowth;
+                Hp = 15 + hpGrowth;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 10;
@@ -184,7 +184,7 @@ public class Enemy : MonoBehaviour
                 Damage = 2;
                 break;
             case Type.Attacking:
-                Hp = 10 + hpGrowth;
+                Hp = 15 + hpGrowth;
                 AttackRange = 2;
                 Speed = 2;
                 Score = 30;
@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour
                 Damage = 2;
                 break;
             case Type.Fast:
-                Hp = 8 + hpGrowth;
+                Hp = 12 + hpGrowth;
                 AttackRange = 0;
                 Speed = 3;
                 Score = 20;
@@ -202,7 +202,7 @@ public class Enemy : MonoBehaviour
                 Damage = 2;
                 break;
             case Type.Flying:
-                Hp = 15 + hpGrowth;
+                Hp = 18 + hpGrowth;
                 AttackRange = 0;
                 Speed = 2;
                 Score = 40;
@@ -210,34 +210,34 @@ public class Enemy : MonoBehaviour
                 Damage = 2;
                 break;
             case Type.BossAttack:
-                Hp = 40 + hpGrowth;
+                Hp = 50 + hpGrowth;
                 AttackRange = 4;
                 Speed = 2;
                 Score = 100;
                 _attackSpeed = 0.5f;
                 AttackDamage = (int)(14 * attackFactor);
-                Gold = (int)(500 * goldFactor);
+                Gold = (int)(300 * goldFactor);
                 Damage = 10;
                 break;
             case Type.BossFly:
-                Hp = 40 + hpGrowth;
+                Hp = 50 + hpGrowth;
                 AttackRange = 2;
                 Speed = 3;
                 Score = 100;
                 Damage = 10;
                 _attackSpeed = 1f;
-                AttackDamage = (int) (80 * attackFactor);
-                Gold = (int)(500 * goldFactor);
+                AttackDamage = (int) (10 * attackFactor);
+                Gold = (int)(300 * goldFactor);
                 break;
             case Type.BossTank:
-                Hp = 80 + hpGrowth;
+                Hp = 100 + hpGrowth;
                 AttackRange = 3;
                 Speed = 1;
                 Score = 100;
                 Damage = 10;
                 _attackSpeed = 1.5f;
-                AttackDamage = (int)(80 * attackFactor);
-                Gold = (int)(500 * goldFactor);
+                AttackDamage = (int)(10 * attackFactor);
+                Gold = (int)(300 * goldFactor);
                 break;
         }
     }

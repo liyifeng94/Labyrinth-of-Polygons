@@ -154,17 +154,17 @@ public class EnemyController : MonoBehaviour
         switch (type)
         {
             case Enemy.Type.Normal:
-                return 3 * level;
+                return 4 * level;
             case Enemy.Type.Flying:
-                return 3 * level;
+                return 4 * level;
             case Enemy.Type.Fast:
-                return 1 * level;
+                return 2 * level;
             case Enemy.Type.Attacking:
-                return 3 * level;
+                return 4 * level;
             case Enemy.Type.BossAttack:
                 return 6 * level;
             case Enemy.Type.BossFly:
-                return 5 * level;
+                return 6 * level;
             case Enemy.Type.BossTank:
                 return 10 * level;
             default:
@@ -178,7 +178,7 @@ public class EnemyController : MonoBehaviour
         int level = _levelManager.GetCurrentLevel();
         if (level <= 5) return 1;
         level -= 6;
-        return (float) Math.Pow(1.4, level);
+        return (float) Math.Pow(1.1, level);
     }
 
     public float GetAttackGrowth(Enemy.Type type)
@@ -189,13 +189,13 @@ public class EnemyController : MonoBehaviour
         switch (type)
         {
             case Enemy.Type.Attacking:
-                return (float)Math.Pow(1.4, level);
+                return (float)Math.Pow(1.1, level);
             case Enemy.Type.BossFly:
-                return (float)Math.Pow(1.2, level);
+                return (float)Math.Pow(1.1, level);
             case Enemy.Type.BossAttack:
-                return (float)Math.Pow(1.5, level);
+                return (float)Math.Pow(1.3, level);
             case Enemy.Type.BossTank:
-                return (float)Math.Pow(1.2, level);
+                return (float)Math.Pow(1.1, level);
         }
         return 0;
     }
