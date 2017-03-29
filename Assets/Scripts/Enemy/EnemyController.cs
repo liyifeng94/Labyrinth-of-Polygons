@@ -154,19 +154,19 @@ public class EnemyController : MonoBehaviour
         switch (type)
         {
             case Enemy.Type.Normal:
-                return 5 * level;
-            case Enemy.Type.Flying:
-                return 5 * level;
-            case Enemy.Type.Fast:
                 return 3 * level;
+            case Enemy.Type.Flying:
+                return 3 * level;
+            case Enemy.Type.Fast:
+                return 1 * level;
             case Enemy.Type.Attacking:
-                return 5 * level;
+                return 3 * level;
             case Enemy.Type.BossAttack:
-                return 14 * level;
+                return 6 * level;
             case Enemy.Type.BossFly:
-                return 10 * level;
+                return 5 * level;
             case Enemy.Type.BossTank:
-                return 20 * level;
+                return 10 * level;
             default:
                 return 0;
         }
