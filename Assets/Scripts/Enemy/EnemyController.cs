@@ -162,7 +162,7 @@ public class EnemyController : MonoBehaviour
             case Enemy.Type.Attacking:
                 return 3 * level;
             case Enemy.Type.BossAttack:
-                return 6 * level;
+                return 4 * level;
             case Enemy.Type.BossFly:
                 return 5 * level;
             case Enemy.Type.BossTank:
