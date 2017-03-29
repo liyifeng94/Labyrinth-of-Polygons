@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     private bool _build = false;
     private float _start,_end;
     private Enemy.Type type = Enemy.Type.Normal;
-    public int EnemyNum;
+    public int EnemyNum = 5;
 
     public void SpawnEnemy(int wave)
     {
@@ -87,8 +87,6 @@ public class EnemyController : MonoBehaviour
         _levelManager = GameManager.Instance.CurrentLevelManager;
         _enemies = new List<Enemy>();
         _start = Time.time;
-        EnemyNum = 5;
-        //SpawnEnemy();
     }
     
 	void Update ()
