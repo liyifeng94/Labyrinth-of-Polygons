@@ -83,7 +83,6 @@ public class ScoreLevelUI : MonoBehaviour
 
 	    titletemp += FINALSCORE + "\n";
 	    scoretemp += finalscore.ToString() + "\n";
-	    //titletemp += gm.GetDifficultyMultiplier(obstacle);
 
         TitleText.text = titletemp;
 	    ScoreText.text = scoretemp;

@@ -178,21 +178,5 @@ public class GameManager : MonoBehaviour
             {x => x < 5, 19 },
         };
         return difswitch.First(sw => sw.Key(obs)).Value;
-
-        /*
-        if (obs >= 115) return 20;
-        else if (obs >= 105) return 18;
-        else if (obs >= 95) return 17;
-        else if (obs >= 85) return 16;
-        else if (obs >= 75) return 12;
-        else if (obs >= 65) return 11;
-        else if (obs >= 55) return 10;
-        else if (obs >= 45) return 9;
-        else if (obs >= 35) return 11;
-        else if (obs >= 25) return 13;
-        else if (obs >= 15) return 15;
-        else if (obs >= 5) return 17;
-        else return 19;
-        */
     }
 }
