@@ -40,23 +40,18 @@ public class ScoreLevelUI : MonoBehaviour
 	    ScoreText.text = "";
 
 	    gm = GameManager.Instance;
-
-        /* should only be true in testing */
-        if (gm != null)
-	    {
-            gmi = gm.LastLevelState;
-            gm.LocalHighScoreBoard.AddEntry(gm.LastLevelState.FinalScore,gm.PlayerName);
-	        score = (uint) gm.CurrentLevelManager.GetScore();
-	        level = (uint) gm.CurrentLevelManager.GetCurrentLevel();
-	        obstacle = gm.Obstacles;
-	        NormalKilled = gmi.NormalKilled;
-	        AttackKilled = gmi.AttackKilled;
-            FlyingKilled = gmi.FlyingKilled;
-	        FastKilled = gmi.FastKilled;
-	        BossKilled = gmi.BossKilled;
-	        finalscore = gmi.FinalScore;
-	    }
-
+	    gmi = gm.LastLevelState;
+	    gm.LocalHighScoreBoard.AddEntry(gm.LastLevelState.FinalScore, gm.PlayerName);
+	    score = (uint) gm.CurrentLevelManager.GetScore();
+	    level = (uint) gm.CurrentLevelManager.GetCurrentLevel();
+	    obstacle = gm.Obstacles;
+	    NormalKilled = gmi.NormalKilled;
+	    AttackKilled = gmi.AttackKilled;
+	    FlyingKilled = gmi.FlyingKilled;
+	    FastKilled = gmi.FastKilled;
+	    BossKilled = gmi.BossKilled;
+	    finalscore = gmi.FinalScore;
+	    
 	    var titletemp = BASICSCORE + "\n";
 	    var scoretemp = score.ToString() + "\n";
 
@@ -90,6 +85,7 @@ public class ScoreLevelUI : MonoBehaviour
         TitleText.text = titletemp;
 	    ScoreText.text = scoretemp;
 
+    
 	    gm.SaveHighScoreBoard();
 	}
 	
