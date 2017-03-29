@@ -7,7 +7,9 @@ public class UpgradeButton : MonoBehaviour {
 
     private bool _enoughGold;
     private bool _destroy;
+    private int _uCost;
 
+    private LevelManager _levelManager;
     private TileEventHandler _tileEventHandler;
 
     private BuildCheckPanel _buildCheckPanel;
@@ -18,6 +20,25 @@ public class UpgradeButton : MonoBehaviour {
     void Awake()
     {
         Instance = this;
+    }
+
+
+    void Start()
+    {
+        _levelManager = GameManager.Instance.CurrentLevelManager;
+    }
+
+
+    void Update()
+    {
+        if (!_enoughGold)
+        {
+            if (_uCost <= _levelManager.GetGold())
+            {
+                _enoughGold = true;
+                UpgradeButtonSelected();
+            }
+        }
     }
 
 
@@ -59,26 +80,19 @@ public class UpgradeButton : MonoBehaviour {
         _towerInfoPanel.SetUpgradingColor();
         _towerInfoPanel.DisplayUpgradedInfo();
         _towerInfoPanel.Appear();
-        /*if (_tileEventHandler.GetTowerScript().CheckMaxLevel())
-        {
-            _notificationPanel.SetNotificationType("MaxLevel");
-        }
-        else
-        {
-            _notificationPanel.SetNotificationType("Upgrade");
-        }*/
         _notificationPanel.SetNotificationType("Upgrade");
         _notificationPanel.Appear();
     }
 
 
-    public void SetGoldCheckFlag()
+    public void SetGoldCheckFlag(int cost)
     {
         _enoughGold = false;
+        _uCost = cost;
     }
 
 
-    public void setDestroyFlag()
+    public void SetDestroyFlag()
     {
         _destroy = true;
     }
