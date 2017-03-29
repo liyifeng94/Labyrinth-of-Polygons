@@ -6,6 +6,7 @@ public class MenuUI : MonoBehaviour
 {
     public Slider ObstaclesSlider;
     public Text NumOfObstacles;
+    public Text BonusMulti;
     public InputField NameInput;
     public Text NamePlaceHolder;
     public Text VersionText;
@@ -44,6 +45,8 @@ public class MenuUI : MonoBehaviour
     {
         uint obsacles = (uint)ObstaclesSlider.value;
         NumOfObstacles.text = obsacles.ToString();
+        int bonus = _gameManager.GetDifficultyMultiplier(obsacles);
+        BonusMulti.text = "x" + (float)bonus / 10;
         _gameManager.Obstacles = obsacles;
     }
 
