@@ -158,28 +158,28 @@ public class TowerInfoPanel : MonoBehaviour {
             case 0:
                 Type.text = "Tank";
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 3:
                 Type.text = "Range";
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 4:
                 Type.text = "Slow";
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
             case 1:
                 Type.text = "Heal";
                 DpmText.text = "Heal";
-                DpmNum.text = "" + (info[5] * 60 * 1.0 / info[6]);
+                DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
@@ -216,19 +216,19 @@ public class TowerInfoPanel : MonoBehaviour {
         {
             case 0:
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
+                DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
             case 3:
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
+                DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
             case 4:
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
+                DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
             case 1:
                 DpmText.text = "Heal";
-                DpmNum.text = "" + (_upgradeTowerInfo[5] * 60 * 1.0 / _upgradeTowerInfo[6]);
+                DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
             case 2:
                 DpmText.text = "Gold";
@@ -253,19 +253,19 @@ public class TowerInfoPanel : MonoBehaviour {
         {
             case 0:
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
+                DpmNum.text = "" + _towerInfo[5];
                 break;
             case 3:
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
+                DpmNum.text = "" + _towerInfo[5];
                 break;
             case 4:
                 DpmText.text = "Atk";
-                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
+                DpmNum.text = "" + _towerInfo[5];
                 break;
             case 1:
                 DpmText.text = "Heal";
-                DpmNum.text = "" + (_towerInfo[5] * 60 * 1.0 / _towerInfo[6]);
+                DpmNum.text = "" + _towerInfo[5];
                 break;
             case 2:
                 DpmText.text = "Gold";
@@ -290,7 +290,7 @@ public class TowerInfoPanel : MonoBehaviour {
         }
         else if (_repairCase) // if repair button is clicked in battle phace
         {
-            Hp.text = "<color=#00ff00ff>" + curHp + "\n</color>/" + maxHp;
+            Hp.text = "<color=#00ff00ff>" + maxHp + "\n</color>/" + maxHp;
         }
         else // sell button or no button is clicked in battoe phace
         {

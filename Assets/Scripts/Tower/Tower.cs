@@ -25,11 +25,14 @@ using System.Linq;
     public int BuildCost;
     public int AttackDamage;
     [HideInInspector] public int UpgradeCost;
+    [HideInInspector] public const float UpgradeFactor = 0.5f;
     [HideInInspector] public int CurrentValue;
 
 
     [HideInInspector] public int RepairCost;
+    [HideInInspector] public const float RepairFactor = 0.2f;
     [HideInInspector] public int SellGain;
+    [HideInInspector] public const float SellFactor = 0.4f;
 
     public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
     public TowerType Type;
@@ -73,13 +76,13 @@ using System.Linq;
         if (CurrentHp > ad)
         {
             CurrentHp -= ad;
-            RepairCost = (int)(CurrentValue * 0.3 * (1 - 1.0 * CurrentHp / HitPoint));
+            RepairCost = (int)(CurrentValue * 0.2 * (1 - 1.0 * CurrentHp / HitPoint));
             SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
         }
         else
         {
             CurrentHp = 0;
-            RepairCost = (int) (CurrentValue * 0.3);
+            RepairCost = (int) (CurrentValue * 0.2);
             SellGain = 0;
             TowerAnimator.SetTrigger("TowerDestroyed");
             _destroySoundSource.Play();
@@ -106,8 +109,8 @@ using System.Linq;
         LevelManager.UseGold(UpgradeCost);
         CurrentLevel += 1;
         CurrentValue += UpgradeCost;
-        UpgradeCost = (int)(CurrentValue * 0.8);
-        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
+        UpgradeCost = (int)(CurrentValue * 0.5);
+        RepairCost = (int)(CurrentValue * 0.2 * CurrentHp / HitPoint);
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
         switch (Type)
         {
@@ -150,7 +153,7 @@ using System.Linq;
         }
         CurrentHp = HitPoint;
         LevelManager.UseGold(RepairCost);
-        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
+        RepairCost = (int)(CurrentValue * 0.2 * CurrentHp / HitPoint);
         Debug.Log("Repair reset to "+ RepairCost);
         if (DestroyByEnemy)
         {
