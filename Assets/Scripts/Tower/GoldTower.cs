@@ -13,9 +13,9 @@ public class GoldTower : Tower
         CurrentHp = HitPoint;
         CurrentLevel = 1;
         CurrentValue = BuildCost;
-        GlodPerRound = (int)(CurrentValue * 0.15);
+        AttackDamage = (int)(CurrentValue * 0.15);
         UpgradeCost = (int)(CurrentValue * 0.8);
-        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
+        RepairCost = (int)(CurrentValue * 0.3 * (1 - 1.0 * CurrentHp / HitPoint));
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
     }
 
@@ -46,26 +46,9 @@ public class GoldTower : Tower
         // after the first round, it starts transfering the money beforing entering the further rounds
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BuildingPhase && !_transfered)
         {
-            LevelManager.AddGold((int)GlodPerRound);
+            LevelManager.AddGold((int)AttackDamage);
             _transfered = true;
         }
-    }
-
-
-    public new int GetTowerInfo(int[] info)
-    {
-        info[0] = AttackRange;
-        info[1] = (int)Type;
-        info[2] = CurrentLevel;
-        info[3] = CurrentHp;
-        info[4] = HitPoint;
-        info[5] = GlodPerRound;
-        info[6] = ReloadTime;
-        info[7] = UpgradeCost;
-        info[8] = RepairCost;
-        info[9] = SellGain;
-        info[10] = BuildCost;
-        return info[0];
     }
 
 
@@ -80,7 +63,7 @@ public class GoldTower : Tower
         info[5] = (int)(upgratedCurrentValue * 0.3);
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * 0.8);
-        info[8] = (int)(upgratedCurrentValue * 0.3 * CurrentHp / HitPoint);
+        info[8] = (int)(upgratedCurrentValue * 0.3 * (1 - 1.0 * info[3] / info[4]));
         info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }

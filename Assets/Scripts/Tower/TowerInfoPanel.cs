@@ -88,6 +88,7 @@ public class TowerInfoPanel : MonoBehaviour {
         // dynamically update current tower hp
         UpdateTowerCurrentHp(info[3], info[4], upgratedInfo[4]);
         UpdateTowerSellGain(info[9], upgratedInfo[9]);
+        UpdateTowerRepairCost(info[8], upgratedInfo[8]);
         if (info[3] == info[4])
         {
             _repairButton.SetHpCheckFlag();
@@ -307,6 +308,19 @@ public class TowerInfoPanel : MonoBehaviour {
         else // sell button or no button is clicked in battoe phace
         {
             SGain.text = sellGain + "G";
+        }
+    }
+
+
+    public void UpdateTowerRepairCost(int rCost, int upgratedRCost)
+    {
+        if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
+        {
+            RCost.text = rCost + "G";
+        }
+        else // sell button or no button is clicked in battoe phace
+        {
+            RCost.text = upgratedRCost + "G";
         }
     }
 

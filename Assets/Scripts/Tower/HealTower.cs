@@ -16,8 +16,9 @@ public class HealTower : Tower
         CurrentLevel = 1;
         CurrentValue = BuildCost;
         UpgradeCost = (int)(CurrentValue * 0.8);
-        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
+        RepairCost = (int)(CurrentValue * 0.3 * (1 - 1.0 * CurrentHp / HitPoint));
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
+        AttackDamage = (int)(HitPoint * 0.1);
     }
 
 
@@ -116,23 +117,6 @@ public class HealTower : Tower
     }
 
 
-    public new int GetTowerInfo(int[] info)
-    {
-        info[0] = AttackRange;
-        info[1] = (int)Type;
-        info[2] = CurrentLevel;
-        info[3] = CurrentHp;
-        info[4] = HitPoint;
-        info[5] = AttackDamage;
-        info[6] = ReloadTime;
-        info[7] = UpgradeCost;
-        info[8] = RepairCost;
-        info[9] = SellGain;
-        info[10] = BuildCost;
-        return info[0];
-    }
-
-
     public new void GetTowerUpgradedInfo(int[] info)
     {
         int upgratedCurrentValue = CurrentValue + UpgradeCost;
@@ -141,10 +125,10 @@ public class HealTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp + (int)(HitPoint * 0.1);
         info[4] = (int)(HitPoint * 1.1);
-        info[5] = AttackDamage + 2;
+        info[5] = (int)(info[4] * 0.1);
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * 0.8);
-        info[8] = (int)(upgratedCurrentValue * 0.3 * CurrentHp / HitPoint);
+        info[8] = (int)(upgratedCurrentValue * 0.3 * (1 - 1.0 * info[3] / info[4]));
         info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }

@@ -14,7 +14,7 @@ public class RangeTower : Tower
         CurrentLevel = 1;
         CurrentValue = BuildCost;
         UpgradeCost = (int)(CurrentValue * 0.8);
-        RepairCost = (int)(CurrentValue * 0.3 * CurrentHp / HitPoint);
+        RepairCost = (int)(CurrentValue * 0.3 * (1 - 1.0 * CurrentHp / HitPoint));
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
     }
 
@@ -47,7 +47,6 @@ public class RangeTower : Tower
             {
                 AttackEnemy(_enemies.First()); // make this simple, just attack the first one
                 FireSoundSource.Play();
-                _enemies.Clear();
                 EndTime = Time.time + ReloadTime;
                 Reloading = true;
             }
@@ -55,7 +54,9 @@ public class RangeTower : Tower
             {
                 if (EndTime - Time.time < 0) Reloading = false;
             }
+
         }
+        _enemies.Clear();
     }
 
 
@@ -110,23 +111,6 @@ public class RangeTower : Tower
     }
 
 
-    public new int GetTowerInfo(int[] info)
-    {
-        info[0] = AttackRange;
-        info[1] = (int)Type;
-        info[2] = CurrentLevel;
-        info[3] = CurrentHp;
-        info[4] = HitPoint;
-        info[5] = AttackDamage;
-        info[6] = ReloadTime;
-        info[7] = UpgradeCost;
-        info[8] = RepairCost;
-        info[9] = SellGain;
-        info[10] = BuildCost;
-        return info[0];
-    }
-
-
     public new void GetTowerUpgradedInfo(int[] info)
     {
         int upgratedCurrentValue = CurrentValue + UpgradeCost;
@@ -138,7 +122,7 @@ public class RangeTower : Tower
         info[5] = AttackDamage + 4;
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * 0.8);
-        info[8] = (int)(upgratedCurrentValue * 0.3 * CurrentHp / HitPoint);
+        info[8] = (int)(upgratedCurrentValue * 0.3 * (1 - 1.0 * info[3] / info[4]));
         info[9] = (int)(upgratedCurrentValue * 0.4 * CurrentHp / HitPoint);
         info[10] = BuildCost;
     }
