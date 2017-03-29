@@ -22,7 +22,7 @@ public class ScoreLevelUI : MonoBehaviour
 
     private uint score = 0;
     private uint level = 0;
-    private uint obstacle = 0;
+    private float obstacle = 0;
     private uint NormalKilled = 0;
     private uint AttackKilled = 0;
     private uint FlyingKilled = 0;
@@ -44,7 +44,7 @@ public class ScoreLevelUI : MonoBehaviour
 	    gm.LocalHighScoreBoard.AddEntry(gm.LastLevelState.FinalScore, gm.PlayerName);
 	    score = (uint) gm.CurrentLevelManager.GetScore();
 	    level = (uint) gm.CurrentLevelManager.GetCurrentLevel();
-	    obstacle = gm.Obstacles;
+	    obstacle = gm.GetDifficultyMultiplier(gm.Obstacles);
 	    NormalKilled = gmi.NormalKilled;
 	    AttackKilled = gmi.AttackKilled;
 	    FlyingKilled = gmi.FlyingKilled;
@@ -59,7 +59,7 @@ public class ScoreLevelUI : MonoBehaviour
         scoretemp += "* " + level.ToString() + "\n";
 
         titletemp += OBSTACLES + "\n";
-        scoretemp += "+ " + obstacle.ToString() + "\n";
+        scoretemp += "* " + obstacle/10 + "\n";
 
 	    titletemp += NORMALK + "\n";
 	    scoretemp += "+" + NormalKilled.ToString() + "* 100" + "\n";

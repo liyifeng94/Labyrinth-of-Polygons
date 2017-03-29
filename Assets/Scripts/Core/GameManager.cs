@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
             {x => 35 > x && x >= 25, 13 },
             {x => 25 > x && x >= 15, 15 },
             {x => 15 > x && x >= 5, 17 },
-            {x => x < 5, 19 },
+            {x => x < 5, 22 },
         };
         return difswitch.First(sw => sw.Key(obs)).Value;
     }
