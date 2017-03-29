@@ -205,28 +205,28 @@ public class Enemy : MonoBehaviour
                 _attackSpeed = 0.5f;
                 AttackDamage = 10 + 3 * currentLevel;
                 AttackDamage = (int)(20 * attackFactor);
-                Gold = (int)(100 * goldFactor);
+                Gold = (int)(500 * goldFactor);
                 Damage = 10;
                 break;
             case Type.BossFly:
                 Hp = 50 + hpGrowth;
-                AttackRange = 4;
+                AttackRange = 2;
                 Speed = 3;
                 Score = 100;
                 Damage = 10;
                 _attackSpeed = 1f;
                 AttackDamage = (int) (10 * attackFactor);
-                Gold = (int)(100 * goldFactor);
+                Gold = (int)(500 * goldFactor);
                 break;
             case Type.BossTank:
                 Hp = 100 + hpGrowth;
-                AttackRange = 4;
+                AttackRange = 3;
                 Speed = 1;
                 Score = 100;
                 Damage = 10;
                 _attackSpeed = 1f;
                 AttackDamage = (int)(10 * attackFactor);
-                Gold = (int)(100 * goldFactor);
+                Gold = (int)(500 * goldFactor);
                 break;
         }
     }
