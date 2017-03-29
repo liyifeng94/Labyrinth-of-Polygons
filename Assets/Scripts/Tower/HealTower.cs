@@ -18,7 +18,7 @@ public class HealTower : Tower
         UpgradeCost = (int)(CurrentValue * 0.8);
         RepairCost = (int)(CurrentValue * 0.3 * (1 - 1.0 * CurrentHp / HitPoint));
         SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
-        AttackDamage = (int)(HitPoint * 0.1);
+        AttackDamage = (int)(HitPoint * 0.2);
     }
 
 
@@ -125,7 +125,9 @@ public class HealTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp + (int)(HitPoint * 0.1);
         info[4] = (int)(HitPoint * 1.1);
-        info[5] = (int)(info[4] * 0.1);
+        Debug.Log("heal amount is " + info[4]);
+        info[5] = (int)(info[4] * 0.2);
+        Debug.Log("updated heal amount is " + info[5]);
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * 0.8);
         info[8] = (int)(upgratedCurrentValue * 0.3 * (1 - 1.0 * info[3] / info[4]));
