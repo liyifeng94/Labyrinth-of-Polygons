@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-using System.Collections.Generic;
-using System.Linq;
-
- public abstract class Tower : MonoBehaviour
+public abstract class Tower : MonoBehaviour
  {
 
     [HideInInspector] public int X;// { get; private set; }

@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Xml.Schema;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class ScoreLevelUI : MonoBehaviour

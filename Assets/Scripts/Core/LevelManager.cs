@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Runtime.Serialization;
 using Debug = System.Diagnostics.Debug;
 
 public class LevelManager : MonoBehaviour

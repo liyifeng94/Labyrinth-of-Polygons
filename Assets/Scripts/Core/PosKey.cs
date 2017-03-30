@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public struct PosKey
+﻿public struct PosKey
 {
     public readonly int X;
     public readonly int Y;
