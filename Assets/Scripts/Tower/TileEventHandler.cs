@@ -528,5 +528,24 @@ public class TileEventHandler : MonoBehaviour
     public HealTower GetHealTowerPtr()
     {
         return _healTowerPtr;
-    }    
+    }
+
+
+    public int GetCurrentTowerUpgradeCost()
+    {
+        switch (_currentTowerType)
+        {
+            case 0:
+                return _tankTowerPtr.UpgradeCost;
+            case 1:
+                return _rangeTowerPtr.UpgradeCost;
+            case 2:
+                return _slowTowerPtr.UpgradeCost;
+            case 3:
+                return _healTowerPtr.UpgradeCost;
+            case 4:
+                return _goldTowerPtr.UpgradeCost;
+        }
+        return -1; //should not reach here
+    }
 }

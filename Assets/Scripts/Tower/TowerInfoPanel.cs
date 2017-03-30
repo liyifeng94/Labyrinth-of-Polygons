@@ -20,6 +20,7 @@ public class TowerInfoPanel : MonoBehaviour {
     private int[] _towerInfo;
     private bool _displayUpgradedInfo;
     private bool _repairCase;
+    private bool _set;
 
     private Tower.TowerType _type;
     private TankTower _tankTower;
@@ -44,12 +45,14 @@ public class TowerInfoPanel : MonoBehaviour {
         _repairButton = RepairButton.Instance;
         _displayUpgradedInfo = false;
         _repairCase = false;
+        _set = false;
     }
 
 
     void LateUpdate()
     {
         // at beginning, no towerPtr is initialized, has to return directly
+        /*
         if (GameBoard.GamePhase.BuildingPhase == _levelManager.CurrentGamePhase())
         {
             // if repair button is clicked in building phase, set current hp to color.green
@@ -60,7 +63,9 @@ public class TowerInfoPanel : MonoBehaviour {
             RCost.text = 0 + "G";
             return;
         }
+        */
         // record a current selected tower, if no tower is selected at the beginning, _type is null
+        if (!_set) return;
         int[] info = new int[11];
         int[] upgratedInfo = new int[11];
         switch (_type)
@@ -87,9 +92,10 @@ public class TowerInfoPanel : MonoBehaviour {
                 break;
         }
         // dynamically update current tower hp
-        UpdateTowerCurrentHp(info[3], info[4], upgratedInfo[4]);
-        UpdateTowerSellGain(info[9], upgratedInfo[9]);
-        UpdateTowerRepairCost(info[8], upgratedInfo[8]);
+        //UpdateTowerCurrentHp(info[3], info[4], upgratedInfo[4]); //
+        //UpdateTowerSellGain(info[9], upgratedInfo[9]);//
+        //UpdateTowerRepairCost(info[8], upgratedInfo[8]);//
+        UpdateTowerInfo(info, upgratedInfo);
         if (info[3] == info[4])
         {
             _repairButton.SetHpCheckFlag();
@@ -117,6 +123,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _type = Tower.TowerType.Tank;
         _tankTower = tower;
+        _set = true;
     }
 
 
@@ -124,6 +131,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _type = Tower.TowerType.Range;
         _rangeTower = tower;
+        _set = true;
     }
 
 
@@ -131,6 +139,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _type = Tower.TowerType.Slow;
         _slowTower = tower;
+        _set = true;
     }
 
 
@@ -138,6 +147,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _type = Tower.TowerType.Heal;
         _healTower = tower;
+        _set = true;
     }
 
 
@@ -145,6 +155,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _type = Tower.TowerType.Gold;
         _goldTower = tower;
+        _set = true;
     }
 
 
@@ -280,7 +291,7 @@ public class TowerInfoPanel : MonoBehaviour {
         SGain.text = _towerInfo[9] + "G";
     }
 
-
+    /*
     // called every single frame when in battle phace to update current hp of a tower
     public void UpdateTowerCurrentHp(int curHp, int maxHp, int upgreatedMaxUp)
     {
@@ -324,7 +335,36 @@ public class TowerInfoPanel : MonoBehaviour {
             RCost.text = rCost + "G";
         }
     }
+    */
 
+
+    void UpdateTowerInfo(int[] info, int[] updatedInfo)
+    {
+        if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
+        {
+            Level.text = updatedInfo[2] + "";
+            int updatedCurHp = info[3] + updatedInfo[4] - info[4];
+            Hp.text = updatedCurHp + "\n/" + updatedInfo[4];
+            DpmNum.text = "" + updatedInfo[5];
+            UCost.text = "" + updatedInfo[7];
+            RCost.text = updatedInfo[8] + "G";
+            SGain.text = updatedInfo[9] + "G";
+        }
+        else if (_repairCase) // if repair button is clicked in battle phace
+        {
+            Hp.text = "<color=#00ff00ff>" + info[4] + "\n</color>/" + info[4];
+            if (GameBoard.GamePhase.BuildingPhase == _levelManager.CurrentGamePhase())
+            {
+                RCost.text = 0 + "G"; 
+            }
+        }
+        else // sell button or no button is clicked in battoe phace
+        {
+            Hp.text = info[3] + "\n/" + info[4];
+            SGain.text = info[9] + "G";
+            RCost.text = info[8] + "G";
+        }
+    }
 
     // change upgrading tower info color to green
     public void SetUpgradingColor()
