@@ -160,7 +160,6 @@ public class Enemy : MonoBehaviour
 
     public void SetupEnemy(int x, int y, List<GameBoard.Tile> path, List<GridSystem.Cell> cells, Type type)
     {
-        int currentLevel = GameManager.Instance.CurrentLevelManager.GetCurrentLevel();
         EnemyType = type;
         GridX = x;
         GridY = y;
