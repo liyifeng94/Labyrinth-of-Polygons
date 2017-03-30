@@ -124,7 +124,7 @@ using System.Linq;
         SellGain = (int)(CurrentValue * SellFactor * CurrentHp / HitPoint);
         switch (Type)
         {
-            case TowerType.Tank:z
+            case TowerType.Tank:
                 CurrentHp += (int)(HitPoint * (1.0 * TankTowerHpFactor - 1));
                 HitPoint = (int)(HitPoint * TankTowerHpFactor);
                 AttackDamage += 1;
