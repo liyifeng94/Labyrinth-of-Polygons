@@ -149,37 +149,38 @@ public class TowerInfoPanel : MonoBehaviour {
         _repairCase = false;
         _displayUpgradedInfo = false;
         _towerInfo = info;
-        switch (info[1])
+        Tower.TowerType towerType = (Tower.TowerType)info[1];
+        switch (towerType)
         {
-            case 1:
+            case Tower.TowerType.Tank:
                 Type.text = "Tank";
                 DpmText.text = "Atk";
                 DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
-            case 3:
+            case Tower.TowerType.Range:
                 Type.text = "Range";
                 DpmText.text = "Atk";
                 DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
-            case 4:
+            case Tower.TowerType.Slow:
                 Type.text = "Slow";
                 DpmText.text = "Atk";
                 DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
-            case 2:
+            case Tower.TowerType.Heal:
                 Type.text = "Heal";
                 DpmText.text = "Heal";
                 DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
-            case 0:
+            case Tower.TowerType.Gold:
                 Type.text = "Gold";
                 DpmText.text = "Gold";
                 DpmNum.text = "" + info[5];
@@ -208,25 +209,26 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _repairCase = false;
         _displayUpgradedInfo = true;
-        switch (_upgradeTowerInfo[1])
+        Tower.TowerType towerType = (Tower.TowerType)_upgradeTowerInfo[1];
+        switch (towerType)
         {
-            case 1:
+            case Tower.TowerType.Tank:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-            case 3:
+            case Tower.TowerType.Range:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-            case 4:
+            case Tower.TowerType.Slow:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-            case 2:
+            case Tower.TowerType.Heal:
                 DpmText.text = "Heal";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-            case 0:
+            case Tower.TowerType.Gold:
                 DpmText.text = "Gold";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
@@ -245,25 +247,26 @@ public class TowerInfoPanel : MonoBehaviour {
     public void SetOriginalowerInfo()
     {
         _displayUpgradedInfo = false;
-        switch (_towerInfo[1])
+        Tower.TowerType towerType = (Tower.TowerType)_towerInfo[1];
+        switch (towerType)
         {
-            case 1:
+            case Tower.TowerType.Tank:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
-            case 3:
+            case Tower.TowerType.Range:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
-            case 4:
+            case Tower.TowerType.Slow:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
-            case 2:
+            case Tower.TowerType.Heal:
                 DpmText.text = "Heal";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
-            case 0:
+            case Tower.TowerType.Gold:
                 DpmText.text = "Gold";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
