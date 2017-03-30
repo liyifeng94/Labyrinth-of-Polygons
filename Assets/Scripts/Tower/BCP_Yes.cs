@@ -10,7 +10,6 @@ public class BCP_Yes : MonoBehaviour
     private GameBoard _gameBoard;
 
     private bool _upgradeCase;
-    private bool _upgradeCost;
 
     private TowerBuildPanel _towerBuildPanel;
     private TowerOperationPanel _towerOperationPanel;
@@ -25,6 +24,7 @@ public class BCP_Yes : MonoBehaviour
     }
 
 
+    // confirm TileEventHandler operations
     public void OperationConfirmed()
     {
         _towerBuildPanel.DisAppear();
@@ -54,6 +54,7 @@ public class BCP_Yes : MonoBehaviour
     }
 
 
+    // set current selected TileEventHandler
     public void setTileEventHandler(TileEventHandler teh)
     {
         _upgradeCase = false;
@@ -80,7 +81,6 @@ public class BCP_Yes : MonoBehaviour
     public bool EnoughGoldToUpgrade()
     {
         int uCost = _tileEventHandler.GetCurrentTowerUpgradeCost();
-        Debug.Log("gold check: " + uCost + " " + _levelManager.GetGold());
         if (uCost > _levelManager.GetGold())
         {
             return false; // not enough gold to upgrade

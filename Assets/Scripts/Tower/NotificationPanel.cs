@@ -6,13 +6,11 @@ public class NotificationPanel : MonoBehaviour {
     public static NotificationPanel Instance;
     public GameObject ThisPanel;
     public Text FixText;
-    //public Text AutoDisappearText;
     private string _type;
     private string _towerOperationReuqst;
-    //private string _rejectedCase;
     private float _endTime;
     private bool _autoDisappearSet;
-    //public float StartTime, EndTime;
+
 
     void Awake()
     {
@@ -25,7 +23,6 @@ public class NotificationPanel : MonoBehaviour {
         ThisPanel.SetActive(false);
         _type = "Nop";
         _towerOperationReuqst = " request received.\nPress Yes to confirm.\nPress No to refuse.";
-        //_rejectedCase = "Request refused. Click another tile or EnterBattle to continue.";
         _autoDisappearSet = false;
     }
 
@@ -82,9 +79,6 @@ public class NotificationPanel : MonoBehaviour {
                 FixText.text = "The selected tower is destroyed. Repair or sell it.\nRequest refused.";
                 _autoDisappearSet = true;
                 break;
-            /*case "MaxLevel":
-                FixText.text = "Max level reached.\nPress Yes or No to go back.";
-                break;*/
             case "Repair":
                 FixText.text = _type + _towerOperationReuqst;
                 _autoDisappearSet = false;
