@@ -253,7 +253,7 @@ MonoBehaviour:
   CurrentValue: 0
   RepairCost: 2
   SellGain: 3
-  Type: 0
+  Type: 1
   FireSoundSource: {fileID: 0}
 --- !u!212 &212000013048375024
 SpriteRenderer:

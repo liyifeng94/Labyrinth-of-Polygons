@@ -43,7 +43,7 @@ public abstract class Tower : MonoBehaviour
     [HideInInspector] public const float RepairFactor = 0.2f;
     [HideInInspector] public const float SellFactor = 0.4f;
 
-    public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
+    public enum TowerType { Tank = 1, Range = 3, Slow = 4, Heal = 2, Gold = 0 }
     public TowerType Type;
 
 
