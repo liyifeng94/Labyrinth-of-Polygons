@@ -35,10 +35,13 @@ public class GoldTower : Tower
 
     void LateUpdate()
     {
-        if (DestroyByEnemy) return;
+        if (DestroyByEnemy)
+        {
+            _transfered = true;
+            return;
+        }
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase)
         {
-            //_gameBoard.ClearHighlightTileAt(X, Y);
             _transfered = false;
         }
 

@@ -73,9 +73,10 @@ using System.Linq;
     public void ReceiveAttack(int ad)
     {
         if (DestroyByEnemy) return;
-        TowerAnimator.SetTrigger("TowerDamaged");
+        
         if (CurrentHp > ad)
         {
+            TowerAnimator.SetTrigger("TowerDamaged");
             CurrentHp -= ad;
             RepairCost = (int)(CurrentValue * 0.2 * (1 - 1.0 * CurrentHp / HitPoint));
             SellGain = (int)(CurrentValue * 0.4 * CurrentHp / HitPoint);
@@ -155,12 +156,11 @@ using System.Linq;
         CurrentHp = HitPoint;
         if (LevelManager.CurrentGamePhase() == GameBoard.GamePhase.BattlePhase) LevelManager.UseGold(RepairCost);
         RepairCost = (int)(CurrentValue * RepairFactor * CurrentHp / HitPoint);
-        Debug.Log("Repair reset to "+ RepairCost);
         if (DestroyByEnemy)
         {
-            TowerAnimator.SetTrigger("TowerFixed");
             DestroyByEnemy = false;
         }
+        TowerAnimator.SetTrigger("TowerFixed");
     }
 
 

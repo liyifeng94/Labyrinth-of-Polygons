@@ -15,6 +15,7 @@ public class UpgradeButton : MonoBehaviour {
     private BuildCheckPanel _buildCheckPanel;
     private TowerInfoPanel _towerInfoPanel;
     private NotificationPanel _notificationPanel;
+    private BCP_Yes _bcpYes;
 
 
     void Awake()
@@ -26,6 +27,7 @@ public class UpgradeButton : MonoBehaviour {
     void Start()
     {
         _levelManager = GameManager.Instance.CurrentLevelManager;
+        _bcpYes = BCP_Yes.Instance;
     }
 
 
@@ -76,6 +78,7 @@ public class UpgradeButton : MonoBehaviour {
             return;
         }
         _tileEventHandler.SetOperation(6);
+        //_bcpYes.SetUpgradeCase();
         _buildCheckPanel.Appear();
         _towerInfoPanel.SetUpgradingColor();
         _towerInfoPanel.DisplayUpgradedInfo();
