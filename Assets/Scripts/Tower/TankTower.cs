@@ -115,7 +115,7 @@ public class TankTower : Tower
         info[0] = AttackRange;
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
-        info[3] = CurrentHp + (int)(HitPoint * (0.1 * TankTowerHpFactor - 1));
+        info[3] = CurrentHp + (int)(HitPoint * (1.0 * TankTowerHpFactor - 1));
         info[4] = (int)(HitPoint * TankTowerHpFactor);
         info[5] = AttackDamage + 2;
         info[6] = ReloadTime;

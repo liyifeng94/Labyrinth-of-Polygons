@@ -117,7 +117,7 @@ public class RangeTower : Tower
         info[0] = AttackRange;
         info[1] = (int)Type;
         info[2] = CurrentLevel + 1;
-        info[3] = CurrentHp + (int)(HitPoint * (0.1 * RangeTowerHpFactor - 1));
+        info[3] = CurrentHp + (int)(HitPoint * (1.0 * RangeTowerHpFactor - 1));
         info[4] = (int)(HitPoint * RangeTowerHpFactor);
         info[5] = AttackDamage + 4;
         info[6] = ReloadTime;

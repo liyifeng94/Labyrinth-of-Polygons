@@ -125,28 +125,28 @@ using System.Linq;
         switch (Type)
         {
             case TowerType.Tank:
-                CurrentHp += (int)(HitPoint * 0.7);
-                HitPoint = (int)(HitPoint * 1.7);
+                CurrentHp += (int)(HitPoint * (0.1 * TankTowerHpFactor - 1));
+                HitPoint = (int)(HitPoint * TankTowerHpFactor);
                 AttackDamage += 1;
                 break;
             case TowerType.Range:
-                CurrentHp += (int)(HitPoint * 0.5);
-                HitPoint = (int)(HitPoint * 1.5);
+                CurrentHp += (int)(HitPoint * (1.0 * RangeTowerHpFactor - 1));
+                HitPoint = (int)(HitPoint * RangeTowerHpFactor);
                 AttackDamage += 4;
                 break;
             case TowerType.Slow:
-                CurrentHp += (int)(HitPoint * 0.4);
-                HitPoint = (int)(HitPoint * 1.4);
+                CurrentHp += (int)(HitPoint * (1.0 * SlowTowerHpFactor - 1));
+                HitPoint = (int)(HitPoint * SlowTowerHpFactor);
                 AttackDamage += 1;
                 break;
             case TowerType.Heal:
-                CurrentHp += (int)(HitPoint * 0.5);
-                HitPoint = (int)(HitPoint * 1.5);
+                CurrentHp += (int)(HitPoint * (1.0 * HealTowerHpFactor - 1));
+                HitPoint = (int)(HitPoint * HealTowerHpFactor);
                 AttackDamage = (int)(HitPoint * 0.1);
                 break;
             case TowerType.Gold:
-                CurrentHp += (int)(HitPoint * 0.4);
-                HitPoint = (int)(HitPoint * 1.4);
+                CurrentHp += (int)(HitPoint * (1.0 * GoldTowerHpFactor - 1));
+                HitPoint = (int)(HitPoint * GoldTowerHpFactor);
                 AttackDamage = (int)(CurrentValue * 0.3);
                 break;
         }
