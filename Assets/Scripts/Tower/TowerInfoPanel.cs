@@ -51,19 +51,6 @@ public class TowerInfoPanel : MonoBehaviour {
 
     void LateUpdate()
     {
-        // at beginning, no towerPtr is initialized, has to return directly
-        /*
-        if (GameBoard.GamePhase.BuildingPhase == _levelManager.CurrentGamePhase())
-        {
-            // if repair button is clicked in building phase, set current hp to color.green
-            if (_repairCase)
-            {
-                Hp.text = "<color=#00ff00ff>" + _towerInfo[4] + "\n</color>/" + _towerInfo[4];
-            }
-            RCost.text = 0 + "G";
-            return;
-        }
-        */
         // record a current selected tower, if no tower is selected at the beginning, _type is null
         if (!_set) return;
         int[] info = new int[11];
@@ -92,9 +79,6 @@ public class TowerInfoPanel : MonoBehaviour {
                 break;
         }
         // dynamically update current tower hp
-        //UpdateTowerCurrentHp(info[3], info[4], upgratedInfo[4]); //
-        //UpdateTowerSellGain(info[9], upgratedInfo[9]);//
-        //UpdateTowerRepairCost(info[8], upgratedInfo[8]);//
         UpdateTowerInfo(info, upgratedInfo);
         if (info[3] == info[4])
         {
@@ -291,52 +275,6 @@ public class TowerInfoPanel : MonoBehaviour {
         SGain.text = _towerInfo[9] + "G";
     }
 
-    /*
-    // called every single frame when in battle phace to update current hp of a tower
-    public void UpdateTowerCurrentHp(int curHp, int maxHp, int upgreatedMaxUp)
-    {
-        if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
-        {
-            int updatedCurHp = curHp + upgreatedMaxUp - maxHp;
-            Hp.text = updatedCurHp + "\n/" + upgreatedMaxUp;
-        }
-        else if (_repairCase) // if repair button is clicked in battle phace
-        {
-            Hp.text = "<color=#00ff00ff>" + maxHp + "\n</color>/" + maxHp;
-        }
-        else // sell button or no button is clicked in battoe phace
-        {
-            Hp.text = curHp + "\n/" + maxHp;
-        }
-    }
-
-
-    public void UpdateTowerSellGain(int sellGain, int upgratedSellGain)
-    {
-        if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
-        {
-            SGain.text = upgratedSellGain + "G";
-        }
-        else // sell button or no button is clicked in battoe phace
-        {
-            SGain.text = sellGain + "G";
-        }
-    }
-
-
-    public void UpdateTowerRepairCost(int rCost, int upgratedRCost)
-    {
-        if (_displayUpgradedInfo) // if upgrade button is clicked in battle phace
-        {
-            RCost.text = upgratedRCost + "G";
-        }
-        else // sell button or no button is clicked in battoe phace
-        {
-            RCost.text = rCost + "G";
-        }
-    }
-    */
-
 
     void UpdateTowerInfo(int[] info, int[] updatedInfo)
     {
@@ -366,6 +304,7 @@ public class TowerInfoPanel : MonoBehaviour {
         }
     }
 
+
     // change upgrading tower info color to green
     public void SetUpgradingColor()
     {
@@ -394,6 +333,7 @@ public class TowerInfoPanel : MonoBehaviour {
     {
         _repairCase = true;
     }
+
 
     // used for sellbutton when previous clicked button is repair button
     public void ResetRepairCase()

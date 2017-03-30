@@ -144,7 +144,7 @@ public class SlowTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp + (int)(HitPoint * (1.0 * SlowTowerHpFactor - 1));
         info[4] = (int)(HitPoint * SlowTowerHpFactor);
-        info[5] = AttackDamage + 1;
+        info[5] = AttackDamage + SlowTowerAtkIncrement;
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * UpgradeFactor);
         info[8] = (int)(upgratedCurrentValue * RepairFactor * (1 - 1.0 * info[3] / info[4]));

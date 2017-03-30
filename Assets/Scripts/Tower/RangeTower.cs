@@ -119,7 +119,7 @@ public class RangeTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp + (int)(HitPoint * (1.0 * RangeTowerHpFactor - 1));
         info[4] = (int)(HitPoint * RangeTowerHpFactor);
-        info[5] = AttackDamage + 4;
+        info[5] = AttackDamage + RangeTowerAtkIncrement;
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * UpgradeFactor);
         info[8] = (int)(upgratedCurrentValue * RepairFactor * (1 - 1.0 * info[3] / info[4]));

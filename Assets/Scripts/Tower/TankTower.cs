@@ -117,12 +117,11 @@ public class TankTower : Tower
         info[2] = CurrentLevel + 1;
         info[3] = CurrentHp + (int)(HitPoint * (1.0 * TankTowerHpFactor - 1));
         info[4] = (int)(HitPoint * TankTowerHpFactor);
-        info[5] = AttackDamage + 2;
+        info[5] = AttackDamage + TankTowerAtkIncrement;
         info[6] = ReloadTime;
         info[7] = (int)(upgratedCurrentValue * UpgradeFactor);
         info[8] = (int)(upgratedCurrentValue * RepairFactor * (1 - 1.0 * info[3] / info[4]));
         info[9] = (int)(upgratedCurrentValue * SellFactor * CurrentHp / HitPoint);
         info[10] = BuildCost;
-        //Debug.Log("Get: " + upgratedCurrentValue);
     }
 }

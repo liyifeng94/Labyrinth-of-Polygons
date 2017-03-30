@@ -37,6 +37,12 @@ using System.Linq;
     [HideInInspector] public const float HealTowerHpFactor = 1.1f;
     [HideInInspector] public const float GoldTowerHpFactor = 1.1f;
 
+    [HideInInspector] public const int TankTowerAtkIncrement = 1;
+    [HideInInspector] public const int RangeTowerAtkIncrement = 4;
+    [HideInInspector] public const int SlowTowerAtkIncrement = 1;
+    [HideInInspector] public const float HealTowerHealFactor = 0.2f;
+    [HideInInspector] public const float GoldTowerGoldFactor= 0.15f;
+
     [HideInInspector] public const float UpgradeFactor = 0.5f;
     [HideInInspector] public const float RepairFactor = 0.2f;
     [HideInInspector] public const float SellFactor = 0.4f;
@@ -127,27 +133,27 @@ using System.Linq;
             case TowerType.Tank:
                 CurrentHp += (int)(HitPoint * (1.0 * TankTowerHpFactor - 1));
                 HitPoint = (int)(HitPoint * TankTowerHpFactor);
-                AttackDamage += 1;
+                AttackDamage += TankTowerAtkIncrement;
                 break;
             case TowerType.Range:
                 CurrentHp += (int)(HitPoint * (1.0 * RangeTowerHpFactor - 1));
                 HitPoint = (int)(HitPoint * RangeTowerHpFactor);
-                AttackDamage += 4;
+                AttackDamage += RangeTowerAtkIncrement;
                 break;
             case TowerType.Slow:
                 CurrentHp += (int)(HitPoint * (1.0 * SlowTowerHpFactor - 1));
                 HitPoint = (int)(HitPoint * SlowTowerHpFactor);
-                AttackDamage += 1;
+                AttackDamage += SlowTowerAtkIncrement;
                 break;
             case TowerType.Heal:
                 CurrentHp += (int)(HitPoint * (1.0 * HealTowerHpFactor - 1));
                 HitPoint = (int)(HitPoint * HealTowerHpFactor);
-                AttackDamage = (int)(HitPoint * 0.1);
+                AttackDamage = (int)(HitPoint * HealTowerHealFactor);
                 break;
             case TowerType.Gold:
                 CurrentHp += (int)(HitPoint * (1.0 * GoldTowerHpFactor - 1));
                 HitPoint = (int)(HitPoint * GoldTowerHpFactor);
-                AttackDamage = (int)(CurrentValue * 0.3);
+                AttackDamage = (int)(CurrentValue * GoldTowerGoldFactor);
                 break;
         }
     }
