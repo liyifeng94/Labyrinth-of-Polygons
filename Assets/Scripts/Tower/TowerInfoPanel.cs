@@ -151,7 +151,7 @@ public class TowerInfoPanel : MonoBehaviour {
         _towerInfo = info;
         switch (info[1])
         {
-            case 0:
+            case 1:
                 Type.text = "Tank";
                 DpmText.text = "Atk";
                 DpmNum.text = "" + info[5];
@@ -172,14 +172,14 @@ public class TowerInfoPanel : MonoBehaviour {
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
-            case 1:
+            case 2:
                 Type.text = "Heal";
                 DpmText.text = "Heal";
                 DpmNum.text = "" + info[5];
                 RTime.text = "Reload";
                 RTimeNum.text = "" + info[6];
                 break;
-            case 2:
+            case 0:
                 Type.text = "Gold";
                 DpmText.text = "Gold";
                 DpmNum.text = "" + info[5];
@@ -210,7 +210,7 @@ public class TowerInfoPanel : MonoBehaviour {
         _displayUpgradedInfo = true;
         switch (_upgradeTowerInfo[1])
         {
-            case 0:
+            case 1:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
@@ -222,11 +222,11 @@ public class TowerInfoPanel : MonoBehaviour {
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-            case 1:
+            case 2:
                 DpmText.text = "Heal";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
-            case 2:
+            case 0:
                 DpmText.text = "Gold";
                 DpmNum.text = "" + _upgradeTowerInfo[5];
                 break;
@@ -247,7 +247,7 @@ public class TowerInfoPanel : MonoBehaviour {
         _displayUpgradedInfo = false;
         switch (_towerInfo[1])
         {
-            case 0:
+            case 1:
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
@@ -259,11 +259,11 @@ public class TowerInfoPanel : MonoBehaviour {
                 DpmText.text = "Atk";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
-            case 1:
+            case 2:
                 DpmText.text = "Heal";
                 DpmNum.text = "" + _towerInfo[5];
                 break;
-            case 2:
+            case 0:
                 DpmText.text = "Gold";
                 DpmNum.text = "" + _towerInfo[5];
                 break;

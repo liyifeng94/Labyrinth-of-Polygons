@@ -144,8 +144,8 @@ PlayerSettings:
   VertexChannelCompressionMask:
     serializedVersion: 2
     m_Bits: 238
-  iPhoneSdkVersion: 989
-  iOSTargetOSVersionString: 7.0
+  iPhoneSdkVersion: 988
+  iOSTargetOSVersionString: 10.2.1
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
   tvOSTargetOSVersionString: 9.0
