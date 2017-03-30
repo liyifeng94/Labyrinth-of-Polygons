@@ -14,7 +14,6 @@ public class EnemyController : MonoBehaviour
     private bool _spawn = false;
     private bool _build = false;
     private float _start,_end;
-    private Enemy.Type _type = Enemy.Type.Normal;
     public int EnemyNum = 5;
     public int DefaultNum = 0;
     public float Timer = 1.0f;
