@@ -78,7 +78,7 @@ public class UpgradeButton : MonoBehaviour {
             return;
         }
         _tileEventHandler.SetOperation(6);
-        //_bcpYes.SetUpgradeCase();
+        _bcpYes.SetUpgradeCase();
         _buildCheckPanel.Appear();
         _towerInfoPanel.SetUpgradingColor();
         _towerInfoPanel.DisplayUpgradedInfo();
