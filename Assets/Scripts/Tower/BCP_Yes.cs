@@ -37,7 +37,6 @@ public class BCP_Yes : MonoBehaviour
                 _notificationPanel.SetNotificationType("NotEnoughMoney");
                 _notificationPanel.Appear();
                 _buildCheckPanel.DisAppear();
-                //_upgradeCase = false;
             }
             else
             {

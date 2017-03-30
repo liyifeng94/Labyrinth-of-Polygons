@@ -25,13 +25,20 @@ using System.Linq;
     public int BuildCost;
     public int AttackDamage;
     [HideInInspector] public int UpgradeCost;
-    [HideInInspector] public const float UpgradeFactor = 0.5f;
     [HideInInspector] public int CurrentValue;
 
 
     [HideInInspector] public int RepairCost;
-    [HideInInspector] public const float RepairFactor = 0.2f;
     [HideInInspector] public int SellGain;
+
+    [HideInInspector] public const float TankTowerHpFactor = 1.3f;
+    [HideInInspector] public const float RangeTowerHpFactor = 1.1f;
+    [HideInInspector] public const float SlowTowerHpFactor = 1.2f;
+    [HideInInspector] public const float HealTowerHpFactor = 1.1f;
+    [HideInInspector] public const float GoldTowerHpFactor = 1.1f;
+
+    [HideInInspector] public const float UpgradeFactor = 0.5f;
+    [HideInInspector] public const float RepairFactor = 0.2f;
     [HideInInspector] public const float SellFactor = 0.4f;
 
     public enum TowerType { Tank = 0, Range = 3, Slow = 4, Heal = 1, Gold = 2 }
@@ -95,13 +102,14 @@ using System.Linq;
 
     public void ReceiveHeal(int heal)
     {
-        if (CurrentHp + heal <= HitPoint)
+        if (CurrentHp + heal < HitPoint)
         {
             CurrentHp += heal;
         }
         else
         {
             CurrentHp = HitPoint;
+            TowerAnimator.SetTrigger("TowerFixed");
         }
     }
 
@@ -119,7 +127,7 @@ using System.Linq;
             case TowerType.Tank:
                 CurrentHp += (int)(HitPoint * 0.7);
                 HitPoint = (int)(HitPoint * 1.7);
-                AttackDamage += 2;
+                AttackDamage += 1;
                 break;
             case TowerType.Range:
                 CurrentHp += (int)(HitPoint * 0.5);
