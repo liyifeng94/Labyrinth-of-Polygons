@@ -145,8 +145,7 @@ public class Enemy : MonoBehaviour
             GridX = _cells[_pos].X;
             GridY = _cells[_pos].Y;
             _gameBoard.UpdateEnemyPosition(this);
-            if (_distance >= 1) _distance = _distance - 1;
-            else _distance -= 0.5f;
+            _distance = 0;
         }
         if ((transform.position.x > _path[_pos].Position.x && Dir == Direction.Right) ||
             (transform.position.x < _path[_pos].Position.x && Dir == Direction.Left) ||
