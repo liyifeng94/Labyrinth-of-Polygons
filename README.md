@@ -1,62 +1,66 @@
-# Labyrinth of Polygons
+﻿# Labyrinth of Polygons
 
 A mobile tower defense game where you have the build towers to create a maze to stop invaders from leaving your labyrinth.
 
 
 Functional Requirements:
 Every UI interaction between the player and the game is achieved by using MVC style (ie. Buttons, Inputs, Clicks). What’s below are functionalities which utilized special architectural styles.
-●	Before starting the game, player can choose the difficult level (differed by number of enemies, gold income etc)
-○	This is achieved by using Blackboard style in game. Since all data are stored in game manager, it is simple to alter those properties and apply to game.
-●	Some enemies can fire to damage the towers.
-○	This functionality is achieved by combining the Publish Subscribe style and  the Pipe and Filter style. While the Publish Subscribe style realized the attack between towers and enemies, the Pipe and Filter style guaranteed an intellectual selection of target to attack for both tower and enemy.
-●	The player can also upgrade/repair/destroy the existing towers.
-○	This is achieved by using MVC style and the Object-Oriented style. While MVC styles handle the selections from the player, the Object-Oriented style makes each tower can be in different condition (ie. different types, level)
-●	The game will not end till a certain number of enemies have escaped to the exit.
-○	This is achieved by combining the Publish Subscribe style and the Layered style. The enemy controller subscribe each enemy so that it will know if there are any enemies alive on the board. If there are no enemies anymore, the enemy controller will notify the game manager through a number layers, then game manager will give orders to other game components.
+ - Before starting the game, player can choose the difficult level (differed by number of enemies, gold income etc)
+   - This is achieved by using Blackboard style in game. Since all data are stored in game manager, it is simple to alter those properties and apply to game. 
+
+ - Some enemies can fire to damage the towers.
+   - This functionality is achieved by combining the Publish Subscribe style and  the Pipe and Filter style. While the Publish Subscribe style realized the attack between towers and enemies, the Pipe and Filter style guaranteed an intellectual selection of target to attack for both tower and enemy.
+
+ - The player can also upgrade/repair/destroy the existing towers.
+   - This is achieved by using MVC style and the Object-Oriented style. While MVC styles handle the selections from the player, the Object-Oriented style makes each tower can be in different condition (ie. different types, level)
+
+ - The game will not end till a certain number of enemies have escaped to the exit.
+   - This is achieved by combining the Publish Subscribe style and the Layered style. The enemy controller subscribe each enemy so that it will know if there are any enemies alive on the board. If there are no enemies anymore, the enemy controller will notify the game manager through a number layers, then game manager will give orders to other game components.
 
 Non-functional Attributes:
-●	Efficiency
-○	The game should be fast enough on pathfinding.
-■	To achieve efficiency on pathfinding. We used the Strategy pattern which encapsulated different algorithm for different situation. 
-○	The game should keep being smooth even with a great number of enemies bullets on the screen.
-■	By using the Publish Subscribe style, we successfully achieved this non-functional attribute. Since both towers and enemies subscribe each other, the bullets only exist between them. Therefore, handling bullets does not occupy a lot of system resources and redundant graphic computations are avoided.
-●	Complexity/Challenging
-○	For each wave or level the player goes deeper, the game should keep the difficulty. This is achieved by using the Blackboard style because we can easily modify the number and stats of enemies and the cost of towers, which will keep challenging the player despite the player might have possessed a number of high-level towers.
+ - Efficiency
+   - The game should be fast enough on pathfinding.
+     - To achieve efficiency on pathfinding. We used the Strategy pattern which encapsulated different algorithm for different situation. 
+   - The game should keep being smooth even with a great number of enemies bullets on the screen.
+     - By using the Publish Subscribe style, we successfully achieved this non-functional attribute. Since both towers and enemies subscribe each other, the bullets only exist between them. Therefore, handling bullets does not occupy a lot of system resources and redundant graphic computations are avoided.
+
+ - Complexity/Challenging
+   - For each wave or level the player goes deeper, the game should keep the difficulty. This is achieved by using the Blackboard style because we can easily modify the number and stats of enemies and the cost of towers, which will keep challenging the player despite the player might have possessed a number of high-level towers.
 
 
 Architecture Styles Used
-●	Client Server 
-○	Used internally to interact with different game components 
-○	the gameboard acts as the server and the other modules are clients.
-■	The enemies and towers both interacts with through the gameboard
+ - Client Server 
+   - Used internally to interact with different game components 
+   - the gameboard acts as the server and the other modules are clients.
+     - The enemies and towers both interacts with through the gameboard
 
-●	Pipe and Filter 
-○	the enemy objects targeting AI uses this for decision making.
+ - Pipe and Filter 
+   - the enemy objects targeting AI uses this for decision making.
 
-●	Layered  
-○	the Unity engine itself is layered
-○	We added multiple layers of abstraction on top of the Unity game engine. 
-■	Grid system adds a layer of abstraction on top of the game coordinate system
+ - Layered  
+   - the Unity engine itself is layered
+   - We added multiple layers of abstraction on top of the Unity game engine. 
+     - Grid system adds a layer of abstraction on top of the game coordinate system
 
-●	Event Based
-○	Unity engine is mostly event based.
-○	UI components communicates using events.
-○	Components talk to each other using the Unity event system
+ - Event Based
+   - Unity engine is mostly event based.
+   - UI components communicates using events.
+   - Components talk to each other using the Unity event system
 
-●	Published Subscribe 
-○	The towers are subscribers when they are created.
-○	Whenever the enemy moves the gameboard notifies the tower of where they are and if they are in range or not. 
+ - Published Subscribe 
+   - The towers are subscribers when they are created.
+   - Whenever the enemy moves the gameboard notifies the tower of where they are and if they are in range or not. 
 
-●	Blackboard
-○	The game manager is where the references to core component objects are stored.
-○	The gameboard is the data storage and modules need to access it to get data.
+ - Blackboard
+   - The game manager is where the references to core component objects are stored.
+   - The gameboard is the data storage and modules need to access it to get data.
 
-●	Object-Oriented
-○	Tower is an abstract class, there are five inherited class (e.g. Tank Tower) represent various type of towers
-○	Main benefits: Understandable, Reusable, Highly Cohesive.
+ - Object-Oriented
+   - Tower is an abstract class, there are five inherited class (e.g. Tank Tower) represent various type of towers
+   - Main benefits: Understandable, Reusable, Highly Cohesive.
 
-●	MVC
-○	Tower Controller plays as Model. it stores actual tower prefabs. Tile Event Handler is controller,  it sends request to Tower Controller (Model) to create a tower object. Tower UI Panel represents View, it generates output message for each operation, and receive input operation request from a user. 
+ - MVC
+   - Tower Controller plays as Model. it stores actual tower prefabs. Tile Event Handler is controller,  it sends request to Tower Controller (Model) to create a tower object. Tower UI Panel represents View, it generates output message for each operation, and receive input operation request from a user. 
 
 Design:
 Core System Components:
