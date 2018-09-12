@@ -3,7 +3,7 @@
 A mobile tower defense game where you have the build towers to create a maze to stop invaders from leaving your labyrinth.
 
 
-Functional Requirements:
+## Functional Requirements:
 Every UI interaction between the player and the game is achieved by using MVC style (ie. Buttons, Inputs, Clicks). What’s below are functionalities which utilized special architectural styles.
  - Before starting the game, player can choose the difficult level (differed by number of enemies, gold income etc)
    - This is achieved by using Blackboard style in game. Since all data are stored in game manager, it is simple to alter those properties and apply to game. 
