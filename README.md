@@ -17,7 +17,7 @@ Every UI interaction between the player and the game is achieved by using MVC st
  - The game will not end till a certain number of enemies have escaped to the exit.
    - This is achieved by combining the Publish Subscribe style and the Layered style. The enemy controller subscribe each enemy so that it will know if there are any enemies alive on the board. If there are no enemies anymore, the enemy controller will notify the game manager through a number layers, then game manager will give orders to other game components.
 
-Non-functional Attributes:
+## Non-functional Attributes:
  - Efficiency
    - The game should be fast enough on pathfinding.
      - To achieve efficiency on pathfinding. We used the Strategy pattern which encapsulated different algorithm for different situation. 
@@ -28,7 +28,7 @@ Non-functional Attributes:
    - For each wave or level the player goes deeper, the game should keep the difficulty. This is achieved by using the Blackboard style because we can easily modify the number and stats of enemies and the cost of towers, which will keep challenging the player despite the player might have possessed a number of high-level towers.
 
 
-Architecture Styles Used
+## Architecture Styles Used
  - Client Server 
    - Used internally to interact with different game components 
    - the gameboard acts as the server and the other modules are clients.
@@ -62,23 +62,23 @@ Architecture Styles Used
  - MVC
    - Tower Controller plays as Model. it stores actual tower prefabs. Tile Event Handler is controller,  it sends request to Tower Controller (Model) to create a tower object. Tower UI Panel represents View, it generates output message for each operation, and receive input operation request from a user. 
 
-Design:
-Core System Components:
+## Design:
+### Core System Components:
 
-Game Manager:
+#### Game Manager:
 Singleton pattern.
 Purpose: A singleton object created at the start of the game. Acts as the core data accessor and manager for the entire game and handles transfer and persistence of data between different scenes. Hold references to all controller and core objects.
 
-Level Manager:
+#### Level Manager:
 Purpose: An object that is created the manage and hold data regarding the current scene/level. 
 
 
-Grid System:
+#### Grid System:
 Purpose: An abstract level on top of the game coordinate system. Where the game objects can use to simplify spawning, movement, and distance checking. Allows the game objects to translate between grid position to game position. 
 (Unity already have two coordinate systems, the 3D game world coordinate system and the 2D screen coordinate position) 
 
 
-Gameboard:
+#### Gameboard:
 Purpose: The game board that the game objects interact with. Hold data for the game that is running such as the enemies’ positions,towers’ positions. It needs to provide interface for the enemy and tower to interact with and implement the gameplay features.
 Observer pattern:
 It will notify the observers (Tower and Enemy) if they are in range of each other.
@@ -86,20 +86,20 @@ Adapter pattern:
 Tower objects and enemy objects interracts through adapter functions provided by the game boarrd.
 
 
-Pathfinder:
+#### Pathfinder:
 Strategy pattern.
 Purpose: The pathfinder is a game object which encapsulates several algorithms to find the shortest path or check the path availability for different clients. When a client asks for a shortest path, the pathfinder will use corresponding algorithm. The choice of algorithm depends on the phase of gameboard and how efficient the client wants.
 The basic algorithm for pathfinding is the Dijkstra’s algorithm. We also upgraded it with caching.
 
-Game Componets:
+### Game Componets:
 
-Tile:
+#### Tile:
 Purpose: The game tile at each grid cell. A game tile can have multiple types it can be either an empty tile, entrance tile, exit tile, or obstacle tile. Each tile is also the input event controller that handles player input such as building of towers. It will also notify the view/UI to get player interaction.
 Decorator:
 The tile object can be attached with different functionalities dynamically depending on what the type of tile it is. For example if it is a empty tile, it needs to handle user input handle those functionalities are added. If it is a exit tile, then functionalities of taking damage is added.
 
 
-Towers:
+#### Towers:
 Purpose: Since the whole game is about tower defence, the tower is indeed the most significant part of it. The game support 5 various types of tower which are Tank Tower (taunt enemies hatred), Range Tower (low attack damage but long attack range), Slow Tower (slow nearby enemies), Heal Tower (heal nearby ally towers) and Gold Tower (generate golds). Each of these towers has its unique pros and cons, user needs to combine them properly to defend the base as long as possible.
 
 Iterator:
@@ -112,7 +112,7 @@ State:
 Tile Event Handler uses State design pattern. It allows the Tile Event Handler to alter its behavior when its internal state (Tower Operation) changes. There are total 9 internal different states, 5 for building different type of towers, 3 for operation an existing tower, and 1 for NOP. For example, if a Tank Tower button is clicked by a user, then the selected Tile Event Handler changes its state from NOP to Build-Tank-Tower. Then if user confirm the building request, then Tile Event Handler perform the last Tower Operation, which is building a tank tower. Similarly, if a Upgrade Button is clicked, then the Tile Event Handler changes its state to Upgrade-Current-Tower, the corresponding existing tower would be upgrade.
 
 
-Tower Building / Operational Buttons:
+#### Tower Building / Operational Buttons:
 Purpose: Basic level 1 towers are good for the early rounds, however, as the time goes, enemies become stronger and stronger. In order to survive longer, user could either build new towers or operate (upgrade and repair ) existing ones during the battle phase. Besides, user is also able to remove existing towers in the building phase, the enemies path might change in this case.
 
 Singleton:
@@ -122,7 +122,7 @@ Observer:
 Tower Building Buttons and Tower Operation Buttons use Observer design pattern. The purpose of these buttons are setting the correct state of the current selected Tile Event Handler, and then the Tile Event Handler could perform the correct state later. However, each enemy tile might has its Tile Event Handler, so the maximum number of Tile Event Handler is 192, how the building and operational buttons know which Tile Event Handler that they are going to modify? To solve this problem, observer are used. When a Tile Event Handler is selected, it notifies those buttons, then these buttons know exactly which Tile Event Handler is being used right now.
 
 
-Tower Relative UI Panels:
+#### Tower Relative UI Panels:
 Purpose: Tower Notification Panel shows some warning messages like block-path case and not-enough-gold case to let user know that the request is forbidden. Tower Info Panel displays tower parameter like hitpoint, attack damage etc.. Build Check Panel allows user to confirm building or operating a tower.
 
 Singleton:
@@ -132,7 +132,7 @@ These three tower relative panels are designed as Singleton. These panels allows
 
 
 
-Enemy:
+#### Enemy:
 Observer pattern
 Usage: enemy’s moving
 Explanation: when enemy enters a new cell, notify the observers (cell and tower) to update the status: cells add the enemy to its current position, and towers add the enemy to its attacking list if it is in the attack range.
